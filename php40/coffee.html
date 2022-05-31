@@ -57,7 +57,7 @@
                         <button @click="change(item,1)">+</button>
                     </div>
                     <p>小記 {{item.productPrice * item.quantity}}</p>
-                    <button><i class="fa-solid fa-trash-can"></i></button>
+                    <button @click="deleteHandler(item)"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
             </li>
         </ul>
@@ -71,10 +71,10 @@
             data() {
                 return {
                     fakeData: [
-                        { productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
-                        { productName: "曼特寧咖啡(一包十入)", productPrice: 150, quantity: 1, src: "https://cs-f.ecimg.tw/items/DBAT8QA900C013E/000001_1637306487.jpg" },
-                        { productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
-                        { productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
+                        { cartSid: 1, productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
+                        { cartSid: 2, productName: "曼特寧咖啡(一包十入)", productPrice: 150, quantity: 1, src: "https://cs-f.ecimg.tw/items/DBAT8QA900C013E/000001_1637306487.jpg" },
+                        { cartSid: 3, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
+                        { cartSid: 4, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
                     ],
                     tweened: 0
                 }
@@ -107,6 +107,14 @@
                     // if (obj.quantity > 99999) {
                     //     obj.quantity = 99999;
                     // }
+                },
+                deleteHandler(obj) {
+                    let deleteLIst = window.confirm("您確定要刪除嗎?");
+                    if(deleteLIst) {
+                        this.fakeData = this.fakeData.filter((data) => {
+                            return obj.cartSid !== data.cartSid;
+                        })
+                    }
                 }
             },
             watch: {
