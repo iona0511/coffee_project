@@ -26,7 +26,14 @@ if ($totalRows > 0) {
         header("Location: ?page=$totalPages");
         exit;
     }
-    $sql = sprintf("SELECT * FROM products ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM`products`
+JOIN `products_categroies` 
+    ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
+JOIN `products_pic` 
+    ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
+JOIN `products_style_filter`
+    ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filtter_sid`
+ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -87,7 +94,8 @@ if ($totalRows > 0) {
                 <th scope="col">特價中</th>
                 <th scope="col">庫存</th>
                 <th scope="col">商品分類</th>
-                <th scope="col">商品圖片</th>
+                <th scope="col">商品圖片(商品頁)</th>
+                <th scope="col">商品圖片(詳細頁)</th>
                 <th scope="col">商品風格</th>
                 <th scope="col"><i class="fa-solid fa-pen-to-square"></i></th>
             </tr>
@@ -109,12 +117,13 @@ if ($totalRows > 0) {
                     <td><?= htmlentities($r['products_introduction']) ?></td>
                     <td><?= htmlentities($r['products_detail_introduction']) ?></td>
                     <td><?= $r['products_price'] ?></td>
-                    <td><?= $r['products_forsale'] ?></td>
-                    <td><?= $r['products_onsale'] ?></td>
+                    <td><?= $r['products_forsale'] ? '是' : '否'; ?></td>
+                    <td><?= $r['products_onsale'] ? '是' : '否'; ?></td>
                     <td><?= $r['products_stocks'] ?></td>
-                    <td><?= $r['products_with_products_categroies_sid'] ?></td>
-                    <td><?= $r['products_with_products_pic'] ?></td>
-                    <td><?= $r['products_with_products_style_filter_sid'] ?></td>
+                    <td><?= $r['products_categroies_name'] ?></td>
+                    <td><?= $r['products_pic_one'] ?></td>
+                    <td><?= $r['products_pic_multi'] ?></td>
+                    <td><?= $r['products_style_filter_categroies'] ?></td>
                     <td><a href="ab-edit.php?sid=<?= $r['sid'] ?>">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a></td>
