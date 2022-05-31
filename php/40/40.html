@@ -184,6 +184,11 @@
             color: #fff;
             cursor: pointer;
         }
+        .cart_price {
+            position: fixed;
+            top: 20px;
+            right: 0px;
+        }
     </style>
 </head>
 
@@ -214,7 +219,7 @@
         <div class="cart_price">
             <div class="cart_price_paddging">
                 <button @click="couponShowHandler">選擇優惠卷</button>
-                <div class="coupon_bg" v-show="couponShow === true" @click="couponShowHandler">
+                <div class="coupon_bg" v-show="couponShow === true" @click="couponConfirm">
                     <div class="coupon_bord" @click.stop>
                         <label :for="'id' + coupon.id" v-for="coupon of couponArray"
                             :class="{coupon_checked: coupon.id == radio}">
@@ -307,6 +312,10 @@
                     this.couponShow = !this.couponShow
                 },
                 couponConfirm() {
+                    if(this.radio === undefined) {
+                        this.couponShowHandler();
+                        return false;
+                    }
                     const couponObj = this.couponArray.filter((data) => {
                         return data.id === this.radio;
                     });
