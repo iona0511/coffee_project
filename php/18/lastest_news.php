@@ -1,7 +1,7 @@
-<?php require dirname(dirname(__DIR__,1)) . '/parts/connect_db.php'; 
+<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
-$pageName ='lastest-news';
-$title ='最新消息';
+$pageName = 'lastest_news';
+$title = '最新消息';
 
 $perPage = 10;
 
@@ -11,32 +11,104 @@ if ($page < 1) {
     header('Location ?page=1');
     exit;
 }
-?>
-<?php include dirname(dirname(__DIR__,1)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__,1)) . '/parts/navbar.php'; ?>
 
+$t_sql = "SELECT COUNT(1) FROM `lastest_news`";
+$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+
+$totalPages = ceil($totalRows / $perPage);
+
+$rows = [];
+
+if ($totalRows > 0) {
+    if ($page > $totalPages) {
+        header("Location: ?page=$totalPages");
+        exit;
+    }
+
+    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid DESC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
+
+    $rows = $pdo->query($sql)->fetchAll();
+}
+?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
 <div class="container">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button"data-bs-toggle="collapse" data-bs-target="#navbarNav"aria-controls="navbarNav" aria-expanded="false" aria-label="Togglenavigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Home<a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled">Disabled</a>
-      </li>
-    </ul>
-  </div>
+    <div class="row">
+        <div class="col">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=1">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $page - 1 ?>">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+
+                    <?php for ($i = $page-5; $i <= $page+5; $i++) :
+                    if ($i >= 1 and $i <= $totalPages) :
+                    ?>
+
+                    <li  class="page-item <?= $page == $i ? 'active' : '' ?>">
+                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                    </li>
+
+                    <?php endif;
+                    endfor; ?>
+
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?= $page + 1 ?>">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link <?= $page == $totalPages ? 'disabled' : '' ?>" href="?page=<?= $totalPages ?>">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <table class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">活動圖片</th>
+                <th scope="col">活動標題</th>
+                <th scope="col">活動類別</th>
+                <th scope="col">活動內容</th>
+                <th scope="col">建立日期</th>
+                <th scope="col">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </th>
+                <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($row as $r) : ?>
+                <tr>
+                    <td>
+                        <a href="javascript : delete_it(<? $r['news_sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a>
+                    </td>
+                    <td><?= $r['news_sid'] ?></td>
+                    <td><?= $r['news_img'] ?></td>
+                    <td><?= htmlentities($r['news_title']) ?></td>
+                    <td><?= $r['news_class_sid'] ?></td>
+                    <td><?= htmlentities($r['news_content']) ?></td>
+                    <td><?= $r['news_create_time'] ?></td>
+                    <td><a href="ab-edit.php?sid=<?= $r['news_sid'] ?>">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </td>
+                </tr>
+        </tbody>
+    </table>
 </div>
 
-<?php include dirname(dirname(__DIR__,1)) . '/parts/scripts.php'; ?>
-<?php include dirname(dirname(__DIR__,1)) . '/parts/html-foot.php'; ?>
+
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
