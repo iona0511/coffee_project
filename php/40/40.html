@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css' />
+    <title>Document</title>
+    <style>
+        .cart_list {
+            list-style-type: none;
+            padding: 0px;
+        }
+
+        .cart_list_li {
+            width: 100%;
+            padding: 20px 0px;
+        }
+        .cart_card {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cart_list_img_wrap {
+            width: 100px;
+            height: 100px;
+        }
+
+        .cart_list_img_wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        .cart_list input[type=number]::-webkit-inner-spin-button {
+            appearance: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul class="cart_list">
+            <li class="cart_list_li" v-for="item of fakeData">
+                <div class="cart_card">
+                    <div class="cart_list_img_wrap">
+                        <img :src="item.src" :alt="item.productName">
+                    </div>
+                    <p>{{item.productName}}</p>
+                    <p>單價 {{item.productPrice}}</p>
+                    <div>
+                        <button @click="change(item,-1)">-</button>
+                        <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
+                        <button @click="change(item,1)">+</button>
+                    </div>
+                    <p>小記 {{item.productPrice * item.quantity}}</p>
+                    <button @click="deleteHandler(item)"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+            </li>
+        </ul>
+        <h1>總計 {{parseInt(tweened)}}</h1>
+    </div>
+
+    <script src="../js/vue.global.js"></script>
+    <script src="../js/gsap.min.js"></script>
+    <script>
+        const vm = Vue.createApp({
+            data() {
+                return {
+                    fakeData: [
+                        { cartSid: 1, productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
+                        { cartSid: 2, productName: "曼特寧咖啡(一包十入)", productPrice: 150, quantity: 1, src: "https://cs-f.ecimg.tw/items/DBAT8QA900C013E/000001_1637306487.jpg" },
+                        { cartSid: 3, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
+                        { cartSid: 4, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
+                    ],
+                    tweened: 0
+                }
+            },
+            computed: {
+                total() {
+                    let output = 0;
+                    this.fakeData.forEach((item) => {
+                        output += item.productPrice * item.quantity;
+                    })
+                    return output;
+                }
+            },
+            methods: {
+                change(item, num) {
+                    item.quantity += num;
+                    if (item.quantity <= 0) {
+                        item.quantity = 0;
+                    }
+                },
+                verify(obj,event) {
+                    event.target.value = event.target.value.replace(/^(0+)|[^\d]+/g,"");
+                    obj.quantity = event.target.value;
+                    if(obj.quantity === "") {
+                        obj.quantity = 0;
+                        event.target.value = 0;
+                    }
+                    obj.quantity = parseInt(obj.quantity);
+                    //最大庫存
+                    // if (obj.quantity > 99999) {
+                    //     obj.quantity = 99999;
+                    // }
+                },
+                deleteHandler(obj) {
+                    let deleteLIst = window.confirm("您確定要刪除嗎?");
+                    if(deleteLIst) {
+                        this.fakeData = this.fakeData.filter((data) => {
+                            return obj.cartSid !== data.cartSid;
+                        })
+                    }
+                }
+            },
+            watch: {
+                total(newNum) {
+                    gsap.to(this,{duration: 0.5,tweened: Number(newNum) || 0});
+                }
+            },
+            beforeMount() {
+                this.fakeData.forEach((item) => {
+                    this.tweened += item.productPrice * item.quantity;
+                });
+            }
+        });
+        vm.mount("#app");
+    </script>
+</body>
+
+</html>
