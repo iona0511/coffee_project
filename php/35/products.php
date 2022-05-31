@@ -5,7 +5,7 @@ $pageName = 'product';
 $title = '商品列表';
 
 //每一頁最多有幾筆
-$perPage = 5;
+$perPage = 2;
 
 // 用戶要看第幾頁
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -27,13 +27,13 @@ if ($totalRows > 0) {
         exit;
     }
     $sql = sprintf("SELECT * FROM`products`
-JOIN `products_categroies` 
-    ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
-JOIN `products_pic` 
-    ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
-JOIN `products_style_filter`
-    ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filtter_sid`
-ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+                JOIN `products_categroies` 
+                    ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
+                JOIN `products_pic` 
+                    ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
+                JOIN `products_style_filter`
+                    ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filtter_sid`
+                ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -124,7 +124,7 @@ ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
                     <td><?= $r['products_pic_one'] ?></td>
                     <td><?= $r['products_pic_multi'] ?></td>
                     <td><?= $r['products_style_filter_categroies'] ?></td>
-                    <td><a href="ab-edit.php?sid=<?= $r['sid'] ?>">
+                    <td><a href="products_edit.php?products_sid=<?= $r['products_sid'] ?>">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a></td>
                 </tr>

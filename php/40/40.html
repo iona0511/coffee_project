@@ -8,6 +8,9 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css' />
     <title>Document</title>
     <style>
+        #app button {
+            cursor: pointer;
+        }
         .cart_list {
             list-style-type: none;
             padding: 0px;
@@ -38,6 +41,23 @@
         .cart_list input[type=number]::-webkit-inner-spin-button {
             appearance: none;
         }
+        .coupon_bord {
+            display: flex;
+            flex-direction: column;
+
+        }
+        .coupon_bord label {
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .coupon_bord input {
+            display: none;
+        }
+        label.coupon_checked {
+            border: 1px solid rgb(140, 203, 255);
+        }
     </style>
 </head>
 
@@ -61,11 +81,24 @@
                 </div>
             </li>
         </ul>
+        <div class="coupon_bg">
+            <div class="coupon_bord">
+                <button>選擇優惠卷</button>
+                <label :for="'id' + coupon.id" v-for="coupon of couponArray" :class="{coupon_checked: coupon.id == radio}">
+                    <input type="radio" :id="'id' + coupon.id" :value="coupon.id" v-model="radio">{{coupon.name}}
+                </label>
+                <div class="coupon_button_group">
+                    <button @click="couponDeny">不使用優惠卷</button>
+                    <button @click="couponConfirm">確定</button>
+                    <button>取消</button>
+                </div>
+            </div>
+        </div>
         <h1>總計 {{parseInt(tweened)}}</h1>
     </div>
 
-    <script src="../js/vue.global.js"></script>
-    <script src="../js/gsap.min.js"></script>
+    <script src="../../js/vue.global.js"></script>
+    <script src="../../js/gsap.min.js"></script>
     <script>
         const vm = Vue.createApp({
             data() {
@@ -76,6 +109,14 @@
                         { cartSid: 3, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
                         { cartSid: 4, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
                     ],
+                    couponArray: [
+                        {id: 1,money: 100, name: "生日優惠券"},
+                        {id: 2,money: 100, name: "註冊優惠券"},
+                        {id: 6,money: 0.75, name: "遊戲_轉盤_優惠券 25% off"},
+                        {id: 7,money: 0.8, name: "遊戲_轉盤_優惠券 20% off"},
+                    ],
+                    radio: undefined,
+                    discount: undefined,
                     tweened: 0
                 }
             },
@@ -85,7 +126,13 @@
                     this.fakeData.forEach((item) => {
                         output += item.productPrice * item.quantity;
                     })
-                    return output;
+                    if(this.discount === undefined) {
+                        return output;
+                    } else if (this.discount < 1) {
+                        return output * this.discount;
+                    } else if (this.discount >= 1 ) {
+                        return output - this.discount;
+                    }
                 }
             },
             methods: {
@@ -115,11 +162,25 @@
                             return obj.cartSid !== data.cartSid;
                         })
                     }
+                },
+                couponDeny() {
+                    this.radio = undefined;
+                },
+                couponConfirm() {
+                    const couponObj = this.couponArray.filter((data) => {
+                        return data.id === this.radio;
+                    });
+                    this.discount = couponObj[0].money;
                 }
             },
             watch: {
                 total(newNum) {
                     gsap.to(this,{duration: 0.5,tweened: Number(newNum) || 0});
+                },
+                radio(newNum) {
+                    if(newNum === undefined) {
+                        this.discount = undefined;
+                    }
                 }
             },
             beforeMount() {
