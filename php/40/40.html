@@ -12,19 +12,30 @@
         [v-cloak] {
             display: none;
         }
+
         #app {
             display: flex;
             padding: 0px 20px;
         }
-        #app button {
-            cursor: pointer;
-        }
+
         .cart_list_left {
             width: 70%;
         }
+
+        .cart_list_left button {
+            cursor: pointer;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(123, 82, 31);
+            color: #fff;
+            font-size: 18px;
+        }
+
         .cart_price {
             width: 30%;
         }
+
         .cart_list {
             list-style-type: none;
             padding: 0px;
@@ -34,27 +45,35 @@
         .cart_list_li {
             width: 100%;
             padding: 20px 0px;
-            border-left: 1px solid rgb(173, 173, 173);
-            border-right: 1px solid rgb(173, 173, 173);
+            border-left: 2px solid rgb(173, 173, 173);
+            border-right: 2px solid rgb(173, 173, 173);
             border-bottom: 1px solid rgb(173, 173, 173);
-        }
-        .cart_list_li:first-child {
             border-top: 1px solid rgb(173, 173, 173);
-            border-radius: 5px 5px 0px 0px;
         }
+
+        .cart_list_li:first-child {
+            border-top: 2px solid rgb(173, 173, 173);
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+
         .cart_list_li:last-child {
-            border-radius: 0px 0px 5px 5px;
+            border-bottom: 2px solid rgb(173, 173, 173);
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
         }
+
         .cart_card {
             width: 95%;
             margin: auto;
             display: flex;
-            justify-content:space-between;
+            justify-content: space-between;
             align-items: center;
         }
+
         .cart_list_img_wrap {
-            width: 100px;
-            height: 100px;
+            width: 20%;
+            aspect-ratio: 1;
         }
 
         .cart_list_img_wrap img {
@@ -64,42 +83,63 @@
             object-position: center center;
         }
 
+        .cart_card p {
+            width: 20%;
+        }
+
+        #subtotal {
+            width: 15%;
+        }
+
+        .cart_list_button_group {
+            width: 20%;
+            display: flex;
+            align-items: center;
+        }
+
+        .cart_list_button_group input {
+            width: 50%;
+            aspect-ratio: 2;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .cart_list_button_group button {
+            width: 25%;
+            aspect-ratio: 1;
+        }
+
+        .cart_card>button {
+            width: 5%;
+            aspect-ratio: 1;
+        }
+
         .cart_list input[type=number]::-webkit-inner-spin-button {
             appearance: none;
         }
+
         .coupon_bord {
             display: flex;
             flex-direction: column;
-
         }
+
         .coupon_bord label {
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
             border: 1px solid transparent;
         }
+
         .coupon_bord input {
             display: none;
         }
+
         label.coupon_checked {
             border: 1px solid rgb(140, 203, 255);
         }
-        .list-enter-from {
-            transform: translateX(-30px);
-            opacity: 0;
-        }
 
-        .list-move{
-            transition: transform .5s ease;
-        }
-        .list-leave-active,
-        .list-enter-active {
+        .list-leave-active {
             transition: all .5s ease;
-        }
-
-        .list-enter-to {
-            transform: translateX(0px);
-            opacity: 1;
         }
 
         .list-leave-from {
@@ -111,10 +151,6 @@
             transform: translateX(30px);
             opacity: 0;
         }
-
-        .rand-move {
-            transition:transform 1s ease;
-        }
     </style>
 </head>
 
@@ -122,7 +158,7 @@
     <div id="app" v-cloak>
         <div class="cart_list_left">
             <ul class="cart_list">
-                <transition-group name="list">
+                <transition-group name="list" mode="out-in">
                     <li class="cart_list_li" v-for="item of fakeData" v-show="item.display === 1" key="item">
                         <div class="cart_card">
                             <div class="cart_list_img_wrap">
@@ -130,12 +166,12 @@
                             </div>
                             <p>{{item.productName}}</p>
                             <p>單價 {{item.productPrice}}</p>
-                            <div>
+                            <div class="cart_list_button_group">
                                 <button @click="change(item,-1)">-</button>
                                 <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
                                 <button @click="change(item,1)">+</button>
                             </div>
-                            <p>小記 {{item.productPrice * item.quantity}}</p>
+                            <p id="subtotal">小記 {{item.productPrice * item.quantity}}</p>
                             <button @click="deleteHandler(item)"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                     </li>
@@ -147,8 +183,10 @@
                 <button>選擇優惠卷</button>
                 <div class="coupon_bg">
                     <div class="coupon_bord">
-                        <label :for="'id' + coupon.id" v-for="coupon of couponArray" :class="{coupon_checked: coupon.id == radio}">
-                            <input type="radio" :id="'id' + coupon.id" :value="coupon.id" v-model="radio">{{coupon.name}}
+                        <label :for="'id' + coupon.id" v-for="coupon of couponArray"
+                            :class="{coupon_checked: coupon.id == radio}">
+                            <input type="radio" :id="'id' + coupon.id" :value="coupon.id"
+                                v-model="radio">{{coupon.name}}
                         </label>
                         <div class="coupon_button_group">
                             <button @click="couponDeny">不使用優惠卷</button>
@@ -168,16 +206,16 @@
             data() {
                 return {
                     fakeData: [
-                        { cartSid: 1, display: 1,productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
+                        { cartSid: 1, display: 1, productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
                         { cartSid: 2, display: 1, productName: "曼特寧咖啡(一包十入)", productPrice: 150, quantity: 1, src: "https://cs-f.ecimg.tw/items/DBAT8QA900C013E/000001_1637306487.jpg" },
                         { cartSid: 3, display: 1, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
                         { cartSid: 4, display: 1, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
                     ],
                     couponArray: [
-                        {id: 1,money: 100, name: "生日優惠券"},
-                        {id: 2,money: 100, name: "註冊優惠券"},
-                        {id: 6,money: 0.75, name: "遊戲_轉盤_優惠券 25% off"},
-                        {id: 7,money: 0.8, name: "遊戲_轉盤_優惠券 20% off"},
+                        { id: 1, money: 100, name: "生日優惠券" },
+                        { id: 2, money: 100, name: "註冊優惠券" },
+                        { id: 6, money: 0.75, name: "遊戲_轉盤_優惠券 25% off" },
+                        { id: 7, money: 0.8, name: "遊戲_轉盤_優惠券 20% off" },
                     ],
                     radio: undefined,
                     discount: undefined,
@@ -190,11 +228,11 @@
                     this.fakeData.forEach((item) => {
                         output += item.productPrice * item.quantity;
                     })
-                    if(this.discount === undefined) {
+                    if (this.discount === undefined) {
                         return output;
                     } else if (this.discount < 1) {
                         return output * this.discount;
-                    } else if (this.discount >= 1 ) {
+                    } else if (this.discount >= 1) {
                         return output - this.discount;
                     }
                 }
@@ -206,10 +244,10 @@
                         item.quantity = 0;
                     }
                 },
-                verify(obj,event) {
-                    event.target.value = event.target.value.replace(/^(0+)|[^\d]+/g,"");
+                verify(obj, event) {
+                    event.target.value = event.target.value.replace(/^(0+)|[^\d]+/g, "");
                     obj.quantity = event.target.value;
-                    if(obj.quantity === "") {
+                    if (obj.quantity === "") {
                         obj.quantity = 0;
                         event.target.value = 0;
                     }
@@ -221,10 +259,13 @@
                 },
                 deleteHandler(obj) {
                     let deleteLIst = window.confirm("您確定要刪除嗎?");
-                    if(deleteLIst) {
-                        this.fakeData = this.fakeData.filter((data) => {
-                            return obj.cartSid !== data.cartSid;
-                        })
+                    if (deleteLIst) {
+                        obj.display = 0;
+                        setTimeout(() => {
+                            this.fakeData = this.fakeData.filter((data) => {
+                                return obj.cartSid !== data.cartSid;
+                            });
+                        }, 470);
                     }
                 },
                 couponDeny() {
@@ -239,10 +280,10 @@
             },
             watch: {
                 total(newNum) {
-                    gsap.to(this,{duration: 0.5,tweened: Number(newNum) || 0});
+                    gsap.to(this, { duration: 0.5, tweened: Number(newNum) || 0 });
                 },
                 radio(newNum) {
-                    if(newNum === undefined) {
+                    if (newNum === undefined) {
                         this.discount = undefined;
                     }
                 }
