@@ -1,33 +1,11 @@
 <?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
-$pageName = 'products_edit';
-$title = '編輯商品資料';
+$pageName = 'products-add';
+$title = '新增商品';
 
-$products_sid = isset($_GET['products_sid']) ? intval($_GET['products_sid']) : 0;
-if (empty($products_sid)) {
-    header('Location: products.php');
-    exit;
-}
 
-$row = $pdo->query("SELECT * FROM`products`
-                    JOIN `products_categroies` 
-                        ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
-                    JOIN `products_pic` 
-                        ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
-                    JOIN `products_style_filter`
-                        ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filter_sid`
-                    WHERE products_sid=$products_sid")->fetch();                    
 $row_cate = $pdo->query("SELECT * FROM`products_categroies`")->fetchAll();
 $row_pic = $pdo->query("SELECT * FROM`products_pic`")->fetchAll();
 $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
-
-if (empty($row)) {
-    header('Location: products.php');
-    echo "console.log('a')";
-    exit;
-}
-
-
-
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
@@ -45,25 +23,23 @@ if (empty($row)) {
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">編輯資料</h5>
-                    <form name="form1" onsubmit="sendData();return false;" novalidate>
-                        <input type="hidden" name="products_sid" value="<?= $row['products_sid'] ?>">
-
+                    <h5 class="card-title">新增資料</h5>
+            <form name="form1" onsubmit="sendData(); return false;" novalidate>
                         <div class="mb-3">
                             <label for="products_name" class="form-label">* 商品名稱</label>
-                            <input type="text" class="form-control" id="products_name" name="products_name" required value="<?= htmlentities($row['products_name']) ?>">
+                            <input type="text" class="form-control" id="products_name" name="products_name" required placeholder="請輸入商品名稱">
                             <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="products_introduction" class="form-label">商品簡介</label>
-                            <input type="products_introduction" class="form-control" id="products_introduction" name="products_introduction" value="<?= $row['products_introduction'] ?>">
+                            <input type="products_introduction" class="form-control" id="products_introduction" name="products_introduction" placeholder="商品簡介">
                             <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="products_detail_introduction" class="form-label">商品詳細介紹</label>
-                            <textarea class="form-control" name="products_detail_introduction" id="products_detail_introduction" cols="30" rows="3"><?= htmlentities($row['products_detail_introduction']) ?></textarea>
+                            <textarea class="form-control" name="products_detail_introduction" id="products_detail_introduction" cols="30" rows="3"></textarea>
                             <div class="form-text red"></div>
                         </div>
 
@@ -125,10 +101,10 @@ if (empty($row)) {
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">修改</button>
+                        <button type="submit" class="btn btn-primary">新增</button>
                     </form>
-                    <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
-                        資料編輯成功
+                    <div id="info_bar" class="alert alert-success" role="alert" style="display:none;">
+                        資料新增成功
                     </div>
                 </div>
             </div>
@@ -136,17 +112,13 @@ if (empty($row)) {
     </div>
 
 </div>
-<?php dirname(dirname(__DIR__, 1)) . '/parts/scripts.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php' ?>
 <script>
-    const row = <?= json_encode($row, JSON_UNESCAPED_UNICODE); ?>;
 
+    const info_bar = document.querySelector('#info_bar');
+    const name_f = document.form1.name;
 
-    const info_bar = document.querySelector('#info-bar');
-    const name_f = document.form1.products_name;
-    const price_f = document.form1.products_price;
-    const forsale_f = document.form1.products_forsale;
-
-    const fields = [name_f, price_f, forsale_f];
+    const fields = [name_f];
     const fieldTexts = [];
     for (let f of fields) {
         fieldTexts.push(f.nextElementSibling);
@@ -155,47 +127,43 @@ if (empty($row)) {
 
 
     async function sendData() {
-        // 讓欄位的外觀回復原來的狀態
+        // 當格式正確後讓欄位的外觀回復原來的狀態
         for (let i in fields) {
             fields[i].classList.remove('red');
             fieldTexts[i].innerText = '';
         }
-        info_bar.style.display = 'none'; // 隱藏訊息列
+        info_bar.style.display = 'none'; // 都沒有時先隱藏訊息列
 
-        // TODO: 欄位檢查, 前端的檢查
-        let isPass = true; // 預設是通過檢查的
 
-        if (name_f.value.length < 2) {
-            fields[0].classList.add('red');
-            fieldTexts[0].innerText = '商品名稱至少兩個字';
-            isPass = false;
-        }
+        // TODO: 1.檢查欄位, 前端的檢查 2.取表單內容
+        let isPass = true; // 預設是通過檢查
 
         if (!isPass) {
             return; // 結束函式
         }
 
         const fd = new FormData(document.form1);
-        const r = await fetch('products_edit_api.php', {
+        const r = await fetch('products_add_api.php', {
             method: 'POST',
             body: fd,
         });
-
         const result = await r.json();
         console.log(result);
-        info_bar.style.display = 'block';
+        info_bar.style.display = 'block'; // 顯示訊息列
         if (result.success) {
             info_bar.classList.remove('alert-danger');
             info_bar.classList.add('alert-success');
-            info_bar.innerText = '修改成功';
+            info_bar.innerText = '新增成功';
 
-            setTimeout(() => {}, 2000);
+            // setTimeout(() => {
+                // location.href = 'products.php'; // 跳轉到列表頁
+            // }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');
-            info_bar.innerText = result.error || '資料沒有修改';
+            info_bar.innerText = result.error || '資料無法新增';
         }
 
     }
 </script>
-<?php dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php' ?>

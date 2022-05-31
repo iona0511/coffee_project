@@ -32,7 +32,7 @@ if ($totalRows > 0) {
                 JOIN `products_pic` 
                     ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
                 JOIN `products_style_filter`
-                    ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filtter_sid`
+                    ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filter_sid`
                 ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $rows = $pdo->query($sql)->fetchAll();
 }
