@@ -26,7 +26,7 @@ if ($totalRows > 0) {
         header("Location: ?page=$totalPages");
         exit;
     }
-    $sql = sprintf("SELECT * FROM products ORDER BY products_sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM products ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $rows = $pdo->query($sql)->fetchAll();
 }
 
@@ -111,7 +111,7 @@ if ($totalRows > 0) {
                     <td><?= $r['products_price'] ?></td>
                     <td><?= $r['products_forsale'] ?></td>
                     <td><?= $r['products_onsale'] ?></td>
-                    <td><?= $r['products_stacks'] ?></td>
+                    <td><?= $r['products_stocks'] ?></td>
                     <td><?= $r['products_with_products_categroies_sid'] ?></td>
                     <td><?= $r['products_with_products_pic'] ?></td>
                     <td><?= $r['products_with_products_style_filter_sid'] ?></td>
