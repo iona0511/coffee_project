@@ -1,11 +1,11 @@
 <?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
-$pageName = 'lastest_news';
+$pageName = 'lastest-news';
 $title = '最新消息';
 
 $perPage = 10;
 
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 
 if ($page < 1) {
     header('Location ?page=1');
@@ -85,30 +85,42 @@ if ($totalRows > 0) {
                 <th scope="col">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </th>
-                <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
+                <th scope="col">
+                    <i class="fa-solid fa-trash-can"></i>
+                </th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach($row as $r) : ?>
+            <?php foreach($rows as $r) : ?>
                 <tr>
-                    <td>
-                        <a href="javascript : delete_it(<? $r['news_sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a>
-                    </td>
                     <td><?= $r['news_sid'] ?></td>
                     <td><?= $r['news_img'] ?></td>
                     <td><?= htmlentities($r['news_title']) ?></td>
                     <td><?= $r['news_class_sid'] ?></td>
                     <td><?= htmlentities($r['news_content']) ?></td>
                     <td><?= $r['news_create_time'] ?></td>
-                    <td><a href="ab-edit.php?sid=<?= $r['news_sid'] ?>">
+                    <td><a href="news-edit.php?news_sid=<?= $r['news_sid'] ?>">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                     </td>
+                    <td>
+                        <a href="javascript : delete_it(<? $r['news_sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a>
+                    </td>
                 </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 
 
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
+
+<script>
+    function delete_it(news_sid) {
+        if (confirm(`確定要刪除編號為${news_sid}的資料嗎?`)) {
+            location.href = `news-delete.php?news_sid=${news_sid}`;
+        }
+    }
+</script>
+
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
