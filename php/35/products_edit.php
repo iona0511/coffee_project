@@ -45,6 +45,12 @@ if (empty($row)) {
         height: 320px;
         display: none;
     }
+
+    .multi-img {
+        width: 320px;
+        height: 320px;
+        display: none;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -118,19 +124,16 @@ if (empty($row)) {
                         </div>
 
                         <div class="mb-3">
-                            <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label>
-                            <input type="file" name="products_pic_one[]" accept="image/png,image/jpeg" onchange="changeImg(event)" />
+                            <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label><br>
+                            <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
                             <img class="single-img" src="" alt="" id="products_pic_one" />
                         </div>
 
-                        <!-- <div class="mb-3">
-                            <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label>
-                            <input type="file" name="products_pic_multi" accept="image/png,image/jpeg" onchange="changeImg(event)" />
-                            <div class="form-text"></div>
-                            <img src="" alt="" id="<?php $r['products_pic_mutil'] ?>" />
-
-                        </div> -->
+                        <div class="mb-3" id="multiDiv">
+                            <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
+                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple/>
+                        </div>
 
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
@@ -172,7 +175,7 @@ if (empty($row)) {
     }
 
 
-    function changeImg() {
+    function changeOneImg() {
         const file = event.currentTarget.files[0];
         console.log(file);
         const reader = new FileReader();
@@ -186,6 +189,19 @@ if (empty($row)) {
         reader.readAsDataURL(file);
     }
 
+    function changeMultiImg() {
+        const file = event.currentTarget.files[0];
+        console.log(file);
+        const reader = new FileReader();
+
+        // 資料載入後 (讀取完成後)
+        reader.onload = function() {
+            console.log(reader.result);
+            // document.querySelector("#products_pic_one").style.display = 'block';
+            // document.querySelector("#products_pic_one").src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
 
     async function sendData() {
