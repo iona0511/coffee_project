@@ -17,6 +17,7 @@
             display: flex;
             padding: 0px 20px;
             user-select: none;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .cart_list_left {
@@ -154,6 +155,15 @@
             transform: translateX(30px);
             opacity: 0;
         }
+        .coupon_select_btn {
+            background-color: rgb(123, 82, 31);
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
         .coupon_bg {
             position: fixed;
             top: 0px;
@@ -189,6 +199,9 @@
             top: 20px;
             right: 0px;
         }
+        .cart_price_paddging h1 {
+            margin: 24px;
+        }
     </style>
 </head>
 
@@ -218,7 +231,7 @@
         </div>
         <div class="cart_price">
             <div class="cart_price_paddging">
-                <button @click="couponShowHandler">選擇優惠卷</button>
+                <button @click="couponShowHandler" class="coupon_select_btn">選擇優惠卷</button>
                 <div class="coupon_bg" v-show="couponShow === true" @click="couponConfirm">
                     <div class="coupon_bord" @click.stop>
                         <label :for="'id' + coupon.id" v-for="coupon of couponArray"
@@ -232,7 +245,8 @@
                         </div>
                     </div>
                 </div>
-                <h1>總計 {{parseInt(tweened)}}</h1>
+                <h1>總計 NT$ {{displayTotal}}</h1>
+                <button @click="sendDataHandler">發送</button>
             </div>
         </div>
     </div>
@@ -274,6 +288,9 @@
                     } else if (this.discount >= 1) {
                         return output - this.discount;
                     }
+                },
+                displayTotal() {
+                    return parseInt(this.tweened);
                 }
             },
             methods: {
@@ -324,6 +341,19 @@
                 },
                 couponShowHandler() {
                     this.couponShow = !this.couponShow
+                },
+                sendDataHandler() {
+                    const fd = new FormData();
+                    const myJSON = JSON.stringify(this.fakeData);
+                    fd.append("fakeData",myJSON);
+                    fetch("./cart_write_session_api.php", {
+                        method: "POST",
+                        body: fd
+                    })
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(data);
+                    })
                 }
             },
             watch: {
@@ -337,6 +367,17 @@
                 }
             },
             beforeMount() {
+                fetch("./check_session_data_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    if(data) {
+                        console.log("有session");
+                        console.log(data);
+                        this.fakeData = data;
+                    } else {
+                        console.log("沒有session");
+                    }
+                });
                 this.fakeData.forEach((item) => {
                     this.tweened += item.productPrice * item.quantity;
                 });
