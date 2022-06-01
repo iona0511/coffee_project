@@ -405,6 +405,7 @@
                 this.fakeData.forEach((item) => {
                     this.tweened += item.productPrice * item.quantity;
                 });
+                //回上一頁不會刷新discount 所以暫時用這個爛方法解決
                 this.couponConfirm();
                 this.couponConfirm();
             }
