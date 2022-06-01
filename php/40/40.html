@@ -366,10 +366,10 @@
                         method: "POST",
                         body: fd
                     })
-                    .then(data => data.json())
-                    .then(data => {
-                        console.log(data);
-                    })
+                    // .then(data => data.json())
+                    // .then(data => {
+                    //     console.log(data);
+                    // })
                     window.location = "./cart_form.html";
                 }
             },
@@ -383,15 +383,15 @@
                     }
                 }
             },
-            async beforeMount() {
-                await fetch("./check_product_session_api.php")
+            beforeMount() {
+                fetch("./check_product_session_api.php")
                 .then(data => data.json())
                 .then(data => {
                     if(data) {
                         this.fakeData = data;
                     }
                 });
-                await fetch("./check_coupon_session_api.php")
+                fetch("./check_coupon_session_api.php")
                 .then(data => data.json())
                 .then(data => {
                     if(data) {

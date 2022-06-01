@@ -13,7 +13,7 @@
 
 <body>
     <div id="app">
-        <h1>{{form}}</h1>
+        <button @click="sessionViewer">{{click}}</button>
     </div>
     
     <script src="../../js/vue.global.js"></script>
@@ -22,7 +22,16 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    form: "form"
+                    click: "click"
+                }
+            },
+            methods: {
+                sessionViewer() {
+                    fetch("./sessionViewer.php")
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(data);
+                    })
                 }
             }
         }).mount("#app");
