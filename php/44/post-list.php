@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/connect_db.php';
 
-$perPage = 5;
+$perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
 $topic = isset($_GET['topic']) ? intval($_GET['topic']) : '';
 $topic = empty($topic) ? '' : $topic;
@@ -71,7 +71,21 @@ if ($totalRows > 0) {
             margin-right: 20px;
         }
 
+        #show-ppg {
+            display: flex;
+        }
+
+        .show-span {
+            align-self: center;
+
+        }
+
         select {
+            border-radius: 4px;
+            border-color: #dee2e6;
+        }
+
+        .search-select {
             border-right: 0px;
             border-radius: 4px 0 0 4px;
             border-color: #dee2e6;
@@ -103,104 +117,139 @@ if ($totalRows > 0) {
             <nav aria-label="Page navigation example" id="pagination">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : ''; ?>">
-                        <a class="page-link" href="?topic=<?= $topic ?>&page=1">First</a>
+                        <a class="page-link" href="?topic=<?= $topic ?>&page=1&ppg=<?= $perPage ?>">First</a>
                     </li>
                     <li class="page-item <?= $page == 1 ? 'disabled' : ''; ?>">
-                        <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $page - 1 ?>">Prev</a>
+                        <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $page - 1 ?>&ppg=<?= $perPage ?>">Prev</a>
                     </li>
                     <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                        <?php if ($i >= $page - 2 and $i <= $page + 2) : ?>
-                            <li class="page-item <?= $page == $i ? 'active' : '' ?>"><a class="page-link" href="?topic=<?= $topic ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                        <?php if ($page <= 2 and $i <= 5) : ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $i ?>&ppg=<?= $perPage ?>"><?= $i ?></a>
+                            </li>
+                        <?php elseif (($totalPages - $page) < 2 and $totalPages - $i <= 4) : ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $i ?>&ppg=<?= $perPage ?>"><?= $i ?></a>
+                            </li>
+                        <?php elseif ($i >= $page - 2 and $i <= $page + 2) : ?>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $i ?>&ppg=<?= $perPage ?>"><?= $i ?></a>
+                            </li>
                         <?php endif; ?>
                     <?php endfor; ?>
                     <li class="page-item <?= $page == $totalPages ? 'disabled' : ''; ?>">
-                        <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $page + 1 ?>">Next</a>
+                        <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $page + 1 ?>&ppg=<?= $perPage ?>">Next</a>
                     </li>
                     <li class="page-item <?= $page == $totalPages ? 'disabled' : ''; ?>">
-                        <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $totalPages ?>">End</a>
+                        <a class="page-link" href="?topic=<?= $topic ?>&page=<?= $totalPages ?>&ppg=<?= $perPage ?>">End</a>
                     </li>
                 </ul>
             </nav>
-            <div class="search-result" style="display: none;">
-                <h3 style="font-weight:bold;">搜尋紀錄</h3>
-                <span><a href="?page=1" class="link-danger">清除</a></span>
-            </div>
-
-            <div class="ml-auto d-flex">
-                <form name="form1" action="" class="d-flex mr-20" onsubmit="return false;">
-                    <select name="by">
-                        <option value="1">文章標題</option>
-                        <option value="2">會員編號</option>
-                    </select>
-                    <input type="search" name="search" id="search">
-                    <button class="btn btn-primary" name="searchBtn">搜尋</button>
-                </form>
-                <div class="dropdown">
+            <div class="h-75" id="show-ppg">
+                <span class="show-span"">每頁</span>
+                <div class=" dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php
-                        if (empty($topic)) {
-                            echo '全部分享';
-                        } else if ($topic == 1) {
-                            echo '課程分享';
-                        } else if ($topic == 2) {
-                            echo '商品分享';
-                        } else if ($topic == 3) {
-                            echo '其他';
+                        if (empty($perPage) or $perPage == 5) {
+                            echo '5';
+                        } else if ($perPage == '10') {
+                            echo '10';
+                        } else if ($perPage == 25) {
+                            echo '25';
+                        } else if ($perPage == 50) {
+                            echo '50';
                         }
                         ?>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="?">全部分享</a></li>
-                        <li><a class="dropdown-item" href="?topic=1">課程分享</a></li>
-                        <li><a class="dropdown-item" href="?topic=2">商品分享</a></li>
-                        <li><a class="dropdown-item" href="?topic=3">其它</a></li>
+                        <li><a class="dropdown-item" href="?">5</a></li>
+                        <li><a class="dropdown-item" href="?ppg=10">10</a></li>
+                        <li><a class="dropdown-item" href="?ppg=25">25</a></li>
+                        <li><a class="dropdown-item" href="?ppg=50">50</a></li>
                     </ul>
-                </div>
+            </div>
+            <span class="show-span">列顯示</span>
+        </div>
+        <div class="search-result" style="display: none;">
+            <h3 style="font-weight:bold;">搜尋紀錄</h3>
+            <span><a href="?page=1" class="link-danger">清除</a></span>
+        </div>
+
+        <div class="ml-auto d-flex h-75">
+            <form name="form1" action="" class="d-flex mr-20" onsubmit="return false;">
+                <select class="search-select" name="by">
+                    <option value="1">文章標題</option>
+                    <option value="2">會員編號</option>
+                </select>
+                <input type="search" name="search" id="search">
+                <button class="btn btn-primary" name="searchBtn">搜尋</button>
+            </form>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <?php
+                    if (empty($topic)) {
+                        echo '全部分享';
+                    } else if ($topic == 1) {
+                        echo '課程分享';
+                    } else if ($topic == 2) {
+                        echo '商品分享';
+                    } else if ($topic == 3) {
+                        echo '其他';
+                    }
+                    ?>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="?">全部分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=1">課程分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=2">商品分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=3">其它</a></li>
+                </ul>
             </div>
         </div>
+    </div>
 
-        <div class="bd-example">
-            <table class="table table-hover" id="table">
-                <thead>
-                    <tr>
-                        <th style="width: 5%"><i class="fa-solid fa-trash-can"></i></th>
-                        <th scope="col" style="width: 10%">Post#</th>
-                        <th scope="col" style="width: 10%">會員暱稱</th>
-                        <th scope="col" style="width: 10%">會員編號</th>
-                        <th scope="col">文章標題</th>
-                        <th scope="col" style="width: 5%">按讚</th>
-                        <th scope="col" style="width: 5%">回覆</th>
-                        <th scope="col" style="width: 8%">主題編號</th>
-                        <th scope="col" style="width: 10%">貼文</th>
-                        <th scope="col" style="width: 10%">修改</th>
-                        <th style="width: 5%"><i class="fa-solid fa-pen-to-square"></i></th>
+    <div class="bd-example">
+        <table class="table table-hover" id="table">
+            <thead>
+                <tr>
+                    <th style="width: 5%"><i class="fa-solid fa-trash-can"></i></th>
+                    <th scope="col" style="width: 10%">Post#</th>
+                    <th scope="col" style="width: 10%">會員暱稱</th>
+                    <th scope="col" style="width: 10%">會員編號</th>
+                    <th scope="col">文章標題</th>
+                    <th scope="col" style="width: 5%">按讚</th>
+                    <th scope="col" style="width: 5%">回覆</th>
+                    <th scope="col" style="width: 8%">主題編號</th>
+                    <th scope="col" style="width: 10%">貼文</th>
+                    <th scope="col" style="width: 10%">修改</th>
+                    <th style="width: 5%"><i class="fa-solid fa-pen-to-square"></i></th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <?php foreach ($rows as $r) : ?>
+                    <tr id="<?= "tr" . $r['sid'] ?>">
+                        <td>
+                            <a href="javascript: delete_it(<?= $r['sid'] ?>)">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
+                        <td><?= $r['sid'] ?></td>
+                        <td><?= $r['member_nickname'] ?></td>
+                        <td><?= $r['member_sid'] ?></td>
+                        <td><a href="post-detail.php?pid=<?= $r['sid'] ?>"><?= $r['title'] ?></a></td>
+                        <td><?= $r['likes'] ?></td>
+                        <td><?= $r['comments'] ?></td>
+                        <td><?= $r['topic_sid'] ?></td>
+                        <td><?= $r['created_at'] ?></td>
+                        <td><?= $r['updated_at'] ?></td>
+                        <td><i class="fa-solid fa-pen-to-square"></i></td>
                     </tr>
-                </thead>
-                <tbody id="tbody">
-                    <?php foreach ($rows as $r) : ?>
-                        <tr id="<?= "tr" . $r['sid'] ?>">
-                            <td>
-                                <a href="javascript: delete_it(<?= $r['sid'] ?>)">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </a>
-                            </td>
-                            <td><?= $r['sid'] ?></td>
-                            <td><?= $r['member_nickname'] ?></td>
-                            <td><?= $r['member_sid'] ?></td>
-                            <td><a href="post-detail.php?pid=<?= $r['sid'] ?>"><?= $r['title'] ?></a></td>
-                            <td><?= $r['likes'] ?></td>
-                            <td><?= $r['comments'] ?></td>
-                            <td><?= $r['topic_sid'] ?></td>
-                            <td><?= $r['created_at'] ?></td>
-                            <td><?= $r['updated_at'] ?></td>
-                            <td><i class="fa-solid fa-pen-to-square"></i></td>
-                        </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
 
-                </tbody>
+            </tbody>
 
-            </table>
-        </div>
+        </table>
+    </div>
     </div>
 
 
@@ -227,6 +276,17 @@ if ($totalRows > 0) {
         }
 
         document.form1.searchBtn.addEventListener("click", async function() {
+            function clear_tbody() {
+                const tbody = document.querySelector("#tbody");
+                tbody.innerHTML = ``;
+
+                document.querySelector("#pagination").style.display = "none";
+                document.querySelector("#show-ppg").style.display = "none";
+                document.querySelector(".search-result").style.display = "flex";
+                if(document.querySelector("#more")){
+                    document.querySelector("#more").remove();
+                }
+            }
 
             function render() {
                 const table = document.querySelector("#table");
@@ -234,10 +294,6 @@ if ($totalRows > 0) {
                 const bd = document.querySelector(".bd-example");
                 tbody.classList.add("bg-primary");
                 tbody.classList.add("bg-opacity-25");
-                tbody.innerHTML = ``;
-                document.querySelector("#pagination").style.display = "none";
-                document.querySelector(".search-result").style.display = "flex";
-
 
 
                 for (let ind in rows) {
@@ -267,15 +323,16 @@ if ($totalRows > 0) {
                         if (ind < 10) {
                             tbody.innerHTML += `<tr class="tr" id="tr${v['sid']}">${rowContent}</tr>`;
                         } else {
-                            if (ind == 10) {
+                            if (ind == 10 && !(document.querySelector("#more"))) {
+                                //印出查看更多按鈕
                                 const continueBtn = document.createElement("h3");
                                 continueBtn.classList.add("continue");
-                                continueBtn.innerHTML = `<div onclick="more()">查看更多...(${rows.length-10})筆</div>`;
+                                continueBtn.innerHTML = `<div id="more" onclick="more()">查看更多...(${rows.length-10})筆</div>`;
                                 table.parentNode.appendChild(continueBtn);
                             }
                             tbody.innerHTML += `<tr class="tr" id="tr${v['sid']}" style="display:none;">
-                            ${rowContent}
-                        </tr>`;
+                                                    ${rowContent}
+                                                </tr>`;
 
                         }
 
@@ -293,6 +350,7 @@ if ($totalRows > 0) {
 
             console.log(rows);
             let recoding_rows_ind = 0;
+            clear_tbody();
             render();
         });
     </script>
