@@ -15,7 +15,7 @@ $row = $pdo->query("SELECT * FROM`products`
                         ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
                     JOIN `products_style_filter`
                         ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filter_sid`
-                    WHERE products_sid=$products_sid")->fetch();                    
+                    WHERE products_sid=$products_sid")->fetch();
 $row_cate = $pdo->query("SELECT * FROM`products_categroies`")->fetchAll();
 $row_pic = $pdo->query("SELECT * FROM`products_pic`")->fetchAll();
 $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
@@ -50,7 +50,7 @@ if (empty($row)) {
                         <input type="hidden" name="products_sid" value="<?= $row['products_sid'] ?>">
 
                         <div class="mb-3">
-                            <label for="products_name" class="form-label">* 商品名稱</label>
+                            <label for="products_name" class="form-label">商品名稱</label>
                             <input type="text" class="form-control" id="products_name" name="products_name" required value="<?= htmlentities($row['products_name']) ?>">
                             <div class="form-text red"></div>
                         </div>
@@ -75,14 +75,22 @@ if (empty($row)) {
 
                         <div class="mb-3">
                             <label for="products_forsale" class="form-label">是否販賣中</label>
-                            <input type="number" class="form-control" id="products_forsale" name="products_forsale" value="<?= $row['products_forsale'] ?>">
-                            <div class="form-text"></div>
+
+                            <input type="radio" id="products_forsale" name="products_forsale" value="1" <?= $row['products_forsale'] == 1 ? 'checked' : ''; ?>>
+                            <label for="products_onsale">是</label>
+                            <input type="radio" id="products_forsale" name="products_forsale" value="0" <?= $row['products_forsale'] == 0 ? 'checked' : ''; ?>>
+                            <label for="products_onsale">否</label>
+
                         </div>
 
                         <div class="mb-3">
                             <label for="products_onsale" class="form-label">是否有特價</label>
-                            <input type="number" class="form-control" id="products_onsale" name="products_onsale" value="<?= $row['products_onsale'] ?>">
-                            <div class="form-text"></div>
+
+                            <input type="radio" id="products_onsale" name="products_onsale" value="1" <?= $row['products_onsale'] == 1 ? 'checked' : ''; ?>>
+                            <label for="products_onsale">是</label>
+                            <input type="radio" id="products_onsale" name="products_onsale" value="0" <?= $row['products_onsale'] == 0 ? 'checked' : ''; ?>>
+                            <label for="products_onsale">否</label>
+
                         </div>
 
                         <div class="mb-3">
@@ -102,7 +110,7 @@ if (empty($row)) {
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label>
                             <div class="form-text"></div>

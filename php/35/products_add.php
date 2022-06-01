@@ -24,9 +24,9 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">新增資料</h5>
-            <form name="form1" onsubmit="sendData(); return false;" novalidate>
+                    <form name="form1" onsubmit="sendData(); return false;" novalidate>
                         <div class="mb-3">
-                            <label for="products_name" class="form-label">* 商品名稱</label>
+                            <label for="products_name" class="form-label">商品名稱</label>
                             <input type="text" class="form-control" id="products_name" name="products_name" required placeholder="請輸入商品名稱">
                             <div class="form-text red"></div>
                         </div>
@@ -45,25 +45,30 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 
                         <div class="mb-3">
                             <label for="products_price" class="form-label">價錢</label>
-                            <input type="number" class="form-control" id="products_price" name="products_price" value="<?= $row['products_price'] ?>">
+                            <input type="number" class="form-control" id="products_price" name="products_price" >
                             <div class="form-text"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="products_forsale" class="form-label">是否販賣中</label>
-                            <input type="number" class="form-control" id="products_forsale" name="products_forsale" value="<?= $row['products_forsale'] ?>">
+                            <label for="products_forsale" class="form-label">是否販賣中</label><br>
+                            <input type="radio" id="products_forsale" name="products_forsale" value="1" checked>
+                            <label for="products_forsale">是</label>
+                            <input type="radio" id="products_forsale" name="products_forsale" value="0" >
+                            <label for="products_forsale">否</label>
                             <div class="form-text"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="products_onsale" class="form-label">是否有特價</label>
-                            <input type="number" class="form-control" id="products_onsale" name="products_onsale" value="<?= $row['products_onsale'] ?>">
-                            <div class="form-text"></div>
+                            <label for="products_onsale" class="form-label">是否有特價</label><br>
+                            <input type="radio" id="products_onsale" name="products_onsale" value="1" checked>
+                            <label for="products_onsale">是</label>
+                            <input type="radio" id="products_onsale" name="products_onsale" value="0" >
+                            <label for="products_onsale">否</label>
                         </div>
 
                         <div class="mb-3">
                             <label for="products_stocks" class="form-label">商品庫存</label>
-                            <input type="number" class="form-control" id="products_stocks" name="products_stocks" value="<?= $row['products_stocks'] ?>">
+                            <input type="number" class="form-control" id="products_stocks" name="products_stocks" >
                             <div class="form-text"></div>
                         </div>
 
@@ -78,7 +83,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label>
                             <div class="form-text"></div>
@@ -116,7 +121,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 <script>
 
     const info_bar = document.querySelector('#info_bar');
-    const name_f = document.form1.name;
+    const name_f = document.form1.products_name;
 
     const fields = [name_f];
     const fieldTexts = [];
@@ -156,7 +161,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
             info_bar.innerText = '新增成功';
 
             // setTimeout(() => {
-                // location.href = 'products.php'; // 跳轉到列表頁
+            // location.href = 'products.php'; // 跳轉到列表頁
             // }, 2000);
         } else {
             info_bar.classList.remove('alert-success');

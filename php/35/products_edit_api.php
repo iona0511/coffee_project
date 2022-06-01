@@ -27,25 +27,25 @@ $products_forsale = $_POST['products_forsale'] ?? '';
 $products_onsale = $_POST['products_onsale'] ?? '';
 $products_stocks = $_POST['products_stocks'] ?? '';
 $products_with_products_categroies_sid = $_POST['products_with_products_categroies_sid'] ?? '';
-$products_pic_one = $_POST['products_pic_one'] ?? '';
-$products_pic_multi = $_POST['products_pic_multi'] ?? '';
+// $products_pic_one = $_POST['products_pic_one'] ?? '';
+// $products_pic_multi = $_POST['products_pic_multi'] ?? '';
 $products_with_products_style_filter_sid = $_POST['products_with_products_style_filter_sid'] ?? '';
 
 // TODO 其他欄位檢查
 
-$sql = "UPDATE `products` 
-SET 
+$sql = "UPDATE `products`
+SET
 `products_name`=?, 
-`products_introduction`=?, 
-`products_detail_introduction`=?, 
-`products_price`=?, 
-`products_forsale`=?, 
-`products_onsale`=?, 
-`products_stocks`=?, 
-`products_with_products_categroies_sid`=?, 
-`products_pic_one`=?, 
-`products_pic_multi`=?, 
-`products_with_products_style_filter_sid`=?, 
+`products_introduction`=?,
+`products_detail_introduction`=?,
+`products_price`=?,
+`products_forsale`=?,
+`products_onsale`=?,
+`products_stocks`=?,
+`products_with_products_categroies_sid`=?,
+-- `products_pic_one`=?,
+-- `products_pic_multi`=?,
+`products_with_products_style_filter_sid`=?
 WHERE `products_sid`=$products_sid ";
 
 $stmt = $pdo->prepare($sql);
@@ -59,9 +59,9 @@ $stmt->execute([
     $products_onsale,
     $products_stocks,
     $products_with_products_categroies_sid,
-    $products_pic_one,
-    $products_pic_multi,
-    $products_with_products_style_filter_sid,
+    // $products_pic_one,
+    // $products_pic_multi,
+    $products_with_products_style_filter_sid
 ]);
 
 // echo $stmt->rowCount();
