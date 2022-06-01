@@ -130,14 +130,14 @@
             cursor: pointer;
             border: 1px solid transparent;
         }
-        .coupon_bord label:hover {
+        .coupon_bord_label:hover {
             border: 1px solid rgb(140, 203, 255);
         }
         .coupon_bord input {
             display: none;
         }
 
-        label.coupon_checked {
+        .coupon_bord label.coupon_checked {
             border: 1px solid rgb(123, 82, 31);
         }
 
@@ -222,7 +222,7 @@
                 <div class="coupon_bg" v-show="couponShow === true" @click="couponConfirm">
                     <div class="coupon_bord" @click.stop>
                         <label :for="'id' + coupon.id" v-for="coupon of couponArray"
-                            :class="{coupon_checked: coupon.id == radio}">
+                            :class="{coupon_checked: coupon.id == radio}" class="coupon_bord_label">
                             <input type="radio" :id="'id' + coupon.id" :value="coupon.id"
                                 v-model="radio">{{coupon.name}}
                         </label>
