@@ -6,6 +6,7 @@ $output = [
     'success' => false,
     'postData' => $_POST,
     'code' => 0,
+    'filenames' => [],
     'error' => ''
 ];
 
@@ -18,6 +19,43 @@ if (empty($products_sid) or empty($_POST['products_name'])) {
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
+
+// 圖片區
+
+$folder = dirname(dirname(__DIR__, 1)) . '/images/';
+
+$extMap = [
+    'image/jpeg' => '.jpg',
+    'image/png' => '.png',
+    'image/gif' => '.gif',
+];
+
+if (empty($_FILES['products_pic_one'])) {
+    $output['error'] = '沒有上傳檔案';
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (!is_array($_FILES['products_pic_one']['name'])) {
+    $output['error'] = '沒有上傳檔案2';
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
+
+    $ext = $extMap[$_FILES['products_pic_one']['type'][$k]]; // 副檔名
+    // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
+    $filename = $f;
+    $output['filenames'][] = $filename;
+    $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
+    $stmtpic = $pdo->prepare($sqlpic);
+    $stmtpic->execute([$filename]);
+    // 把上傳的檔案搬移到指定的位置
+    move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $filename);
+}
+
+// 圖片區結束
 
 $products_name = $_POST['products_name'];
 $products_introduction = $_POST['products_introduction'] ?? '';
@@ -67,6 +105,7 @@ $stmt->execute([
 // echo $stmt->rowCount();
 // echo json_encode($output, JSON_UNESCAPED_UNICODE);
 // exit;
+
 
 
 if ($stmt->rowCount() == 1) {

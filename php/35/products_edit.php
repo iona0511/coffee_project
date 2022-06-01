@@ -39,6 +39,12 @@ if (empty($row)) {
     .form-text.red {
         color: red;
     }
+
+    .single-img {
+        width: 320px;
+        height: 320px;
+        display: none;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -113,13 +119,18 @@ if (empty($row)) {
 
                         <div class="mb-3">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label>
+                            <input type="file" name="products_pic_one[]" accept="image/png,image/jpeg" onchange="changeImg(event)" />
                             <div class="form-text"></div>
+                            <img class="single-img" src="" alt="" id="products_pic_one" />
                         </div>
 
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label>
+                            <input type="file" name="products_pic_multi" accept="image/png,image/jpeg" onchange="changeImg(event)" />
                             <div class="form-text"></div>
-                        </div>
+                            <img src="" alt="" id="<?php $r['products_pic_mutil'] ?>" />
+
+                        </div> -->
 
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
@@ -161,23 +172,38 @@ if (empty($row)) {
     }
 
 
+    function changeImg() {
+        const file = event.currentTarget.files[0];
+        console.log(file);
+        const reader = new FileReader();
+
+        // 資料載入後 (讀取完成後)
+        reader.onload = function() {
+            console.log(reader.result);
+            document.querySelector("#products_pic_one").style.display = 'block';
+            document.querySelector("#products_pic_one").src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
-        for (let i in fields) {
-            fields[i].classList.remove('red');
-            fieldTexts[i].innerText = '';
-        }
+        // for (let i in fields) {
+        //     fields[i].classList.remove('red');
+        //     fieldTexts[i].innerText = '';
+        // }
         info_bar.style.display = 'none'; // 隱藏訊息列
 
-        // TODO: 欄位檢查, 前端的檢查
+        // // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-        if (name_f.value.length < 2) {
-            fields[0].classList.add('red');
-            fieldTexts[0].innerText = '商品名稱至少兩個字';
-            isPass = false;
-        }
+        // if (name_f.value.length < 2) {
+        //     fields[0].classList.add('red');
+        //     fieldTexts[0].innerText = '商品名稱至少兩個字';
+        //     isPass = false;
+        // }
 
         if (!isPass) {
             return; // 結束函式
