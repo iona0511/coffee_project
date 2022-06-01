@@ -232,6 +232,7 @@
         <div class="cart_price">
             <div class="cart_price_paddging">
                 <button @click="couponShowHandler" class="coupon_select_btn">選擇優惠卷</button>
+                <p>優惠卷: {{couponName}}</p>
                 <div class="coupon_bg" v-show="couponShow === true" @click="couponConfirm">
                     <div class="coupon_bord" @click.stop>
                         <label :for="'id' + coupon.id" v-for="coupon of couponArray"
@@ -246,7 +247,7 @@
                     </div>
                 </div>
                 <h1>總計 NT$ {{displayTotal}}</h1>
-                <button @click="sendDataHandler">發送</button>
+                <button @click="sendDataHandler">前往結帳頁</button>
             </div>
         </div>
     </div>
@@ -291,6 +292,14 @@
                 },
                 displayTotal() {
                     return parseInt(this.tweened);
+                },
+                couponName() {
+                    if(this.radio === undefined) {
+                        return "無";
+                    }
+                    return this.couponArray.filter((data) => {
+                        return data.id === this.radio;
+                    })[0].name;
                 }
             },
             methods: {
@@ -346,6 +355,13 @@
                     const fd = new FormData();
                     const myJSON = JSON.stringify(this.fakeData);
                     fd.append("fakeData",myJSON);
+                    if(this.radio === undefined) {
+                        const myCoupon = JSON.stringify("-1");
+                        fd.append("couponSelect", myCoupon);
+                    } else {
+                        const myCoupon = JSON.stringify(this.radio);
+                        fd.append("couponSelect", myCoupon);
+                    }
                     fetch("./cart_write_session_api.php", {
                         method: "POST",
                         body: fd
@@ -354,6 +370,7 @@
                     .then(data => {
                         console.log(data);
                     })
+                    window.location = "./cart_form.html";
                 }
             },
             watch: {
@@ -366,21 +383,30 @@
                     }
                 }
             },
-            beforeMount() {
-                fetch("./check_session_data_api.php")
+            async beforeMount() {
+                await fetch("./check_product_session_api.php")
                 .then(data => data.json())
                 .then(data => {
                     if(data) {
-                        console.log("有session");
-                        console.log(data);
                         this.fakeData = data;
-                    } else {
-                        console.log("沒有session");
+                    }
+                });
+                await fetch("./check_coupon_session_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    if(data) {
+                        if(data === "-1") {
+                            this.radio = undefined
+                        } else {
+                            this.radio = data;
+                        }
                     }
                 });
                 this.fakeData.forEach((item) => {
                     this.tweened += item.productPrice * item.quantity;
                 });
+                this.couponConfirm();
+                this.couponConfirm();
             }
         });
         vm.mount("#app");
