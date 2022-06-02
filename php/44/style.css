@@ -1,0 +1,44 @@
+.ml-auto {
+    margin-left: auto;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+#show-ppg {
+    display: flex;
+}
+
+.show-span {
+    align-self: center;
+
+}
+
+select {
+    border-radius: 4px;
+    border-color: #dee2e6;
+}
+
+.search-select {
+    border-right: 0px;
+    border-radius: 4px 0 0 4px;
+    border-color: #dee2e6;
+
+}
+
+#search {
+    border-radius: 0 4px 4px 0;
+    border-width: 0.5px;
+    border-style: solid;
+    margin-right: 5px;
+    padding: 0px;
+    border-color: #dee2e6;
+    box-shadow: none;
+    outline: none;
+}
+
+.search-result {
+    display: flex;
+    align-items: end;
+}
