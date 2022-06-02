@@ -57,7 +57,7 @@ foreach( $rrr as $k => $v){
                         'member_level' => $v['member_level'],
                     ];
 
-                    $output['123'] = $_SESSION['user'] ;
+                    $output['session'] = $_SESSION['user'] ;
                 }
             }
         }

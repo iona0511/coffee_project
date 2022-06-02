@@ -44,21 +44,49 @@ require __DIR__ . '/parts/connect_db.php';
     transform: rotateY(180deg);
 }
 
+.cardF{
+    position: relative;
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: lightgray;   
+}
 .cardB{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: black;   
     transform: rotateY(180deg);
 }
+
+.btn{
+    width: 250px;
+    padding: 10px 30px;
+    cursor: pointer;
+    background: hsl(24, 100%, 86%);
+    border: 0;
+    outline: none;
+    } 
 
 </style>
 <body>
     
     <?php if (isset($_SESSION['user'])) : ?>
         <h2><?= $_SESSION['user']['member_nickname'] ?> 您好！</h2>
-    <?php endif; ?>    
+    <?php endif; ?>  
+    
+    <div>
+        <button type='submit'class='btn'>進入會員中心</button>
+    </div>
 
     <div class="container">
         <div class="card">      
             <div class="cardF">
                 <?= $_SESSION['user']['member_nickname'] ?>
+                <?= $_SESSION['user']['member_level']."points" ?>
             </div>
             <div class="cardB"></div>
         </div>
