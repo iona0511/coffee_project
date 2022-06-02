@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/connect_db.php';
+require __DIR__ . '/part/connect_db.php';
 
 
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : '';
@@ -38,6 +38,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="fontawesome-free-6.1.1-web/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
     <style>
 
     </style>
@@ -51,6 +52,21 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         <?= json_encode($tags, JSON_UNESCAPED_UNICODE); ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        const pid = '<?= $pid ?>';
+        async function getData() {
+            function render(){
+
+            }
+
+            const data = await fetch("post-detail-api", {
+                method: "POST",
+                body: pid
+            });
+            const response = data;
+            render();
+        }
+    </script>
 </body>
 
 </html>
