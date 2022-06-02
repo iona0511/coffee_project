@@ -1,19 +1,12 @@
 <?php
 require __DIR__ . '/part/connect_db.php';
 
-$topic='';
-
-$search = isset($_POST['search']) ? $_POST['search'] : '';
-$by = isset($_POST['by']) ? intval($_POST['by']) : '1';
+$data = json_decode(file_get_contents('php://input'), true);
 
 
-if ($by == 1 and isset($search)) {
-    $sql = sprintf("SELECT * FROM post WHERE `delete_state`='0' AND `topic_sid` LIKE '%%%s' AND `title` LIKE'%%%s%%'", $topic, $search);
- 
-} elseif ($by == 2 and isset($search)) {
-    $sql = sprintf("SELECT * FROM post WHERE `delete_state`='0' AND `topic_sid` LIKE '%%%s' AND `member_sid` LIKE'%%%s%%' ORDER BY `post`.`member_sid` ASC", $topic, $search);
-}
+
+$sql = sprintf("SELECT * FROM `post_img` WHERE `post_sid` = '%s'", $data["pid"]);
 
 $rows = $pdo->query($sql)->fetchAll();
 
-echo json_encode($rows,JSON_UNESCAPED_UNICODE);
+echo json_encode($rows, JSON_UNESCAPED_UNICODE);
