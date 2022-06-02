@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/connect_db.php';
+<?php require __DIR__ . '/part/connect_db.php';
 
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : '0';

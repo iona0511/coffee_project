@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/connect_db.php';
+require __DIR__ . '/part/connect_db.php';
 
 $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
@@ -62,11 +62,11 @@ if ($totalRows > 0) {
     <title>文章列表</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-<?php include __DIR__."/nav.php";?>
+<?php include __DIR__."/part/nav.php";?>
     <div class="container">
         <h2 class="text-primary" style="font-weight:bold;">文章列表</h2>
         <div class="d-flex">
@@ -305,7 +305,6 @@ if ($totalRows > 0) {
             const rows = await data.json();
 
             console.log(rows);
-            let recoding_rows_ind = 0;
             clear_tbody();
             render();
         });
