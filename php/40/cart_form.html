@@ -77,8 +77,10 @@
             <transition-group name="confirm-slide">
                 <div class="confirmBord"  v-show="confirmShow === true" key="confirmBord" @click.stop>
                     <h5>您確定要送出嗎?</h5>
-                    <button @click="sendData">確定</button>
-                    <button @click="denySending">取消</button>
+                    <div class="button_group">
+                        <button @click="sendData">確定</button>
+                        <button @click="denySending">取消</button>
+                    </div>
                 </div>
             </transition-group>
         </div>
@@ -113,7 +115,14 @@
                 },
                 sendData() {
                     const fd = new FormData(document.payForm)
-                    console.log("send data");
+                    fetch("./cart_write_data_api.php", {
+                        method: "POST",
+                        body: fd
+                    })
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(typeof data);
+                    })
                 }
             }
         }).mount("#app");

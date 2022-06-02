@@ -362,6 +362,8 @@
                         const myCoupon = JSON.stringify(this.radio);
                         fd.append("couponSelect", myCoupon);
                     }
+                    const total = JSON.stringify(this.displayTotal);
+                    fd.append("displayTotal", total)
                     fetch("./cart_write_session_api.php", {
                         method: "POST",
                         body: fd
