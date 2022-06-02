@@ -43,13 +43,13 @@ if (empty($row)) {
     .single-img {
         width: 320px;
         height: 320px;
-        display: none;
+        /* display: none; */
     }
 
     .multi-img {
         width: 320px;
         height: 320px;
-        display: none;
+        /* display: none; */
     }
 </style>
 <div class="container">
@@ -127,12 +127,18 @@ if (empty($row)) {
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label><br>
                             <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
-                            <img class="single-img" src="" alt="" id="products_pic_one" />
+                            <img class="single-img" src="
+                            <?php if ($row['products_pic_one']) : echo '/coffee_project/images/' . $row['products_pic_one'];
+                            endif; ?>" <?php if (!$row['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
                         </div>
 
                         <div class="mb-3" id="multiDiv">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
-                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple/>
+                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple />
+                            <?php $multiPic =  explode(",", $row['products_pic_multi']) ?>
+                            <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
+                                <img class="multi-img" src="<?= '/coffee_project/images/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
+                            <?php endfor; ?>
                         </div>
 
                         <div class="mb-3">
@@ -190,17 +196,25 @@ if (empty($row)) {
     }
 
     function changeMultiImg() {
-        const file = event.currentTarget.files[0];
-        console.log(file);
-        const reader = new FileReader();
-
-        // 資料載入後 (讀取完成後)
-        reader.onload = function() {
-            console.log(reader.result);
-            // document.querySelector("#products_pic_one").style.display = 'block';
-            // document.querySelector("#products_pic_one").src = reader.result;
-        };
-        reader.readAsDataURL(file);
+        if (event.currentTarget.files.length < 3) {
+            for (i = 0; i < event.currentTarget.files.length; i++) {
+                let file = event.currentTarget.files[i];
+                console.log(file);
+                let reader = new FileReader();
+                let idName = `#products_pic_multi${i}`;
+                // 資料載入後 (讀取完成後)
+                console.log(reader.result);
+                reader.onload = function() {
+                    console.log(reader.result);
+                    console.log(document.querySelector(idName));
+                    document.querySelector(idName).style.display = 'block';
+                    document.querySelector(idName).src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            };
+        } else {
+            alert('圖片上限3張');
+        }
     }
 
 
