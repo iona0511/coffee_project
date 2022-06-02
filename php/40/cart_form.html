@@ -14,6 +14,35 @@
             display: flex;
             flex-direction: column;
         }
+        .confirmBg {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0008;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .confirmBord {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .confirm-slide-enter-from {
+            transform:translateY(-30px);
+            opacity:0;
+        }
+        
+        .confirm-slide-enter-active {
+            transition: transform .5s ease, opacity .5s ease;
+        }
+        
+        .confirm-slide-enter-to {
+            transform:translateY(0px);
+            opacity:1;
+        }
     </style>
 </head>
 
@@ -44,12 +73,14 @@
                 <button type="submit">確定送出</button>
             </div>
         </form>
-        <div class="confirmBg" v-show="confirmShow === true">
-            <div class="confirmBord">
-                <h5>您確定要送出嗎?</h5>
-                <button>確定</button>
-                <button>取消    </button>
-            </div>
+        <div class="confirmBg" v-show="confirmShow === true" @click="denySending">
+            <transition-group name="confirm-slide">
+                <div class="confirmBord"  v-show="confirmShow === true" key="confirmBord" @click.stop>
+                    <h5>您確定要送出嗎?</h5>
+                    <button @click="sendData">確定</button>
+                    <button @click="denySending">取消</button>
+                </div>
+            </transition-group>
         </div>
     </div>
     
@@ -75,16 +106,14 @@
                     })
                 },
                 confirmSending() {
-
+                    this.confirmShow = true;
+                },
+                denySending() {
+                    this.confirmShow = false;
                 },
                 sendData() {
-                    const confirmed = window.confirm("您確定要送出嗎?");
-                    if(confirmed) {
-                        const fd = new FormData(document.payForm)
-                        console.log("send data");
-                    } else {
-                        return false;
-                    }
+                    const fd = new FormData(document.payForm)
+                    console.log("send data");
                 }
             }
         }).mount("#app");
