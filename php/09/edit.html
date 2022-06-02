@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    *{
+        box-sizing: border-box;
+    }
+    .form-box{
+        width:800px;
+        height:650px;
+        position:relative;
+        margin:2% auto;
+        background:rgba(0,0,0,0.3);
+        padding:10px;
+    }
+    .input-field{
+        width: 50%;
+        padding:10px 0;
+        margin:5px 0;
+        border-left:0;
+        border-top:0;
+        border-right:0;
+        border-bottom: 1px solid #999;
+        outline:none;
+        background: transparent;
+    }
+    .form-row{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .form-title{
+        margin-right: 15px;
+    }
+
+    .input-group-register{
+        display: block;
+        margin-top: 50px;
+        transition:.5s;
+    }
+
+    .input-group-edit{
+        position:absolute;
+        top: 100px;
+	    width: 500px;
+    }
+    .login-form{
+        text-align: center;
+        margin: auto;
+        margin-bottom: 50px;
+    }
+    .re-btn{
+        width: 280px;
+        padding: 10px 30px;
+        cursor: pointer;
+        display: block;
+        margin: auto;
+        margin-top: 50px;
+        background: hsl(24, 100%, 86%);
+        border: 0;
+        outline: none;
+        border-radius: 30px;
+    }
+
+    </style>
+</head>
+<body>
+    <div id='login-form'class='login-page'>
+        <div class="form-box">
+            <form id='edit' class='input-group-edit' name="form1" onsubmit="sendData();return false;" novalidate>
+                <div class="form-row">
+                    <div class="form-title">姓名：</div>
+                    <input type='text'class='input-field' id="member_name" name="member_name"  required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">暱稱：</div>
+                    <input type='text'class='input-field' id="member_nickname" name="member_nickname"  required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">帳號：</div>
+                    <input type='text'class='input-field' id="member_account" name="member_account"  required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">密碼：</div>
+                    <input type='password'class='input-field' id="member_password" name="member_password" required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">生日：</div>
+                    <input type="text" class= 'input-field' id="birthday" name="birthday">      
+                </div>
+                <div class="form-row">
+                    <div class="form-title">手機：</div>
+                    <input type='text'class='input-field' id="member_mobile" name="member_mobile"  required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">地址：</div>
+                    <input type='text'class='input-field' id="member_address" name="member_address"  required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">信箱：</div>
+                    <input type='email'class='input-field' id="member_mail" name="member_mail" required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <button type='submit'class='re-btn'>確認修改</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    async function sendData() {
+        const fd = new FormData(document.form1);
+        await fetch("edit-api.php",{
+        method:'POST',
+        body:fd
+    })    
+
+        .then((r) => r.json())
+        .then((obj) => {
+        data = obj;
+    });
+
+}
+
+
+</script>
+
+</body>
+</html>

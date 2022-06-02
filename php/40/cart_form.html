@@ -7,13 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        
+        form[name=payForm] {
+            display: flex;
+            flex-direction: column;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <h1>{{form}}</h1>
+        <!-- <button @click="sessionViewer">{{click}}</button> -->
+        <form name="payForm">
+            <label for="order_pay">付款方式</label>
+            <select name="order_pay" id="order_pay" v-model="payWay">
+                <option value="" selected disabled>-- 請選擇一項 --</option>
+                <option value="ATM轉帳">ATM轉帳</option>
+                <option value="郵寄貨到付款">郵寄貨到付款</option>
+                <option value="店內取貨付款">店內取貨付款</option>
+            </select>
+            <label for="order_deliver">收貨方式</label>
+            <select name="order_deliver" id="order_deliver" v-model="deliverWay">
+                <option value="" selected disabled>-- 請選擇一項 --</option>
+                <option value="郵寄">郵寄</option>
+                <option value="店內取貨">店內取貨</option>
+            </select>
+            <label for="order_address" v-show="deliverWay === '郵寄'">寄送地址</label>
+            <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model="deliverAddress">
+        </form>
     </div>
     
     <script src="../../js/vue.global.js"></script>
@@ -22,8 +42,20 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    form: "form"
+                    click: "click",
+                    payWay: "",
+                    deliverWay: "",
+                    deliverAddress: "",
                 }
+            },
+            methods: {
+                // sessionViewer() {
+                //     fetch("./sessionViewer.php")
+                //     .then(data => data.json())
+                //     .then(data => {
+                //         console.log(data);
+                //     })
+                // },
             }
         }).mount("#app");
     </script>
