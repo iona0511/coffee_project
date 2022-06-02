@@ -62,13 +62,13 @@ if ($totalRows > 0) {
     <title>文章列表</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-<?php include __DIR__."/part/nav.php";?>
+    <?php include __DIR__ . "/part/nav.php"; ?>
     <div class="container">
-        <h2 class="text-primary" style="font-weight:bold;">文章列表</h2>
+        <h2 class="text-primary mb-3" style="font-weight:bold;">文章列表</h2>
         <div class="d-flex">
             <nav aria-label="Page navigation example" id="pagination">
                 <ul class="pagination">
@@ -127,7 +127,8 @@ if ($totalRows > 0) {
             <span class="show-span">列顯示</span>
         </div>
         <div class="search-result" style="display: none;">
-            <h3 style="font-weight:bold;">搜尋紀錄</h3>
+            <h3 style="font-weight:bold;" class="mr-1">搜尋紀錄</h3>
+            <span class="mr-1" id="rows_length"></span>
             <span><a href="?page=1" class="link-danger">清除</a></span>
         </div>
 
@@ -254,6 +255,9 @@ if ($totalRows > 0) {
 
                 for (let ind in rows) {
                     const v = rows[ind];
+                    document.querySelector('#rows_length').innerText = `共(${rows.length})筆`;
+
+
                     if (rows.length > 0) {
                         const rowContent = `<td>
                             <a href="javascript: delete_it(${v['sid']})">
@@ -283,13 +287,12 @@ if ($totalRows > 0) {
                                 //印出查看更多按鈕
                                 const continueBtn = document.createElement("h3");
                                 continueBtn.classList.add("continue");
-                                continueBtn.innerHTML = `<div id="more" onclick="more()">查看更多...(${rows.length-10})筆</div>`;
+                                continueBtn.innerHTML = `<btn id="more" class="btn btn-primary" onclick="more()">查看更多...</ㄖ>`;
                                 table.parentNode.appendChild(continueBtn);
                             }
                             tbody.innerHTML += `<tr class="tr" id="tr${v['sid']}" style="display:none;">
                                                     ${rowContent}
                                                 </tr>`;
-
                         }
 
                     }
