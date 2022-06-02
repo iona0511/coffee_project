@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        [v-cloak] {
+            display: none !important;
+        }
         form[name=payForm] {
             display: flex;
             flex-direction: column;
@@ -15,9 +18,9 @@
 </head>
 
 <body>
-    <div id="app">
-        <!-- <button @click="sessionViewer">{{click}}</button> -->
-        <form name="payForm">
+    <div id="app" v-cloak>
+        <button @click="sessionViewer">{{click}}</button>
+        <form name="payForm" @submit.prevent="confirmSending()">
             <label for="order_pay">付款方式</label>
             <select name="order_pay" id="order_pay" v-model="payWay">
                 <option value="" selected disabled>-- 請選擇一項 --</option>
@@ -25,6 +28,10 @@
                 <option value="郵寄貨到付款">郵寄貨到付款</option>
                 <option value="店內取貨付款">店內取貨付款</option>
             </select>
+            <label for="bankAccount">匯款帳號</label>
+            <div>
+                <input type="number" placeholder="銀行代碼" name="bankNumber" id="bankNumber"><span>-</span><input type="number" placeholder="銀行帳戶" name="bankAccount" id="bankAccount">
+            </div>
             <label for="order_deliver">收貨方式</label>
             <select name="order_deliver" id="order_deliver" v-model="deliverWay">
                 <option value="" selected disabled>-- 請選擇一項 --</option>
@@ -32,8 +39,18 @@
                 <option value="店內取貨">店內取貨</option>
             </select>
             <label for="order_address" v-show="deliverWay === '郵寄'">寄送地址</label>
-            <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model="deliverAddress">
+            <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress">
+            <div>
+                <button type="submit">確定送出</button>
+            </div>
         </form>
+        <div class="confirmBg" v-show="confirmShow === true">
+            <div class="confirmBord">
+                <h5>您確定要送出嗎?</h5>
+                <button>確定</button>
+                <button>取消    </button>
+            </div>
+        </div>
     </div>
     
     <script src="../../js/vue.global.js"></script>
@@ -46,16 +63,29 @@
                     payWay: "",
                     deliverWay: "",
                     deliverAddress: "",
+                    confirmShow: false,
                 }
             },
             methods: {
-                // sessionViewer() {
-                //     fetch("./sessionViewer.php")
-                //     .then(data => data.json())
-                //     .then(data => {
-                //         console.log(data);
-                //     })
-                // },
+                sessionViewer() {
+                    fetch("./sessionViewer.php")
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                },
+                confirmSending() {
+
+                },
+                sendData() {
+                    const confirmed = window.confirm("您確定要送出嗎?");
+                    if(confirmed) {
+                        const fd = new FormData(document.payForm)
+                        console.log("send data");
+                    } else {
+                        return false;
+                    }
+                }
             }
         }).mount("#app");
     </script>
