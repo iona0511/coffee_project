@@ -59,58 +59,14 @@ if ($totalRows > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>文章列表</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <style>
-        .ml-auto {
-            margin-left: auto;
-        }
-
-        .mr-20 {
-            margin-right: 20px;
-        }
-
-        #show-ppg {
-            display: flex;
-        }
-
-        .show-span {
-            align-self: center;
-
-        }
-
-        select {
-            border-radius: 4px;
-            border-color: #dee2e6;
-        }
-
-        .search-select {
-            border-right: 0px;
-            border-radius: 4px 0 0 4px;
-            border-color: #dee2e6;
-
-        }
-
-        #search {
-            border-radius: 0 4px 4px 0;
-            border-width: 0.5px;
-            border-style: solid;
-            margin-right: 5px;
-            padding: 0px;
-            border-color: #dee2e6;
-            box-shadow: none;
-            outline: none;
-        }
-
-        .search-result {
-            display: flex;
-            align-items: end;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<?php include __DIR__."/nav.php";?>
     <div class="container">
         <h2 class="text-primary" style="font-weight:bold;">文章列表</h2>
         <div class="d-flex">
@@ -145,7 +101,7 @@ if ($totalRows > 0) {
                     </li>
                 </ul>
             </nav>
-            <div class="h-75" id="show-ppg">
+            <div class="h-75 mx-3" id="show-ppg">
                 <span class="show-span"">每頁</span>
                 <div class=" dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -199,10 +155,10 @@ if ($totalRows > 0) {
                     ?>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="?">全部分享</a></li>
-                    <li><a class="dropdown-item" href="?topic=1">課程分享</a></li>
-                    <li><a class="dropdown-item" href="?topic=2">商品分享</a></li>
-                    <li><a class="dropdown-item" href="?topic=3">其它</a></li>
+                    <li><a class="dropdown-item" href="?ppg=<?= $perPage ?>">全部分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=1&ppg=<?= $perPage ?>">課程分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=2&ppg=<?= $perPage ?>">商品分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=3%ppg=<?= $perPage ?>">其它</a></li>
                 </ul>
             </div>
         </div>
@@ -283,7 +239,7 @@ if ($totalRows > 0) {
                 document.querySelector("#pagination").style.display = "none";
                 document.querySelector("#show-ppg").style.display = "none";
                 document.querySelector(".search-result").style.display = "flex";
-                if(document.querySelector("#more")){
+                if (document.querySelector("#more")) {
                     document.querySelector("#more").remove();
                 }
             }
