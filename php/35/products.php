@@ -14,7 +14,6 @@ if ($page < 1) {
     exit;
 }
 
-// 先算總共有幾筆, 再去算總共有幾頁
 $t_sql = "SELECT count(1) FROM products";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
