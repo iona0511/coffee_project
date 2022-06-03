@@ -114,6 +114,7 @@
                     this.confirmShow = false;
                 },
                 sendData() {
+                    this.denySending();
                     const fd = new FormData(document.payForm)
                     fetch("./cart_write_data_api.php", {
                         method: "POST",
@@ -121,7 +122,7 @@
                     })
                     .then(data => data.json())
                     .then(data => {
-                        console.log(typeof data);
+                        console.log(data);
                     })
                 }
             }
