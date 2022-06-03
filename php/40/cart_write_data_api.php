@@ -7,7 +7,11 @@
     // $output["order_deliver"] = $_POST["order_deliver"];
     // $output["order_address"] = $_POST["order_address"];
     // echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    $payInfo = $_POST["bankNumber"] . $_POST["bankAccount"];
+    if(!empty($_POST["bankNumber"]) and !empty($_POST["bankAccount"])) {
+        $payInfo = $_POST["bankNumber"] . $_POST["bankAccount"];
+    } else {
+        $payInfo = NULL;
+    }
     $decodeCoupon = json_decode($_SESSION["rawCoupon"],true);
     if($decodeCoupon == -1) {
         $decodeCoupon = NULL;
