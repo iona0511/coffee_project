@@ -56,7 +56,6 @@ foreach( $rrr as $k => $v){
                         'member_mobile' => $v['member_mobile'],
                         'member_mail' => $v['member_mail'],
                         'member_level' => $v['member_level'],
-                        "member_sid" => $v['member_sid'],
                     ];
 
                     $output['session'] = $_SESSION['user'] ;
