@@ -14,6 +14,30 @@
             display: flex;
             flex-direction: column;
         }
+        .wrong_msg {
+            color: red;
+            font-size: 12px;
+        }
+        .bank-slide-enter-from {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        
+        .bank-slide-enter-active,
+        .bank-slide-leave-active {
+            transition:transform .5s ease, opacity .5s ease;
+        }
+        
+        .bank-slide-enter-to,
+        .bank-slide-leave-from {
+            transform:translateX(0px);
+            opacity: 1;
+        }
+        
+        .bank-slide-leave-to {
+            transform: translateX(20px);
+            opacity: 0;
+        }
         .confirmBg {
             position: fixed;
             top: 0px;
@@ -57,18 +81,22 @@
                 <option value="郵寄貨到付款">郵寄貨到付款</option>
                 <option value="店內取貨付款">店內取貨付款</option>
             </select>
-            <label for="bankAccount">匯款帳號</label>
-            <div>
-                <input type="number" placeholder="銀行代碼" name="bankNumber" id="bankNumber"><span>-</span><input type="number" placeholder="銀行帳戶" name="bankAccount" id="bankAccount">
-            </div>
+            <transition-group name="bank-slide">
+                <label for="bankAccount" key="bankLabel" v-show="payWay === 'ATM轉帳'">*匯款帳號<span class="wrong_msg" v-show="bankWrongMsg === true"> *匯款帳號格式錯誤</span></label>
+                <div key="bankInput"  v-show="payWay === 'ATM轉帳'">
+                    <input type="text" placeholder="銀行代碼" name="bankNumber" id="bankNumber" v-model.trim="bankNumber"><span>-</span><input type="text" placeholder="銀行帳戶" name="bankAccount" id="bankAccount" v-model.trim="bankAccount">
+                </div>
+            </transition-group>
             <label for="order_deliver">收貨方式</label>
             <select name="order_deliver" id="order_deliver" v-model="deliverWay">
                 <option value="" selected disabled>-- 請選擇一項 --</option>
-                <option value="郵寄">郵寄</option>
-                <option value="店內取貨">店內取貨</option>
+                <option value="郵寄" v-show="payWay !== '店內取貨付款'">郵寄</option>
+                <option value="店內取貨" v-show="payWay !== '郵寄貨到付款'">店內取貨</option>
             </select>
-            <label for="order_address" v-show="deliverWay === '郵寄'">寄送地址</label>
-            <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress">
+            <transition-group name="bank-slide">
+                <label for="order_address" v-show="deliverWay === '郵寄'" key="deliverLabel">*寄送地址<span class="wrong_msg" v-show="addressWrongMsg === true"> *地址格式錯誤</span></label>
+                <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress" key="deliverInput">
+            </transition-group>
             <div>
                 <button type="submit">確定送出</button>
             </div>
@@ -92,12 +120,19 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    click: "click",
+                    click: "view session",
                     payWay: "",
                     deliverWay: "",
                     deliverAddress: "",
+                    bankNumber: "",
+                    bankAccount: "",
+                    bankWrongMsg: false,
+                    addressWrongMsg: false,
                     confirmShow: false,
                 }
+            },
+            computed: {
+
             },
             methods: {
                 sessionViewer() {
@@ -108,12 +143,34 @@
                     })
                 },
                 confirmSending() {
-                    this.confirmShow = true;
+                    let passed = true;
+                    //如果是ATM就要驗證銀行帳號
+                    if(this.payWay === "ATM轉帳") {
+                        //驗證銀行帳號
+                        if(!(/^\d{3}$/.test(this.bankNumber)) || !(/^\d+$/.test(this.bankAccount))) {
+                            this.bankWrongMsg = true;
+                            passed = false;
+                        } else {
+                            this.bankWrongMsg = false;
+                        }
+                    }
+                    //驗證地址
+                    if(/.+(市|縣).+(路|街).+\d+號/.test(this.deliverAddress) || this.deliverAddress === "本店") {
+                        this.addressWrongMsg = false;
+                    } else {
+                        this.addressWrongMsg = true;
+                        passed = false;
+                    }
+                    //都通過才顯示bord
+                    if(passed) {
+                        this.confirmShow = true;
+                    }
                 },
                 denySending() {
                     this.confirmShow = false;
                 },
                 sendData() {
+                    this.denySending();
                     const fd = new FormData(document.payForm)
                     fetch("./cart_write_data_api.php", {
                         method: "POST",
@@ -121,9 +178,37 @@
                     })
                     .then(data => data.json())
                     .then(data => {
-                        console.log(typeof data);
+                        if(data.success) {
+                            window.location = "./checkout_success.html";
+                        } else {
+                            alert(data.message);
+                        }
                     })
                 }
+            },
+            watch: {
+                payWay(newdata) {
+                    if (newdata === "店內取貨付款") {
+                        this.deliverWay = "店內取貨";
+                        this.bankNumber = "";
+                        this.bankAccount = "";
+                        this.bankWrongMsg = false;
+                    } else if (newdata === "郵寄貨到付款") {
+                        this.deliverWay = "郵寄";
+                        this.bankNumber = "";
+                        this.bankAccount = "";
+                        this.bankWrongMsg = false;
+                    }
+                },
+                deliverWay(newdata) {
+                    if (newdata === "店內取貨") {
+                        this.deliverAddress = "本店";
+                    } else if (newdata === "郵寄") {
+                        this.deliverAddress = "";
+                        this.addressWrongMsg = false;
+                    }
+                },
+
             }
         }).mount("#app");
     </script>

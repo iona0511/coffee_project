@@ -362,7 +362,7 @@
                         const myCoupon = JSON.stringify(this.radio);
                         fd.append("couponSelect", myCoupon);
                     }
-                    const total = JSON.stringify(this.displayTotal);
+                    const total = JSON.stringify(parseInt(this.total));
                     fd.append("displayTotal", total)
                     fetch("./cart_write_session_api.php", {
                         method: "POST",
@@ -385,7 +385,7 @@
                     }
                 }
             },
-            beforeMount() {
+            async beforeMount() {
                 fetch("./check_product_session_api.php")
                 .then(data => data.json())
                 .then(data => {
@@ -393,7 +393,7 @@
                         this.fakeData = data;
                     }
                 });
-                fetch("./check_coupon_session_api.php")
+                await fetch("./check_coupon_session_api.php")
                 .then(data => data.json())
                 .then(data => {
                     if(data) {
