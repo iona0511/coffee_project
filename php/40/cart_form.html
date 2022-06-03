@@ -178,7 +178,11 @@
                     })
                     .then(data => data.json())
                     .then(data => {
-                        console.log(data);
+                        if(data.success) {
+                            window.location = "./checkout_success.html";
+                        } else {
+                            alert(data.message);
+                        }
                     })
                 }
             },
