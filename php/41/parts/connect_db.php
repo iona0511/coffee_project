@@ -1,14 +1,14 @@
 <?php
 
-// $db_host = '192.168.24.24'; 
-// $db_user = 'coffee'; 
-// $db_pass = 'coffee';
-// $db_name = 'coffee';  
+$db_host = '192.168.24.24'; 
+$db_user = 'coffee'; 
+$db_pass = 'coffee';
+$db_name = 'coffee';  
 
-$db_host = 'localhost'; 
-$db_user = 'Trista'; 
-$db_pass = 'admin';
-$db_name = 'mydb';  
+// $db_host = 'localhost'; 
+// $db_user = 'Trista'; 
+// $db_pass = 'admin';
+// $db_name = 'mydb';  
 
 
 
