@@ -89,8 +89,10 @@
                 <option value="郵寄">郵寄</option>
                 <option value="店內取貨">店內取貨</option>
             </select>
-            <label for="order_address" v-show="deliverWay === '郵寄'">寄送地址</label>
-            <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress">
+            <transition-group name="bank-slide">
+                <label for="order_address" v-show="deliverWay === '郵寄'" key="deliverLabel">寄送地址</label>
+                <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress" key="deliverInput">
+            </transition-group>
             <div>
                 <button type="submit">確定送出</button>
             </div>
