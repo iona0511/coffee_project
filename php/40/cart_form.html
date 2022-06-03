@@ -14,6 +14,26 @@
             display: flex;
             flex-direction: column;
         }
+        .bank-slide-enter-from {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+        
+        .bank-slide-enter-active,
+        .bank-slide-leave-active {
+            transition:transform .5s ease, opacity .5s ease;
+        }
+        
+        .bank-slide-enter-to,
+        .bank-slide-leave-from {
+            transform:translateX(0px);
+            opacity: 1;
+        }
+        
+        .bank-slide-leave-to {
+            transform: translateX(20px);
+            opacity: 0;
+        }
         .confirmBg {
             position: fixed;
             top: 0px;
@@ -57,10 +77,12 @@
                 <option value="郵寄貨到付款">郵寄貨到付款</option>
                 <option value="店內取貨付款">店內取貨付款</option>
             </select>
-            <label for="bankAccount">匯款帳號</label>
-            <div>
-                <input type="number" placeholder="銀行代碼" name="bankNumber" id="bankNumber"><span>-</span><input type="number" placeholder="銀行帳戶" name="bankAccount" id="bankAccount">
-            </div>
+            <transition-group name="bank-slide">
+                <label for="bankAccount" key="bankLabel" v-show="payWay === 'ATM轉帳'">匯款帳號</label>
+                <div key="bankInput"  v-show="payWay === 'ATM轉帳'">
+                    <input type="number" placeholder="銀行代碼" name="bankNumber" id="bankNumber"><span>-</span><input type="number" placeholder="銀行帳戶" name="bankAccount" id="bankAccount">
+                </div>
+            </transition-group>
             <label for="order_deliver">收貨方式</label>
             <select name="order_deliver" id="order_deliver" v-model="deliverWay">
                 <option value="" selected disabled>-- 請選擇一項 --</option>
@@ -99,6 +121,15 @@
                     confirmShow: false,
                 }
             },
+            computed: {
+                addressReset() {
+                    if(this.deliverWay === "店內取貨") {
+                        this.deliverAddress = "本店";
+                    } else if (this.deliverWay === "郵寄") {
+                        this.deliverAddress = "";
+                    }
+                },
+            },
             methods: {
                 sessionViewer() {
                     fetch("./sessionViewer.php")
@@ -125,7 +156,7 @@
                         console.log(data);
                     })
                 }
-            }
+            },
         }).mount("#app");
     </script>
 </body>
