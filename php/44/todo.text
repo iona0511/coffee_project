@@ -3,9 +3,9 @@ post-add上傳多張圖片
 post-add多筆標籤
 
 detail 多筆圖片顯示
+post-edit
 
-*DB Member Table
-post-add 串接會員session，判斷id
+
 detail 串接會員，判斷編輯刪除
 
 -----------------------------------------------
@@ -19,3 +19,6 @@ detail 串接會員，判斷編輯刪除
 
 
 (post-add標籤即時預覽)
+-----------------------------------------------
+Done:
+post-add 串接會員session，判斷id
