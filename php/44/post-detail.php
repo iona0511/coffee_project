@@ -120,7 +120,6 @@ if ($rows['topic_sid'] == 1) {
                     <!-- Comment -->
                     <div class="comment-wrap" display="block">
                         <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
-                                <?php $cm_rows_id = $v['sid'] ?>
                                 <div class="d-flex comment-card">
                                     <div class="comment-info">
                                         <div class="avatar">
@@ -135,7 +134,7 @@ if ($rows['topic_sid'] == 1) {
                                         <p><?= $v['content'] ?></p>
                                         <div class="comment-msg">
                                             <p class="mr-2"><?= $v['created_at'] ?></p>
-                                            <a href="">
+                                            <a data-cid="<?= $v['sid'] ?>" onclick="setCid(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
                                                 <p>回覆</p>
                                             </a>
                                         </div>
@@ -144,12 +143,15 @@ if ($rows['topic_sid'] == 1) {
                                 <!-- 二次留言 -->
                                 <!-- Reply -->
                                 <?php
+                                $cm_rows_id = $v['sid'];
                                 $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
                                 $rply_rows = $pdo->query($rply_sql)->fetchAll();
+                                
                                 if (isset($rply_rows)) :
                                     foreach ($rply_rows as $rk => $rv) :
                                 ?>
                                         <div class="d-flex reply-card">
+
                                             <div class="comment-info">
                                                 <div class="avatar">
                                                     <i class="fa-solid fa-circle-user text-primary"></i>
@@ -164,15 +166,17 @@ if ($rows['topic_sid'] == 1) {
                                                 <div class="comment-msg">
                                                     <p class="mr-2"><?= $rv['created_at'] ?></p>
                                                 </div>
+
                                             </div>
                                         </div>
+
                                 <?php endforeach;
                                 endif; ?>
                         <?php endforeach;
                         endif; ?>
                     </div>
                 </div>
-                <div class="content-bot">
+                <div class="content-bot msg-bar">
                     <input class="form-control form-control-md msg" type="text" placeholder="留言">
                     <a href="javascript:send_msg();">發佈</a>
                 </div>
@@ -185,6 +189,8 @@ if ($rows['topic_sid'] == 1) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
         const pic = document.querySelector(".pic");
+        let cidNumber = '';
+        let cidSid = '';
 
         function cm_toggle() {
             if (document.querySelector(".comment-wrap").style.display == "none") {
@@ -194,20 +200,39 @@ if ($rows['topic_sid'] == 1) {
             }
         }
 
-        async function send_msg(){
+        function focus_on(name) {
 
-            const msg = JSON.stringify(document.querySelector(".msg").value);
-            console.log(msg);
+            document.querySelector(".msg").focus();
+            document.querySelector(".msg").value = "@" + name;
+        }
 
-            // const data = await fetch("post-detail-api.php", {
-            //     method: "POST",
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: msg
-            // });
+        function setCid(event) {
+            console.log(event.currentTarget);
+            cidNumber = event.currentTarget.dataset.cid;
+            cidSid = event.currentTarget.dataset.c_sid;
+        }
 
-            // const response = await data.json();
+        async function send_msg() {
+            const msg = document.querySelector(".msg").value;
+
+            const jsonData = JSON.stringify({
+                pid: <?= $pid ?>,
+                msg: msg
+            });
+
+
+            const data = await fetch("comment-add-api.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            });
+
+            const response = await data.json();
+            console.log(response);
+
+            if (response['success']) history.go(0);
         }
 
         async function getData() {
@@ -231,12 +256,12 @@ if ($rows['topic_sid'] == 1) {
                     'Content-Type': 'application/json'
                 },
                 body: pd
-
             });
             const response = await data.json();
             console.log(response[0]);
             console.log(response[0].img_src);
             render();
+
         }
         getData();
     </script>

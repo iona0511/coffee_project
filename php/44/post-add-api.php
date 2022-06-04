@@ -1,8 +1,6 @@
 <?php
 require __DIR__ . '/part/connect_db.php';
 
-
-
 $op_msg = [
     'success' => false,
     'postData' => $_POST,
@@ -13,7 +11,7 @@ $op_msg = [
 ];
 
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
-$m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_nickname'] : '';
+$m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
 
 
 if (empty($_POST['title'])) {

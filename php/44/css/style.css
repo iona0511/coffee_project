@@ -127,18 +127,22 @@ select {
     height: 92%;
     overflow-y: scroll;
 }
+
 .content-top::-webkit-scrollbar {
     display: none;
 }
 
-.content-bot {
-   
-    height: 8%; 
+.msg-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.content-bot a{
+
+.content-bot {
+    height: 8%;
+}
+
+.content-bot a {
     padding-left: 10px;
     width: 50px;
     line-height: 40px;
@@ -146,9 +150,6 @@ select {
     flex-shrink: 0;
 }
 
-.form1 {
-
-}
 
 .m-nickname {
     font-weight: bold;
