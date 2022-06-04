@@ -47,7 +47,7 @@ a {
     margin-top: 1.5rem;
 }
 
-.text-pink{
+.text-pink {
     color: rgb(254, 128, 170);
 }
 
@@ -93,27 +93,61 @@ select {
 
 
 /* post-detail */
-.mh-80{
-   min-height: 80vh;
+.mh-80 {
+    min-height: 80vh;
+}
+
+
+
+.span-btn:hover {
+    cursor: pointer;
 }
 
 .post-wrap {
-    padding-top:0.5rem ;
+    padding-top: 0.5rem;
     padding-bottom: 1.5rem;
     height: 85vh;
 }
 
 @media screen and (min-width:768px) {
-    .post-wrap{
-    
+    .post-wrap {
+
         max-width: 120vh;
-    } 
+    }
 }
 
 .post-content {
     display: flex;
     flex-direction: column;
     padding-right: 2rem;
+
+}
+
+.content-top {
+    height: 92%;
+    overflow-y: scroll;
+}
+.content-top::-webkit-scrollbar {
+    display: none;
+}
+
+.content-bot {
+   
+    height: 8%; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.content-bot a{
+    padding-left: 10px;
+    width: 50px;
+    line-height: 40px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.form1 {
+
 }
 
 .m-nickname {
@@ -128,7 +162,7 @@ select {
     display: flex;
 }
 
-.avatar{
+.avatar {
     padding-right: 0.5rem;
 }
 
@@ -137,27 +171,42 @@ select {
     line-height: 1.2rem;
 }
 
-.comment-card{
+.comment-wrap p {
+    margin-bottom: 0rem;
+}
+
+.comment-card {
     padding-top: 10px;
+}
+
+.reply-card {
+    padding-top: .5rem;
+    padding-left: 38px;
 }
 
 .comment-info {
     display: flex;
     flex-shrink: 0;
+    padding-right: 0.5rem;
     /* align-items: center; */
 }
 
-.comment-info .avatar{
-   margin-top: -2px;
+.comment-info .avatar {
+    margin-top: -2px;
 }
 
 .comment-info .info {
     display: flex;
     flex-direction: column;
-
 }
 
-.info-id{
+.comment-msg {
+    display: flex;
+    font-size: 12px;
+    color: #69696b;
+}
+
+.info-id {
     color: #69696b;
     font-size: 12px;
     line-height: 0.8rem;
@@ -182,14 +231,14 @@ select {
 }
 
 .fa-circle-user {
-    font-size: 40px;
+    font-size: 38px;
 }
 
 .comment-info .fa-circle-user {
-    font-size: 30px;
+    font-size: 28px;
 }
 
-.comment-content{
+.comment-content {
     font-size: 15px;
     line-height: 1.2rem;
     margin-top: -1px;
@@ -200,7 +249,6 @@ select {
 }
 
 .social {
-    /* justify-self: flex-end; */
     font-size: 16px;
     color: rgba(28, 28, 28, 0.75);
 }

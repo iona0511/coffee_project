@@ -25,9 +25,16 @@ $tag_sql = sprintf("SELECT pt.*,t.name,t.times FROM `post_tag` pt JOIN `tag` t O
 $rows = $pdo->query($sql)->fetch();
 $tags = $pdo->query($tag_sql)->fetchAll();
 
+
 if ($rows['comments'] >= 1) {
-    $cm_sql =  sprintf("SELECT * FROM `comment` WHERE `post_sid` = '%s'", $pid);
+    $cm_sql =  sprintf("SELECT c.*,m.member_nickname FROM `comment` c JOIN `member` m ON c.member_sid = m.member_sid WHERE c.post_sid = '%s'", $pid);
+
     $cm_rows = $pdo->query($cm_sql)->fetchAll();
+    $cm_rows_id = isset($cm_rows_id) ? $cm_rows_id : 0;
+
+    // $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
+
+    // $rply_rows = $pdo->query($rply_sql)->fetchAll();
 }
 
 
@@ -64,62 +71,110 @@ if ($rows['topic_sid'] == 1) {
     <div class="container post-wrap">
         <div class="post-wrap d-flex">
             <div class="post-content">
-                <div class="member-info">
-                    <div class="avatar">
-                        <i class="fa-solid fa-circle-user text-primary"></i>
+                <div class="content-top">
+                    <div class="member-info">
+                        <div class="avatar">
+                            <i class="fa-solid fa-circle-user text-primary"></i>
+                        </div>
+                        <div class="info">
+                            <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
+                            <p class="info-id">#<?= $rows['member_sid'] ?></p>
+                        </div>
                     </div>
-                    <div class="info">
-                        <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
-                        <p class="info-id">#<?= $rows['member_sid'] ?></p>
+                    <!-- 找session sid=文章sid才出現 -->
+                    <div class="post-edit mb-2" style="display:none;">
+                        <a class="mr-1" href="post-edit.php?<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
+                        <a href="post-delete-api.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
                     </div>
-                </div>
-                <div class="post-edit mb-2">
-                    <a class="mr-1" href="post-edit.php?<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
-                    <a href="post-delete-api.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
-                </div>
-                <h3 class="mb-3"><?= $rows['title'] ?></h3>
-                <div class="d-flex mb-3">
-                    <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
-                        <?= $topic_name ?>
-                    </a>
-                    <span class="c-date"><?= $rows['created_at'] ?></span>
-                </div>
-                <p class="post-text">
-                    <?= $rows['content'] ?>
-                </p>
-
-                <div class="tag-bar d-flex">
-                    <?php foreach ($tags as $k => $v) : ?>
-                        <a href="?">
-                            <div class="tag mr-1"><?= $v['name'] ?></div>
+                    <h3 class="mb-3"><?= $rows['title'] ?></h3>
+                    <div class="d-flex mb-3">
+                        <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
+                            <?= $topic_name ?>
                         </a>
-                    <?php endforeach; ?>
-                </div>
-                <div class="social mb-2">
-                    <a href="javascript:;" class="">
-                        <span style="color:black;" class="like">
-                            <i class="fa-solid fa-heart"></i>
-                            <?= $rows['likes'] ?>
-                        </span>
-                    </a>
-                    <span>・留言<?= !empty($rows['comments']) ? $rows['comments'] : '' ?></span>
-                </div>
-                <div class="comment-wrap">
-                    <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
-                            <div class="d-flex comment-card">
-                                <div class="comment-info mr-2">
-                                    <div class="avatar">
-                                        <i class="fa-solid fa-circle-user text-pink"></i>
+                        <span class="c-date"><?= $rows['created_at'] ?></span>
+                    </div>
+                    <p class="post-text">
+                        <?= $rows['content'] ?>
+                    </p>
+                    <div class="tag-bar d-flex">
+                        <?php foreach ($tags as $k => $v) : ?>
+                            <a href="?">
+                                <div class="tag mr-1"><?= $v['name'] ?></div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="social mb-2">
+                        <a href="javascript:;" class="">
+                            <span style="color:black;" class="like">
+                                <i class="fa-solid fa-heart"></i>
+                                <?= $rows['likes'] ?>
+                            </span>
+                        </a>
+                        <a href="javascript:;" class="">
+                            <span style="color:black;" onclick="cm_toggle();">
+                                ・留言<?= !empty($rows['comments']) ? $rows['comments'] : '' ?>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- 一次回覆 -->
+                    <!-- Comment -->
+                    <div class="comment-wrap" display="block">
+                        <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
+                                <?php $cm_rows_id = $v['sid'] ?>
+                                <div class="d-flex comment-card">
+                                    <div class="comment-info">
+                                        <div class="avatar">
+                                            <i class="fa-solid fa-circle-user text-pink"></i>
+                                        </div>
+                                        <div class="info">
+                                            <span class="c-nickname"><?= $v['member_nickname'] ?></span>
+                                            <span class="info-id">#<?= $v['member_sid'] ?></span>
+                                        </div>
                                     </div>
-                                    <div class="info">
-                                        <span class="c-nickname"><?= $v['member_nickname'] ?></span>
-                                        <span class="info-id">#<?= $v['member_sid'] ?></span>
+                                    <div class="comment-content">
+                                        <p><?= $v['content'] ?></p>
+                                        <div class="comment-msg">
+                                            <p class="mr-2"><?= $v['created_at'] ?></p>
+                                            <a href="">
+                                                <p>回覆</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <p class="comment-content"><?= $v['content'] ?></p>
-                            </div>
-                    <?php endforeach;
-                    endif; ?>
+                                <!-- 二次留言 -->
+                                <!-- Reply -->
+                                <?php
+                                $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
+                                $rply_rows = $pdo->query($rply_sql)->fetchAll();
+                                if (isset($rply_rows)) :
+                                    foreach ($rply_rows as $rk => $rv) :
+                                ?>
+                                        <div class="d-flex reply-card">
+                                            <div class="comment-info">
+                                                <div class="avatar">
+                                                    <i class="fa-solid fa-circle-user text-primary"></i>
+                                                </div>
+                                                <div class="info">
+                                                    <span class="c-nickname"><?= $rv['member_nickname'] ?></span>
+                                                    <span class="info-id">#<?= $rv['member_sid'] ?></span>
+                                                </div>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p><?= $rv['content'] ?></p>
+                                                <div class="comment-msg">
+                                                    <p class="mr-2"><?= $rv['created_at'] ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                <?php endforeach;
+                                endif; ?>
+                        <?php endforeach;
+                        endif; ?>
+                    </div>
+                </div>
+                <div class="content-bot">
+                    <input class="form-control form-control-md msg" type="text" placeholder="留言">
+                    <a href="javascript:send_msg();">發佈</a>
                 </div>
             </div>
             <div class="pic-wrap mh">
@@ -131,8 +186,31 @@ if ($rows['topic_sid'] == 1) {
     <script>
         const pic = document.querySelector(".pic");
 
-        async function getData() {
+        function cm_toggle() {
+            if (document.querySelector(".comment-wrap").style.display == "none") {
+                document.querySelector(".comment-wrap").style = "display:block";
+            } else {
+                document.querySelector(".comment-wrap").style = "display:none";
+            }
+        }
 
+        async function send_msg(){
+
+            const msg = JSON.stringify(document.querySelector(".msg").value);
+            console.log(msg);
+
+            // const data = await fetch("post-detail-api.php", {
+            //     method: "POST",
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: msg
+            // });
+
+            // const response = await data.json();
+        }
+
+        async function getData() {
             const pd = JSON.stringify({
                 pid: <?= $pid ?>
             });
@@ -160,7 +238,7 @@ if ($rows['topic_sid'] == 1) {
             console.log(response[0].img_src);
             render();
         }
-        getData()
+        getData();
     </script>
 </body>
 
