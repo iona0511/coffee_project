@@ -1,4 +1,13 @@
 <?php require __DIR__ . '/parts/connect_db.php';
+session_start();
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    // header('Location: http://www.example.com/');
+    exit;
+}
+
+
 $pageName = 'points_record_list';
 $title = '積分歷史紀錄';
 $perPage = 5;
