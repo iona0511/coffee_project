@@ -17,3 +17,5 @@ try {
 } catch (PDOException $ex) {
     echo $ex->getMessage();
 }
+
+session_start();
