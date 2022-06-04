@@ -69,6 +69,7 @@ if ($totalRows > 0) {
     <?php include __DIR__ . "/part/nav.php"; ?>
     <div class="container">
         <h2 class="text-primary mb-3" style="font-weight:bold;">文章列表</h2>
+        
         <div class="d-flex">
             <nav aria-label="Page navigation example" id="pagination">
                 <ul class="pagination">

@@ -1,7 +1,6 @@
 <?php
 require __DIR__ . '/part/connect_db.php';
 
-
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : '';
 
 
