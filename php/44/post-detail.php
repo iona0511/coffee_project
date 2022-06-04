@@ -64,7 +64,7 @@ if ($rows['topic_sid'] == 1) {
     <div class="container post-wrap">
         <div class="post-wrap d-flex">
             <div class="post-content">
-                <div class="member-info mb-2">
+                <div class="member-info">
                     <div class="avatar">
                         <i class="fa-solid fa-circle-user text-primary"></i>
                     </div>
@@ -72,6 +72,10 @@ if ($rows['topic_sid'] == 1) {
                         <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
                         <p>#<?= $rows['member_sid'] ?></p>
                     </div>
+                </div>
+                <div class="post-edit mb-2">
+                    <a class="mr-1" href="post-edit.php?<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
+                    <a href="post-delete-api.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
                 </div>
                 <h3 class="mb-3"><?= $rows['title'] ?></h3>
                 <div class="d-flex mb-3">
@@ -131,6 +135,13 @@ if ($rows['topic_sid'] == 1) {
 
             function render() {
                 pic.src = response[0].img_src;
+                // render 編輯/刪除
+                if (response[0].m_sid == <?= $rows['member_sid'] ?>) {
+                    document.querySelector(".post-edit").style.display = "block";
+                }
+                else{
+                    document.querySelector(".post-edit").style.display = "none";
+                }
             }
 
             const data = await fetch("post-detail-api.php", {
@@ -142,6 +153,7 @@ if ($rows['topic_sid'] == 1) {
 
             });
             const response = await data.json();
+            console.log(response[0]);
             console.log(response[0].img_src);
             render();
         }
