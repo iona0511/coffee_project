@@ -27,7 +27,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
 
 if ($rows['comments'] >= 1) {
     $cm_sql =  sprintf("SELECT * FROM `comment` WHERE `post_sid` = '%s'", $pid);
-    $cm_rows = $pdo->query($cm_sql)->fetch();
+    $cm_rows = $pdo->query($cm_sql)->fetchAll();
 }
 
 
@@ -70,7 +70,7 @@ if ($rows['topic_sid'] == 1) {
                     </div>
                     <div class="info">
                         <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
-                        <p>#<?= $rows['member_sid'] ?></p>
+                        <p class="info-id">#<?= $rows['member_sid'] ?></p>
                     </div>
                 </div>
                 <div class="post-edit mb-2">
@@ -95,32 +95,36 @@ if ($rows['topic_sid'] == 1) {
                         </a>
                     <?php endforeach; ?>
                 </div>
-                <div class="social">
+                <div class="social mb-2">
                     <a href="javascript:;" class="">
                         <span style="color:black;" class="like">
                             <i class="fa-solid fa-heart"></i>
                             <?= $rows['likes'] ?>
                         </span>
                     </a>
-                    <span>・留言<?= $rows['comments'] ?></span>
+                    <span>・留言<?= !empty($rows['comments']) ? $rows['comments'] : '' ?></span>
+                </div>
+                <div class="comment-wrap">
+                    <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
+                            <div class="d-flex comment-card">
+                                <div class="comment-info mr-2">
+                                    <div class="avatar">
+                                        <i class="fa-solid fa-circle-user text-pink"></i>
+                                    </div>
+                                    <div class="info">
+                                        <span class="c-nickname"><?= $v['member_nickname'] ?></span>
+                                        <span class="info-id">#<?= $v['member_sid'] ?></span>
+                                    </div>
+                                </div>
+                                <p class="comment-content"><?= $v['content'] ?></p>
+                            </div>
+                    <?php endforeach;
+                    endif; ?>
                 </div>
             </div>
-            <div class="pic-wrap">
+            <div class="pic-wrap mh">
                 <img src="" class="pic" alt="">
             </div>
-        </div>
-        <div class="comment-wrap">
-            <h3 class="mb-5">留言</h3>
-            <div class="member-info mb-2">
-                <div class="avatar">
-                    <i class="fa-solid fa-circle-user text-primary"></i>
-                </div>
-                <div class="info">
-                    <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
-                    <p>#<?= $rows['member_sid'] ?></p>
-                </div>
-            </div>
-            <p><?= $cm_rows['content'] ?></p>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -138,8 +142,7 @@ if ($rows['topic_sid'] == 1) {
                 // render 編輯/刪除
                 if (response[0].m_sid == <?= $rows['member_sid'] ?>) {
                     document.querySelector(".post-edit").style.display = "block";
-                }
-                else{
+                } else {
                     document.querySelector(".post-edit").style.display = "none";
                 }
             }

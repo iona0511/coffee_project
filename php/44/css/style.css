@@ -12,7 +12,7 @@ h5 {
     margin-bottom: 0;
 }
 
-img{
+img {
     vertical-align: middle;
 }
 
@@ -43,8 +43,12 @@ a {
     margin-right: 1.5rem;
 }
 
-.mt-3{
+.mt-3 {
     margin-top: 1.5rem;
+}
+
+.text-pink{
+    color: rgb(254, 128, 170);
 }
 
 
@@ -89,9 +93,21 @@ select {
 
 
 /* post-detail */
-.post-wrap{
-    padding-top: 1rem;
+.mh-80{
+   min-height: 80vh;
+}
+
+.post-wrap {
+    padding-top:0.5rem ;
     padding-bottom: 1.5rem;
+    height: 85vh;
+}
+
+@media screen and (min-width:768px) {
+    .post-wrap{
+    
+        max-width: 120vh;
+    } 
 }
 
 .post-content {
@@ -100,14 +116,51 @@ select {
     padding-right: 2rem;
 }
 
-.m_nickname {
+.m-nickname {
+    font-weight: bold;
+}
+
+.c-nickname {
     font-weight: bold;
 }
 
 .member-info {
     display: flex;
-    max-width: 140px;
-    justify-content: space-between;
+}
+
+.avatar{
+    padding-right: 0.5rem;
+}
+
+.comment-wrap {
+    font-size: 16px;
+    line-height: 1.2rem;
+}
+
+.comment-card{
+    padding-top: 10px;
+}
+
+.comment-info {
+    display: flex;
+    flex-shrink: 0;
+    /* align-items: center; */
+}
+
+.comment-info .avatar{
+   margin-top: -2px;
+}
+
+.comment-info .info {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.info-id{
+    color: #69696b;
+    font-size: 12px;
+    line-height: 0.8rem;
 }
 
 .c-date {
@@ -115,9 +168,11 @@ select {
 }
 
 .pic-wrap {
-    padding: 0;
+    flex-shrink: 0;
+    width: 50%;
     margin-left: auto;
-    max-height: 680px;
+    min-height: 600px;
+    max-height: 800px;
 }
 
 .pic {
@@ -127,20 +182,25 @@ select {
 }
 
 .fa-circle-user {
-    /* width: 50px; */
     font-size: 40px;
 }
 
-.post-text {
-    flex-grow: 1;
+.comment-info .fa-circle-user {
+    font-size: 30px;
 }
 
-.tag-bar{
+.comment-content{
+    font-size: 15px;
+    line-height: 1.2rem;
+    margin-top: -1px;
+}
+
+.tag-bar {
     margin-bottom: 1rem;
 }
 
 .social {
-    justify-self: flex-end;
+    /* justify-self: flex-end; */
     font-size: 16px;
     color: rgba(28, 28, 28, 0.75);
 }
@@ -159,15 +219,13 @@ select {
     white-space: nowrap;
 }
 
-.fa-heart{
-    color:rgb(252, 162, 162)
+.fa-heart {
+    color: rgb(252, 162, 162)
 }
-.like:hover .fa-heart{
-    color:rgb(245, 76, 76)
+
+.like:hover .fa-heart {
+    color: rgb(245, 76, 76)
 }
 
 /* post-detail */
 /* comment */
-.comment-wrap{
-    background-color: rgb(245, 245, 245);
-}
