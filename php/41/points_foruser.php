@@ -172,7 +172,7 @@ $a = $t_points[0];
     <p>可用積分</p>
 </div>
 <!-- 上面的按紐 -->
-<div class="display_justify_content" class="margin-top:25px;">
+<div class="display_justify_content" style="margin-top:25px;">
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;margin-right:10px;margin-bottom:20px;" class="button <?= $type == 1 ? 'active' : '' ?> " href="?type=1">獲取紀錄</a>
     </div>
@@ -195,7 +195,6 @@ $a = $t_points[0];
                     <tr>
                         <td><?= $r['create_at'] ?></td>
                         <td><?= $type == 1 ? '每日簽到獎勵' : '咖啡拿鐵兌換券'; ?></td>
-                        <!-- 根據type顯示不同的自 -->
                         <td><?= $r['points_get'] ?></td>
                     </tr>
                 <?php endforeach; ?>
