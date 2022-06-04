@@ -1,4 +1,13 @@
 <?php require __DIR__ . '/parts/connect_db.php';
+session_start();
+
+
+if (!isset($_SESSION['user']['member_account'])){
+    header('Location:/coffee_project/php/09/login.html');
+    // header('Location: http://www.example.com/');
+    exit;
+}
+
 
 $pageName = 'points_foruser_get';
 
@@ -47,7 +56,15 @@ if ($totalRows > 0) {
     $rows = $pdo->query($sql)->fetchAll();
 }
 
-$sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=1 ");
+$a=$_SESSION['user']['member_sid'];
+// $a=$_SESSION['member_sid'];
+// $_SESSION['user']['member_account']
+
+$sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$a );
+// $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=1" );
+
+
+
 $t_points = $pdo->query($sql_points)->fetchAll();
 $a = $t_points[0];
 

@@ -1,11 +1,19 @@
 <?php require __DIR__ . '/parts/connect_db.php';
 // ======================================
+
+session_start();
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    // header('Location: http://www.example.com/');
+    exit;
+}
+
+// =====================
+
 $pageName = 'points_formanager';
 
 $title = '會員積分紀錄';
-// ============================================
-
-
 
 $t_sql = sprintf("SELECT`points_user`.`total_points`,`points_user`.`voucher_amount`,`member`.`member_sid`,`member`.`member_account`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`");
 
@@ -1035,7 +1043,8 @@ if ($totalRows > 0) {
             opacity: 0;
         }
     }
-    
+
+
     
 </style>
 <div>
@@ -1051,7 +1060,9 @@ if ($totalRows > 0) {
         </svg>
 
         <form name="form_pfm" style="margin-left: 5px;" novalidate> 
-            <input style="outline:none;border: none;border-bottom: 1px solid #000;padding: 7px 0px;background: transparent;" type="text" name="account" value="" placeholder="輸入會員帳號">
+                <input style="outline:none;border: none;border-bottom: 1px solid #000;padding: 7px 0px;background: transparent;" type="text" name="account" value="" placeholder="輸入會員帳號">
+            </div>
+
         </form>
     </div>
 

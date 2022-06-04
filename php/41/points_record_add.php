@@ -1,4 +1,13 @@
 <?php require __DIR__ . '/parts/connect_db.php';
+session_start();
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    // header('Location: http://www.example.com/');
+    exit;
+}
+
+
 $pageName = 'points_record_add';
 $title = '新增積分歷史紀錄';
 
@@ -44,6 +53,10 @@ $title = '新增積分歷史紀錄';
         padding: 15px 20px;
         letter-spacing: 0.05em;
         
+    }
+    button:hover{
+        background-color: #B2ADAA;
+        border: 1px solid #B2ADAA;
     }
     body{
         background-color: #F2F0ED;
