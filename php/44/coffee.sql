@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-03 21:26:26
+-- 產生時間： 2022-06-04 10:33:54
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -62,6 +62,14 @@ CREATE TABLE `member` (
   `member_mail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `member_level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`member_sid`, `member_name`, `member_nickname`, `member_account`, `member_password`, `member_birthday`, `member_mobile`, `member_adress`, `member_mail`, `member_level`) VALUES
+(666, '子揚', 'Tommy', 'tommy', '1234', NULL, '0975072579', '台北市', 'sky003428@gmail.com', ''),
+(1001, '王小明', '帥氣a小明', 'ming', '1234', NULL, '0975123456', '新北市', 'ming1234@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -196,7 +204,13 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 (119, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:13', NULL, 0),
 (120, '783', '4353\r\n3273', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:50', NULL, 0),
 (121, '783', '4353<br/>3273<br/>abc', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:17:06', NULL, 0),
-(122, '783', '4353 asd<br/>3273 16<br/>abc<br/><br/>abba', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:24:19', NULL, 0);
+(122, '783', '4353 asd<br/>3273 16<br/>abc<br/><br/>abba', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:24:19', NULL, 0),
+(123, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:21:45', NULL, 0),
+(124, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:06', NULL, 0),
+(125, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:29', NULL, 0),
+(126, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:25', NULL, 0),
+(127, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:46', NULL, 0),
+(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -413,7 +427,7 @@ ALTER TABLE `comment`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1002;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member_likes`
@@ -425,7 +439,7 @@ ALTER TABLE `member_likes`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post`
 --
 ALTER TABLE `post`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_img`
