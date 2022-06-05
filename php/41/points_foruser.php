@@ -57,11 +57,8 @@ if ($totalRows > 0) {
 }
 
 $a=$_SESSION['user']['member_sid'];
-// $a=$_SESSION['member_sid'];
-// $_SESSION['user']['member_account']
 
 $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$a );
-// $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=1" );
 
 
 

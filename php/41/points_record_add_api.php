@@ -3,13 +3,10 @@ require __DIR__ . '/parts/connect_db.php';
 
 session_start();
 
-
 if (!isset($_SESSION['user']['admin_account'])){
     header('Location:/coffee_project/php/09/admin-login.html');
-    // header('Location: http://www.example.com/');
     exit;
 }
-
 
 header('Content-Type: application/json'); 
 
@@ -19,7 +16,6 @@ $output = [
     'code' => 0,
     'error' => ''
 ];
-
 
 if (empty($_POST['member_account'])) {
     $output['error'] = '沒有會員帳號資料';
@@ -32,7 +28,7 @@ if (empty($_POST['member_account'])) {
 $member_account = $_POST['member_account'];
 $number = $_POST['number'];
 $score = $_POST['score'];
-$date = $_POST['date'];
+// $date = $_POST['date'];
 
 if (!empty($number) and filter_var($number, FILTER_VALIDATE_INT) === false) {
 
@@ -48,35 +44,19 @@ if (!empty($score) and filter_var($score, FILTER_VALIDATE_INT) === false) {
     exit;
 }
 
-
-
 $sql = "INSERT INTO `points_record`(
     `member_sid`, `type`, `points_get`,`create_at`
     ) VALUES (
         ?, ?, ?, NOW()
     )";
 
-// $sql_member_sid = sprintf("SELECT `points_record`.`type`,`points_record`.`points_get`,`points_record`.`create_at`,`member`.`member_account` FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid` WHERE`member`.`member_account`= '%s' ",$member_account) ;
 
 $sql_member_sid = sprintf("SELECT `member_sid` FROM `member` WHERE`member`.`member_account`= '%s'",$member_account);
-
-// SELECT`member`.`member_sid`
-
-
-// $sql_member_sid = sprintf("SELECT `points_record`.`type`,`points_record`.`points_get`,`points_record`.`create_at`,`member`.`member_account` FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid` WHERE`member`.`member_account`= '%s' LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 
 
 $t_member_sid = $pdo->query($sql_member_sid)->fetchAll();
 
 $a =$t_member_sid[0];
-print_r($a);
-
-// $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=1 ");
-// $t_points = $pdo->query($sql_points)->fetchAll();
-// $a = $t_points[0];  找acco = ?
-
-// 找不到怎麼辦
-
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute([
