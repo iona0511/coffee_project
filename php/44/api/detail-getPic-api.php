@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/part/connect_db.php';
+require dirname(dirname(__FILE__)) . '/part/connect_db.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';

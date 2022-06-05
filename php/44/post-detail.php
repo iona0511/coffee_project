@@ -310,7 +310,7 @@ if ($rows['topic_sid'] == 1) {
                 }
             }
 
-            const data = await fetch("post-detail-api.php", {
+            const data = await fetch("api/detail-getPic-api", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
