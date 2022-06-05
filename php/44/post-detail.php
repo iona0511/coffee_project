@@ -2,7 +2,7 @@
 require __DIR__ . '/part/connect_db.php';
 
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : '';
-
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 
 // 判斷有沒有pid，沒有id導回前一頁
 if (empty($pid)) {
@@ -45,6 +45,8 @@ if ($rows['topic_sid'] == 1) {
 } else {
     $topic_name = '其它';
 }
+
+
 
 // echo json_encode($rows, JSON_UNESCAPED_UNICODE);
 ?>
@@ -134,51 +136,58 @@ if ($rows['topic_sid'] == 1) {
                                         <p><?= $v['content'] ?></p>
                                         <div class="comment-msg">
                                             <p class="mr-2"><?= $v['created_at'] ?></p>
-                                            <a data-cid="<?= $v['sid'] ?>" onclick="setCid(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
+                                            <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
                                                 <p>回覆</p>
+                                            </a>
+                                            <a href="delete-cmt.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
+                                                <p>刪除</p>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- 二次留言 -->
                                 <!-- Reply -->
-                                <?php
-                                $cm_rows_id = $v['sid'];
-                                $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
-                                $rply_rows = $pdo->query($rply_sql)->fetchAll();
-                                
-                                if (isset($rply_rows)) :
-                                    foreach ($rply_rows as $rk => $rv) :
-                                ?>
-                                        <div class="d-flex reply-card">
 
-                                            <div class="comment-info">
-                                                <div class="avatar">
-                                                    <i class="fa-solid fa-circle-user text-primary"></i>
+                                <div class="reply-card" id="rpc<?= $v['sid'] ?>">
+                                    <?php
+                                    $cm_rows_id = $v['sid'];
+                                    $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
+                                    $rply_rows = $pdo->query($rply_sql)->fetchAll();
+
+                                    if (isset($rply_rows)) :
+                                        foreach ($rply_rows as $rk => $rv) :
+                                    ?>
+                                            <div class="d-flex">
+                                                <div class="comment-info">
+                                                    <div class="avatar">
+                                                        <i class="fa-solid fa-circle-user text-primary"></i>
+                                                    </div>
+                                                    <div class="info">
+                                                        <span class="c-nickname"><?= $rv['member_nickname'] ?></span>
+                                                        <span class="info-id">#<?= $rv['member_sid'] ?></span>
+                                                    </div>
                                                 </div>
-                                                <div class="info">
-                                                    <span class="c-nickname"><?= $rv['member_nickname'] ?></span>
-                                                    <span class="info-id">#<?= $rv['member_sid'] ?></span>
+                                                <div class="comment-content">
+                                                    <p><?= $rv['content'] ?></p>
+                                                    <div class="comment-msg">
+                                                        <p class="mr-2"><?= $rv['created_at'] ?></p>
+                                                        <a href="delete-rply.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $rk['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
+                                                            <p>刪除</p>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="comment-content">
-                                                <p><?= $rv['content'] ?></p>
-                                                <div class="comment-msg">
-                                                    <p class="mr-2"><?= $rv['created_at'] ?></p>
-                                                </div>
+                                    <?php endforeach;
+                                    endif; ?>
 
-                                            </div>
-                                        </div>
-
-                                <?php endforeach;
-                                endif; ?>
+                                </div>
                         <?php endforeach;
                         endif; ?>
                     </div>
                 </div>
-                <div class="content-bot msg-bar">
+                <div class="content-bot cmt-bar">
                     <input class="form-control form-control-md msg" type="text" placeholder="留言">
-                    <a href="javascript:send_msg();">發佈</a>
+                    <a href="javascript:send_cmt();">發佈</a>
                 </div>
             </div>
             <div class="pic-wrap mh">
@@ -190,7 +199,7 @@ if ($rows['topic_sid'] == 1) {
     <script>
         const pic = document.querySelector(".pic");
         let cidNumber = '';
-        let cidSid = '';
+
 
         function cm_toggle() {
             if (document.querySelector(".comment-wrap").style.display == "none") {
@@ -201,19 +210,34 @@ if ($rows['topic_sid'] == 1) {
         }
 
         function focus_on(name) {
-
             document.querySelector(".msg").focus();
-            document.querySelector(".msg").value = "@" + name;
+            document.querySelector(".msg").placeholder = "@" + name + " ";
         }
 
-        function setCid(event) {
-            console.log(event.currentTarget);
+        function cancel_rply(event) {
+            event.currentTarget.parentNode.remove();
+        }
+
+        function renderInp(event) {
             cidNumber = event.currentTarget.dataset.cid;
-            cidSid = event.currentTarget.dataset.c_sid;
+
+            if (!!document.querySelector(".rply-bar")) {
+                document.querySelector(".rply-bar").remove();
+            }
+
+            console.log(document.querySelector("#rpc" + cidNumber));
+            const el = document.createElement("div");
+            el.classList.add("rply-bar");
+            el.innerHTML = `
+                <input class="form-control form-control-md msg" type="text" placeholder="留言">
+                <a onclick="cancel_rply(event);" href="javascr:;">取消</a>
+                <a href="javascript:send_rply(${cidNumber});">發佈</a>
+            `;
+            document.querySelector("#rpc" + cidNumber).appendChild(el)
         }
 
-        async function send_msg() {
-            const msg = document.querySelector(".msg").value;
+        async function send_cmt() {
+            const msg = document.querySelector(".cmt-bar .msg").value;
 
             const jsonData = JSON.stringify({
                 pid: <?= $pid ?>,
@@ -222,6 +246,29 @@ if ($rows['topic_sid'] == 1) {
 
 
             const data = await fetch("comment-add-api.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            });
+
+            const response = await data.json();
+            console.log(response);
+
+            if (response['success']) history.go(0);
+        }
+
+        async function send_rply(cid) {
+            const msg = document.querySelector(".rply-bar .msg").value;
+
+            const jsonData = JSON.stringify({
+                cid: cid,
+                msg: msg
+            });
+
+
+            const data = await fetch("reply-add-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -245,8 +292,20 @@ if ($rows['topic_sid'] == 1) {
                 // render 編輯/刪除
                 if (response[0].m_sid == <?= $rows['member_sid'] ?>) {
                     document.querySelector(".post-edit").style.display = "block";
+
+                    // if (!!document.querySelectorAll(".cmt-delete")) {
+
+                    //     document.querySelectorAll(".cmt-delete").forEach((el)=>{
+                    //         if (el.dataset.mid=)
+                    //         .style.display = "block";
+                    //     });
+
+                    // }
+                    // document.querySelector(".rply-delete").style.display = "block";
                 } else {
                     document.querySelector(".post-edit").style.display = "none";
+                    // document.querySelector(".cmt-delte").style.display = "none";
+                    // document.querySelector(".rply-delte").style.display = "none";
                 }
             }
 

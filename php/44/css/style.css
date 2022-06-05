@@ -132,7 +132,12 @@ select {
     display: none;
 }
 
-.msg-bar {
+.cmt-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.rply-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -142,7 +147,14 @@ select {
     height: 8%;
 }
 
-.content-bot a {
+.cmt-bar a {
+    padding-left: 10px;
+    width: 50px;
+    line-height: 40px;
+    display: block;
+    flex-shrink: 0;
+}
+.rply-bar a {
     padding-left: 10px;
     width: 50px;
     line-height: 40px;
@@ -202,6 +214,7 @@ select {
 }
 
 .comment-msg {
+   
     display: flex;
     font-size: 12px;
     color: #69696b;

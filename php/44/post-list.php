@@ -1,6 +1,8 @@
 <?php
 require __DIR__ . '/part/connect_db.php';
 
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+
 $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
 $topic = isset($_GET['topic']) ? intval($_GET['topic']) : '';
