@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/part/connect_db.php';
+require dirname(dirname(__FILE__)) . '/part/connect_db.php';
 
 $op_msg = [
     'success' => false,

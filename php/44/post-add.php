@@ -80,7 +80,7 @@ require __DIR__ . '/part/connect_db.php';
             const info_bar = document.querySelector('#info_bar');
             info_bar.style.display = 'none';
 
-            const r = await fetch('post-add-api.php', {
+            const r = await fetch('api/post-add-api.php', {
                 method: 'POST',
                 body: fd,
             });
