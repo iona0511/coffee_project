@@ -93,6 +93,31 @@ select {
 
 
 /* post-detail */
+.page {
+    position: relative;
+    width: 100%;
+}
+
+.page .fa-arrow-left {
+    position: absolute;
+    text-align: center;
+    line-height: 48px;
+    font-size: 20px;
+
+    width: 48px;
+    height: 48px;
+    top: 10px;
+    left: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.page .fa-arrow-left:hover {
+    background-color: rgba(212, 212, 212, 0.537);
+
+}
+
 .container-nis {
     padding-right: var(--bs-gutter-x, .75rem);
     padding-left: var(--bs-gutter-x, .75rem);
@@ -247,7 +272,7 @@ select {
     width: 55%;
     margin-left: auto;
     position: relative;
-    background-color: rgba(219, 219, 219, 0.434);
+    background-color: rgba(239, 235, 229, 0.4);
     overflow-y: hidden;
 }
 
@@ -313,3 +338,66 @@ select {
 
 /* post-detail */
 /* comment */
+
+
+/* post-add */
+#info_bar{
+    transition: .4s;
+}
+
+#photo_container{
+  
+    width: 100%;
+    height: 20vw;
+    min-height: 250px;
+    display: flex;
+    margin-bottom: 10px ;
+}
+
+.p-card{
+    width: 20%;
+    padding-right: 12px;
+    position: relative;
+    overflow-y: hidden;
+}
+.p-card:last-child{
+    padding-right: 0px;
+}
+
+.photoItem{
+   
+    width: 100%;
+    height: 100%;
+    padding-right: 10px;
+}
+
+
+.up-photo{
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.fa-circle-minus{
+    position: absolute;
+    font-size: 25px;
+    text-align: end;
+    width: 30px;
+    height: 30px;
+    top:0;
+    right: 0;
+    color: rgba(134, 134, 134, 0.75);
+    cursor: pointer;
+    z-index: 100;
+}
+.fa-circle-minus:hover{
+    top:0;
+    right: 0;
+    color: rgb(0, 0, 0);
+}
