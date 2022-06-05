@@ -10,6 +10,11 @@ $m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'
 $sql = sprintf("SELECT * FROM `post_img` WHERE `post_sid` = '%s'", $data["pid"]);
 
 $rows = $pdo->query($sql)->fetchAll();
+
+if (empty($rows)) {
+    $rows = $pdo->query("SELECT * FROM `post_img` WHERE `post_sid` = 0")->fetchAll();
+}
+
 $memberInfo = [
     'm_sid' => "$m_sid",
     'm_nickname' => "$m_nickname"
