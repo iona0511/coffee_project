@@ -246,7 +246,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
 
-            const data = await fetch("comment-add-api.php", {
+            const data = await fetch("api/commentAdd-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -269,7 +269,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
 
-            const data = await fetch("reply-add-api.php", {
+            const data = await fetch("api/replyAdd-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
