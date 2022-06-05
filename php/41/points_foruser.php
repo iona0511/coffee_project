@@ -1,13 +1,12 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php 
+require dirname(__DIR__,2) . '/parts/connect_db.php';
 session_start();
 
 
 if (!isset($_SESSION['user']['member_account'])){
     header('Location:/coffee_project/php/09/login.html');
-    // header('Location: http://www.example.com/');
     exit;
 }
-
 
 $pageName = 'points_foruser_get';
 
@@ -24,6 +23,7 @@ if ($type == 2) {
 }
 
 // ============================================
+
 
 $t_sql = sprintf("SELECT COUNT(1)FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`= %s;", $type);
 
@@ -57,11 +57,8 @@ if ($totalRows > 0) {
 }
 
 $a=$_SESSION['user']['member_sid'];
-// $a=$_SESSION['member_sid'];
-// $_SESSION['user']['member_account']
 
 $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$a );
-// $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=1" );
 
 
 
@@ -94,7 +91,6 @@ $a = $t_points[0];
 
     .border_collapse {
         border-collapse: collapse;
-
     }
 
     @keyframes sheen {
@@ -175,12 +171,13 @@ $a = $t_points[0];
     }
     a {
         color: #B79973;
-        text-decoration: underline;
+        text-decoration:none;
     }
     .page-link{
         color: #B79973;
     }
 </style>
+<!-- Button_up -->
 <div class="display_justify_content px24" style="font-weight:bold; margin-top: 20px;">
     <p>積分紀錄</p>
 </div>
@@ -188,7 +185,7 @@ $a = $t_points[0];
     <p style="color: #893429;font-weight: bold;"> <?= $a['total_points'] ?></p>
     <p>可用積分</p>
 </div>
-<!-- 上面的按紐 -->
+<!-- middle -->
 <div class="display_justify_content" style="margin-top:25px;">
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;margin-right:10px;margin-bottom:20px;" class="button <?= $type == 1 ? 'active' : '' ?> " href="?type=1">獲取紀錄</a>
@@ -219,7 +216,7 @@ $a = $t_points[0];
         </table>
     </div>
 </div>
-<!--  -->
+<!-- button_bottom -->
 <div class="row display_justify_content">
     <div class="col-3">
         <nav aria-label="Page navigation example">
