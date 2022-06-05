@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-04 10:33:54
+-- 產生時間： 2022-06-05 22:03:27
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -30,19 +30,22 @@ SET time_zone = "+00:00";
 CREATE TABLE `comment` (
   `sid` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `replies` int(11) NOT NULL,
+  `replies` int(11) NOT NULL DEFAULT 0,
   `created_at` date NOT NULL,
   `post_sid` int(11) NOT NULL,
-  `member_sid` int(11) NOT NULL,
-  `member_nickname` varchar(255) NOT NULL
+  `member_sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `comment`
 --
 
-INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `member_sid`, `member_nickname`) VALUES
-(1, '挖~課程看起來很讚耶char<br>不知道適不適合新手?', 1, '2022-06-03', 1, 1005, '123');
+INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `member_sid`) VALUES
+(1, '挖~課程看起來很讚耶 不知道適不適合新手?', 1, '2022-06-03', 1, 1005),
+(2, '看照片感覺不錯唷', 1, '2022-06-03', 1, 666),
+(3, '感覺讚讚', 0, '2022-06-05', 1, 1005),
+(7, 'aaa', 0, '2022-06-05', 1, 1001),
+(8, 'bcd', 0, '2022-06-05', 1, 1001);
 
 -- --------------------------------------------------------
 
@@ -69,7 +72,8 @@ CREATE TABLE `member` (
 
 INSERT INTO `member` (`member_sid`, `member_name`, `member_nickname`, `member_account`, `member_password`, `member_birthday`, `member_mobile`, `member_adress`, `member_mail`, `member_level`) VALUES
 (666, '子揚', 'Tommy', 'tommy', '1234', NULL, '0975072579', '台北市', 'sky003428@gmail.com', ''),
-(1001, '王小明', '帥氣a小明', 'ming', '1234', NULL, '0975123456', '新北市', 'ming1234@gmail.com', '');
+(1001, '王小明', '帥氣a小明', 'ming', '1234', NULL, '0975123456', '新北市', 'ming1234@gmail.com', ''),
+(1005, '陳大圓', '新手大圓', 'yuan', '1234', NULL, '0975123456', '新北市', 'yuan1234@gmail.com', '');
 
 -- --------------------------------------------------------
 
@@ -108,7 +112,7 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, `likes`, `comments`, `topic_sid`, `created_at`, `updated_at`, `delete_state`) VALUES
-(1, '體驗拉花課程分享', '每次看到咖啡師的拉花作品，再看看咖啡師拉花的動作看似簡單，胃痛一直很想要體驗拉花，想不到自己實際操作一遍，操作起來還真的不簡單啊。', '帥氣a小明', 1001, 2, 1, 1, '2022-05-31 04:35:39', NULL, 0),
+(1, '體驗拉花課程分享', '每次看到咖啡師的拉花作品，再看看咖啡師拉花的動作看似簡單，胃痛一直很想要體驗拉花，想不到自己實際操作一遍，操作起來還真的不簡單啊。', '帥氣a小明', 1001, 2, 2, 1, '2022-05-31 04:35:39', NULL, 0),
 (2, '好喝環境', '深入的探討咖啡，是釐清一切的關鍵。咖啡，到底應該如何實現。若無法徹底理解咖啡，恐怕會是人類的一大遺憾。儘管如此，我們仍然需要對咖啡保持懷疑的態度。徐志摩在不經意間這樣說過，由於我們過於習慣在別人面前戴面具，因此最後導致在自己面前偽裝自己。強烈建議大家把這段話牢牢記住。\r\n    ', '小明', 1011, 0, 0, 1, '2022-01-25 07:01:45', NULL, 0),
 (3, '超讚體驗咖啡課程', '車爾尼雪夫斯基在不經意間這樣說過，一個沒有受到獻身的熱情所鼓舞的人，永遠不會做出什麼偉大的事情來。這是撼動人心的。烏納穆諾曾經認為，在科學裡，嘲笑腐儒，也就類似宗。這似乎解答了我的疑惑。那麼，廢文絕對是史無前例的。', '小美', 1410, 3, 4, 1, '2022-05-05 07:05:40', NULL, 0),
 (4, '超讚體驗馬克杯', ' 這必定是個前衛大膽的想法。拉花課程勢必能夠左右未來。面對如此難題，我們必須設想周全。問題的核心究竟是什麼？在人類的歷史中，我們總是盡了一切努力想搞懂拉花課程。而這些並不是完全重要，更加重要的問題是，拉花課程，發生了會如何，不發生又會如何。', '小明', 1011, 4, 0, 1, '2022-05-30 01:05:12', NULL, 0),
@@ -155,7 +159,7 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 (45, 'hello', '你好嗎', 'tommy', 666, 0, 0, 1, '2022-06-02 04:54:49', NULL, 0),
 (46, 'hello', '我是羊羊', 'Tommy', 666, 0, 0, 1, '2022-06-02 10:56:29', NULL, 0),
 (47, '12', '123', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:02:49', NULL, 0),
-(48, '543', '543', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:04:03', NULL, 0),
+(48, '543', '543', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:04:03', NULL, 1),
 (49, '123', '453', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:05:37', NULL, 0),
 (50, '1434', '5753', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:42:15', NULL, 0),
 (51, '1434', '5753', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:53:58', NULL, 0),
@@ -196,21 +200,21 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 (111, 'abc', '123\r\n456\r\n78', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:02:59', NULL, 0),
 (112, '123', '453', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:05:59', NULL, 0),
 (113, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:06:07', NULL, 0),
-(114, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:03', NULL, 0),
+(114, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:03', NULL, 1),
 (115, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:21', NULL, 0),
-(116, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:38', NULL, 0),
-(117, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:09:54', NULL, 0),
-(118, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:10:05', NULL, 0),
+(116, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:38', NULL, 1),
+(117, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:09:54', NULL, 1),
+(118, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:10:05', NULL, 1),
 (119, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:13', NULL, 0),
-(120, '783', '4353\r\n3273', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:50', NULL, 0),
-(121, '783', '4353<br/>3273<br/>abc', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:17:06', NULL, 0),
+(120, '783', '4353\r\n3273', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:50', NULL, 1),
+(121, '783', '4353<br/>3273<br/>abc', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:17:06', NULL, 1),
 (122, '783', '4353 asd<br/>3273 16<br/>abc<br/><br/>abba', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:24:19', NULL, 0),
 (123, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:21:45', NULL, 0),
-(124, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:06', NULL, 0),
-(125, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:29', NULL, 0),
-(126, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:25', NULL, 0),
+(124, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:06', NULL, 1),
+(125, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:29', NULL, 1),
+(126, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:25', NULL, 1),
 (127, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:46', NULL, 0),
-(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 0);
+(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -221,7 +225,6 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 CREATE TABLE `post_img` (
   `sid` int(11) NOT NULL,
   `img_name` varchar(255) NOT NULL,
-  `img_src` varchar(255) NOT NULL,
   `post_sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -229,8 +232,9 @@ CREATE TABLE `post_img` (
 -- 傾印資料表的資料 `post_img`
 --
 
-INSERT INTO `post_img` (`sid`, `img_name`, `img_src`, `post_sid`) VALUES
-(1, 'dog.jpg', 'uploaded/dog.jpg', 1);
+INSERT INTO `post_img` (`sid`, `img_name`, `post_sid`) VALUES
+(1, 'dog.jpg', 1),
+(666, 'default_pic.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -263,12 +267,22 @@ INSERT INTO `post_tag` (`sid`, `post_sid`, `tag_sid`) VALUES
 CREATE TABLE `reply` (
   `sid` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `reply_sid` int(11) NOT NULL,
+  `comment_sid` int(11) NOT NULL,
   `created_at` date NOT NULL,
-  `post_sid` int(11) NOT NULL,
-  `member_sid` int(11) NOT NULL,
-  `member_nickname` varchar(255) NOT NULL
+  `member_sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `reply`
+--
+
+INSERT INTO `reply` (`sid`, `content`, `comment_sid`, `created_at`, `member_sid`) VALUES
+(1, '這邊的老師都很會教，別擔心', 1, '2022-06-04', 1001),
+(2, '那是肯定阿!', 2, '2022-06-04', 1001),
+(3, '讚讚', 0, '2022-06-05', 1001),
+(4, '讚讚', 0, '2022-06-05', 1001),
+(5, '7373', 0, '2022-06-05', 1001),
+(6, '7373', 1, '2022-06-05', 1001);
 
 -- --------------------------------------------------------
 
@@ -421,13 +435,13 @@ ALTER TABLE `topic`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1002;
+  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member_likes`
@@ -445,7 +459,7 @@ ALTER TABLE `post`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_img`
 --
 ALTER TABLE `post_img`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=667;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_tag`
@@ -457,7 +471,7 @@ ALTER TABLE `post_tag`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `reply`
 --
 ALTER TABLE `reply`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `review`
