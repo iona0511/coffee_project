@@ -7,6 +7,100 @@ if (!isset($_SESSION['user']['member_account'])){
     exit;
 }
 
+$pageName = 'coupon_foruser';
+
+$title = '我的優惠券';
+// ===================================
+$type = isset($_GET['type']) ? intval($_GET['type']) : 1;
+
+
+if ($type == 2) {
+    $type = 2;
+} else {
+    $type = 1;
+}
+// ================
+
+if($type==1){
+    
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW();");
+
+    $perPage = 5;
+
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+    if ($page < 1) {
+        header('Location: ?page=1');
+        exit;
+    }
+
+    $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+
+    $totalPages = ceil($totalRows / $perPage);
+
+    $rows = [];
+
+    if ($totalRows > 0) {
+        if ($page > $totalPages) {
+            // header("Location: ?page=$totalPages");
+            exit;
+        }
+    
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    
+        $rows = $pdo->query($sql)->fetchAll();
+    }
+    
+    $a=$_SESSION['user']['member_sid'];
+    
+    $sql_points = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE`coupon_receive`.`member_sid`=%s",$a );
+    
+    $t_points = $pdo->query($sql_points)->fetchAll();
+    $a = $t_points[0];
+
+}else{
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0;");
+
+    $perPage = 5;
+
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+    if ($page < 1) {
+        header('Location: ?page=1');
+        exit;
+    }
+
+    $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+
+    $totalPages = ceil($totalRows / $perPage);
+
+    $rows = [];
+
+    if ($totalRows > 0) {
+        if ($page > $totalPages) {
+            // header("Location: ?page=$totalPages");
+            exit;
+        }
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0 LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    
+        $rows = $pdo->query($sql)->fetchAll();
+    }
+    $a=$_SESSION['user']['member_sid'];
+    
+    $sql_points = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE`coupon_receive`.`member_sid`=%s",$a );
+    
+    $t_points = $pdo->query($sql_points)->fetchAll();
+    $a = $t_points[0];
+
+}
+
+// SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW()
+
+// SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0;
+
+// ===================================
+
+
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
 
@@ -17,7 +111,6 @@ if (!isset($_SESSION['user']['member_account'])){
     }
     .wrapper {
         display: block;
-        /* transform: translate(-50%, -50%); */
     }
 
     .button {
@@ -62,9 +155,46 @@ if (!isset($_SESSION['user']['member_account'])){
         background-color: #B79973;
         color: #fff;
     }
+    .coupon_style{
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #B79973;
+        border-color: #B79973;
+    }
+    .page-link{
+        color: #B79973;
+    }
+    body{
+        background: url(../41/copon_img/bg_1.png) 50% 100% / cover #000 fixed;
+        
+    }
+    .c_p_disabled{
+        filter:contrast(50%);
+    }
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+    a:hover{
+        background-color: rgba(183, 153, 115, 0.3);
+        border: 1px solid rgba(183, 153, 115, 0.3);
+        color: #fff;
+    }
+
+
+
 </style>
 
-<div class="display_justify_content px24" style="font-weight:bold; margin-top: 20px;">
+<div class="display_justify_content px24" style="font-weight:bold; margin-top: 30px;font-size: 24px;">
     <p>我的優惠券</p>
 </div>
 <!-- 上面的按紐 -->
@@ -74,6 +204,40 @@ if (!isset($_SESSION['user']['member_account'])){
     </div>
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;" class="button <?= $type == 2 ? 'active' : '' ?>" href="?type=2">已使用或過期</a>
+    </div>
+</div>
+<!-- 中間 -->
+<div style="width: 100%;">
+    <div class="display_justify_content coupon_style" style="margin:20px auto;width:60%;flex-direction: column;padding-bottom: 20px;">
+        <?php foreach ($rows as $r) : ?>
+            <a class="display_justify_content" style="width:50%;margin: 5px auto;flex-direction: row;" >
+            <span class="tilt tilt-1"></span><span class="tilt tilt-2"></span><span class="tilt tilt-3"></span><span class="tilt tilt-4"></span><span class="tilt tilt-5"></span><span class="tilt tilt-6"></span><span class="tilt tilt-7"></span><span class="tilt tilt-8"></span><span class="tilt tilt-9"></span><span class="tilt tilt-10"></span><span class="tilt tilt-11"></span><span class="tilt tilt-12"></span><span class="tilt tilt-13"></span><span class="tilt tilt-14"></span><span class="tilt tilt-15"></span>
+                <div style="width: 50%;text-align:right;">
+                    <div>
+                        <img style="width:250px;<?= $type == 2 ? ' display: none;' : '' ?>" src="../41/copon_img/coupon_icon-removebg-preview.png" alt="">
+                    </div>
+                    <div>
+                        <img style="width:250px;<?= $type == 1 ? ' display: none;' : '' ?>" src="../41/copon_img/coupon_icon-removebg-preview_02.png" alt="">
+                    </div>
+                </div>
+                <div style="width: 4%;"></div>
+                <div style="width: 46%;margin-top:25px;text-align:left;">
+                    <div>
+                        <div>
+                            <?= $r['coupon_name'] ?>
+                        </div>
+                        <div style="flex-direction: row;margin-top:25px;">
+                            <div style="font-size: 14px;">
+                                <?= $type == 1 ?$r['end_time'] :$r['used_time']; ?>
+                            </div>
+                            <div style="width: 50px;font-size: 14px;">
+                                <?= $type == 1 ? '到期' : '已過期'; ?>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+        </a>
+        <?php endforeach; ?>
     </div>
 </div>
 

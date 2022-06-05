@@ -24,6 +24,7 @@ if ($type == 2) {
 
 // ============================================
 
+
 $t_sql = sprintf("SELECT COUNT(1)FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`= %s;", $type);
 
 
@@ -170,12 +171,13 @@ $a = $t_points[0];
     }
     a {
         color: #B79973;
-        text-decoration: underline;
+        text-decoration:none;
     }
     .page-link{
         color: #B79973;
     }
 </style>
+<!-- Button_up -->
 <div class="display_justify_content px24" style="font-weight:bold; margin-top: 20px;">
     <p>積分紀錄</p>
 </div>
@@ -183,7 +185,7 @@ $a = $t_points[0];
     <p style="color: #893429;font-weight: bold;"> <?= $a['total_points'] ?></p>
     <p>可用積分</p>
 </div>
-<!-- 上面的按紐 -->
+<!-- middle -->
 <div class="display_justify_content" style="margin-top:25px;">
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;margin-right:10px;margin-bottom:20px;" class="button <?= $type == 1 ? 'active' : '' ?> " href="?type=1">獲取紀錄</a>
@@ -214,7 +216,7 @@ $a = $t_points[0];
         </table>
     </div>
 </div>
-<!-- 下面的按紐 -->
+<!-- button_bottom -->
 <div class="row display_justify_content">
     <div class="col-3">
         <nav aria-label="Page navigation example">
