@@ -341,38 +341,44 @@ select {
 
 
 /* post-add */
-#info_bar{
+#info_bar {
     transition: .4s;
 }
 
-#photo_container{
-  
+#photo_container {
+    overflow-y: hidden;
+    overflow-x: visible;
     width: 100%;
     height: 20vw;
     min-height: 250px;
     display: flex;
-    margin-bottom: 10px ;
+    padding: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.p-card{
-    width: 20%;
-    padding-right: 12px;
-    position: relative;
-    overflow-y: hidden;
+#photo_container::-webkit-scrollbar {
+    display: none;
 }
-.p-card:last-child{
+
+.p-card {
+    width: 20%;
+    padding-right: 1rem;
+}
+
+.p-card:last-child {
     padding-right: 0px;
 }
 
-.photoItem{
-   
+.photoItem {
     width: 100%;
     height: 100%;
-    padding-right: 10px;
+    position: relative;
+   
 }
 
 
-.up-photo{
+.up-photo {
     max-width: 100%;
     width: 100%;
     height: auto;
@@ -384,20 +390,21 @@ select {
     margin: auto;
 }
 
-.fa-circle-minus{
+.fa-circle-minus {
     position: absolute;
-    font-size: 25px;
+    font-size: 20px;
     text-align: end;
-    width: 30px;
-    height: 30px;
-    top:0;
+    width: 26px;
+    height: 26px;
+    top: -6px;
     right: 0;
     color: rgba(134, 134, 134, 0.75);
     cursor: pointer;
-    z-index: 100;
+    transform: translateX(33.3%);
 }
-.fa-circle-minus:hover{
-    top:0;
+
+.fa-circle-minus:hover {
+    top: -8px;
     right: 0;
     color: rgb(0, 0, 0);
 }
