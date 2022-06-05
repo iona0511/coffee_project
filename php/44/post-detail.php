@@ -70,130 +70,131 @@ if ($rows['topic_sid'] == 1) {
 
 <body>
     <?php include __DIR__ . "/part/nav.php" ?>
-
-    <div class="post-wrap d-flex">
-        <div class="pic-wrap mh">
-            <img src="" class="pic" alt="">
-        </div>
-        <div class="post-content">
-            <div class="content-top">
-                <div class="member-info">
-                    <div class="avatar">
-                        <i class="fa-solid fa-circle-user text-primary"></i>
+    <div class="page">
+        <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
+        <div class="post-wrap d-flex">
+            <div class="pic-wrap mh">
+                <img src="" class="pic" alt="">
+            </div>
+            <div class="post-content">
+                <div class="content-top">
+                    <div class="member-info">
+                        <div class="avatar">
+                            <i class="fa-solid fa-circle-user text-primary"></i>
+                        </div>
+                        <div class="info">
+                            <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
+                            <p class="info-id">#<?= $rows['member_sid'] ?></p>
+                        </div>
                     </div>
-                    <div class="info">
-                        <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
-                        <p class="info-id">#<?= $rows['member_sid'] ?></p>
+                    <!-- 找session sid=文章sid才出現 -->
+                    <div class="post-edit mb-2" style="display:none;">
+                        <a class="mr-1" href="post-edit.php?<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
+                        <a href="post-delete-api.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
                     </div>
-                </div>
-                <!-- 找session sid=文章sid才出現 -->
-                <div class="post-edit mb-2" style="display:none;">
-                    <a class="mr-1" href="post-edit.php?<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
-                    <a href="post-delete-api.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
-                </div>
-                <h3 class="mb-3"><?= $rows['title'] ?></h3>
-                <div class="d-flex mb-3">
-                    <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
-                        <?= $topic_name ?>
-                    </a>
-                    <span class="c-date"><?= $rows['created_at'] ?></span>
-                </div>
-                <p class="post-text">
-                    <?= $rows['content'] ?>
-                </p>
-                <div class="tag-bar d-flex">
-                    <?php foreach ($tags as $k => $v) : ?>
-                        <a href="?">
-                            <div class="tag mr-1"><?= $v['name'] ?></div>
+                    <h3 class="mb-3"><?= $rows['title'] ?></h3>
+                    <div class="d-flex mb-3">
+                        <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
+                            <?= $topic_name ?>
                         </a>
-                    <?php endforeach; ?>
-                </div>
-                <div class="social mb-2">
-                    <a href="javascript:;" class="">
-                        <span style="color:black;" class="like">
-                            <i class="fa-solid fa-heart"></i>
-                            <?= $rows['likes'] ?>
-                        </span>
-                    </a>
-                    <a href="javascript:;" class="">
-                        <span style="color:black;" onclick="cm_toggle();">
-                            ・留言<?= !empty($rows['comments']) ? $rows['comments'] : '' ?>
-                        </span>
-                    </a>
-                </div>
-                <!-- 一次回覆 -->
-                <!-- Comment -->
-                <div class="comment-wrap" display="block">
-                    <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
-                            <div class="d-flex comment-card">
-                                <div class="comment-info">
-                                    <div class="avatar">
-                                        <i class="fa-solid fa-circle-user text-pink"></i>
-                                    </div>
-                                    <div class="info">
-                                        <span class="c-nickname"><?= $v['member_nickname'] ?></span>
-                                        <span class="info-id">#<?= $v['member_sid'] ?></span>
-                                    </div>
-                                </div>
-                                <div class="comment-content">
-                                    <p><?= $v['content'] ?></p>
-                                    <div class="comment-msg">
-                                        <p class="mr-2"><?= $v['created_at'] ?></p>
-                                        <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
-                                            <p>回覆</p>
-                                        </a>
-                                        <a href="delete-cmt.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
-                                            <p>刪除</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 二次留言 -->
-                            <!-- Reply -->
-
-                            <div class="reply-card" id="rpc<?= $v['sid'] ?>">
-                                <?php
-                                $cm_rows_id = $v['sid'];
-                                $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
-                                $rply_rows = $pdo->query($rply_sql)->fetchAll();
-
-                                if (isset($rply_rows)) :
-                                    foreach ($rply_rows as $rk => $rv) :
-                                ?>
-                                        <div class="d-flex">
-                                            <div class="comment-info">
-                                                <div class="avatar">
-                                                    <i class="fa-solid fa-circle-user text-primary"></i>
-                                                </div>
-                                                <div class="info">
-                                                    <span class="c-nickname"><?= $rv['member_nickname'] ?></span>
-                                                    <span class="info-id">#<?= $rv['member_sid'] ?></span>
-                                                </div>
-                                            </div>
-                                            <div class="comment-content">
-                                                <p><?= $rv['content'] ?></p>
-                                                <div class="comment-msg">
-                                                    <p class="mr-2"><?= $rv['created_at'] ?></p>
-                                                    <a href="delete-rply.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $rk['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
-                                                        <p>刪除</p>
-                                                    </a>
-                                                </div>
-                                            </div>
+                        <span class="c-date"><?= $rows['created_at'] ?></span>
+                    </div>
+                    <p class="post-text">
+                        <?= $rows['content'] ?>
+                    </p>
+                    <div class="tag-bar d-flex">
+                        <?php foreach ($tags as $k => $v) : ?>
+                            <a href="?">
+                                <div class="tag mr-1"><?= $v['name'] ?></div>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="social mb-2">
+                        <a href="javascript:;" class="">
+                            <span style="color:black;" class="like">
+                                <i class="fa-solid fa-heart"></i>
+                                <?= $rows['likes'] ?>
+                            </span>
+                        </a>
+                        <a href="javascript:;" class="">
+                            <span style="color:black;" onclick="cm_toggle();">
+                                ・留言<?= !empty($rows['comments']) ? $rows['comments'] : '' ?>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- 一次回覆 -->
+                    <!-- Comment -->
+                    <div class="comment-wrap" display="block">
+                        <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
+                                <div class="d-flex comment-card">
+                                    <div class="comment-info">
+                                        <div class="avatar">
+                                            <i class="fa-solid fa-circle-user text-pink"></i>
                                         </div>
-                                <?php endforeach;
-                                endif; ?>
+                                        <div class="info">
+                                            <span class="c-nickname"><?= $v['member_nickname'] ?></span>
+                                            <span class="info-id">#<?= $v['member_sid'] ?></span>
+                                        </div>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p><?= $v['content'] ?></p>
+                                        <div class="comment-msg">
+                                            <p class="mr-2"><?= $v['created_at'] ?></p>
+                                            <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
+                                                <p>回覆</p>
+                                            </a>
+                                            <a href="delete-cmt.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
+                                                <p>刪除</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 二次留言 -->
+                                <!-- Reply -->
 
-                            </div>
-                    <?php endforeach;
-                    endif; ?>
+                                <div class="reply-card" id="rpc<?= $v['sid'] ?>">
+                                    <?php
+                                    $cm_rows_id = $v['sid'];
+                                    $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
+                                    $rply_rows = $pdo->query($rply_sql)->fetchAll();
+
+                                    if (isset($rply_rows)) :
+                                        foreach ($rply_rows as $rk => $rv) :
+                                    ?>
+                                            <div class="d-flex">
+                                                <div class="comment-info">
+                                                    <div class="avatar">
+                                                        <i class="fa-solid fa-circle-user text-primary"></i>
+                                                    </div>
+                                                    <div class="info">
+                                                        <span class="c-nickname"><?= $rv['member_nickname'] ?></span>
+                                                        <span class="info-id">#<?= $rv['member_sid'] ?></span>
+                                                    </div>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <p><?= $rv['content'] ?></p>
+                                                    <div class="comment-msg">
+                                                        <p class="mr-2"><?= $rv['created_at'] ?></p>
+                                                        <a href="delete-rply.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $rk['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
+                                                            <p>刪除</p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php endforeach;
+                                    endif; ?>
+
+                                </div>
+                        <?php endforeach;
+                        endif; ?>
+                    </div>
                 </div>
-            </div>
-            <div class="content-bot cmt-bar">
-                <input class="form-control form-control-md msg" type="text" placeholder="留言">
-                <a href="javascript:send_cmt();">發佈</a>
+                <div class="content-bot cmt-bar">
+                    <input class="form-control form-control-md msg" type="text" placeholder="留言">
+                    <a href="javascript:send_cmt();">發佈</a>
+                </div>
             </div>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -282,14 +283,14 @@ if ($rows['topic_sid'] == 1) {
 
             if (response['success']) history.go(0);
         }
-
+        // Get pic&reder
         async function getData() {
             const pd = JSON.stringify({
                 pid: <?= $pid ?>
             });
 
             function render() {
-                pic.src = response[0].img_src;
+                pic.src = "uploaded/"+response[0].img_name;
                 // render 編輯/刪除
                 if (response[0].m_sid == <?= $rows['member_sid'] ?>) {
                     document.querySelector(".post-edit").style.display = "block";
@@ -310,7 +311,7 @@ if ($rows['topic_sid'] == 1) {
                 }
             }
 
-            const data = await fetch("api/detail-getPic-api", {
+            const data = await fetch("api/detail-getPic-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -319,7 +320,7 @@ if ($rows['topic_sid'] == 1) {
             });
             const response = await data.json();
             console.log(response[0]);
-            console.log(response[0].img_src);
+            console.log(response[0].img_name);
             render();
 
         }
