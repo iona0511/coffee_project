@@ -71,7 +71,7 @@ if ($totalRows > 0) {
     <?php include __DIR__ . "/part/nav.php"; ?>
     <div class="container">
         <h2 class="text-primary mb-3" style="font-weight:bold;">文章列表</h2>
-        
+
         <div class="d-flex">
             <nav aria-label="Page navigation example" id="pagination">
                 <ul class="pagination">
@@ -189,7 +189,7 @@ if ($totalRows > 0) {
                 <?php foreach ($rows as $r) : ?>
                     <tr id="<?= "tr" . $r['sid'] ?>">
                         <td>
-                            <a href="javascript: delete_it(<?= $r['sid'] ?>)">
+                            <a href="javascript:btn_click(<?= $r['sid'] ?>);">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </td>
@@ -209,15 +209,45 @@ if ($totalRows > 0) {
             </tbody>
 
         </table>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn" id="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
+            刪除
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">刪除文章</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        確認刪除?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="cofirm-btn" onclick="">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
+        function btn_click(sid) {
+            document.querySelector(".modal-body").innerHTML = `確定刪除要 <b>編號#${sid}</b> 文章嗎?`;
+            document.querySelector("#cofirm-btn").setAttribute("onclick", `delete_it(${sid})`);
+            btn.click();
+        }
+
         function delete_it(sid) {
 
-            fetch(`post-delete-api.php?sid=${sid}`)
+            fetch(`delete-post.php?sid=${sid}`)
                 .then(data => data.json())
                 .then((data) => {
                     const d = data;
@@ -304,7 +334,7 @@ if ($totalRows > 0) {
             }
 
             const fd = new FormData(document.form1);
-            const data = await fetch("post-list-api.php", {
+            const data = await fetch("api/post-list-api.php", {
                 method: "POST",
                 body: fd,
             });
