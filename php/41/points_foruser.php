@@ -1,13 +1,12 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php 
+require dirname(__DIR__,2) . '/parts/connect_db.php';
 session_start();
 
 
 if (!isset($_SESSION['user']['member_account'])){
     header('Location:/coffee_project/php/09/login.html');
-    // header('Location: http://www.example.com/');
     exit;
 }
-
 
 $pageName = 'points_foruser_get';
 
@@ -91,7 +90,6 @@ $a = $t_points[0];
 
     .border_collapse {
         border-collapse: collapse;
-
     }
 
     @keyframes sheen {
@@ -216,7 +214,7 @@ $a = $t_points[0];
         </table>
     </div>
 </div>
-<!--  -->
+<!-- 下面的按紐 -->
 <div class="row display_justify_content">
     <div class="col-3">
         <nav aria-label="Page navigation example">

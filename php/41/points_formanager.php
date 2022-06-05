@@ -1,4 +1,7 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php
+// require __DIR__ . '/parts/connect_db.php';
+
+require dirname(__DIR__,2) . '/parts/connect_db.php';
 // ======================================
 
 session_start();

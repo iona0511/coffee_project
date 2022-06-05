@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/parts/connect_db.php';
+require dirname(__DIR__,2) . '/parts/connect_db.php';
 
 session_start();
 
@@ -24,11 +24,9 @@ if (empty($_POST['member_account'])) {
     exit;
 }
 
-// $member_sid = $_POST['member_sid'];
 $member_account = $_POST['member_account'];
 $number = $_POST['number'];
 $score = $_POST['score'];
-// $date = $_POST['date'];
 
 if (!empty($number) and filter_var($number, FILTER_VALIDATE_INT) === false) {
 
