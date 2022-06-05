@@ -40,13 +40,8 @@ require __DIR__ . '/part/connect_db.php';
                 上傳多張照片
             </button>
             <input type="hidden" name="photos" value="[]" />
-            <div id="photo_container">
-                <div class="p-card">
-                    <div class="photoItem" style="display: inline-block" data-f="${f}">
-                        <img class="up-photo" src="./uploaded/dog.jpg" alt="" />
-                        <i class="fa-solid fa-circle-minus" onclick="delete_pic(event);"></i>
-                    </div>
-                </div>
+            <div id="photo_container" style="display:none;">
+                <!-- 上傳照位置 -->
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">文章內容</label>
@@ -66,13 +61,14 @@ require __DIR__ . '/part/connect_db.php';
         </form>
 
         <form name="form1" style="display: none">
-            <input type="file" name="photos[]" accept="image/*" multiple />
+            <input type="file" name="photos[]" accept="image/png, image/jpeg" multiple />
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
         const photos = document.form1.elements[0];
         const container = document.querySelector(".container");
+        const p_container = document.querySelector("#photo_container");
         let photoAr = [];
 
 
@@ -138,6 +134,11 @@ require __DIR__ . '/part/connect_db.php';
         }
 
         photos.addEventListener("change", async function() {
+            if(photos.files.length >5){
+                alert('最多隻能新增五張圖片'); 
+                return; 
+            }
+            
             const pData = new FormData(document.form1);
             const r = await fetch("api/uploadPic-api.php", {
                 method: "POST",
@@ -154,6 +155,7 @@ require __DIR__ . '/part/connect_db.php';
             document.querySelectorAll(".photoItem").forEach((el) => {
                 photoAr.push(el.getAttribute("data-f"));
             });
+            document.querySelector("#photo_container").style.display="flex";
             document.main_form.photos.value = JSON.stringify(photoAr);
         });
     </script>

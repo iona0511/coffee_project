@@ -1,18 +1,21 @@
 <?php
 require dirname(dirname(__FILE__)) . '/part/connect_db.php';
 
+
+
 $op_msg = [
     'success' => false,
     'postData' => $_POST,
     'error' => '',
     'postId' => 0,
     'tag' => '',
-    'poster' => ''
+    'poster' => '',
+    'pics' => 0
 ];
 
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
 $m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
-
+$photos = json_decode($_POST['photos'], true);
 
 if (empty($_POST['title'])) {
     $op_msg['error'] = '沒有文章標題';
@@ -32,6 +35,18 @@ if (empty($_POST['title'])) {
 } elseif (empty($m_sid)) {
     $op_msg['error'] = '請先登入';
     $op_msg['code'] = 300;
+    echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
+    exit;
+} 
+
+if (count($photos) >= 1 ) {
+    $op_msg['error'] = '沒有上傳圖片';
+    $op_msg['code'] = 400;
+    echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
+    exit;
+}elseif(count($photos) >5){
+    $op_msg['error'] = '圖片超過規定上傳數量';
+    $op_msg['code'] = 400;
     echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -56,8 +71,6 @@ $sql = "INSERT INTO `post`(
     )";
 
 
-
-
 $stmt = $pdo->prepare($sql);
 
 // $stmt->execute([
@@ -72,9 +85,22 @@ $stmt->execute([
 ]);
 
 
+$postSid = $pdo->lastInsertId();
+
+// 新增row進Post_pic 
+foreach ($photos as $k => $f_name) {
+    $sql = "INSERT INTO `post_img`(`img_name`, `post_sid`) 
+    VALUES (?, ?)";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$f_name, $postSid]);
+    $op_msg['pics']++;
+}
+
+
+
 if ($stmt->rowCount() == 1) {
     $op_msg['success'] = true;
-    $postSid = $pdo->lastInsertId();
     $op_msg['postId'] = $postSid;
     $op_msg['poster'] = $m_sid;
 
