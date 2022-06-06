@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="fontawesome/css/all.css" />
+
     <style>
     *{
         box-sizing: border-box;
@@ -14,7 +16,7 @@
         height:650px;
         position:relative;
         margin:2% auto;
-        background:rgba(0,0,0,0.3);
+        background:rgba(195, 223, 255, 0.37);
         padding:10px;
     }
     .input-field{
@@ -37,41 +39,58 @@
         margin-right: 15px;
     }
 
-    .input-group-register{
-        display: block;
-        margin-top: 50px;
-        transition:.5s;
-    }
-
     .input-group-edit{
         position:absolute;
         top: 100px;
-	    width: 500px;
+        width: 450px;
+        left: 0;
     }
-    .login-form{
+    .edit-form{
         text-align: center;
         margin: auto;
         margin-bottom: 50px;
     }
-    .re-btn{
+    .ed-btn{
         width: 280px;
         padding: 10px 30px;
         cursor: pointer;
         display: block;
         margin: auto;
-        margin-top: 50px;
         background: hsl(24, 100%, 86%);
         border: 0;
         outline: none;
         border-radius: 30px;
+        position:absolute;
+        bottom: -100px;
+        left: 265px;
+    }
+    .avatarZone{
+        width: 300px;
+        height: 300px;
+        border: 1.5px solid #999;
+        position:absolute;
+        top: 115px;
+        right: 8%;
+    }
+    #uploadBtn{
+        position:absolute;
+        top: 40%;
+        right: 21.5%;
+        border: 0;
+    }
+    #myImg{
+        width: 300px;
+        height: 300px;
+        opacity:0;
     }
 
     </style>
 </head>
 <body>
-    <div id='login-form'class='login-page'>
+    <div id='edit-form'class='edit-page'>
         <div class="form-box">
-            <form id='edit' class='input-group-edit' name="form1" onsubmit="sendData();return false;" novalidate>
+            <form id='edit' class='input-group-edit' name="form1" onsubmit="sendData(),renderPic() ;return false;" novalidate>
+                <!-- <input type="hidden" name="member_sid" value=""> -->
                 <div class="form-row">
                     <div class="form-title">姓名：</div>
                     <input type='text'class='input-field' id="member_name" name="member_name"  required>
@@ -94,7 +113,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-title">生日：</div>
-                    <input type="text" class= 'input-field' id="birthday" name="birthday">      
+                    <input type="date" class= 'input-field' id="member_birthday" name="member_birthday">      
                 </div>
                 <div class="form-row">
                     <div class="form-title">手機：</div>
@@ -111,17 +130,25 @@
                     <input type='email'class='input-field' id="member_mail" name="member_mail" required>
                     <!-- <div class="form-text"></div> -->
                 </div>
-                <button type='submit'class='re-btn'>確認修改</button>
+                <button type='submit'class='ed-btn'>確認修改</button>
             </form>
+            <form name="form2" action="upload-avatar-api.php" method="post" enctype="multipart/form-data" onsubmit="return false;" style="display: none">
+                <input type="file" name="avatar" accept="image/*" onchange="changeImg(event)" >
+            </form>           
+            <div class="avatarZone">
+                <img id="myImg" src="" alt="">
+            </div>
+            <button id="uploadBtn" onclick="uploadAvatar()">上傳頭貼&nbsp;<i class="fa-solid fa-images"></i></button>
         </div>
     </div>
 </div>
 
 <script>
 
-    async function sendData() {
+    // 編輯送出
+    function sendData() {
         const fd = new FormData(document.form1);
-        await fetch("edit-api.php",{
+        fetch("edit-api.php",{
         method:'POST',
         body:fd
     })    
@@ -129,9 +156,105 @@
         .then((r) => r.json())
         .then((obj) => {
         data = obj;
-    });
+        // console.log(obj);
 
+        if(obj.success){
+            alert("修改完成！");
+            window.location.href='welcome.php';
+        }else{
+            alert("資料沒有修改");
+        }
+        // form1.member_sid.value = obj.postData.sid;
+    });
+    
+};
+
+// const renderData = async () => {
+//     await fetch("edit-read-api.php")
+//     .then(r=>r.json())
+//     .then((obj)=> {
+//         const form1 =document.form1;
+//         inputS= form1.querySelectorAll('.form-row input');
+//         form1.member_name.value = obj.postData.member_name;
+//     }
+    
+//     )};
+    
+//     renderData();
+
+// 讀取資料庫並印在欄位上
+const renderData = async () => {
+    await fetch("edit-read-api.php")
+    .then(r=>r.json())
+    .then((obj)=> {
+        const form1 =document.form1;
+    
+        inputS= form1.querySelectorAll('.form-row input');
+        // console.log(inputS);
+        for ( let i = 0; i < inputS.length; i++ ){
+            inputS[i].value = obj.postData[i+1];
+        }
+    }
+    
+    )};
+    
+    renderData();
+
+// 頭貼上傳
+const myImg = document.querySelector("#myImg");
+const uploadBtn = document.querySelector("#uploadBtn");
+const avatar = document.form2.avatar;
+
+avatar.addEventListener("change", async function (){
+    const fd = new FormData(document.form2)
+    const r = await fetch("upload-avatar-api.php",{
+        method:"POST",
+        body:fd,
+    });
+    const obj = await r.json();
+    console.log(obj);
+    myImg.src = "./uploaded/" + obj.filename; 
+    if(obj.error){
+        alert("頭貼沒有修改");
+    }
+});
+
+function uploadAvatar(){
+    avatar.click();
 }
+
+// 預覽頭貼
+function changeImg(){
+    const file = event.currentTarget.files[0];
+    console.log(file);
+    const reader = new FileReader();
+    reader.onload = function(){
+        console.log(reader.result);
+        document.querySelector("#myImg").src = reader.result;
+
+        if( reader.result != ""){
+        myImg.style.opacity = 1;
+        uploadBtn.style.top= 70 + "%";
+    }
+
+    }
+    reader.readAsDataURL(file);
+}
+
+
+const renderPic = async () => {
+    await fetch("edit-read-api.php")
+    .then(r=>r.json())
+    .then((obj)=> {
+        myImg.src = '/php09/uploaded/'+ obj.filename ;  
+
+        if( obj.filename != ""){
+        myImg.style.opacity = 1;
+        uploadBtn.style.top= 70 + "%";
+    } 
+    }   
+    )};
+    renderPic();
 
 
 </script>

@@ -49,12 +49,14 @@ foreach( $rrr as $k => $v){
                     
                     $_SESSION['user'] = [
                         'member_account' => $_POST['member_account'],
+                        'member_sid' => $v['member_sid'],
                         'member_name' => $v['member_name'],
                         'member_nickname' => $v['member_nickname'],
                         'member_birthday' => $v['member_birthday'],
                         'member_mobile' => $v['member_mobile'],
                         'member_mail' => $v['member_mail'],
                         'member_level' => $v['member_level'],
+                        'avatar' => $v['avatar'],
                     ];
 
                     $output['session'] = $_SESSION['user'] ;
