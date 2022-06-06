@@ -1,4 +1,4 @@
-<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 
 $pageName = 'lastest-news';
 $title = '最新消息';
@@ -30,8 +30,8 @@ if ($totalRows > 0) {
     $rows = $pdo->query($sql)->fetchAll();
 }
 ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-head.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/navbar.php'; ?>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -113,7 +113,7 @@ if ($totalRows > 0) {
 </div>
 
 
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/scripts.php'; ?>
 
 <script>
     function delete_it(news_sid) {
@@ -123,4 +123,4 @@ if ($totalRows > 0) {
     }
 </script>
 
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-foot.php'; ?>
