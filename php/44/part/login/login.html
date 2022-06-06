@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .form-box {
+            width: 500px;
+            height: 650px;
+            position: relative;
+            margin: 2% auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+        }
+
+        .input-field {
+            width: 50%;
+            padding: 10px 0;
+            margin: 5px 0;
+            border-left: 0;
+            border-top: 0;
+            border-right: 0;
+            border-bottom: 1px solid #999;
+            outline: none;
+            background: transparent;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-title {
+            margin-right: 15px;
+        }
+
+        .buttonBox {
+            width: 220px;
+            margin: 35px auto;
+            position: relative;
+            border-radius: 30px;
+        }
+
+        .input-group-register {
+            display: none;
+            margin-top: 50px;
+            transition: .5s;
+        }
+
+        .toggle-btn {
+            padding: 10px 30px;
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+            outline: none;
+            position: relative;
+        }
+
+        .input-group-login {
+            position: absolute;
+            top: 200px;
+            width: 500px;
+            transition: .5s;
+        }
+
+        .login-form {
+            text-align: center;
+            margin: auto;
+            margin-bottom: 50px;
+        }
+
+        .submit-btn {
+            width: 250px;
+            padding: 10px 30px;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+            background: hsl(24, 100%, 86%);
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+        }
+
+        .re-btn {
+            width: 280px;
+            padding: 10px 30px;
+            cursor: pointer;
+            display: block;
+            margin: auto;
+            margin-top: 50px;
+            background: hsl(24, 100%, 86%);
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+        }
+
+        .btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 90px;
+            height: 38px;
+            background: hsl(24, 100%, 86%);
+            border-radius: 30px;
+            transition: .65s;
+        }
+
+        .btn-right {
+            transform: translateX(100%);
+        }
+
+        .fail {
+            width: 250px;
+            height: 50px;
+            margin: auto;
+            margin-top: 80px;
+            color: white;
+            background-color: red;
+            text-align: center;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='login-form' class='login-page'>
+        <div class="form-box">
+            <div class='buttonBox'>
+                <div class="btn"></div>
+                <button type='button' onclick='loginclick()' class='toggle-btn'>登入</button>
+                <button type='button' onclick='registerclick()' class='toggle-btn'>註冊</button>
+            </div>
+
+            <form id='login' class='input-group-login' name="form2" onsubmit="sendLog();return false;" novalidate>
+                <div class="login-form">
+                    <input type='text' class='input-field' name="member_account" placeholder='帳號' required>
+                    <input type='password' class='input-field' name="member_password" placeholder='密碼' required>
+                </div>
+                <div>
+                    <button type='submit' class='submit-btn'>登入</button>
+                    <p class="formText"></p>
+                </div>
+            </form>
+
+            <form id='register' class='input-group-register' name="form1" onsubmit="sendData();return false;"
+                novalidate>
+                <div class="form-row">
+                    <div class="form-title">姓名：</div>
+                    <input type='text' class='input-field' id="member_name" name="member_name" placeholder='姓名'
+                        required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">暱稱：</div>
+                    <input type='text' class='input-field' id="member_nickname" name="member_nickname" placeholder='暱稱'
+                        required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">帳號：</div>
+                    <input type='text' class='input-field' id="member_account" name="member_account" placeholder='帳號'
+                        required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">密碼：</div>
+                    <input type='password' class='input-field' id="member_password" name="member_password"
+                        placeholder='密碼' required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">生日：</div>
+                    <input type="date" class='input-field' id="birthday" name="birthday">
+                </div>
+                <div class="form-row">
+                    <div class="form-title">手機：</div>
+                    <input type='password' class='input-field' id="member_mobile" name="member_mobile"
+                        placeholder='手機號碼' required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">地址：</div>
+                    <input type='text' class='input-field' id="member_address" name="member_address" placeholder='地址'
+                        required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <div class="form-row">
+                    <div class="form-title">信箱：</div>
+                    <input type='email' class='input-field' id="member_mail" name="member_mail" placeholder='信箱'
+                        required>
+                    <!-- <div class="form-text"></div> -->
+                </div>
+                <button type='submit' class='re-btn'>確認註冊</button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const login = document.getElementById('login');
+        const register = document.getElementById('register');
+        const button = document.querySelector('.btn');
+        const formText = document.querySelector(".formText");
+
+        function loginclick() {
+            login.style.display = "block";
+            register.style.display = "none";
+            button.classList.remove("btn-right");
+        }
+
+        function registerclick() {
+            login.style.display = "none";
+            register.style.display = "block";
+            button.classList.add("btn-right");
+        }
+
+        async function sendData() {
+            const fd = new FormData(document.form1);
+            // fd.append("member_name","123")
+            await fetch("register-api.php", {
+                method: 'POST',
+                body: fd
+            })
+                .then((r) => r.json())
+                .then((obj) => {
+                    data = obj;
+                });
+        }
+
+        async function sendLog() {
+            const fd = new FormData(document.form2);
+            await fetch("login-api.php", {
+                method: 'POST',
+                body: fd
+            })
+
+                .then((r) => r.json())
+                .then((obj) => {
+                    data = obj;
+
+                    console.log(obj);
+
+                    if (data.success) {
+                        history.go(-1);
+
+                    } else {
+                        formText.classList.add("fail");
+                        formText.innerText = '錯誤';
+                    }
+
+
+                });
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>

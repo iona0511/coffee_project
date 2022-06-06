@@ -14,7 +14,6 @@ if ($page < 1) {
     exit;
 }
 
-// 先算總共有幾筆, 再去算總共有幾頁
 $t_sql = "SELECT count(1) FROM products";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
@@ -40,6 +39,19 @@ if ($totalRows > 0) {
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
 
+<head>
+    <style>
+        .products_add_btn {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .products_single_img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 
 <!-- server side render -->
@@ -121,8 +133,14 @@ if ($totalRows > 0) {
                     <td><?= $r['products_onsale'] ? '是' : '否'; ?></td>
                     <td><?= $r['products_stocks'] ?></td>
                     <td><?= $r['products_categroies_name'] ?></td>
-                    <td><?= $r['products_pic_one'] ?></td>
-                    <td><?= $r['products_pic_multi'] ?></td>
+                    <td><img class="products_single_img" src="
+                            <?php if ($r['products_pic_one']) : echo '/coffee_project/images/' . $r['products_pic_one'];
+                            endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" /></td>
+                    <td>
+                        <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
+                            <img class="products_multi_img" src="<?= '/coffee_project/images/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
+                        <?php endfor; ?>
+                    </td>
                     <td><?= $r['products_style_filter_categroies'] ?></td>
                     <td><a href="products_edit.php?products_sid=<?= $r['products_sid'] ?>">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -130,9 +148,11 @@ if ($totalRows > 0) {
                 </tr>
             <?php endforeach; ?>
         </tbody>
+    </table>
+    <a class="products_add_btn" href="products_add.php">
+        <button type="button" class="btn btn-primary">新增</button>
+    </a>
 </div>
-
-</table>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php' ?>
 <script>
     function delete_it(sid) {

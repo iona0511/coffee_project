@@ -1,5 +1,7 @@
 <?php
-require __DIR__ . '/connect_db.php';
+require __DIR__ . '/part/connect_db.php';
+
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : '';
 
 $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
@@ -59,60 +61,17 @@ if ($totalRows > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>文章列表</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <style>
-        .ml-auto {
-            margin-left: auto;
-        }
-
-        .mr-20 {
-            margin-right: 20px;
-        }
-
-        #show-ppg {
-            display: flex;
-        }
-
-        .show-span {
-            align-self: center;
-
-        }
-
-        select {
-            border-radius: 4px;
-            border-color: #dee2e6;
-        }
-
-        .search-select {
-            border-right: 0px;
-            border-radius: 4px 0 0 4px;
-            border-color: #dee2e6;
-
-        }
-
-        #search {
-            border-radius: 0 4px 4px 0;
-            border-width: 0.5px;
-            border-style: solid;
-            margin-right: 5px;
-            padding: 0px;
-            border-color: #dee2e6;
-            box-shadow: none;
-            outline: none;
-        }
-
-        .search-result {
-            display: flex;
-            align-items: end;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <?php include __DIR__ . "/part/nav.php"; ?>
     <div class="container">
-        <h2 class="text-primary" style="font-weight:bold;">文章列表</h2>
+        <h2 class="text-primary mb-3" style="font-weight:bold;">文章列表</h2>
+
         <div class="d-flex">
             <nav aria-label="Page navigation example" id="pagination">
                 <ul class="pagination">
@@ -145,7 +104,7 @@ if ($totalRows > 0) {
                     </li>
                 </ul>
             </nav>
-            <div class="h-75" id="show-ppg">
+            <div class="h-75 mx-3" id="show-ppg">
                 <span class="show-span"">每頁</span>
                 <div class=" dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -171,7 +130,8 @@ if ($totalRows > 0) {
             <span class="show-span">列顯示</span>
         </div>
         <div class="search-result" style="display: none;">
-            <h3 style="font-weight:bold;">搜尋紀錄</h3>
+            <h3 style="font-weight:bold;" class="mr-1">搜尋紀錄</h3>
+            <span class="mr-1" id="rows_length"></span>
             <span><a href="?page=1" class="link-danger">清除</a></span>
         </div>
 
@@ -199,10 +159,10 @@ if ($totalRows > 0) {
                     ?>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="?">全部分享</a></li>
-                    <li><a class="dropdown-item" href="?topic=1">課程分享</a></li>
-                    <li><a class="dropdown-item" href="?topic=2">商品分享</a></li>
-                    <li><a class="dropdown-item" href="?topic=3">其它</a></li>
+                    <li><a class="dropdown-item" href="?ppg=<?= $perPage ?>">全部分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=1&ppg=<?= $perPage ?>">課程分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=2&ppg=<?= $perPage ?>">商品分享</a></li>
+                    <li><a class="dropdown-item" href="?topic=3%ppg=<?= $perPage ?>">其它</a></li>
                 </ul>
             </div>
         </div>
@@ -229,7 +189,7 @@ if ($totalRows > 0) {
                 <?php foreach ($rows as $r) : ?>
                     <tr id="<?= "tr" . $r['sid'] ?>">
                         <td>
-                            <a href="javascript: delete_it(<?= $r['sid'] ?>)">
+                            <a href="javascript:btn_click(<?= $r['sid'] ?>);">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </td>
@@ -249,15 +209,45 @@ if ($totalRows > 0) {
             </tbody>
 
         </table>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn" id="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
+            刪除
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">刪除文章</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        確認刪除?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="cofirm-btn" onclick="">確認</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
+        function btn_click(sid) {
+            document.querySelector(".modal-body").innerHTML = `確定刪除要 <b>編號#${sid}</b> 文章嗎?`;
+            document.querySelector("#cofirm-btn").setAttribute("onclick", `delete_it(${sid})`);
+            btn.click();
+        }
+
         function delete_it(sid) {
 
-            fetch(`post-delete-api.php?sid=${sid}`)
+            fetch(`delete-post.php?sid=${sid}`)
                 .then(data => data.json())
                 .then((data) => {
                     const d = data;
@@ -283,7 +273,7 @@ if ($totalRows > 0) {
                 document.querySelector("#pagination").style.display = "none";
                 document.querySelector("#show-ppg").style.display = "none";
                 document.querySelector(".search-result").style.display = "flex";
-                if(document.querySelector("#more")){
+                if (document.querySelector("#more")) {
                     document.querySelector("#more").remove();
                 }
             }
@@ -298,6 +288,9 @@ if ($totalRows > 0) {
 
                 for (let ind in rows) {
                     const v = rows[ind];
+                    document.querySelector('#rows_length').innerText = `共(${rows.length})筆`;
+
+
                     if (rows.length > 0) {
                         const rowContent = `<td>
                             <a href="javascript: delete_it(${v['sid']})">
@@ -327,13 +320,12 @@ if ($totalRows > 0) {
                                 //印出查看更多按鈕
                                 const continueBtn = document.createElement("h3");
                                 continueBtn.classList.add("continue");
-                                continueBtn.innerHTML = `<div id="more" onclick="more()">查看更多...(${rows.length-10})筆</div>`;
+                                continueBtn.innerHTML = `<btn id="more" class="btn btn-primary" onclick="more()">查看更多...</ㄖ>`;
                                 table.parentNode.appendChild(continueBtn);
                             }
                             tbody.innerHTML += `<tr class="tr" id="tr${v['sid']}" style="display:none;">
                                                     ${rowContent}
                                                 </tr>`;
-
                         }
 
                     }
@@ -342,14 +334,13 @@ if ($totalRows > 0) {
             }
 
             const fd = new FormData(document.form1);
-            const data = await fetch("post-list-api.php", {
+            const data = await fetch("api/post-list-api.php", {
                 method: "POST",
                 body: fd,
             });
             const rows = await data.json();
 
             console.log(rows);
-            let recoding_rows_ind = 0;
             clear_tbody();
             render();
         });

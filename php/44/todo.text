@@ -1,0 +1,32 @@
+
+post-add多筆標籤
+
+detail 多筆圖片顯示
+post-edit
+post-likes
+
+-----------------------------------------------
+商品評論 
+*DB 商品 Table,Cart Table
+
+評論頁
+
+新增評論,編輯評論() 串接會員session，判斷id == 已購買
+刪除評論(後台list?) 
+
+member 歷史文章
+
+(post-add標籤即時預覽)
+-----------------------------------------------
+Done:
+6/4
+nav串接會員登入
+post-add 串接會員session，判斷id
+detail 串接會員，判斷編輯刪除
+
+6/5
+改資料夾結構
+detail切版
+detail comment add
+detail reply add
+post-add.api上傳多張圖片

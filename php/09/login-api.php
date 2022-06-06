@@ -1,6 +1,6 @@
 <?php
 session_start();
-require __DIR__ . '/parts/connect_db.php';
+require dirname(__DIR__,2) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 
 
