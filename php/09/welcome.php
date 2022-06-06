@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/parts/connect_db.php';
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 if (! isset($_SESSION)) {
     session_start();
 }
@@ -33,9 +33,6 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 .card{
     width: 500px;
     height: 300px;
-    /* background: linear-gradient(135deg, rgba(255, 255, 255, 0.1)); */
-    /* backdrop-filter: blur(10px); */
-    /* -webkit-backdrop-filter: blur(10px); */
     border-radius: 20px;
     border:1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
@@ -49,9 +46,7 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 .flipped {
     transform: rotateY(180deg);
 }
-/* .z{
-    z-index: 1;
-} */
+
 
 .cardF{
     position: relative;
@@ -173,7 +168,6 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 
     card.addEventListener("click", function (e) {
     card.classList.toggle('flipped');
-    // cardB.classList.toggle('z');
     });
 
 
