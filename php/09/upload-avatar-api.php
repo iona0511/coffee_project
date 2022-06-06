@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require __DIR__ . '/parts/connect_db.php';
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 if (! isset($_SESSION)) {
     session_start();
 }
@@ -32,7 +32,7 @@ if (empty($extMap[$_FILES['avatar']['type']])) {
     exit;
 }
 
-// $ext = $extMap[$_FILES['avatar']['type']];
+
 $filename = $_FILES['avatar']['name'];
 $output['filename'] = $filename;
 
