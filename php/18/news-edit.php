@@ -1,4 +1,4 @@
-<?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 $pageName = 'news-edit';
 $title = '消息編輯頁';
 
@@ -18,8 +18,8 @@ if (empty($row)) {
 
 
 ?>
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/navbar.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -27,6 +27,12 @@ if (empty($row)) {
 
     .form-text.red {
         color: red;
+    }
+
+    .act {
+        display: flex;
+        flex-direction: row;
+        height: 30px;
     }
 </style>
 <div class="container">
@@ -44,21 +50,41 @@ if (empty($row)) {
                             <div class="form-text red"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="news_class_sid" class="form-label">活動類別</label>
-                            <input type="text" class="form-control" id="news_class_sid" name="news_class_sid" value="<?= $row['news_class_sid'] ?>">
+                            <label for="news_class" class="form-label">活動類別</label>
+                            </br>
+                            <!-- 這邊無法顯示出資料庫裡的類別，可以參考老師的01 form -->
+                            <select name="news_class" id="news_class" value="<?= $row['news_class'] ?>">
+                                <option value="">-- 請選擇 --</option>
+                                <?php foreach ($row_class as $r) : ?>
+                                    <option value="<?= $r['news_class_sid'] ?>">
+                                        <?= $r['news_class_name'] ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                             <div class="form-text red"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="news_content" class="form-label">活動內容</label>
-                            <input type="text" class="form-control" id="news_content" name="news_content" value="<?= $row['news_content'] ?>">
-                            <div class="form-text red"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="news_date" class="form-label">活動區間</label>
+
+                      
+                        <label for="news_start_date" class="form-label">活動區間</label>
+                        <div class="mb-3 act">                         
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date" value="<?= $row['news_start_date'] ?>">
                             <div class="form-text red"></div>
                             <p>~</p>
                             <input type="date" class="form-control w-2" id="news_end_date" name="news_end_date" value="<?= $row['news_end_date'] ?>">
+                            <div class="form-text red"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="news_content" class="form-label">活動內容</label>
+                            <!-- <input type="text" class="form-control" id="news_content" name="news_content" value="<?= $row['news_content'] ?>"> -->
+                            <textarea type="text" class="form-control" id="news_content" name="news_content" value="<?= $row['news_content'] ?>"></textarea>
+                            <div class="form-text red"></div>
+                        </div>
+ 
+                        <div class="mb-3">
+                            <label for="news_img" class="form-label">活動圖片</label>
+                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>  
+                            <div id="preview"></div>
                             <div class="form-text red"></div>
                         </div>
 
@@ -71,7 +97,6 @@ if (empty($row)) {
             </div>
         </div>
     </div>
-
 </div>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
 
@@ -81,13 +106,14 @@ if (empty($row)) {
     const info_bar = document.querySelector('#info_bar');
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
-    const class_sid_f = document.form1.news_class_sid;
+    // const class_sid_f = document.form1.news_class_sid;
+    const class_name_f = document.form1.news_class_name;
     const start_date_f = document.form1.news_start_date;
     const end_date_f = document.form1.news_end_date;
     const content_f = document.form1.news_content;
     const img_f = document.form1.news_img;
     //這裡要確認資料庫欄位是否名稱有對應到
-    const fields = [title_f, class_sid_f, start_date_f, end_date_f, content_f, img_f];
+    const fields = [title_f, class_name_f, start_date_f, end_date_f, content_f, img_f];
 
     const fieldTexts = [];
 
@@ -125,7 +151,7 @@ if (empty($row)) {
             // name_f.nextElementSibling.classList.add('red');
             // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
             fields[0].classList.add('red');
-            fieldTexts[0].innerText = '標題至少要10個字';
+            fieldTexts[0].innerText = '內容至少要10個字';
             isPass = false;
         }
 

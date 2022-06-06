@@ -45,9 +45,9 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
                             <div class="form-text red"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="news_class" class="form-label">活動類別</label>
+                            <label for="news_class_name" class="form-label">活動類別</label>
                             </br>
-                            <select name="news_class" id="news_class">
+                            <select name="news_class_name" id="news_class_name">
                                 <option value="">-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
                                     <option value="<?= $r['news_class_sid'] ?>">
@@ -97,13 +97,13 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
-    const class_f = document.form1.news_class;
+    const class_name_f = document.form1.news_class_name;
     const start_date_f = document.form1.news_start_date;
     const end_date_f = document.form1.news_end_date;
     const content_f = document.form1.news_content;
     const img_f = document.form1.news_img;
     //這裡要確認資料庫欄位是否名稱有對應到
-    const fields = [title_f, class_f, start_date_f, end_date_f, content_f, img_f];
+    const fields = [title_f, class_name_f, start_date_f, end_date_f, content_f, img_f];
 
     const fieldTexts = [];
 
@@ -171,6 +171,7 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
             body: fd,
         });
 
+        console.log(r);
         const result = await r.json();
         console.log(result);
 
