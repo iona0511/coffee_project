@@ -14,8 +14,17 @@
             rel="stylesheet"
             href="fontawesome-free-6.1.1-web/fontawesome-free-6.1.1-web/css/all.css"
         />
+        <link rel="stylesheet" href="delete-data-test.html" />
+
         <title>Document</title>
         <style>
+            .mb {
+                margin-bottom: 70px;
+            }
+            .title {
+                font-weight: bold;
+                padding-bottom: 10px;
+            }
             .pic {
                 width: 200px;
                 border: 1px solid #333;
@@ -27,9 +36,16 @@
                 border: 1px solid #333;
                 width: 600px;
                 position: relative;
+                border-radius: 10px;
+                box-shadow: 1px 1px 6px 1px #333;
             }
             .btnWrap {
                 text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .btn {
+                width: 250px;
             }
             a {
                 color: #fff;
@@ -42,26 +58,41 @@
             }
             .photoItem > img {
                 width: 200px;
+                height: 200px;
             }
 
             #photo_container2 {
-                margin-top: 25px;
+                margin-top: 20px;
             }
             #photo_container {
-                margin-top: 25px;
+                margin-top: 20px;
             }
             .btn-danger {
                 padding: 0;
                 margin-right: 30px;
+            }
+            .btn-danger > a {
+                display: block;
+                width: 100%;
+                height: 100%;
             }
             .form1 {
                 justify-content: space-between;
             }
 
             #btn {
+                padding: 3px 0;
                 width: 200px;
                 position: absolute;
-                top: 40%;
+                top: 30.5%;
+                background-color: #333;
+                color: #fff;
+                border-radius: 5px;
+            }
+
+            .borderTop {
+                border-top: 2px dotted #333;
+                padding-top: 20px;
             }
         </style>
     </head>
@@ -78,13 +109,13 @@
                             <div id="photo_container"></div>
                             <div id="photo_container2"></div>
                             <button id="btn" onclick="uploadAvatar()">
-                                上傳照片
+                                課程照片
                             </button>
                             <input type="hidden" name="course_img_s" value="" />
                         </div>
                         <div>
-                            <div>課程名稱</div>
-                            <div class="form-floating mb-3">
+                            <div class="mt-3 title">課程名稱</div>
+                            <div class="form-floating mb-5">
                                 <input
                                     type="text"
                                     class="course_name"
@@ -92,48 +123,14 @@
                                 />
                                 <label for="course_name"></label>
                             </div>
-                            <div>課程價格</div>
-                            <div class="form-floating mb-3">
+                            <div class="title">課程價格</div>
+                            <div class="form-floating mb">
                                 <input
                                     type="text"
                                     class="course_price"
                                     name="course_price"
                                 />
                                 <label for="course_price"></label>
-                            </div>
-
-                            <div>適合對象</div>
-                            <div class="form-floating mb-3">
-                                <textarea
-                                    class="course_people"
-                                    name="course_people"
-                                    rows="3"
-                                    cols="30"
-                                    required
-                                ></textarea>
-                                <label for="course_people"></label>
-                            </div>
-                            <div>課程內容</div>
-                            <div class="form-floating mb-3">
-                                <textarea
-                                    class="course_content"
-                                    name="course_content"
-                                    rows="3"
-                                    cols="30"
-                                    required
-                                ></textarea>
-                                <label for="course_content"></label>
-                            </div>
-                            <div>需要材料</div>
-                            <div class="form-floating mb-3">
-                                <textarea
-                                    class="course_material"
-                                    name="course_material"
-                                    rows="3"
-                                    cols="30"
-                                    required
-                                ></textarea>
-                                <label for="course_material"></label>
                             </div>
                             <select
                                 class="form-select form-select-sm mb-5 course_level"
@@ -146,6 +143,39 @@
                                 <option value="3">高級</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="borderTop title">適合對象</div>
+                    <div class="form-floating mb-3">
+                        <textarea
+                            class="course_people"
+                            name="course_people"
+                            rows="3"
+                            cols="69"
+                            required
+                        ></textarea>
+                        <label for="course_people"></label>
+                    </div>
+                    <div class="title">課程內容</div>
+                    <div class="form-floating mb-3">
+                        <textarea
+                            class="course_content"
+                            name="course_content"
+                            rows="3"
+                            cols="69"
+                            required
+                        ></textarea>
+                        <label for="course_content"></label>
+                    </div>
+                    <div class="title">需要材料</div>
+                    <div class="form-floating mb-5">
+                        <textarea
+                            class="course_material"
+                            name="course_material"
+                            rows="3"
+                            cols="69"
+                            required
+                        ></textarea>
+                        <label for="course_material"></label>
                     </div>
                     <div class="container btnWrap">
                         <button type="button" class="btn btn-danger">
@@ -168,14 +198,14 @@
                 </form>
             </div>
         </div>
-
+        <!-- <script type="text/javascript" src="delete-data.js"></script> -->
         <script>
             const btn = document.querySelector("#btn");
             const photoContainer = document.querySelector("#photo_container");
             const photoContainer2 = document.querySelector("#photo_container2");
             const avatar = document.form2.elements[0];
 
-            function getData() {
+            function editData() {
                 fetch("class-index-api.php")
                     .then((response) => {
                         return response.json();
@@ -193,10 +223,10 @@
                                 document.querySelector(".course_people");
                             course_material =
                                 document.querySelector(".course_material");
-                            if (
-                                window.location.href.slice(-1) ===
-                                data[j].course_sid
-                            ) {
+                            sid = localStorage.getItem("sid");
+                            console.log(sid);
+
+                            if (sid === data[j].course_sid) {
                                 courseName.value = data[j].course_name;
                                 course_price.value = data[j].course_price;
                                 course_level.value = data[j].course_level;
@@ -205,13 +235,10 @@
                                 course_material.value = data[j].course_material;
                                 data[j].course_img_s === ""
                                     ? 0
-                                    : (photoContainer2.innerHTML = ` <img src="./uploaded/${data[j].course_img_s}" alt="" style="width:200px; " />`);
+                                    : (photoContainer2.innerHTML = ` <img src="./uploaded/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
                             }
 
-                            if (
-                                window.location.href.slice(-2) ===
-                                data[j].course_sid
-                            ) {
+                            if (sid === data[j].course_sid) {
                                 courseName.value = data[j].course_name;
                                 course_price.value = data[j].course_price;
                                 course_level.value = data[j].course_level;
@@ -220,18 +247,13 @@
                                 course_material.value = data[j].course_material;
                                 data[j].course_img_s === ""
                                     ? 0
-                                    : (photoContainer2.innerHTML = ` <img src="./uploaded/${data[j].course_img_s}" alt="" style="width:200px; " />`);
+                                    : (photoContainer2.innerHTML = ` <img src="./uploaded/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
                             }
                         }
                     });
             }
-            getData();
-            for (let i = 0; i < 10; i++) {
-                sid =
-                    window.location.href.slice(-2) === `?${i}`
-                        ? window.location.href.slice(-2)
-                        : window.location.href.slice(-1);
-            }
+            editData();
+
             async function sendData() {
                 const fd = new FormData(document.form1);
 
