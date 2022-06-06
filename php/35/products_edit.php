@@ -196,17 +196,18 @@ if (empty($row)) {
     }
 
     function changeMultiImg() {
-        if (event.currentTarget.files.length < 3) {
+        if (event.currentTarget.files.length <= 3) {
             for (i = 0; i < event.currentTarget.files.length; i++) {
                 let file = event.currentTarget.files[i];
                 console.log(file);
                 let reader = new FileReader();
                 let idName = `#products_pic_multi${i}`;
+                // wrap.innerHTML = '';
                 // 資料載入後 (讀取完成後)
-                console.log(reader.result);
+                // console.log(reader.result);
                 reader.onload = function() {
-                    console.log(reader.result);
-                    console.log(document.querySelector(idName));
+                    // console.log(reader.result);
+                    // console.log(document.querySelector(idName));
                     document.querySelector(idName).style.display = 'block';
                     document.querySelector(idName).src = reader.result;
                 };
