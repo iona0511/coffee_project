@@ -11,12 +11,15 @@ $db_name = 'coffee'; //資料庫名稱, 所選定的資料庫
 // $db_pass = 'admin';
 // $db_name = 'mydb';
 
-
-
 // $db_host = 'localhost'; 
 // $db_user = 'Rowan'; 
 // $db_pass = 'admin';
 // $db_name = 'coffee'; 
+
+// $db_host = 'localhost';
+// $db_user = 'hunterluo';
+// $db_pass = 'admin';
+// $db_name = 'coffee';
 
 $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
 
