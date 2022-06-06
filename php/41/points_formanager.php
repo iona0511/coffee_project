@@ -42,17 +42,11 @@ if ($totalRows > 0) {
         exit;
     }
 
-    // $sql = sprintf("SELECT`points_user`.`total_points`,`points_user`.`voucher_amount`,`member`.`member_sid`,`member`.`member_account`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid` LIMIT %s, %s",($page - 1) * $perPage, $perPage);
-
     $sql = sprintf("SELECT`points_user`.`total_points`,`points_user`.`voucher_amount`,`member`.`member_sid`,`member`.`member_account`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`");
 
-
     if(isset($_GET['account'])){
-    
         $member_account = $_GET['account'];
         $sql = $sql.sprintf(" WHERE `member`.`member_account`= '%s'",$member_account);
-
-        // print_r($sql);
     }
 
     $sql = $sql.sprintf(" LIMIT %s, %s",($page - 1) * $perPage, $perPage);

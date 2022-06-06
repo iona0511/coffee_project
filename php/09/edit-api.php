@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/parts/connect_db.php';
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 if (! isset($_SESSION)) {
     session_start();
@@ -49,6 +49,7 @@ $stmtpic = $pdo->query("SELECT `avatar` FROM `member` WHERE `member_sid`= $sid")
 
 if ($stmt->rowCount() == 1) {
     $output['success'] = true;
+    $_SESSION['user']['member_name'] = $_POST['member_name']; 
 } else{
     $output['error'] = '資料沒有修改';
 }
