@@ -1,4 +1,4 @@
-<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 
 header('Content-Type: application/json');
 // echo json_encode($_POST, JSON_UNESCAPED_UNICODE);

@@ -1,12 +1,21 @@
-<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+<?php 
+require dirname(__DIR__,2) . '/parts/connect_db.php';
+session_start();
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    // header('Location: http://www.example.com/');
+    exit;
+}
+
 $pageName = 'news-insert';
 $title = '新增消息';
 
 $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
 ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-head.php'; ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar.php'; ?>
 <style>
     .form-control.red {
         border: 1px soid blue;
@@ -14,6 +23,11 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
     .form-text.red {
         color: red;
+    }
+    .act {
+        display: flex;
+        flex-direction: row;
+        height: 30px;
     }
 </style>
 <div class="container">
@@ -32,6 +46,7 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
                         </div>
                         <div class="mb-3">
                             <label for="news_class" class="form-label">活動類別</label>
+                            </br>
                             <select name="news_class" id="news_class">
                                 <option value="">-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
@@ -42,13 +57,14 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
                             </select>
                             <div class="form-text red"></div>
                         </div>
+
                         <div class="mb-3">
                             <label for="news_content" class="form-label">活動內容</label>
                             <textarea type="text" class="form-control" id="news_content" name="news_content"></textarea>
                             <div class="form-text red"></div>
-                        </div>
-                        <div class="mb-3">
+
                             <label for="news_start_date" class="form-label">活動區間</label>
+                        <div class="mb-3 act">                         
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date">
                             <p>~</p>
                             <input type="date" class="form-control w-2" id="news_end_date" name="news_end_date">
@@ -74,7 +90,7 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
     </div>
 </div>
 
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php'; ?>
 <script>
     const info_bar = document.querySelector('#info_bar');
     const title = document.form1.news_title;
@@ -132,4 +148,4 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
     }
 </script>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-foot.php'; ?>
