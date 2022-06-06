@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 $pageName = 'user_list';
 $title = '會員資料';
