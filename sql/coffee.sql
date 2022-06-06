@@ -114,7 +114,7 @@ CREATE TABLE `coupon` (
   `coupon_name` varchar(255) NOT NULL,
   `coupon_send_type` int(11) NOT NULL,
   `coupon_setting_type` int(11) NOT NULL,
-  `coupon_money` int(255) NOT NULL,
+  `coupon_money` varchar(255) NOT NULL,
   `menu_sid` int(11) DEFAULT NULL,
   `products_sid` int(11) DEFAULT NULL,
   `type` int(11) NOT NULL,
@@ -127,16 +127,16 @@ CREATE TABLE `coupon` (
 --
 
 INSERT INTO `coupon` (`sid`, `coupon_name`, `coupon_send_type`, `coupon_setting_type`, `coupon_money`, `menu_sid`, `products_sid`, `type`, `coupon_validity_period`, `coupon_status`) VALUES
-(1, '生日優惠券', 1, 1, 100, 0, 0, 3, 12, 1),
-(2, '註冊優惠券', 2, 1, 100, 0, 0, 3, 12, 1),
-(3, '遊戲_轉盤_優惠券', 3, 2, 1, 1, 0, 1, 6, 1),
-(4, '遊戲_轉盤_優惠券', 3, 2, 1, 3, 0, 1, 6, 1),
-(5, '遊戲_轉盤_優惠券', 3, 2, 1, 9, 0, 1, 6, 1),
-(6, '遊戲_轉盤_優惠券', 3, 2, 1, 16, 0, 1, 6, 1),
-(7, '遊戲_轉盤_優惠券', 3, 2, 1, 19, 0, 1, 6, 1),
-(8, '遊戲_轉盤_優惠券', 3, 2, 1, 0, 1, 2, 6, 1),
-(9, '遊戲_轉盤_優惠券', 3, 2, 1, 0, 3, 2, 6, 1),
-(10, '購物優惠券', 4, 2, 1, 0, 0, 3, 6, 1);
+(1, '生日優惠券$100', 1, 1, '100', 0, 0, 3, 12, 1),
+(2, '註冊優惠券$100', 2, 1, '100', 0, 0, 3, 12, 1),
+(3, '咖啡拿鐵5折', 3, 2, '0.5', 1, 0, 1, 6, 1),
+(4, '卡布奇諾5折', 3, 2, '0.5', 3, 0, 1, 6, 1),
+(5, '義式摩卡75折', 3, 2, '0.75', 9, 0, 1, 6, 1),
+(6, '耶加雪菲75折', 3, 2, '0.75', 16, 0, 1, 6, 1),
+(7, '宇治奶茶8折', 3, 2, '0.8', 19, 0, 1, 6, 1),
+(8, '精選曼巴咖啡組8折', 3, 2, '0.8', 0, 1, 2, 6, 1),
+(9, '黃金曼特寧組9折', 3, 2, '0.8', 0, 3, 2, 6, 1),
+(10, '購物優惠券9折', 4, 2, '0.9', 0, 0, 3, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -149,8 +149,16 @@ CREATE TABLE `coupon_logs` (
   `member_sid` int(11) NOT NULL,
   `coupon_receive_sid` int(11) NOT NULL,
   `order_sid` int(11) NOT NULL,
-  `used_time` datetime NOT NULL
+  `used_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `coupon_logs`
+--
+
+INSERT INTO `coupon_logs` (`sid`, `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`) VALUES
+(1, 1, 2, 0, NULL),
+(2, 2, 4, 0, '2022-06-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -172,7 +180,7 @@ CREATE TABLE `coupon_receive` (
 --
 
 INSERT INTO `coupon_receive` (`sid`, `member_sid`, `coupon_sid`, `create_time`, `end_time`, `status`) VALUES
-(1, 1, 1, '2022-03-28 00:00:00', '2023-03-28 00:00:00', 0),
+(1, 1, 1, '2021-03-24 00:00:00', '2022-03-24 00:00:00', 0),
 (2, 1, 2, '2022-03-31 00:00:00', '2023-03-31 00:00:00', 0),
 (3, 1, 3, '2022-05-07 00:00:00', '2023-11-07 00:00:00', 0),
 (4, 2, 4, '2022-05-07 00:00:00', '2023-11-07 00:00:00', 0),
@@ -1025,7 +1033,7 @@ ALTER TABLE `coupon`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `coupon_logs`
 --
 ALTER TABLE `coupon_logs`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `coupon_receive`
