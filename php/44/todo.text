@@ -1,7 +1,6 @@
 
 post-add多筆標籤
 
-detail 多筆圖片顯示
 post-edit
 post-likes
 
@@ -29,4 +28,8 @@ detail 串接會員，判斷編輯刪除
 detail切版
 detail comment add
 detail reply add
+
+6/6
 post-add.api上傳多張圖片
+detail 多筆圖片顯示
+圖片slider

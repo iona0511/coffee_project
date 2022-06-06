@@ -71,10 +71,21 @@ if ($rows['topic_sid'] == 1) {
 <body>
     <?php include __DIR__ . "/part/nav.php" ?>
     <div class="page">
+
         <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
         <div class="post-wrap d-flex">
-            <div class="pic-wrap mh">
+            <div class="pic-wrap" id="p_wrap">
+                <div class="drag-row">
+
+                </div>
                 <!-- <img src="" class="pic" alt=""> -->
+                <div class="drag-nav">
+                    <ul class="nav-ul">
+                        <li class="drag-ctrl n-selected"><i class="fa-solid fa-circle"></i></li>
+                        <li class="drag-ctrl"><i class="fa-solid fa-circle"></i></li>
+                        <li class="drag-ctrl"><i class="fa-solid fa-circle"></i></li>
+                    </ul>
+                </div>
             </div>
             <div class="post-content">
                 <div class="content-top">
@@ -161,7 +172,7 @@ if ($rows['topic_sid'] == 1) {
                                     if (isset($rply_rows)) :
                                         foreach ($rply_rows as $rk => $rv) :
                                     ?>
-                                            <div class="d-flex">
+                                            <div class="d-flex pt-1">
                                                 <div class="comment-info">
                                                     <div class="avatar">
                                                         <i class="fa-solid fa-circle-user text-primary"></i>
@@ -195,11 +206,14 @@ if ($rows['topic_sid'] == 1) {
                 </div>
             </div>
         </div>
+        <div class="control" style="text-align:center;margin-top: 10px;">
+            <button type="button" onclick="prev_pic();">prev</button>
+            <button type="button" onclick="next_pic();">next</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
-        const pic = document.querySelector(".pic");
         let cidNumber = '';
 
 
@@ -227,7 +241,6 @@ if ($rows['topic_sid'] == 1) {
                 document.querySelector(".rply-bar").remove();
             }
 
-            console.log(document.querySelector("#rpc" + cidNumber));
             const el = document.createElement("div");
             el.classList.add("rply-bar");
             el.innerHTML = `
@@ -290,10 +303,16 @@ if ($rows['topic_sid'] == 1) {
             });
 
             function render(r) {
+                const d_row = document.querySelector(".drag-row");
+                d_row.style.width = r.length * 100 + "%";
                 for (let v of r) {
-                    document.querySelector(".pic-wrap").innerHTML += `<img src="uploaded/${v.img_name}" class="pic" alt="">`;
-                    console.log(v);
+                    d_row.innerHTML += `
+                    <div class="drag-col">
+                    <img src="uploaded/${v.img_name}" class="pic" alt="">
+                    </div>
+                    `;
                 }
+                document.querySelector(".drag-col").classList.add("selected");
 
 
                 // render 編輯/刪除
@@ -314,12 +333,63 @@ if ($rows['topic_sid'] == 1) {
             });
             const response = await data.json();
             console.log(response);
-            console.log(response[0].img_name);
             render(response);
 
         }
         getData();
+        let s_ind = 0;
+
+        function drag(direction) {
+
+            const p_wrap = document.querySelector("#p_wrap");
+            const d_row = document.querySelector(".drag-row");
+            const d_cols = document.querySelectorAll(".drag-col");
+            const cols = d_cols.length;
+
+            const wrap_width = p_wrap.getBoundingClientRect().width; //wrap寬
+
+            if (direction > 0) {
+                // 往右邊滑
+                d_cols[s_ind].classList.remove("selected");
+                if (s_ind < (cols - 1)) {
+                    s_ind++;
+                    d_row.style.left = (d_row.offsetLeft - wrap_width) + "px";
+                } else {
+                    s_ind = 0;
+                    d_row.style.left = "0px";
+                }
+                d_cols[s_ind].classList.add("selected");
+                // d_row.style.left = (d_row.offsetLeft - wrap_width) + "px";
+                const selected = document.querySelector(".selected");
+
+            } else {
+                // 往左邊滑
+                d_cols[s_ind].classList.remove("selected");
+                if (s_ind > 0) {
+                    s_ind--;
+                    d_row.style.left = (d_row.offsetLeft + wrap_width) + "px";
+                } else {
+                    s_ind = cols - 1;
+                    d_row.style.left = -d_cols[s_ind].offsetLeft + "px";
+                    console.log(d_cols[s_ind].offsetLeft);
+
+                }
+                d_cols[s_ind].classList.add("selected");
+                // d_row.style.left = (d_row.offsetLeft + wrap_width) + "px";
+                const selected = document.querySelector(".selected");
+            }
+        }
+
+        const prev_pic = () => {
+            drag(-1);
+
+        };
+        const next_pic = () => {
+            drag(1);
+
+        };
     </script>
+
 </body>
 
 </html>
