@@ -78,7 +78,7 @@ if ($totalRows > 0) {
     
 </style>
 
-<div class="display_justify_content" style=" width:1200px;margin:20px auto;font-size:24px;">會員積分資料(For Demo)</div>
+<div class="display_justify_content" style=" width:1200px;margin:20px auto;font-size:24px;">新增會員積分紀錄(For Demo)</div>
 <div class="display_justify_content" style="height: 500px; width:1200px;margin-top:25px; margin:20px auto;" >
     <table class="table table-striped" >
         <thead>
