@@ -27,9 +27,9 @@ $name = $_POST['course_name'];
 $price = $_POST['course_price'];
 $level = $_POST['course_level'];
 $img = $_POST['course_img_s'];
-$course_content = $_POST['course_content'];
-$course_people = $_POST['course_people'];
-$course_material = $_POST['course_material'];
+$content = $_POST['course_content'];
+$people = $_POST['course_people'];
+$material = $_POST['course_material'];
 
 
 
@@ -42,9 +42,9 @@ $stmt->execute([
     $price,
     $level,
     $img,
-    $course_content,
-    $course_people,
-    $course_material
+    $content,
+    $people,
+    $material
 
 ]);
 

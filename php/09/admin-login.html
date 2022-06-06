@@ -99,6 +99,21 @@
     .btn-right{
         transform: translateX(100%);
     }
+    .shuffle{
+        position: absolute;
+        bottom: 20px;
+        right: 50px;
+        font-size: .6rem;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        outline: none;
+        background: transparent;
+    }
+    .shuffle:hover{
+        color: white;
+    }
     </style>
 </head>
 <body>
@@ -113,6 +128,7 @@
                     <button type='submit'class='submit-btn'>管理者登入</button>
                 </div>
             </form>
+            <button class="shuffle">切換至一般用戶</button>
         </div> 
     </div>
 
@@ -136,6 +152,11 @@
     }
 
     }
+
+    const shuffle = document.querySelector(".shuffle");
+    shuffle.addEventListener('click',()=>{
+        window.location.href='login.html';
+    })
     
 </script>
 

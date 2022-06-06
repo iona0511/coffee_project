@@ -460,8 +460,8 @@ INSERT INTO `points_record` (`sid`, `member_sid`, `type`, `points_get`, `create_
 CREATE TABLE `points_user` (
   `sid` int(11) NOT NULL,
   `member_sid` int(11) NOT NULL,
-  `total_points` int(255) NOT NULL,
-  `voucher_amount` int(11) NOT NULL
+  `total_points` int(255) DEFAULT NULL,
+  `voucher_amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -470,7 +470,10 @@ CREATE TABLE `points_user` (
 
 INSERT INTO `points_user` (`sid`, `member_sid`, `total_points`, `voucher_amount`) VALUES
 (1, 1, 200, 1),
-(2, 2, 340, 2);
+(2, 2, 340, 2),
+(3, 3, 700, 5),
+(4, 4, 1200, 3),
+(5, 5, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1093,7 +1096,7 @@ ALTER TABLE `points_record`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_user`
 --
 ALTER TABLE `points_user`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post`

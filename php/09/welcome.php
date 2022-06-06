@@ -1,6 +1,11 @@
 <?php
-session_start();
 require __DIR__ . '/parts/connect_db.php';
+if (! isset($_SESSION)) {
+    session_start();
+}
+// 解決跨頁無法取得SESSION的問題
+$sid = isset($_SESSION['user']['member_sid']) ? intval($_SESSION['user']['member_sid']) : 0;
+$row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 
 
 ?>
@@ -15,6 +20,7 @@ require __DIR__ . '/parts/connect_db.php';
 </head>
 <style>
     *{
+        box-sizing: border-box;
         margin: 0;
     }
 .container{
@@ -22,14 +28,14 @@ require __DIR__ . '/parts/connect_db.php';
     width: 100%;
     height: 100vh;
     background-size: cover;
-    /* background-image: url(./imgs/pexels-gradienta-7134986.jpg); */
+    background-image: url(./imgs/pexels-gradienta-7134986.jpg);
 }
 .card{
     width: 500px;
     height: 300px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* background: linear-gradient(135deg, rgba(255, 255, 255, 0.1)); */
+    /* backdrop-filter: blur(10px); */
+    /* -webkit-backdrop-filter: blur(10px); */
     border-radius: 20px;
     border:1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
@@ -43,13 +49,17 @@ require __DIR__ . '/parts/connect_db.php';
 .flipped {
     transform: rotateY(180deg);
 }
+/* .z{
+    z-index: 1;
+} */
 
 .cardF{
     position: relative;
     width: 500px;
     height: 300px;
     border-radius: 20px;
-    background-color: lightgray;   
+    background-color: rgba(240, 255, 255, 0.1);
+    backface-visibility: hidden; 
 }
 .cardB{
     position: absolute;
@@ -58,50 +68,116 @@ require __DIR__ . '/parts/connect_db.php';
     width: 500px;
     height: 300px;
     border-radius: 20px;
-    background-color: black;   
+    background-color: rgba(240, 255, 255, 0.1);
     transform: rotateY(180deg);
+    backface-visibility: hidden; 
 }
 
 .btn{
     width: 250px;
-    padding: 10px 30px;
+    padding: 0;
     cursor: pointer;
-    background: hsl(24, 100%, 86%);
+    background: black;
     border: 0;
     outline: none;
+    margin-top: 30px;
     } 
 
+.btn>a{
+    display: inline-block;
+    padding: 10px 80px;
+    text-decoration: none;
+    color:white;
+}
+.cardText{
+    font-size: 1.3rem;
+    position: absolute;
+    top: 45%;
+    right: 20%;
+}
+.cardLogo{
+    position: absolute;
+    font-size: 1.5rem;
+    top: 27%;
+    left: 15%;
+}
+.cardID{
+    position: absolute;
+    font-size: 1rem;
+    top: 65%;
+    right: 20%;
+}
+.userText{
+    font-size: 3rem;
+}
+
+.userText>span{
+    font-size: 1.5rem;
+}
+.memCenter{
+    position: absolute;
+    top: 45%;
+    left: 20%;
+}
+.silver{
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+}
+.gold{
+    background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+}
 </style>
+
 <body>
-    
-    <?php if (isset($_SESSION['user'])) : ?>
-        <h2><?= $_SESSION['user']['member_nickname'] ?> 您好！</h2>
-    <?php endif; ?>  
-    
-    <div>
-        <button type='submit'class='btn'>進入會員中心</button>
-    </div>
+
 
     <div class="container">
-        <div class="card">      
+        <div class="card">         
             <div class="cardF">
-                <?= $_SESSION['user']['member_nickname'] ?>
-                <?= $_SESSION['user']['member_level']."points" ?>
+                <?php if ($_SESSION['user']['member_level']>1000) : echo "<div class='gold'></div>"; elseif($_SESSION['user']['member_level']>500): echo "<div class='silver'></div>"; endif; ?>
+                <div class="cardLogo">
+                    <img src="./imgs/member-card-logo.png" alt="">
+                </div>
+                <p class="cardText"><?= $row['member_name'] ?></p>
+                <p class="cardID"><span>ID:</span><?= "&nbsp".$_SESSION['user']['member_sid']=str_pad($_SESSION['user']['member_sid'],6,"0",STR_PAD_LEFT) ?></p>                
             </div>
-            <div class="cardB"></div>
+            <div class="cardB">
+                <?php if ($_SESSION['user']['member_level']>1000) : echo "<div class='gold'></div>"; elseif($_SESSION['user']['member_level']>500): echo "<div class='silver'></div>"; endif; ?>
+                <p class="cardText"><?= $_SESSION['user']['member_level']."&nbsp"."&nbsp"."points" ?></p>
+            </div>
         </div>
+
+        <div class="memCenter">
+            <?php if (isset($_SESSION['user'])) : ?>
+                <!-- 解決跨頁無法取得SESSION的問題 -->
+                <h2 class="userText"><?= $row['member_nickname'] ?> <span>您好！</span></h2>
+            <?php endif; ?>  
+        
+            <button type='submit'class='btn'><a href="edit.html">進入會員中心</a></button>
+        </div>
+        
     </div>
 
 
     <script>
 
+    
     const card = document.querySelector(".card");
     const cardF = document.querySelector(".cardF");
     const cardB = document.querySelector(".cardB");
 
     card.addEventListener("click", function (e) {
     card.classList.toggle('flipped');
+    // cardB.classList.toggle('z');
     });
+
+
+
 
     </script>
 </body>

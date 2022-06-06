@@ -112,6 +112,21 @@
         text-align: center;
         padding: 15px 0;
     }
+    .shuffle{
+        position: absolute;
+        bottom: -230px;
+        right: 50px;
+        font-size: .6rem;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        outline: none;
+        background: transparent;
+    }
+    .shuffle:hover{
+        color: white;
+    }
 
     </style>
 </head>
@@ -133,6 +148,7 @@
                 <button type='submit'class='submit-btn'>登入</button>
                 <p class="formText"></p>
             </div>
+            <button class="shuffle">切換至管理者登入</button>
         </form>
 
         <form id='register' class='input-group-register' name="form1" onsubmit="sendData();return false;" novalidate>
@@ -158,11 +174,11 @@
             </div>
             <div class="form-row">
                 <div class="form-title">生日：</div>
-                <input type="date" class= 'input-field' id="birthday" name="birthday">      
+                <input type="date" class= 'input-field' id="member_birthday" name="member_birthday">      
             </div>
             <div class="form-row">
                 <div class="form-title">手機：</div>
-                <input type='password'class='input-field' id="member_mobile" name="member_mobile" placeholder='手機號碼' required>
+                <input type='text'class='input-field' id="member_mobile" name="member_mobile" placeholder='手機號碼' required>
                 <!-- <div class="form-text"></div> -->
             </div>
             <div class="form-row">
@@ -177,6 +193,7 @@
             </div>
             <button type='submit'class='re-btn'>確認註冊</button>
         </form>
+
         </div>
     </div>
 </div>
@@ -186,6 +203,7 @@
     const register = document.getElementById('register');
     const button = document.querySelector('.btn');
     const formText = document.querySelector(".formText");
+    const shuffle = document.querySelector(".shuffle");
 
     function loginclick(){
         login.style.display = "block";
@@ -199,6 +217,10 @@
         button.classList.add("btn-right");
     }
 
+    shuffle.addEventListener('click',()=>{
+        window.location.href='admin-login.html';
+    })
+
     async function sendData() {
         const fd = new FormData(document.form1);
     // fd.append("member_name","123")
@@ -209,7 +231,14 @@
         .then((r) => r.json())
         .then((obj) => {
         data = obj;
+        
+        if(data.success){
+        alert("會員註冊成功！");       
+        // window.location.href='首頁';
+    }
+
     });
+
     }
 
     async function sendLog() {
@@ -230,7 +259,7 @@
 
     }else{
         formText.classList.add("fail");
-        formText.innerText = '錯誤';
+        formText.innerText = '帳號或密碼錯誤';
     }
 
 

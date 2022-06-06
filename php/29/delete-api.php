@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/connect_db.php';
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+// require __DIR__ . '/connect_db.php';
 
 $sid = isset($_POST['course_sid']) ? intval($_POST['course_sid']) : 0;
 
