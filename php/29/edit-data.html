@@ -208,7 +208,6 @@
             const photoContainer = document.querySelector("#photo_container");
             const photoContainer2 = document.querySelector("#photo_container2");
             const avatar = document.form2.elements[0];
-            let on = 1;
 
             function editData() {
                 fetch("./class-index-api.php")
@@ -297,9 +296,6 @@
                     photoAr.push(el.getAttribute("data-f"));
                 });
                 document.form1.course_img_s.value = photoAr;
-                // console.log(photoAr);
-                // console.log(document.form1.course_img_s);
-                // console.log(document.form1.course_img_s.value);
             });
 
             function uploadAvatar() {
