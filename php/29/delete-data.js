@@ -1,13 +1,13 @@
 
 const wrap = document.querySelector(".wrap");
 const classIndexApi =
-    "http://localhost/coffee-course/class-index-api.php";
-const deleteApi = "http://localhost/coffee-course/delete-api.php";
+    "./class-index-api.php";
+const deleteApi = "./delete-api.php";
 const style = document.querySelector(".style");
 const search = document.querySelector(".search");
 const sort = document.querySelector("#sort");
 
-
+console.log(5)
 function priceAsc(a, b) {
     return a.course_price - b.course_price;
 }
@@ -31,10 +31,11 @@ function getData(flag) {
     })
         .then((response) => {
             return response.json();
+            
         })
         
         .then((data) => {
-            
+            console.log(data)
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {
                     data.sort(priceAsc);
@@ -47,8 +48,11 @@ function getData(flag) {
                 }
                 content();
             });
+
+
         function content (){
             wrap.innerHTML = ''
+            console.log(1)
             for (let i = 0; i < data.length; i++) {
                 const trs = document.createElement("tr");
                 trs.dataset.index = data[i].course_name;
@@ -80,6 +84,7 @@ function getData(flag) {
                 }
             }
         }
+        console.log(2)
         flag  && content();
 
         search.addEventListener("input", () => {
@@ -119,9 +124,10 @@ function getData(flag) {
     
 }
 
-if(window.location.href === "http://localhost/coffee-course/delete-data.html"){ getData(true);}
+// if(window.location.href === "http://localhost/coffee-course/delete-data.html"){ }
 
-   
+getData(true);
+console.log(3)
 
     function add(){
        getData(false);
