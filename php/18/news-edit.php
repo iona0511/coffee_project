@@ -1,4 +1,4 @@
-<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 $pageName = 'news-edit';
 $title = '最新消息編輯頁';
 
@@ -18,8 +18,8 @@ if (empty($row)) {
 
 
 ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-head.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/navbar.php'; ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -71,7 +71,7 @@ if (empty($row)) {
     </div>
 
 </div>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/scripts.php'; ?>
 <script>
     const row = <?= json_encode($row, JSON_UNESCAPED_UNICODE); ?>;
 
@@ -153,4 +153,4 @@ if (empty($row)) {
 
     }
 </script>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
+<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-foot.php'; ?>
