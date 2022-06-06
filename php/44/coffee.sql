@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-05 22:03:27
+-- 產生時間： 2022-06-06 06:17:00
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -214,7 +214,11 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 (125, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:29', NULL, 1),
 (126, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:25', NULL, 1),
 (127, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:46', NULL, 0),
-(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 1);
+(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 1),
+(129, '123', '453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:50:38', NULL, 0),
+(130, '123', '453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:54:03', NULL, 0),
+(131, '123', '453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:54:29', NULL, 0),
+(132, '434', '5437', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:56:20', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -233,8 +237,9 @@ CREATE TABLE `post_img` (
 --
 
 INSERT INTO `post_img` (`sid`, `img_name`, `post_sid`) VALUES
+(0, 'default_pic.jpg', 0),
 (1, 'dog.jpg', 1),
-(666, 'default_pic.jpg', 0);
+(2, 'cat.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -453,13 +458,13 @@ ALTER TABLE `member_likes`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post`
 --
 ALTER TABLE `post`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_img`
 --
 ALTER TABLE `post_img`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=667;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=674;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_tag`
