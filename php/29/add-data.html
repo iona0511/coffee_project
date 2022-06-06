@@ -12,7 +12,7 @@
         />
         <link
             rel="stylesheet"
-            href="fontawesome-free-6.1.1-web/fontawesome-free-6.1.1-web/css/all.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         />
         <title>Document</title>
         <style>
@@ -92,6 +92,10 @@
                 border-top: 2px dotted #333;
                 padding-top: 20px;
             }
+
+            .addSuccess > div {
+                transform: translateX(185px);
+            }
         </style>
     </head>
     <body>
@@ -118,6 +122,7 @@
                                     type="text"
                                     class="course_name"
                                     name="course_name"
+                                    onfocus="deleteNameValue()"
                                 />
                                 <label for="course_name"></label>
                             </div>
@@ -127,6 +132,7 @@
                                     type="text"
                                     class="course_price"
                                     name="course_price"
+                                    onfocus="deletePriceValue()"
                                 />
                                 <label for="course_price"></label>
                             </div>
@@ -150,7 +156,7 @@
                             name="course_people"
                             rows="3"
                             cols="69"
-                            required
+                            onfocus="deletePeopleValue()"
                         ></textarea>
                         <label for="course_people"></label>
                     </div>
@@ -161,7 +167,7 @@
                             name="course_content"
                             rows="3"
                             cols="69"
-                            required
+                            onfocus="deleteContentValue()"
                         ></textarea>
                         <label for="course_content"></label>
                     </div>
@@ -172,10 +178,11 @@
                             name="course_material"
                             rows="3"
                             cols="69"
-                            required
+                            onfocus="deleteMaterialValue()"
                         ></textarea>
                         <label for="course_material"></label>
                     </div>
+                    <div class="addWindows"></div>
                     <div class="container btnWrap">
                         <button type="button" class="btn btn-danger">
                             <a href="./delete-data.html">取消</a>
@@ -199,19 +206,101 @@
         </div>
 
         <script>
+            const courseName = document.querySelector(".course_name");
+            const coursePrice = document.querySelector(".course_price");
+            const coursePeople = document.querySelector(".course_people");
+            const courseContent = document.querySelector(".course_content");
+            const courseMaterial = document.querySelector(".course_material");
+            const addWindows = document.querySelector(".addWindows");
+            //防呆函式區(下面)
+            function deleteNameValue() {
+                if (courseName.value === "請填入課程名稱") {
+                    courseName.value = "";
+                    courseName.style.color = "#000";
+                }
+            }
+            function deletePriceValue() {
+                if (coursePrice.value === "請填入課程價格") {
+                    coursePrice.value = "";
+                    coursePrice.style.color = "#000";
+                }
+            }
+
+            function deletePeopleValue() {
+                if (coursePeople.value === "請填入適合對象") {
+                    coursePeople.value = "";
+                    coursePeople.style.color = "#000";
+                }
+            }
+
+            function deleteContentValue() {
+                if (courseContent.value === "請填入課程內容") {
+                    courseContent.value = "";
+                    courseContent.style.color = "#000";
+                }
+            }
+
+            function deleteMaterialValue() {
+                if (courseMaterial.value === "請填入課程需要材料") {
+                    courseMaterial.value = "";
+                    courseMaterial.style.color = "#000";
+                }
+            }
+            //防呆函式區(上面)
+
             async function sendData() {
                 const fd = new FormData(document.form1);
-                const r = await fetch("add-api.php", {
+                const r = await fetch("./add-api.php", {
                     method: "POST",
                     body: fd,
                 });
                 const result = await r.json();
-                console.log(result);
+
+                //課程名稱防呆
+                if (courseName.value === "") {
+                    courseName.style.color = "red";
+                    courseName.value = "請填入課程名稱";
+                }
+                //課程價格防呆
+                if (coursePrice.value === "") {
+                    coursePrice.style.color = "red";
+                    coursePrice.value = "請填入課程價格";
+                }
+                //適合對象防呆
+                if (coursePeople.value === "") {
+                    coursePeople.style.color = "red";
+                    coursePeople.value = "請填入適合對象";
+                }
+                //課程內容防呆
+                if (courseContent.value === "") {
+                    courseContent.style.color = "red";
+                    courseContent.value = "請填入課程內容";
+                }
+                //課程需要材料防呆
+                if (courseMaterial.value === "") {
+                    courseMaterial.style.color = "red";
+                    courseMaterial.value = "請填入課程需要材料";
+                }
 
                 if (result.success === true) {
+                    addWindows.innerHTML = `   <div
+                class="alert alert-success d-flex align-items-center addSuccess"
+                role="alert"
+            >
+                <svg
+                    class="bi flex-shrink-0 me-2"
+                    width="24"
+                    height="24"
+                    role="img"
+                    aria-label="Success:"
+                >
+                    <use xlink:href="#check-circle-fill" />
+                </svg>
+                <div>課程新增成功</div>
+            </div>`;
                     setTimeout(() => {
                         window.location.href = "delete-data.html";
-                    }, 1000);
+                    }, 1500);
                 }
             }
 
@@ -221,22 +310,21 @@
 
             const photoItem = (f) => {
                 return `
-                <div class="photoItem" style="display: inline-block" data-f="${f}">
-                    <img src="./uploaded/${f}" alt="" />    
-                </div>
-                `;
+                        <div class="photoItem" style="display: inline-block" data-f="${f}">
+                            <img src="../../images/29/${f}" alt="" />
+                        </div>
+                        `;
             };
 
             avatar.addEventListener("change", async function () {
                 // 上傳表單
                 const fd = new FormData(document.form2);
-                const r = await fetch("upload-photos-api.php", {
+                const r = await fetch("./upload-photos-api.php", {
                     method: "POST",
                     body: fd,
                 });
                 const obj = await r.json();
-                console.log(obj);
-                // myimg.src = "./uploaded/" + obj.filename;
+
                 if (obj.filename && obj.filename.length) {
                     photoContainer.innerHTML += obj.filename
                         .map((f) => photoItem(f))
@@ -247,7 +335,6 @@
                     photoAr.push(el.getAttribute("data-f"));
                 });
                 document.form1.course_img_s.value = photoAr;
-                console.log(document.form1.course_img_s.value);
             });
 
             function uploadAvatar() {
