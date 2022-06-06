@@ -1,16 +1,16 @@
 
 <?php
 
-$db_host = '192.168.24.24'; // 主機名稱
-$db_user = 'coffee'; // 資料庫連線的用戶
-$db_pass = 'coffee'; // 連線用戶的密碼
-$db_name = 'coffee';  // 資料庫名稱
+// $db_host = '192.168.24.24'; // 主機名稱
+// $db_user = 'coffee'; // 資料庫連線的用戶
+// $db_pass = 'coffee'; // 連線用戶的密碼
+// $db_name = 'coffee';  // 資料庫名稱
 
 
-// $db_host = 'localhost'; // 主機名稱
-// $db_user = 'root'; // 資料庫連線的用戶
-// $db_pass = ''; // 連線用戶的密碼
-// $db_name = 'coffee_course';  // 資料庫名稱
+$db_host = 'localhost'; // 主機名稱
+$db_user = 'root'; // 資料庫連線的用戶
+$db_pass = ''; // 連線用戶的密碼
+$db_name = 'coffee_course';  // 資料庫名稱
 
 $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
 
