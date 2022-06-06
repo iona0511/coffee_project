@@ -144,6 +144,7 @@
 </div>
 
 <script>
+    let pic = false;
 
     // 編輯送出
     function sendData() {
@@ -158,29 +159,15 @@
         data = obj;
         // console.log(obj);
 
-        if(obj.success){
+        if(obj.success || pic){
             alert("修改完成！");
             window.location.href='welcome.php';
         }else{
             alert("資料沒有修改");
         }
-        // form1.member_sid.value = obj.postData.sid;
     });
     
 };
-
-// const renderData = async () => {
-//     await fetch("edit-read-api.php")
-//     .then(r=>r.json())
-//     .then((obj)=> {
-//         const form1 =document.form1;
-//         inputS= form1.querySelectorAll('.form-row input');
-//         form1.member_name.value = obj.postData.member_name;
-//     }
-    
-//     )};
-    
-//     renderData();
 
 // 讀取資料庫並印在欄位上
 const renderData = async () => {
@@ -215,7 +202,10 @@ avatar.addEventListener("change", async function (){
     console.log(obj);
     myImg.src = "./uploaded/" + obj.filename; 
     if(obj.error){
+        pic = false;
         alert("頭貼沒有修改");
+    }else{
+        pic = true;
     }
 });
 
@@ -246,7 +236,7 @@ const renderPic = async () => {
     await fetch("edit-read-api.php")
     .then(r=>r.json())
     .then((obj)=> {
-        myImg.src = '/php09/uploaded/'+ obj.filename ;  
+        myImg.src = './uploaded/'+ obj.filename ;  
 
         if( obj.filename != ""){
         myImg.style.opacity = 1;
