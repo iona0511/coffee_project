@@ -5,7 +5,7 @@ if (! isset($_SESSION)) {
     session_start();
 }
 
-$folder = __DIR__ . '/uploaded/';
+$folder = dirname(dirname(__DIR__, 1)) . '/images/09/';
 
 // 篩選檔案的副檔名
 $extMap = [
