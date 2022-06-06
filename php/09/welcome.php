@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/parts/connect_db.php';
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 if (! isset($_SESSION)) {
     session_start();
 }
@@ -33,9 +33,6 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 .card{
     width: 500px;
     height: 300px;
-    /* background: linear-gradient(135deg, rgba(255, 255, 255, 0.1)); */
-    /* backdrop-filter: blur(10px); */
-    /* -webkit-backdrop-filter: blur(10px); */
     border-radius: 20px;
     border:1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
@@ -49,9 +46,7 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 .flipped {
     transform: rotateY(180deg);
 }
-/* .z{
-    z-index: 1;
-} */
+
 
 .cardF{
     position: relative;
@@ -131,17 +126,45 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
     height: 300px;
     border-radius: 20px;
 }
+
+/* nav  */
+.select {
+        margin-top: 0px;
+        margin-bottom: 20px;
+        text-align: center;
+}
+.wrap{
+    position: relative;
+}
 </style>
 
 <body>
 
-
     <div class="container">
+
+        <div class="wrap">
+        <div class="select">
+            <img src="" style="width: 60px" />
+            <a href="#nav" class="nav">首頁</a>
+            <a href="" class="nav">店家資訊</a>
+            <a href="" class="nav">商品</a>
+            <a href="" class="nav">訂位點餐</a>
+            <a href="" class="nav">課程資訊</a>
+            <a href="" class="nav">分享牆</a>
+            <a href="" class="nav">客服</a>
+            <a href="" class="nav">遊戲</a>
+            <a href="" class="nav">購物車</a>
+            <a href="welcome.php" class="nav">會員中心</a>
+            <a href="logout.php" class="nav">會員登出</a>
+        </div>
+        </div>
+
+
         <div class="card">         
             <div class="cardF">
                 <?php if ($_SESSION['user']['member_level']>1000) : echo "<div class='gold'></div>"; elseif($_SESSION['user']['member_level']>500): echo "<div class='silver'></div>"; endif; ?>
                 <div class="cardLogo">
-                    <img src="./imgs/member-card-logo.png" alt="">
+                    <img src="/coffee_project/images/09/member-card-logo" alt="">
                 </div>
                 <p class="cardText"><?= $row['member_name'] ?></p>
                 <p class="cardID"><span>ID:</span><?= "&nbsp".$_SESSION['user']['member_sid']=str_pad($_SESSION['user']['member_sid'],6,"0",STR_PAD_LEFT) ?></p>                
@@ -173,7 +196,6 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 
     card.addEventListener("click", function (e) {
     card.classList.toggle('flipped');
-    // cardB.classList.toggle('z');
     });
 
 

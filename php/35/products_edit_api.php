@@ -22,7 +22,7 @@ if (empty($products_sid) or empty($_POST['products_name'])) {
 
 // 圖片區
 
-$folder = dirname(dirname(__DIR__, 1)) . '/images/';
+$folder = dirname(dirname(__DIR__, 1)) . '/images/35/';
 
 $extMap = [
     'image/jpeg' => '.jpg',
@@ -59,7 +59,7 @@ foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
 
 // 複數圖片區
 
-$folder = dirname(dirname(__DIR__, 1)) . '/images/';
+$folder = dirname(dirname(__DIR__, 1)) . '/images/35/';
 
 $extMap = [
     'image/jpeg' => '.jpg',
@@ -149,10 +149,10 @@ $stmt->execute([
 
 
 
-if ($stmt->rowCount() == 1) {
+if ($stmt->rowCount() == 1 || $stmtmulti->rowCount() == 1) {
     $output['success'] = true;
 } else {
-    $output['error'] = '資料沒有修改';
+    $output['error'] = '資料沒有修改或圖片沒有修改';
     $output['code'] = 211;
 }
 

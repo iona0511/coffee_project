@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-05 06:21:31
+-- 產生時間： 2022-06-06 10:53:08
 -- 伺服器版本： 10.4.24-MariaDB
--- PHP 版本： 7.4.29
+-- PHP 版本： 8.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- 資料庫: `coffee`
@@ -89,19 +83,24 @@ INSERT INTO `cart` (`cart_sid`, `cart_product_id`, `cart_food_id`, `cart_price`,
 CREATE TABLE `comment` (
   `sid` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `replies` int(11) NOT NULL,
+  `replies` int(11) NOT NULL DEFAULT 0,
   `created_at` date NOT NULL,
   `post_sid` int(11) NOT NULL,
-  `member_sid` int(11) NOT NULL,
-  `member_nickname` varchar(255) NOT NULL
+  `member_sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `comment`
 --
 
-INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `member_sid`, `member_nickname`) VALUES
-(1, '挖~課程看起來很讚耶char<br>不知道適不適合新手?', 1, '2022-06-03', 1, 1005, '123');
+INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `member_sid`) VALUES
+(1, '挖~課程看起來很讚耶 不知道適不適合新手?', 1, '2022-06-03', 1, 1005),
+(2, '看照片感覺不錯唷', 1, '2022-06-03', 1, 666),
+(3, '感覺讚讚', 0, '2022-06-05', 1, 1005),
+(7, 'aaa', 0, '2022-06-05', 1, 1001),
+(8, 'bcd', 0, '2022-06-05', 1, 1001),
+(9, '1234', 0, '2022-06-06', 1, 1005),
+(10, '123445', 0, '2022-06-06', 1, 1005);
 
 -- --------------------------------------------------------
 
@@ -213,12 +212,11 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`course_sid`, `course_name`, `course_price`, `course_level`, `course_img_s`, `course_content`, `course_people`, `course_material`) VALUES
-(1, '愛心拉花', 1000, 1, 'img', '拉花基礎課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
-(2, '花型拉花', 1000, 1, 'img', '拉花基礎課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
+(1, '25', 525, 3, 'bbef68b71607a389c94b837201bdd66b.png', '52', '252', '52525'),
+(2, '25', 25, 0, '286e7e4adedb9326d35feba14f79a9d1.png', '255', '121', '252'),
 (3, '咖啡烘焙', 2000, 2, 'img', '體驗自己親手烘焙咖啡豆的樂趣', '想體驗自己烘咖啡豆的人', '咖啡豆.相關沖煮器材設備(課程提供)'),
 (4, '咖啡生豆認識及風味鑑嘗學', 3000, 3, 'img', '認識不同咖啡產地及品種，加強自己品嚐咖啡思維', '對咖啡豆有濃厚興趣及對咖啡烘焙有興趣朋友參加', '咖啡豆.相關沖煮器材設備(課程提供)'),
-(5, '手沖咖啡基礎訓練班', 1500, 1, 'img', '學會從風味中了解自己沖煮手法', '適合初學者或希望了解自己沖煮技巧缺點人士', '咖啡豆.相關沖煮器材設備(課程提供)'),
-(6, '聖誕樹拉花', 1500, 2, 'img', '拉花中級課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)');
+(5, '手沖咖啡基礎訓練班', 1500, 1, 'img', '學會從風味中了解自己沖煮手法', '適合初學者或希望了解自己沖煮技巧缺點人士', '咖啡豆.相關沖煮器材設備(課程提供)');
 
 -- --------------------------------------------------------
 
@@ -299,8 +297,10 @@ INSERT INTO `member` (`member_sid`, `member_name`, `member_nickname`, `member_ac
 (2, '小黑', 'black', 'black', 'black', '2022-05-12', '0912345678', '新北市', 'black@test.com', '0', '1539960.gif'),
 (4, '小白', 'white', 'white', 'white', '2022-06-08', '0911123456', '台北市', 'white@test.com', '2000', ''),
 (7, '123', '睡覺了', '123', '123', NULL, '123', '123456789', '123@test123', '', '1539960.gif'),
-(14, '123', '123', '123', '123', NULL, '123', '123', '123@test123', '0', ''),
-(17, '測試', '小白', '123', '12345', NULL, '123', '新北市', '123@test123', '', '31Xj7BP6MCTmxwUJ972W89EBE1HSoAlRJIcJtZIB.jpg');
+(14, '123', '1234', '123', '123', NULL, '123', '123', '123@test123', '', '31Xj7BP6MCTmxwUJ972W89EBE1HSoAlRJIcJtZIB.jpg'),
+(666, '子揚', 'Tommy', 'tommy', '1234', NULL, '0975072579', '台北市', 'sky003428@gmail.com', '0', ''),
+(1001, '王小明', '帥氣a小明', 'ming', '1234', NULL, '0975123456', '新北市', 'ming1234@gmail.com', '0', ''),
+(1005, '陳大圓', '新手大圓', 'yuan', '1234', NULL, '0975123456', '新北市', 'yuan1234@gmail.com', '0', '');
 
 -- --------------------------------------------------------
 
@@ -367,8 +367,6 @@ INSERT INTO `menu` (`menu_sid`, `menu_categories`, `menu_photo`, `menu_name`, `m
 (30, '瑪芬堡', NULL, '豬肉瑪芬堡', 400, '55', NULL, NULL, '2022-06-26 00:00:00'),
 (31, '瑪芬堡', NULL, '雙層豬肉瑪芬堡', 516.9, '75', NULL, NULL, '2022-06-27 00:00:00'),
 (33, '三明治', NULL, '火腿三明治', 312.7, '45', NULL, NULL, '2022-06-29 00:00:00'),
-(34, '三明治', NULL, '鮪魚三明治', 315.6, '45', NULL, NULL, '2022-06-30 00:00:00'),
-(35, '三明治', NULL, '牛肉三明治', 300.8, '55', NULL, NULL, '2022-07-01 00:00:00'),
 (36, '口袋歐姆蛋', NULL, '起司歐姆蛋', 270, '50', NULL, NULL, '2022-07-02 00:00:00'),
 (37, '口袋歐姆蛋', NULL, '培根歐姆蛋', 295.2, '60', NULL, NULL, '2022-07-03 00:00:00'),
 (38, '口袋歐姆蛋', NULL, '鮪魚歐姆蛋', 296.9, '60', NULL, NULL, '2022-07-04 00:00:00'),
@@ -405,6 +403,26 @@ INSERT INTO `menu` (`menu_sid`, `menu_categories`, `menu_photo`, `menu_name`, `m
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `news_class`
+--
+
+CREATE TABLE `news_class` (
+  `class_sid` int(11) NOT NULL,
+  `class_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `news_class`
+--
+
+INSERT INTO `news_class` (`class_sid`, `class_name`) VALUES
+(1, '商品'),
+(2, '美食'),
+(3, '課程');
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `order`
 --
 
@@ -427,7 +445,8 @@ CREATE TABLE `order` (
 
 INSERT INTO `order` (`order_sid`, `order_time`, `order_pay`, `order_pay_info`, `order_deliver`, `order_address`, `order_member_id`, `order_coupon_id`, `order_price`, `order_id`) VALUES
 (1, '2022-05-31 14:29:48', '店內取貨付款', '店內取貨付款', '店內取貨', '本店', 1, 2, 1160, '531142948'),
-(2, '2022-05-31 14:50:43', 'ATM轉帳', '700-24416794519754', '郵寄', '655 雲林縣元長鄉子茂33號', 3, 7, 872, '531145043');
+(2, '2022-05-31 14:50:43', 'ATM轉帳', '700-24416794519754', '郵寄', '655 雲林縣元長鄉子茂33號', 3, 7, 872, '531145043'),
+(3, '2022-06-06 15:00:43', 'ATM轉帳', '700-5615614', '郵寄', '220 新北市板橋區文華街27號', 1, 6, 1248, '1654498843');
 
 -- --------------------------------------------------------
 
@@ -449,7 +468,8 @@ CREATE TABLE `points_record` (
 
 INSERT INTO `points_record` (`sid`, `member_sid`, `type`, `points_get`, `create_at`) VALUES
 (1, 1, 1, 10, '2022-06-02'),
-(2, 2, 2, -300, '2022-06-03');
+(2, 2, 2, -300, '2022-06-03'),
+(3, 1, 1, 300, '2022-06-06');
 
 -- --------------------------------------------------------
 
@@ -500,7 +520,7 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, `likes`, `comments`, `topic_sid`, `created_at`, `updated_at`, `delete_state`) VALUES
-(1, '體驗拉花課程分享', '每次看到咖啡師的拉花作品，再看看咖啡師拉花的動作看似簡單，胃痛一直很想要體驗拉花，想不到自己實際操作一遍，操作起來還真的不簡單啊。', '帥氣a小明', 1001, 2, 1, 1, '2022-05-31 04:35:39', NULL, 0),
+(1, '體驗拉花課程分享', '每次看到咖啡師的拉花作品，再看看咖啡師拉花的動作看似簡單，胃痛一直很想要體驗拉花，想不到自己實際操作一遍，操作起來還真的不簡單啊。', '帥氣a小明', 1001, 2, 2, 1, '2022-05-31 04:35:39', NULL, 0),
 (2, '好喝環境', '深入的探討咖啡，是釐清一切的關鍵。咖啡，到底應該如何實現。若無法徹底理解咖啡，恐怕會是人類的一大遺憾。儘管如此，我們仍然需要對咖啡保持懷疑的態度。徐志摩在不經意間這樣說過，由於我們過於習慣在別人面前戴面具，因此最後導致在自己面前偽裝自己。強烈建議大家把這段話牢牢記住。\r\n    ', '小明', 1011, 0, 0, 1, '2022-01-25 07:01:45', NULL, 0),
 (3, '超讚體驗咖啡課程', '車爾尼雪夫斯基在不經意間這樣說過，一個沒有受到獻身的熱情所鼓舞的人，永遠不會做出什麼偉大的事情來。這是撼動人心的。烏納穆諾曾經認為，在科學裡，嘲笑腐儒，也就類似宗。這似乎解答了我的疑惑。那麼，廢文絕對是史無前例的。', '小美', 1410, 3, 4, 1, '2022-05-05 07:05:40', NULL, 0),
 (4, '超讚體驗馬克杯', ' 這必定是個前衛大膽的想法。拉花課程勢必能夠左右未來。面對如此難題，我們必須設想周全。問題的核心究竟是什麼？在人類的歷史中，我們總是盡了一切努力想搞懂拉花課程。而這些並不是完全重要，更加重要的問題是，拉花課程，發生了會如何，不發生又會如何。', '小明', 1011, 4, 0, 1, '2022-05-30 01:05:12', NULL, 0),
@@ -547,7 +567,7 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 (45, 'hello', '你好嗎', 'tommy', 666, 0, 0, 1, '2022-06-02 04:54:49', NULL, 0),
 (46, 'hello', '我是羊羊', 'Tommy', 666, 0, 0, 1, '2022-06-02 10:56:29', NULL, 0),
 (47, '12', '123', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:02:49', NULL, 0),
-(48, '543', '543', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:04:03', NULL, 0),
+(48, '543', '543', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:04:03', NULL, 1),
 (49, '123', '453', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:05:37', NULL, 0),
 (50, '1434', '5753', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:42:15', NULL, 0),
 (51, '1434', '5753', 'Tommy', 666, 0, 0, 1, '2022-06-02 11:53:58', NULL, 0),
@@ -588,21 +608,25 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 (111, 'abc', '123\r\n456\r\n78', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:02:59', NULL, 0),
 (112, '123', '453', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:05:59', NULL, 0),
 (113, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:06:07', NULL, 0),
-(114, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:03', NULL, 0),
+(114, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:03', NULL, 1),
 (115, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:21', NULL, 0),
-(116, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:38', NULL, 0),
-(117, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:09:54', NULL, 0),
-(118, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:10:05', NULL, 0),
+(116, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:07:38', NULL, 1),
+(117, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:09:54', NULL, 1),
+(118, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:10:05', NULL, 1),
 (119, '783', '4353', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:13', NULL, 0),
-(120, '783', '4353\r\n3273', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:50', NULL, 0),
-(121, '783', '4353<br/>3273<br/>abc', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:17:06', NULL, 0),
+(120, '783', '4353\r\n3273', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:12:50', NULL, 1),
+(121, '783', '4353<br/>3273<br/>abc', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:17:06', NULL, 1),
 (122, '783', '4353 asd<br/>3273 16<br/>abc<br/><br/>abba', 'Tommy', 666, 0, 0, 1, '2022-06-04 03:24:19', NULL, 0),
 (123, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:21:45', NULL, 0),
-(124, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:06', NULL, 0),
-(125, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:29', NULL, 0),
-(126, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:25', NULL, 0),
+(124, 'abc', '453453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:06', NULL, 1),
+(125, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:22:29', NULL, 1),
+(126, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:25', NULL, 1),
 (127, '134', '456', '帥氣a小明', 1001, 0, 0, 1, '2022-06-04 14:23:46', NULL, 0),
-(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 0);
+(128, '123', '453', '帥氣a小明', 0, 0, 0, 1, '2022-06-04 15:46:02', NULL, 1),
+(129, '123', '453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:50:38', NULL, 0),
+(130, '123', '453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:54:03', NULL, 0),
+(131, '123', '453', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:54:29', NULL, 0),
+(132, '434', '5437', '帥氣a小明', 1001, 0, 0, 1, '2022-06-06 04:56:20', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -613,7 +637,6 @@ INSERT INTO `post` (`sid`, `title`, `content`, `member_nickname`, `member_sid`, 
 CREATE TABLE `post_img` (
   `sid` int(11) NOT NULL,
   `img_name` varchar(255) NOT NULL,
-  `img_src` varchar(255) NOT NULL,
   `post_sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -621,8 +644,10 @@ CREATE TABLE `post_img` (
 -- 傾印資料表的資料 `post_img`
 --
 
-INSERT INTO `post_img` (`sid`, `img_name`, `img_src`, `post_sid`) VALUES
-(1, 'dog.jpg', 'uploaded/dog.jpg', 1);
+INSERT INTO `post_img` (`sid`, `img_name`, `post_sid`) VALUES
+(1, 'dog.jpg', 1),
+(2, 'cat.jpg', 1),
+(674, 'default_pic.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -672,8 +697,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`products_sid`, `products_number`, `products_name`, `products_introduction`, `products_detail_introduction`, `products_price`, `products_forsale`, `products_onsale`, `products_stocks`, `products_with_products_categroies_sid`, `products_with_products_pic`, `products_with_products_style_filter_sid`) VALUES
-(1, '1653962198', '曼巴咖啡(一包十入)400', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 310, 1, 0, 2800, 1, 1, 1),
-(2, '1653962417', '曼特寧咖啡(一包十入)', '精選曼特寧咖啡, 一包十入', '香濃甘苦的滋味，不帶酸味順口香醇。', 320, 1, 0, 3200, 1, 2, 2),
+(1, '1653962198', '曼巴咖啡(一包十入)', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 310, 1, 0, 2800, 0, 1, 0),
+(2, '1653962417', '曼特寧咖啡(一包十入)', '精選曼特寧咖啡, 一包十入', '香濃甘苦的滋味，不帶酸味順口香醇。', 320, 0, 1, 3200, 1, 2, 2),
 (3, '1653969575', '黃金曼特寧(半磅)', '曼特寧咖啡豆, 半磅包裝', '曼特寧咖啡豆', 470, 1, 0, 4000, 2, 3, 2),
 (4, '1653972891', '濾紙(大)', '大片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 1, 0, 5000, 3, 4, 4),
 (5, '1653972907', '濾紙(小)', '小片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 1, 0, 5000, 3, 4, 4),
@@ -720,8 +745,8 @@ CREATE TABLE `products_pic` (
 --
 
 INSERT INTO `products_pic` (`products_pic_sid`, `products_pic_one`, `products_pic_multi`) VALUES
-(1, 'ATT00018.gif', '[\"ATT00033.gif\",\"ATT00036.gif\",\"ATT00039.gif\"]'),
-(2, 'products_mandheling_01.png', 'detail_mandheling_01.png, detail_mandheling_02.png, detail_mandheling_03.png, detail_mandheling_04.png'),
+(1, 'slide3.jpg', 'puckered.png,slide2.jpg,slide3.jpg'),
+(2, 'slide4.jpg', 'puckered.png,slide2.jpg,slide3.jpg'),
 (3, 'products_mandheling_bean_01.png', 'details_mandheling_bean_01.png, details_mandheling_bean_02.png, details_mandheling_bean_03.png, details_mandheling_bean_04.png'),
 (4, 'products_filter_01.png', 'details_filter_01.png, details_filter_02.png, details_filter_03.png, details_filter_04.png');
 
@@ -758,12 +783,22 @@ INSERT INTO `products_style_filter` (`products_style_filter_sid`, `products_styl
 CREATE TABLE `reply` (
   `sid` int(11) NOT NULL,
   `content` varchar(255) NOT NULL,
-  `reply_sid` int(11) NOT NULL,
+  `comment_sid` int(11) NOT NULL,
   `created_at` date NOT NULL,
-  `post_sid` int(11) NOT NULL,
-  `member_sid` int(11) NOT NULL,
-  `member_nickname` varchar(255) NOT NULL
+  `member_sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `reply`
+--
+
+INSERT INTO `reply` (`sid`, `content`, `comment_sid`, `created_at`, `member_sid`) VALUES
+(1, '這邊的老師都很會教，別擔心', 1, '2022-06-04', 1001),
+(2, '那是肯定阿!', 2, '2022-06-04', 1001),
+(3, '讚讚', 0, '2022-06-05', 1001),
+(4, '讚讚', 0, '2022-06-05', 1001),
+(5, '7373', 0, '2022-06-05', 1001),
+(6, '7373', 1, '2022-06-05', 1001);
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1059,7 @@ ALTER TABLE `cart`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `coupon`
@@ -1048,7 +1083,7 @@ ALTER TABLE `coupon_receive`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `course`
 --
 ALTER TABLE `course`
-  MODIFY `course_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `course_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `course_related`
@@ -1066,7 +1101,7 @@ ALTER TABLE `lastest_news`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member_likes`
@@ -1078,19 +1113,19 @@ ALTER TABLE `member_likes`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `menu_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_record`
 --
 ALTER TABLE `points_record`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_user`
@@ -1102,13 +1137,13 @@ ALTER TABLE `points_user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post`
 --
 ALTER TABLE `post`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_img`
 --
 ALTER TABLE `post_img`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=677;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_tag`
@@ -1144,7 +1179,7 @@ ALTER TABLE `products_style_filter`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `reply`
 --
 ALTER TABLE `reply`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `review`
@@ -1170,7 +1205,3 @@ ALTER TABLE `tag`
 ALTER TABLE `topic`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
