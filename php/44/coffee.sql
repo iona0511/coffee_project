@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-06 06:17:00
+-- 產生時間： 2022-06-06 09:46:55
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -61,7 +61,7 @@ CREATE TABLE `member` (
   `member_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `member_birthday` datetime DEFAULT NULL,
   `member_mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `member_adress` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `member_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `member_mail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `member_level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -70,7 +70,7 @@ CREATE TABLE `member` (
 -- 傾印資料表的資料 `member`
 --
 
-INSERT INTO `member` (`member_sid`, `member_name`, `member_nickname`, `member_account`, `member_password`, `member_birthday`, `member_mobile`, `member_adress`, `member_mail`, `member_level`) VALUES
+INSERT INTO `member` (`member_sid`, `member_name`, `member_nickname`, `member_account`, `member_password`, `member_birthday`, `member_mobile`, `member_address`, `member_mail`, `member_level`) VALUES
 (666, '子揚', 'Tommy', 'tommy', '1234', NULL, '0975072579', '台北市', 'sky003428@gmail.com', ''),
 (1001, '王小明', '帥氣a小明', 'ming', '1234', NULL, '0975123456', '新北市', 'ming1234@gmail.com', ''),
 (1005, '陳大圓', '新手大圓', 'yuan', '1234', NULL, '0975123456', '新北市', 'yuan1234@gmail.com', '');
