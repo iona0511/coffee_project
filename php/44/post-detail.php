@@ -74,7 +74,7 @@ if ($rows['topic_sid'] == 1) {
         <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
         <div class="post-wrap d-flex">
             <div class="pic-wrap mh">
-                <img src="" class="pic" alt="">
+                <!-- <img src="" class="pic" alt=""> -->
             </div>
             <div class="post-content">
                 <div class="content-top">
@@ -289,26 +289,20 @@ if ($rows['topic_sid'] == 1) {
                 pid: <?= $pid ?>
             });
 
-            function render() {
-                pic.src = "uploaded/"+response[0].img_name;
-                // render 編輯/刪除
-                if (response[0].m_sid == <?= $rows['member_sid'] ?>) {
-                    document.querySelector(".post-edit").style.display = "block";
-
-                    // if (!!document.querySelectorAll(".cmt-delete")) {
-
-                    //     document.querySelectorAll(".cmt-delete").forEach((el)=>{
-                    //         if (el.dataset.mid=)
-                    //         .style.display = "block";
-                    //     });
-
-                    // }
-                    // document.querySelector(".rply-delete").style.display = "block";
-                } else {
-                    document.querySelector(".post-edit").style.display = "none";
-                    // document.querySelector(".cmt-delte").style.display = "none";
-                    // document.querySelector(".rply-delte").style.display = "none";
+            function render(r) {
+                for (let v of r) {
+                    document.querySelector(".pic-wrap").innerHTML += `<img src="uploaded/${v.img_name}" class="pic" alt="">`;
+                    console.log(v);
                 }
+
+
+                // render 編輯/刪除
+                // if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
+                //     document.querySelector(".post-edit").style.display = "block";
+
+                // } else {
+                //     document.querySelector(".post-edit").style.display = "none";
+                // }
             }
 
             const data = await fetch("api/detail-getPic-api.php", {
@@ -319,9 +313,9 @@ if ($rows['topic_sid'] == 1) {
                 body: pd
             });
             const response = await data.json();
-            console.log(response[0]);
+            console.log(response);
             console.log(response[0].img_name);
-            render();
+            render(response);
 
         }
         getData();

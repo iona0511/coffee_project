@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        .rect {
+            position: relative;
+            width: 50%;
+            margin: 50px auto;
+
+            outline: 1px solid red;
+            overflow-x: hidden;
+        }
+
+
+        .drag-row {
+            display: flex;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            cursor: pointer;
+            user-select: none;
+            transition: .3s;
+            /* 禁止反白 */
+        }
+
+        .drag-col {
+            width: 100%;
+
+            flex-shrink: 0;
+        }
+/* 
+        @media screen and (min-width:768px) {
+            .drag-col {
+                width: 33.33%;
+            }
+        }
+
+        @media screen and (min-width:992px) {
+            .drag-col {
+                width: 25%;
+            }
+        } */
+
+        .img-wrap {
+            width: 100%;
+        }
+
+        .img-wrap img {
+            width: 100%;
+            -webkit-user-drag: none;
+            vertical-align: bottom;
+
+        }
+
+        .selected {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rect">
+        <div class="drag-row">
+            <div class="drag-col selected">
+                <div class="img-wrap red">
+                    <img src="./images/article/220322_02_1260b_400.jpg" alt="">
+                </div>
+                <div class="img-fig">
+                    <p>test</p>
+                </div>
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/220401_08_1260c_400.jpg" alt="">
+                    <div class="img-fig">
+                        <p>hello</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/220428_01_1260b_400.jpg" alt="">
+                </div>
+
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/aboutryohin_s_02_191217.jpg" alt="">
+                </div>
+
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/220401_08_1260c_400.jpg" alt="">
+                    <div class="img-fig">
+                        <p>hello2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/atelierMUJI_191129_400.jpg" alt="">
+                </div>
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/cafemealMUJI_191128_400.jpg" alt="">
+                </div>
+            </div>
+            <div class="drag-col">
+                <div class="img-wrap">
+                    <img src="./images/article/220428_01_1260b_400.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="select-bar">
+            
+        </div>
+    </div>
+
+
+    <script>
+        const row = document.querySelector(".drag-row");
+        const col = document.querySelector(".drag-col");
+        const colArr = document.querySelectorAll(".drag-col");
+        let i = 0;
+        const body = document.querySelector("body");
+        const imgFig = document.querySelector(".img-fig");
+        const rect = document.querySelector(".rect");
+        const ASPECT_RATIO = 1;
+        const objLength = document.querySelectorAll(".drag-col").length;
+        let cardPerRow=calcPR();
+
+        
+        function calcPR(){
+            // if(body.clientWidth<768) {
+            return 1;
+        // }else if(body.clientWidth<992){
+        //     return 3;
+        // }else{
+        //     return 4;
+        // }
+        };
+
+        rect.style.height = rect.getBoundingClientRect().width / ASPECT_RATIO / cardPerRow + imgFig.getBoundingClientRect().height + "px";
+        
+        let objWidth =  col.getBoundingClientRect().width;
+    
+       
+        
+        row.style.left = 0 + 'px';
+        let originX = 0;
+        let rowLeft;
+        let moveX;
+        let dragX = 0;
+        let dragDrag = 0;
+        
+        window.addEventListener('resize', () => {
+            objWidth = col.getBoundingClientRect().width;
+            cardPerRow=calcPR();
+            rect.style.height = rect.getBoundingClientRect().width / ASPECT_RATIO / cardPerRow + imgFig.getBoundingClientRect().height + "px";
+
+            //縮放後將第一個項目做row的left參照
+            row.style.left = -colArr[i].offsetLeft + 'px';
+        });
+
+
+
+        function colSelect(slideNum) {
+            // slideNum 往左滑=1,右滑-1
+            colArr[i].classList.remove("selected");
+            slideNum > 0 ? i++ : i--;
+            colArr[i].classList.add("selected");
+        }
+
+
+        const mDown = (event) => {
+            row.style.cursor = "grab";
+            dragX = event.pageX;
+            rowLeft = parseFloat(row.style.left);
+            originX = event.pageX - rowLeft;
+
+
+            window.addEventListener("mousemove", mMove);
+            window.addEventListener("mouseup", mUp);
+        };
+        const mUp = (t) => {
+            dragDrag = dragX - event.pageX;
+            
+            if (dragDrag > objWidth / 2.5 && i + cardPerRow < colArr.length) {
+                // 往左滑
+                row.style.left = rowLeft - objWidth + 'px';
+                colSelect(1);
+            }
+            else if (dragDrag < -objWidth / 2.5 && rowLeft < -1) {
+                // 往右滑
+                row.style.left = rowLeft + objWidth + 'px';
+                colSelect(-1)
+
+            }
+            else {
+                row.style.left = rowLeft + 'px';
+
+            }
+            
+            row.style.cursor = "pointer";
+
+            window.removeEventListener("mousemove", mMove);
+            window.removeEventListener("mouseup", mUp);
+        };
+        const mMove = (event) => {
+            moveX = event.pageX - originX;
+            row.style.left = moveX + 'px';
+        };
+
+
+        // 手機event
+        // const tDown = (event) => {
+        //     window.event.preventDefault();
+
+        //     dragX = event.targetTouches[0].pageX;
+        //     rowLeft = parseInt(row.style.left);
+
+        //     originX = event.targetTouches[0].pageX - rowLeft;
+
+        //     window.event.stopPropagation();
+        //     window.addEventListener("touchmove", tMove);
+
+        // };
+        // const tUp = (event) => {
+        //     window.removeEventListener("mousemove", tMove);
+        //     console.log(event);
+
+        //     if (dragDrag > objWidth / 3 && rowLeft > -(objWidth * (objLength - cardPerRow))) {
+        //         row.style.left = rowLeft - objWidth + 'px';
+
+        //     }
+        //     else if (dragDrag < -objWidth / 3 && rowLeft != 0) {
+        //         row.style.left = rowLeft + objWidth + 'px';
+
+
+        //     }
+        //     else {
+        //         row.style.left = rowLeft + 'px';
+        //     }
+        //     row.style.cursor = "unset";
+        // };
+        // const tMove = (event) => {
+        //     moveX = event.targetTouches[0].pageX - originX;
+        //     row.style.left = moveX + 'px';
+        //     dragDrag = dragX - event.targetTouches[0].pageX;
+        // };
+
+        row.addEventListener("mousedown", mDown);
+
+        // row.addEventListener("touchstart", tDown);
+
+
+      
+        // window.addEventListener("touchend", tUp);
+
+    </script>
+</body>
+
+</html>
