@@ -114,7 +114,7 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
                             <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
-                                <option value="">-- 請選擇 --</option>
+                                <option value="" selected disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_cate as $r) : ?>
                                     <option value="<?= $r['products_categroies_sid'] ?>">
                                         <?= $r['products_categroies_name'] ?>
@@ -128,7 +128,7 @@ if (empty($row)) {
                             <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
                             <img class="single-img" src="
-                            <?php if ($row['products_pic_one']) : echo '/coffee_project/images/' . $row['products_pic_one'];
+                            <?php if ($row['products_pic_one']) : echo '/coffee_project/images/35/' . $row['products_pic_one'];
                             endif; ?>" <?php if (!$row['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
                         </div>
 
@@ -137,14 +137,14 @@ if (empty($row)) {
                             <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple />
                             <?php $multiPic =  explode(",", $row['products_pic_multi']) ?>
                             <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
-                                <img class="multi-img" src="<?= '/coffee_project/images/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
+                                <img class="multi-img" src="<?= '/coffee_project/images/35/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
                             <?php endfor; ?>
                         </div>
 
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
                             <select name="products_with_products_style_filter_sid" id="products_with_products_style_filter_sid">
-                                <option value="">-- 請選擇 -- </option>
+                                <option value="" selected disabled>-- 請選擇 -- </option>
                                 <?php foreach ($row_style as $r) : ?>
                                     <option value="<?= $r['products_style_filter_sid'] ?>">
                                         <?= $r['products_style_filter_categroies'] ?>
@@ -154,6 +154,9 @@ if (empty($row)) {
                         </div>
 
                         <button type="submit" class="btn btn-primary">修改</button>
+                        <a href="./products.php">
+                        <button type="button" class="btn btn-primary">取消</button>
+                        </a>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料編輯成功
