@@ -1,5 +1,6 @@
 <?php 
-require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+require __DIR__ . '/connect_db.php';
+
 
 header('Content-Type:apllication/json');
 

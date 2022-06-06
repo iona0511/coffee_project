@@ -206,7 +206,7 @@
             const avatar = document.form2.elements[0];
 
             function editData() {
-                fetch("class-index-api.php")
+                fetch("./class-index-api.php")
                     .then((response) => {
                         return response.json();
                     })
@@ -226,17 +226,17 @@
                             sid = localStorage.getItem("sid");
                             console.log(sid);
 
-                            if (sid === data[j].course_sid) {
-                                courseName.value = data[j].course_name;
-                                course_price.value = data[j].course_price;
-                                course_level.value = data[j].course_level;
-                                course_content.value = data[j].course_content;
-                                course_people.value = data[j].course_people;
-                                course_material.value = data[j].course_material;
-                                data[j].course_img_s === ""
-                                    ? 0
-                                    : (photoContainer2.innerHTML = ` <img src="./uploaded/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
-                            }
+                            // if (sid === data[j].course_sid) {
+                            //     courseName.value = data[j].course_name;
+                            //     course_price.value = data[j].course_price;
+                            //     course_level.value = data[j].course_level;
+                            //     course_content.value = data[j].course_content;
+                            //     course_people.value = data[j].course_people;
+                            //     course_material.value = data[j].course_material;
+                            //     data[j].course_img_s === ""
+                            //         ? 0
+                            //         : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
+                            // }
 
                             if (sid === data[j].course_sid) {
                                 courseName.value = data[j].course_name;
@@ -247,7 +247,7 @@
                                 course_material.value = data[j].course_material;
                                 data[j].course_img_s === ""
                                     ? 0
-                                    : (photoContainer2.innerHTML = ` <img src="./uploaded/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
+                                    : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
                             }
                         }
                     });
@@ -258,12 +258,12 @@
                 const fd = new FormData(document.form1);
 
                 fd.append("course_sid", sid);
-                const r = await fetch("edit-api.php", {
+                const r = await fetch("./edit-api.php", {
                     method: "POST",
                     body: fd,
                 });
                 const result = await r.json();
-                console.log(result.success);
+                // console.log(result.success);
                 if (result.success === true) {
                     window.location.href = "delete-data.html";
                 }
@@ -272,7 +272,7 @@
             const photoItem = (f) => {
                 photoContainer2.style.display = "none";
                 return ` <div class="photoItem" style="display: inline-block" data-f="${f}">
-                                            <img src="./uploaded/${f}" alt="" />
+                                            <img src="../../images/29/${f}" alt="" />
                                         </div>
                                         `;
             };
@@ -280,7 +280,7 @@
             avatar.addEventListener("change", async function () {
                 // 上傳表單
                 const fd = new FormData(document.form2);
-                const r = await fetch("upload-photos-api.php", {
+                const r = await fetch("./upload-photos-api.php", {
                     method: "POST",
                     body: fd,
                 });

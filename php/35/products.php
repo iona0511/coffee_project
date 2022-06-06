@@ -38,27 +38,27 @@ if ($totalRows > 0) {
 
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
+<style>
+    /* .products_add_btn {
+        display: flex;
+        justify-content: flex-end;
+    } */
+    .products_nav_btn{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0px;
+        margin-top: 10px;
+    }
+</style>
 
-<head>
-    <style>
-        .products_add_btn {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .products_single_img {
-            width: 100px;
-            height: 100px;
-        }
-    </style>
-</head>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 
 <!-- server side render -->
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example" class="products_nav_btn">
                 <ul class="pagination">
 
                     <!-- php寫在class裡面, 讓使用者按頁術限定在1到最大頁面之間 -->
@@ -84,9 +84,11 @@ if ($totalRows > 0) {
                             <i class="fa-solid fa-angles-right"></i>
                         </a>
                     </li>
-
-
                 </ul>
+
+                <a class="products_add_btn" href="./products_add.php">
+                    <button type="button" class="btn btn-primary">新增</button>
+                </a>
             </nav>
         </div>
     </div>
@@ -133,12 +135,12 @@ if ($totalRows > 0) {
                     <td><?= $r['products_onsale'] ? '是' : '否'; ?></td>
                     <td><?= $r['products_stocks'] ?></td>
                     <td><?= $r['products_categroies_name'] ?></td>
-                    <td><img class="products_single_img" src="
-                            <?php if ($r['products_pic_one']) : echo '/coffee_project/images/' . $r['products_pic_one'];
-                            endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" /></td>
-                    <td>
+                    <td><img class="single-img" src="
+                            <?php if ($r['products_pic_one']) : echo '/../../coffee_project/images/35/' . $r['products_pic_one'];
+                            endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" title="<?= $r['products_pic_one'] ?>" /></td>
+                    <td> <?php $multiPic =  explode(",", $r['products_pic_multi']) ?>
                         <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
-                            <img class="products_multi_img" src="<?= '/coffee_project/images/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
+                            <img class="multi-img" src="<?= '/../../coffee_project/images/35/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" title="<?= $r['products_pic_multi'] ?>" />
                         <?php endfor; ?>
                     </td>
                     <td><?= $r['products_style_filter_categroies'] ?></td>
@@ -149,10 +151,8 @@ if ($totalRows > 0) {
             <?php endforeach; ?>
         </tbody>
     </table>
-    <a class="products_add_btn" href="products_add.php">
-        <button type="button" class="btn btn-primary">新增</button>
-    </a>
 </div>
+
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php' ?>
 <script>
     function delete_it(sid) {

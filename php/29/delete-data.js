@@ -1,8 +1,8 @@
 
 const wrap = document.querySelector(".wrap");
 const classIndexApi =
-    "http://localhost/coffee-course/class-index-api.php";
-const deleteApi = "http://localhost/coffee-course/delete-api.php";
+    "./class-index-api.php";
+const deleteApi = "./delete-api.php";
 const style = document.querySelector(".style");
 const search = document.querySelector(".search");
 const sort = document.querySelector("#sort");
@@ -31,10 +31,11 @@ function getData(flag) {
     })
         .then((response) => {
             return response.json();
+            
         })
         
         .then((data) => {
-            
+            console.log(data)
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {
                     data.sort(priceAsc);
@@ -47,8 +48,11 @@ function getData(flag) {
                 }
                 content();
             });
+
+
         function content (){
             wrap.innerHTML = ''
+            console.log(1)
             for (let i = 0; i < data.length; i++) {
                 const trs = document.createElement("tr");
                 trs.dataset.index = data[i].course_name;
@@ -58,7 +62,7 @@ function getData(flag) {
                 trs.innerHTML = `
                 <td>${data[i].course_sid}</td>
                  <td scope="row" class="pic">
-                <img src="./uploaded/${data[i].course_img_s}" alt="" />
+                <img src="../../images/29/${data[i].course_img_s}" alt="" />
             </td>
             <td>${data[i].course_name}</td>
             <td class="course_level">${data[i].course_level}</td>
@@ -80,7 +84,8 @@ function getData(flag) {
                 }
             }
         }
-        flag  && content();
+    
+         content();
 
         search.addEventListener("input", () => {
             if (search.value === "") {
@@ -119,20 +124,20 @@ function getData(flag) {
     
 }
 
-if(window.location.href === "http://localhost/coffee-course/delete-data.html"){ getData(true);}
+// if(window.location.href === "http://localhost/coffee-course/delete-data.html"){ }
 
-   
+getData();
 
-    function add(){
-       getData(false);
-    }
-    add();
+
+    // function add(){
+    //    getData(false);
+    // }
+    // add();
 
 
 
 
 function editDataA(value) {
-    // console.log(value)
     localStorage.setItem('sid',`${value}`);
 }
 

@@ -223,7 +223,6 @@
 
     async function sendData() {
         const fd = new FormData(document.form1);
-    // fd.append("member_name","123")
         await fetch("register-api.php",{
         method:'POST',
         body:fd
