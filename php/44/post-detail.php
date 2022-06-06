@@ -2,7 +2,8 @@
 require __DIR__ . '/part/connect_db.php';
 
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : '';
-$user = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
+
 
 // 判斷有沒有pid，沒有id導回前一頁
 if (empty($pid)) {
@@ -45,7 +46,6 @@ if ($rows['topic_sid'] == 1) {
 } else {
     $topic_name = '其它';
 }
-
 
 
 // echo json_encode($rows, JSON_UNESCAPED_UNICODE);
@@ -143,7 +143,7 @@ if ($rows['topic_sid'] == 1) {
                                             <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
                                                 <p>回覆</p>
                                             </a>
-                                            <a href="delete-cmt.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
+                                            <a href="cmt-delete.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
                                                 <p>刪除</p>
                                             </a>
                                         </div>
@@ -175,7 +175,7 @@ if ($rows['topic_sid'] == 1) {
                                                     <p><?= $rv['content'] ?></p>
                                                     <div class="comment-msg">
                                                         <p class="mr-2"><?= $rv['created_at'] ?></p>
-                                                        <a href="delete-rply.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $rk['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $v['member_sid'] ?>">
+                                                        <a href="rply-delete.php?rid=<?= $rv['sid'] ?>" class="cmt-delete" style="display:<?= $rv['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $rv['member_sid'] ?>">
                                                             <p>刪除</p>
                                                         </a>
                                                     </div>
@@ -297,12 +297,12 @@ if ($rows['topic_sid'] == 1) {
 
 
                 // render 編輯/刪除
-                // if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
-                //     document.querySelector(".post-edit").style.display = "block";
+                if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
+                    document.querySelector(".post-edit").style.display = "block";
 
-                // } else {
-                //     document.querySelector(".post-edit").style.display = "none";
-                // }
+                } else {
+                    document.querySelector(".post-edit").style.display = "none";
+                }
             }
 
             const data = await fetch("api/detail-getPic-api.php", {

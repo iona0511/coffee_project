@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/part/connect_db.php';
 
-$user = isset($_SESSION['user']) ? $_SESSION['user'] : '';
+$user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
 $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
