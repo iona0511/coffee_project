@@ -35,7 +35,7 @@ function getData(flag) {
         })
         
         .then((data) => {
-            console.log(data)
+            
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {
                     data.sort(priceAsc);
@@ -52,7 +52,7 @@ function getData(flag) {
 
         function content (){
             wrap.innerHTML = ''
-            console.log(1)
+           
             for (let i = 0; i < data.length; i++) {
                 const trs = document.createElement("tr");
                 trs.dataset.index = data[i].course_name;

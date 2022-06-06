@@ -12,9 +12,8 @@
         />
         <link
             rel="stylesheet"
-            href="fontawesome-free-6.1.1-web/fontawesome-free-6.1.1-web/css/all.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         />
-        <link rel="stylesheet" href="delete-data-test.html" />
 
         <title>Document</title>
         <style>
@@ -57,6 +56,11 @@
                 color: #fff;
             }
             .photoItem > img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .photoItemImg > img {
                 width: 200px;
                 height: 200px;
             }
@@ -204,6 +208,7 @@
             const photoContainer = document.querySelector("#photo_container");
             const photoContainer2 = document.querySelector("#photo_container2");
             const avatar = document.form2.elements[0];
+            let on = 1;
 
             function editData() {
                 fetch("./class-index-api.php")
@@ -211,6 +216,8 @@
                         return response.json();
                     })
                     .then((data) => {
+                        sid = localStorage.getItem("sid");
+                        console.log(sid);
                         for (let j = 0; j < data.length; j++) {
                             courseName = document.querySelector(".course_name");
                             course_price =
@@ -223,32 +230,24 @@
                                 document.querySelector(".course_people");
                             course_material =
                                 document.querySelector(".course_material");
-                            sid = localStorage.getItem("sid");
-                            console.log(sid);
+                            function addImg() {
+                                if (sid === data[j].course_sid) {
+                                    courseName.value = data[j].course_name;
+                                    course_price.value = data[j].course_price;
+                                    course_level.value = data[j].course_level;
+                                    course_content.value =
+                                        data[j].course_content;
+                                    course_people.value = data[j].course_people;
+                                    course_material.value =
+                                        data[j].course_material;
 
-                            // if (sid === data[j].course_sid) {
-                            //     courseName.value = data[j].course_name;
-                            //     course_price.value = data[j].course_price;
-                            //     course_level.value = data[j].course_level;
-                            //     course_content.value = data[j].course_content;
-                            //     course_people.value = data[j].course_people;
-                            //     course_material.value = data[j].course_material;
-                            //     data[j].course_img_s === ""
-                            //         ? 0
-                            //         : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
-                            // }
-
-                            if (sid === data[j].course_sid) {
-                                courseName.value = data[j].course_name;
-                                course_price.value = data[j].course_price;
-                                course_level.value = data[j].course_level;
-                                course_content.value = data[j].course_content;
-                                course_people.value = data[j].course_people;
-                                course_material.value = data[j].course_material;
-                                data[j].course_img_s === ""
-                                    ? 0
-                                    : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
+                                    data[j].course_img_s === ""
+                                        ? 0
+                                        : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
+                                }
                             }
+
+                            addImg();
                         }
                     });
             }
@@ -263,7 +262,7 @@
                     body: fd,
                 });
                 const result = await r.json();
-                // console.log(result.success);
+
                 if (result.success === true) {
                     window.location.href = "delete-data.html";
                 }
@@ -271,6 +270,7 @@
 
             const photoItem = (f) => {
                 photoContainer2.style.display = "none";
+
                 return ` <div class="photoItem" style="display: inline-block" data-f="${f}">
                                             <img src="../../images/29/${f}" alt="" />
                                         </div>
@@ -297,7 +297,9 @@
                     photoAr.push(el.getAttribute("data-f"));
                 });
                 document.form1.course_img_s.value = photoAr;
-                console.log(document.form1.course_img_s.value);
+                // console.log(photoAr);
+                // console.log(document.form1.course_img_s);
+                // console.log(document.form1.course_img_s.value);
             });
 
             function uploadAvatar() {
