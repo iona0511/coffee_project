@@ -1050,6 +1050,9 @@ if ($totalRows > 0) {
 
     
 </style>
+<div class="display_justify_content px24" style="font-weight:bold; margin-top: 5px;font-size: 24px;">
+    總會員積分紀錄
+</div>
 <div>
     <div style="width:300px;margin-left:auto;margin-right: 5%;margin-top:50px;display:flex;">
         <svg style="margin-top:10px;" xmlns="HLM/images/common/_l_search.svg" width="17.494" height="17.33" viewBox="0 0 17.494 17.33">

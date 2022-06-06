@@ -36,7 +36,7 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT `points_record`.`type`,`points_record`.`points_get`,`points_record`.`create_at`,`member`.`member_account` FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid` LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT `points_record`.`type`,`points_record`.`points_get`,`points_record`.`create_at`,`member`.`member_account` FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid` ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     
     $rows = $pdo->query($sql)->fetchAll();
 }
@@ -78,7 +78,7 @@ if ($totalRows > 0) {
     
 </style>
 
-
+<div class="display_justify_content" style=" width:1200px;margin:20px auto;font-size:24px;">會員積分資料(For Demo)</div>
 <div class="display_justify_content" style="height: 500px; width:1200px;margin-top:25px; margin:20px auto;" >
     <table class="table table-striped" >
         <thead>

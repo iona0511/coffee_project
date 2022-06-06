@@ -70,7 +70,7 @@ $title = '新增積分歷史紀錄';
         <div >
             <div >
                 <div >
-                    <h5 >新增會員積分資料</h5>
+                    <h5 >新增會員積分資料(For Demo)</h5>
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
                         <div class="mb-3" style="border-top: 1px solid #D0D0D0;margin-top: 25px; padding: 15px 0;">
                             <label for="name">* 會員帳號</label>
