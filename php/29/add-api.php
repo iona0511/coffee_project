@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/connect_db.php';
+require dirname(__DIR__, 2) . '/parts/connect_db.php';
+// require __DIR__ . '/connect_db.php';
 
 $output = [
     'success' => false,

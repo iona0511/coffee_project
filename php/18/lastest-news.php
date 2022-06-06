@@ -1,4 +1,4 @@
-<?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 $pageName = 'lastest-news';
 $title = '最新消息';
@@ -30,8 +30,17 @@ if ($totalRows > 0) {
     $rows = $pdo->query($sql)->fetchAll();
 }
 ?>
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/navbar.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
+
+<head>
+    <style>
+        .add_btn {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -48,13 +57,13 @@ if ($totalRows > 0) {
                         </a>
                     </li>
 
-                    <?php for ($i = $page-5; $i <= $page+5; $i++) :
-                    if ($i >= 1 and $i <= $totalPages) :
+                    <?php for ($i = $page - 5; $i <= $page + 5; $i++) :
+                        if ($i >= 1 and $i <= $totalPages) :
                     ?>
 
-                    <li  class="page-item <?= $page == $i ? 'active' : '' ?>">
-                        <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                    </li>
+                            <li class="page-item <?= $page == $i ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                            </li>
 
                     <?php endif;
                     endfor; ?>
@@ -70,16 +79,21 @@ if ($totalRows > 0) {
                         </a>
                     </li>
                 </ul>
+                <a class="add_btn" href="news-insert.php">
+                    <button type="button" class="btn btn-primary">新增</button>
+                </a>
             </nav>
+
         </div>
     </div>
+
     <table class="table table-success table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">活動圖片</th>
-                <th scope="col">活動標題</th>
-                <th scope="col">活動類別</th>
+                <th scope="col" class="title-w">活動標題</th>
+                <th scope="col">類別</th>
                 <th scope="col">活動內容</th>
                 <th scope="col">建立日期</th>
                 <th scope="col">
@@ -91,7 +105,7 @@ if ($totalRows > 0) {
             </tr>
         </thead>
         <tbody>
-            <?php foreach($rows as $r) : ?>
+            <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
                     <td><?= $r['news_img'] ?></td>
@@ -113,7 +127,7 @@ if ($totalRows > 0) {
 </div>
 
 
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/scripts.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
 
 <script>
     function delete_it(news_sid) {
@@ -123,4 +137,4 @@ if ($totalRows > 0) {
     }
 </script>
 
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-foot.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
