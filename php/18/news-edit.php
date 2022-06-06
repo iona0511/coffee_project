@@ -1,6 +1,6 @@
 <?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 $pageName = 'news-edit';
-$title = '最新消息編輯頁';
+$title = '消息編輯頁';
 
 $news_sid = isset($_GET['news_sid']) ? intval($_GET['news_sid']) : 0;
 
@@ -34,7 +34,7 @@ if (empty($row)) {
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">最新消息編輯頁</h5>
+                    <h5 class="card-title">消息編輯頁</h5>
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
                         <input type="hidden" name="sid" value="<?= $row['news_sid'] ?>">
                         <div class="mb-3">
@@ -56,8 +56,10 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="news_date" class="form-label">活動區間</label>
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date" value="<?= $row['news_start_date'] ?>">
+                            <div class="form-text red"></div>
                             <p>~</p>
                             <input type="date" class="form-control w-2" id="news_end_date" name="news_end_date" value="<?= $row['news_end_date'] ?>">
+                            <div class="form-text red"></div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">修改</button>
@@ -71,24 +73,28 @@ if (empty($row)) {
     </div>
 
 </div>
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/scripts.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php'; ?>
+
 <script>
     const row = <?= json_encode($row, JSON_UNESCAPED_UNICODE); ?>;
 
+    const info_bar = document.querySelector('#info_bar');
+    // const news_img = document.querySelector('#news_img');
+    const title_f = document.form1.news_title;
+    const class_sid_f = document.form1.news_class_sid;
+    const start_date_f = document.form1.news_start_date;
+    const end_date_f = document.form1.news_end_date;
+    const content_f = document.form1.news_content;
+    const img_f = document.form1.news_img;
+    //這裡要確認資料庫欄位是否名稱有對應到
+    const fields = [title_f, class_sid_f, start_date_f, end_date_f, content_f, img_f];
 
-    const email_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zAZ]{2,}))$/;
-    const mobile_re = /^09\d{2}-?\d{3}-?\d{3}$/;
-
-    const info_bar = document.querySelector('#info-bar');
-    const name_f = document.form1.name;
-    const email_f = document.form1.email;
-    const mobile_f = document.form1.mobile;
-
-    const fields = [name_f, email_f, mobile_f];
     const fieldTexts = [];
+
     for (let f of fields) {
         fieldTexts.push(f.nextElementSibling);
     }
+    console.log(fieldTexts)
 
 
 
@@ -96,6 +102,7 @@ if (empty($row)) {
         // 讓欄位的外觀回復原來的狀態
         for (let i in fields) {
             fields[i].classList.remove('red');
+            console.log('fieldTexts ', fieldTexts)
             fieldTexts[i].innerText = '';
         }
         info_bar.style.display = 'none'; // 隱藏訊息列
@@ -103,25 +110,22 @@ if (empty($row)) {
         // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-        if (name_f.value.length < 2) {
+        if (title_f.value.length < 2) {
             // alert('姓名至少兩個字');
             // name_f.classList.add('red');
             // name_f.nextElementSibling.classList.add('red');
             // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
             fields[0].classList.add('red');
-            fieldTexts[0].innerText = '姓名至少兩個字';
+            fieldTexts[0].innerText = '標題至少要2個字';
             isPass = false;
         }
-        if (email_f.value && !email_re.test(email_f.value)) {
-            // alert('email 格式錯誤');
-            fields[1].classList.add('red');
-            fieldTexts[1].innerText = 'email 格式錯誤';
-            isPass = false;
-        }
-        if (mobile_f.value && !mobile_re.test(mobile_f.value)) {
-            // alert('手機號碼格式錯誤');
-            fields[2].classList.add('red');
-            fieldTexts[2].innerText = '手機號碼格式錯誤';
+        if (content_f.value.length < 10) {
+            // alert('姓名至少兩個字');
+            // name_f.classList.add('red');
+            // name_f.nextElementSibling.classList.add('red');
+            // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
+            fields[0].classList.add('red');
+            fieldTexts[0].innerText = '標題至少要10個字';
             isPass = false;
         }
 
@@ -153,4 +157,4 @@ if (empty($row)) {
 
     }
 </script>
-<?php include dirname(dirname(__DIR__, 2)) . '/parts/html-foot.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
