@@ -12,7 +12,7 @@ $row = $pdo->query("SELECT * FROM`products`
                     JOIN `products_categroies` 
                         ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
                     JOIN `products_pic` 
-                        ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
+                        ON`products`.`products_sid` = `products_pic`.`products_pic_sid`
                     JOIN `products_style_filter`
                         ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filter_sid`
                     WHERE products_sid=$products_sid")->fetch();
@@ -114,7 +114,7 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
                             <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
-                                <option value="" selected disabled>-- 請選擇 --</option>
+                                <option value="1" selected disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_cate as $r) : ?>
                                     <option value="<?= $r['products_categroies_sid'] ?>">
                                         <?= $r['products_categroies_name'] ?>
@@ -144,7 +144,7 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
                             <select name="products_with_products_style_filter_sid" id="products_with_products_style_filter_sid">
-                                <option value="" selected disabled>-- 請選擇 -- </option>
+                                <option value="1" selected disabled>-- 請選擇 -- </option>
                                 <?php foreach ($row_style as $r) : ?>
                                     <option value="<?= $r['products_style_filter_sid'] ?>">
                                         <?= $r['products_style_filter_categroies'] ?>
@@ -257,7 +257,9 @@ if (empty($row)) {
             info_bar.classList.add('alert-success');
             info_bar.innerText = '修改成功';
 
-            setTimeout(() => {}, 2000);
+            setTimeout(() => {
+                window.location.href='products.php';
+            }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');
