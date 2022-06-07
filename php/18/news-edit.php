@@ -56,8 +56,8 @@ if (empty($row)) {
         <div class="col-md-6">
             <div class="card color-y">
                 <div class="card-body">
-                    <h5 class="card-title">消息編輯頁</h5>
-                    <form name="form1" onsubmit="sendData();return false;" novalidate>
+                    <h2 class="card-title mb-4">編輯消息</h2>
+                    <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <input type="hidden" name="sid" value="<?= $row['news_sid'] ?>">
                         <div class="mb-3">
                             <label for="news_title" class="form-label">活動標題</label>
