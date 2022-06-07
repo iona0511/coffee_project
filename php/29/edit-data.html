@@ -216,7 +216,7 @@
                     })
                     .then((data) => {
                         sid = localStorage.getItem("sid");
-                        console.log(sid);
+                        // console.log(sid);
                         for (let j = 0; j < data.length; j++) {
                             courseName = document.querySelector(".course_name");
                             course_price =
@@ -230,7 +230,9 @@
                             course_material =
                                 document.querySelector(".course_material");
                             function addImg() {
-                                if (sid === data[j].course_sid) {
+                                if (sid == data[j].course_sid) {
+                                    console.log(typeof data[j].course_sid);
+                                    console.log(typeof sid);
                                     courseName.value = data[j].course_name;
                                     course_price.value = data[j].course_price;
                                     course_level.value = data[j].course_level;

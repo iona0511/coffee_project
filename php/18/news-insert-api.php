@@ -1,8 +1,15 @@
-<?php require dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
+<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 header('Content-Type: application/json');
-// echo json_encode($_POST, JSON_UNESCAPED_UNICODE);
-// exit;
+
+
+$folder = __DIR__ . '/news_images/';
+
+$extMap = [
+    'image/jpeg'=>'.jpg',
+    'image/png'=>'.png',
+    'image/gif'=>'.gif',
+];
 
 $output = [
     'success' => false,
@@ -19,26 +26,29 @@ $output = [
 //     exit;
 // }
 
-$news_img = $_POST['news_img'];
+// $ext = $extMap[$_FILES['news_img']['type']];
+$news_img = $_FILES['news_img'];
 $news_title = $_POST['news_title'] ?? '';
-$news_class_sid = $_POST['news_class_sid'] ?? '';
-$news_start_date = empty($_POST['news_start_date']) ?? '';
-$news_end_date = $_POST['news_end_date'] ?? '';
-$news_content = $_POST['news_content'] ?? '';
-
-// if (!empty($email) and filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-//     $output['error'] = 'email 格式錯誤';
-//     $output['code'] = 405;
-//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     exit;
-// }
-// TODO: 其他欄位檢查
-
-$news_title = $_POST['news_title'];
 $news_class_sid = $_POST['news_class_sid'] ?? '';
 $news_start_date = $_POST['news_start_date'] ?? '';
 $news_end_date = $_POST['news_end_date'] ?? '';
 $news_content = $_POST['news_content'] ?? '';
+
+
+// TODO: 其他欄位檢查
+// $ext = $extMap[$_FILES['news_img']['type']];
+// $news_title = $_POST['news_title'];
+// $news_class = $_POST['news_class'];
+// $news_start_date = $_POST['news_start_date'];
+// $news_end_date = $_POST['news_end_date'];
+// $news_content = $_POST['news_content'];
+// $news_img = $_POST['news_img'];
+
+if(move_uploaded_file($_FILES['news_img']['tmp_name'],$folder.$news_img)){
+    $output['success']=true;
+}
+
+$output['filename'] = $news_img;
 
 
 $sql = "INSERT INTO `lastest_news`(
@@ -49,10 +59,7 @@ $sql = "INSERT INTO `lastest_news`(
         ?,?,NOW()
     )";
 
-// $sql = "INSERT INTO `lastest_news` ( `news_img`, `news_title`, `news_class_sid`, `news_start_date`, `news_end_date`, `news_content`, `news_create_time`, `news_status`) VALUES ( 'dfg', 'dfg', '1', '2022-06-02', '2022-06-25', 'fg', '2022-06-01 17:08:00.000000', NULL)";
-
 $stmt = $pdo->prepare($sql);
-
 $stmt->execute([
     $news_title,
     $news_class_sid,

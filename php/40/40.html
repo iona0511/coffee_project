@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/reset.css">
-    <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css' /> -->
-    <link rel="stylesheet" href="../../fontawesome/css/all.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css''/>
     <title>Document</title>
     <style>
         [v-cloak] {
@@ -242,8 +241,8 @@
                                 v-model="radio">{{coupon.name}}
                         </label>
                         <div class="coupon_button_group">
-                            <button @click="couponDeny">不使用優惠卷</button>
                             <button @click="couponConfirm">確定</button>
+                            <button @click="couponDeny">不使用優惠卷</button>
                         </div>
                     </div>
                 </div>
@@ -265,12 +264,7 @@
                         { cartSid: 3, display: 1, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
                         { cartSid: 4, display: 1, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
                     ],
-                    couponArray: [
-                        { id: 1, money: 100, name: "生日優惠券 折抵100元" },
-                        { id: 2, money: 100, name: "註冊優惠券 折抵100元" },
-                        { id: 6, money: 0.75, name: "遊戲_轉盤_優惠券 25% off" },
-                        { id: 7, money: 0.8, name: "遊戲_轉盤_優惠券 20% off" },
-                    ],
+                    couponArray: [],
                     radio: undefined,
                     discount: undefined,
                     couponShow: false,
@@ -294,13 +288,20 @@
                 displayTotal() {
                     return parseInt(this.tweened);
                 },
-                couponName() {
+                selectedCoupon() {
                     if(this.radio === undefined) {
-                        return "無";
+                        return undefined;
                     }
                     return this.couponArray.filter((data) => {
                         return data.id === this.radio;
-                    })[0].name;
+                    })[0];
+                },
+                couponName() {
+                    if(this.selectedCoupon === undefined) {
+                        return "無";
+                    } else {
+                        return this.selectedCoupon.name;
+                    }
                 }
             },
             methods: {
@@ -387,6 +388,12 @@
                 }
             },
             async beforeMount() {
+                await fetch("./cart_read_coupon_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    console.log(data);
+                    this.couponArray = data;
+                });
                 fetch("./check_product_session_api.php")
                 .then(data => data.json())
                 .then(data => {
@@ -401,10 +408,11 @@
                         if(data === "-1") {
                             this.radio = undefined
                         } else {
-                            this.radio = data;
+                            this.radio = parseInt(data);
                         }
                     }
                 });
+                
                 this.fakeData.forEach((item) => {
                     this.tweened += item.productPrice * item.quantity;
                 });

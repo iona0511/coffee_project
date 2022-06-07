@@ -64,6 +64,7 @@ if ($rows['topic_sid'] == 1) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -71,10 +72,23 @@ if ($rows['topic_sid'] == 1) {
 <body>
     <?php include __DIR__ . "/part/nav.php" ?>
     <div class="page">
+
         <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
         <div class="post-wrap d-flex">
-            <div class="pic-wrap mh">
-                <!-- <img src="" class="pic" alt=""> -->
+            <div class="pic-wrap" id="p_wrap">
+                <div class="drag-row">
+                    <!--  -->
+                </div>
+                <!-- 如果只有一張圖不需要下面這兩個 -->
+                <div class="drag-nav">
+                    <ul class="nav-ul">
+                        <!-- 小點點放這 -->
+                    </ul>
+                </div>
+                <div class="pn-nav">
+                    <!-- 左右 -->
+
+                </div>
             </div>
             <div class="post-content">
                 <div class="content-top">
@@ -110,9 +124,9 @@ if ($rows['topic_sid'] == 1) {
                         <?php endforeach; ?>
                     </div>
                     <div class="social mb-2">
-                        <a href="javascript:;" class="">
+                        <a href="javascript:like();" class="">
                             <span style="color:black;" class="like">
-                                <i class="fa-solid fa-heart"></i>
+                                <i class="fa-solid fa-heart animate__animated"></i>
                                 <?= $rows['likes'] ?>
                             </span>
                         </a>
@@ -143,7 +157,7 @@ if ($rows['topic_sid'] == 1) {
                                             <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
                                                 <p>回覆</p>
                                             </a>
-                                            <a href="cmt-delete.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
+                                            <a href="api/cmtDelete-api.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
                                                 <p>刪除</p>
                                             </a>
                                         </div>
@@ -161,7 +175,7 @@ if ($rows['topic_sid'] == 1) {
                                     if (isset($rply_rows)) :
                                         foreach ($rply_rows as $rk => $rv) :
                                     ?>
-                                            <div class="d-flex">
+                                            <div class="d-flex pt-1">
                                                 <div class="comment-info">
                                                     <div class="avatar">
                                                         <i class="fa-solid fa-circle-user text-primary"></i>
@@ -195,13 +209,46 @@ if ($rows['topic_sid'] == 1) {
                 </div>
             </div>
         </div>
+        <div class="control" style="text-align:center;margin-top: 10px;">
+
+
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
-        const pic = document.querySelector(".pic");
         let cidNumber = '';
+        async function like() {
+            const jsonData = JSON.stringify({
+                pid: <?= $pid ?>,
+            });
 
+            const data = await fetch("api/like-api.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            });
+
+            const response = await data.json();
+            console.log(response);
+            // render
+            document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
+            if (response['isLog'] == true) {
+                if (response['isLike'] == true) {
+                    document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
+                } else {
+                    document.querySelector(".fa-heart").classList.remove("heart_red", "animate__heartBeat");
+                }
+            } else {
+                const cof = confirm('您尚未登入,是否前往登入頁面?');
+
+                if (cof) {
+                    location.href = "part/login/login.html";
+                }
+            }
+        }
 
         function cm_toggle() {
             if (document.querySelector(".comment-wrap").style.display == "none") {
@@ -227,7 +274,6 @@ if ($rows['topic_sid'] == 1) {
                 document.querySelector(".rply-bar").remove();
             }
 
-            console.log(document.querySelector("#rpc" + cidNumber));
             const el = document.createElement("div");
             el.classList.add("rply-bar");
             el.innerHTML = `
@@ -247,7 +293,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
 
-            const data = await fetch("api/commentAdd-api.php", {
+            const data = await fetch("api/cmtAdd-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -258,7 +304,15 @@ if ($rows['topic_sid'] == 1) {
             const response = await data.json();
             console.log(response);
 
-            if (response['success']) history.go(0);
+            if (response['success']) {
+                history.go(0);
+            } else {
+                const cof = confirm('您尚未登入,是否前往登入頁面?');
+
+                if (cof) {
+                    location.href = "part/login/login.html";
+                }
+            }
         }
 
         async function send_rply(cid) {
@@ -285,18 +339,46 @@ if ($rows['topic_sid'] == 1) {
         }
         // Get pic&reder
         async function getData() {
+            // 取得當下文章的post_sid
             const pd = JSON.stringify({
                 pid: <?= $pid ?>
             });
 
+            // render畫面
             function render(r) {
+                const d_row = document.querySelector(".drag-row");
+
+                // 有幾張圖片d_row就幾倍寬
+                d_row.style.width = r.length * 100 + "%";
                 for (let v of r) {
-                    document.querySelector(".pic-wrap").innerHTML += `<img src="uploaded/${v.img_name}" class="pic" alt="">`;
-                    console.log(v);
+                    d_row.innerHTML += `
+                    <div class="drag-col">
+                    <img src="uploaded/${v.img_name}" class="pic" alt="">
+                    </div>
+                    `;
+
+                    // 有一張圖片以上才render 小點跟左右
+                    if (r.length > 1) {
+                        document.querySelector(".nav-ul").innerHTML += `
+                        <li class="drag-ctrl" onclick=""><i class="fa-solid fa-circle"></i></li>
+                        `;
+
+                    }
+                }
+                if (r.length > 1) {
+                    document.querySelector(".pn-nav").innerHTML = `
+                <i class="fa-solid fa-circle-chevron-left prvnxt prv" onclick="prev_pic()"></i>
+                    <i class="fa-solid fa-circle-chevron-right prvnxt nxt" onclick="next_pic()"></i>
+                    `;
+                    document.querySelector(".drag-col").classList.add("selected");
+                    document.querySelector(".drag-ctrl").classList.add("n-selected");
                 }
 
+                // 如果登入者有按過讚render紅色愛心
+                if (r[0]['isLike'] == true) document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
 
-                // render 編輯/刪除
+
+                // render是該篇文章作者給編輯/刪除
                 if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
                     document.querySelector(".post-edit").style.display = "block";
 
@@ -305,7 +387,7 @@ if ($rows['topic_sid'] == 1) {
                 }
             }
 
-            const data = await fetch("api/detail-getPic-api.php", {
+            const data = await fetch("api/detail-getInfo-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -314,12 +396,66 @@ if ($rows['topic_sid'] == 1) {
             });
             const response = await data.json();
             console.log(response);
-            console.log(response[0].img_name);
             render(response);
-
+            addPicCtrl();
         }
         getData();
+        let s_ind = 0;
+
+        function slide(direction) {
+            const d_row = document.querySelector(".drag-row");
+            const d_cols = document.querySelectorAll(".drag-col");
+            const cols = d_cols.length;
+            const nav_li = document.querySelectorAll(".drag-ctrl");
+
+            document.querySelector(".drag-col.selected").classList.remove("selected");
+            document.querySelector(".n-selected").classList.remove("n-selected");
+            if (direction == "next") {
+                if (s_ind < (cols - 1)) {
+                    s_ind++;
+                } else {
+                    s_ind = 0;
+                }
+            } else if (direction == "prev") {
+                if (s_ind > 0) {
+                    s_ind--;
+                } else {
+                    s_ind = cols - 1;
+                }
+            } else {
+                s_ind = direction;
+            }
+            d_row.style.left = -d_cols[s_ind].offsetLeft + "px";
+            d_cols[s_ind].classList.add("selected");
+            nav_li[s_ind].classList.add("n-selected");
+        }
+
+        function addPicCtrl() {
+            document.querySelectorAll(".drag-ctrl").forEach((v, ind) => {
+                v.addEventListener("click", () => {
+                    slide(ind);
+                    console.log(ind);
+                });
+            });
+
+        }
+
+        // 處理resize
+        window.addEventListener('resize', () => {
+            const d_row = document.querySelector(".drag-row");
+            const d_cols = document.querySelectorAll(".drag-col");
+
+            d_row.style.left = -d_cols[s_ind].offsetLeft + "px";
+        });
+
+        const prev_pic = () => {
+            slide("prev");
+        };
+        const next_pic = () => {
+            slide("next");
+        };
     </script>
+
 </body>
 
 </html>
