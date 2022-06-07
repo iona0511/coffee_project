@@ -226,7 +226,7 @@ select {
 }
 
 .comment-card {
-    padding-top: 10px;
+    padding-top: 12px;
 }
 
 .reply-card {
@@ -267,13 +267,102 @@ select {
     color: #69696b;
 }
 
+/* 圖片slider */
 .pic-wrap {
     flex-shrink: 0;
     width: 55%;
-    margin-left: auto;
     position: relative;
     background-color: rgba(239, 235, 229, 0.4);
+    overflow-x: hidden;
+}
+
+.drag-nav {
+    position: absolute;
+    bottom: 10px;
+    color: rgb(165, 165, 165);
+    text-align: center;
+    left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+    transform: translateX(-50%);
+}
+
+.prvnxt {
+    color: rgb(165, 165, 165);
+    font-size: 24px;
+    text-align: center;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    text-shadow: 0.1em 0.1em 0.2em rgb(56, 56, 56);
+    opacity: .8;
+}
+
+.prv {
+    left: .75rem;
+    transform: translateY(-50%) translateX(50%);
+
+}
+
+.nxt {
+    right: .75rem;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+
+.prvnxt:hover {
+    color: #a9c7e4;
+}
+
+.nav-ul {
+    padding: 5px;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+li.drag-ctrl {
+    font-size: 1px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+
+    /* text-align: center; */
+    line-height: 20px;
+    margin-right: 12px;
+}
+
+li.drag-ctrl:last-child {
+    margin-right: 0px;
+}
+
+li.n-selected {
+    color: #a9c7e4;
+}
+
+.drag-row {
+    position: absolute;
+    background-color: rgba(239, 235, 229, 0.4);
     overflow-y: hidden;
+    display: flex;
+    align-items: center;
+
+    left: 0;
+    transition: .3s;
+    height: 100%;
+}
+
+
+.drag-col {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 33.3%;
+
 }
 
 .pic {
@@ -281,12 +370,8 @@ select {
     max-width: 100%;
     width: 100%;
     height: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+
+
 }
 
 .fa-circle-user {
@@ -374,7 +459,7 @@ select {
     width: 100%;
     height: 100%;
     position: relative;
-   
+
 }
 
 

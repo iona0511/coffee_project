@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-06 09:46:55
+-- 產生時間： 2022-06-06 19:29:56
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -239,7 +239,8 @@ CREATE TABLE `post_img` (
 INSERT INTO `post_img` (`sid`, `img_name`, `post_sid`) VALUES
 (0, 'default_pic.jpg', 0),
 (1, 'dog.jpg', 1),
-(2, 'cat.jpg', 1);
+(2, 'cat.jpg', 1),
+(3, 'GOLDEN2.PNG', 1);
 
 -- --------------------------------------------------------
 
@@ -464,7 +465,7 @@ ALTER TABLE `post`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_img`
 --
 ALTER TABLE `post_img`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=674;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=675;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post_tag`

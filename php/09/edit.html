@@ -200,7 +200,7 @@ avatar.addEventListener("change", async function (){
     });
     const obj = await r.json();
     console.log(obj);
-    myImg.src = "./uploaded/" + obj.filename; 
+    myImg.src = "/coffee_project/images/09/" + obj.filename; 
     if(obj.error){
         pic = false;
         alert("頭貼沒有修改");
@@ -236,7 +236,7 @@ const renderPic = async () => {
     await fetch("edit-read-api.php")
     .then(r=>r.json())
     .then((obj)=> {
-        myImg.src = './uploaded/'+ obj.filename ;  
+        myImg.src = '/coffee_project/images/09/'+ obj.filename ;  
 
         if( obj.filename != ""){
         myImg.style.opacity = 1;
