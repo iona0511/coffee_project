@@ -18,6 +18,22 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 <?php include dirname(__DIR__, 2) . '/parts/html-head.php'; ?>
 <?php include dirname(__DIR__, 2) . '/parts/navbar.php'; ?>
 <style>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        }
+
+    body {
+    /* background-color: #CD853F; */
+    background-color:#CAAD87;
+    background-size: cover;
+    opacity: 0.9;
+    }
+
+    .color-y {
+        background-color:aliceblue;
+        opacity: 0.8;
+    }
     .form-control.red {
         border: 1px soid blue;
     }
@@ -30,12 +46,15 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
         flex-direction: row;
         height: 30px;
     }
+    .margin {
+        margin-right: 0,150px;
+    }
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 margin">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body color-y"">
                     <h5 class="card-title">新增消息</h5>
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
                         <!-- <input type="hidden" name="sid" > -->
@@ -83,7 +102,7 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
                         <button type="submit" class="btn btn-primary">新增</button>
                     </form>
-                    <div id="info_bar" class="alert alert-success" role="alert" style="display:none;">
+                    <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功
                     </div>
                 </div>
@@ -94,7 +113,7 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
 <?php include dirname(__DIR__, 2) . '/parts/scripts.php'; ?>
 <script>
-    const info_bar = document.querySelector('#info_bar');
+    const info_bar = document.querySelector('#info-bar');
 
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
