@@ -129,10 +129,33 @@
     if($stmt -> rowCount() == 1) {
         $output["success"] = true;
         //最近新增資料的 primary key
-        //$pdo -> lastInsertId();
+        $_SESSION["newestOrder"] = $pdo -> lastInsertId();
     } else {
         $output["success"] = false;
         $output["message"] = "系統繁忙";
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    }
+
+    //寫入優惠卷
+    $sql = "INSERT INTO `coupon_logs`(
+        `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
+    ) VALUES (
+        ?, ?, ?, NOW()
+    )";
+    $stmt = $pdo -> prepare($sql);
+    $stmt -> execute([
+        $_SESSION["user"]["member_sid"],
+        $decodeCoupon,
+        $_SESSION["newestOrder"]
+    ]);
+    if($stmt -> rowCount() == 1) {
+        $output["success"] = true;
+        //最近新增資料的 primary key
+        // $pdo -> lastInsertId();
+    } else {
+        $output["success"] = false;
+        $output["message"] = "系統繁忙2";
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>
