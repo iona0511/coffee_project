@@ -55,8 +55,8 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
         <div class="col-md-6 margin">
             <div class="card">
                 <div class="card-body color-y"">
-                    <h5 class="card-title">新增消息</h5>
-                    <form name="form1" onsubmit="sendData();return false;" novalidate>
+                    <h2 class="card-title mb-4">新增消息</h2>
+                    <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <!-- <input type="hidden" name="sid" > -->
                         <div class="mb-3">
                             <label for="news_title" class="form-label">活動標題</label>
@@ -64,11 +64,12 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
                             <input type="text" class="form-control" id="news_title" name="news_title" required>
                             <div class="form-text red"></div>
                         </div>
+
                         <div class="mb-3">
                             <label for="news_class_name" class="form-label">活動類別</label>
                             </br>
                             <select name="news_class_name" id="news_class_name">
-                                <option value="">-- 請選擇 --</option>
+                                <option value="" selected disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
                                     <option value="<?= $r['news_class_sid'] ?>">
                                         <?= $r['news_class_name'] ?>
