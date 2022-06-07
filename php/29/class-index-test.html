@@ -98,74 +98,11 @@
                         return response.json();
                     })
                     .then(function (data) {
-                        sort.addEventListener("change", function () {
-                            if (sort.value === "priceAsc") {
-                                data.sort(priceAsc);
-                            } else if (sort.value === "priceDesc") {
-                                data.sort(priceDesc);
-                            } else if (sort.value === "levelAsc") {
-                                data.sort(levelAsc);
-                            } else if (sort.value === "levelDesc") {
-                                data.sort(levelDesc);
-                            }
-                            addData();
-                        });
-
-                        function limits() {
-                            countLim = Math.ceil(data.length / len);
-                            //餘數算一頁向上取整
-                            inputs = document.querySelector(".inputs");
-                            inputs.innerHTML = "";
-                            for (let i = 1; i <= countLim; i++) {
-                                // console.log(i);
-                                inputs.innerHTML += `<input type="button" value="${i}" onclick="limitinput(${i})" >`; //每個頁面按鈕都繫結上一個點選事件
-                            }
-                        }
-
-                        let choose = 0; //建立一個全域性變數用來儲存當前處於第幾個頁面
-
-                        function tablestr(num) {
-                            //num是指當前哪個頁面
-
-                            let num1 = (num - 1) * len; //確定迴圈開始的集合下標
-
-                            let num2 = num * len; //確定迴圈結束的結束下標
-
-                            wrap.innerHTML = ""; //清空一下
-
-                            for (let i = num1; i < num2; i++) {
-                                //遍歷陣列
-
-                                let str = "";
-
-                                // for (var h in data[i]) {
-                                //遍歷集合
-
-                                str += `<div class="pic">
-                    <div class="level">${data[i].course_level}</div>
-                    <img src="../../images/29/${data[i].course_img_s}" alt="" />
-                </div>
-                <h3>${data[i].course_name}</h3>
-                <p class="card-txt">${data[i].course_content}</p>
-                <p class="card-txt">NT$${data[i].course_price}</p>`;
-                                // }
-
-                                wrap.innerHTML += `<div class="card">  ${str}  </div>`; //每迴圈一次新增一條資料
-                            }
-                        }
-
-                        function liminputcolor(choose) {
-                            inputs.childNodes[
-                                choose - 1
-                            ].style.backgroundColor = "red";
-                        }
-                        limits();
-                        inputs.childNodes[0].style.backgroundColor = "red"; //第一個按鈕的背景顏色為紅色
-                        tablestr(1);
+                        localStorage.setItem("data", JSON.stringify(data));
 
                         //         function addData() {
                         //             wrap.innerHTML = "";
-                        //             for (let i = 0; i < data.length; i++) {
+
                         //                 const cards = document.createElement("div");
                         //                 cards.className = "card";
                         //                 cards.dataset.index = data[i].course_name;
@@ -178,56 +115,91 @@
                         // <p class="card-txt">${data[i].course_content}</p>
                         // <p class="card-txt">NT$${data[i].course_price}</p>`;
 
-                        //                 level = document.querySelectorAll(".level");
-
-                        //                 if (data[i].course_level === "1") {
-                        //                     level[i].innerHTML = "入門";
-                        //                     level[i].style.backgroundColor =
-                        //                         "rgb(20, 155, 53)";
-                        //                 }
-                        //                 if (data[i].course_level === "2") {
-                        //                     level[i].innerHTML = "普通";
-                        //                     level[i].style.backgroundColor = "#fa0";
-                        //                 }
-                        //                 if (data[i].course_level === "3") {
-                        //                     level[i].innerHTML = "困難";
-                        //                     level[i].style.backgroundColor = "#f00";
-                        //                 }
-                        //             }
                         //         }
                         //         addData();
-
-                        search.addEventListener("input", () => {
-                            if (search.value === "") {
-                                style.innerHTML +=
-                                    '.card:not([data-index*="' +
-                                    search.value +
-                                    '"]){display:block;}';
-                            }
-                            data.forEach(function (v, i) {
-                                ar2 = data[i].course_name.split("");
-
-                                ar2.forEach(function (v, i) {
-                                    if (search.value === ar2[i])
-                                        style.innerHTML +=
-                                            '.card:not([data-index*="' +
-                                            search.value +
-                                            '"]){display:none;}';
-                                });
-                            });
-                        });
                     });
             }
             getData();
 
+            data2 = JSON.parse(localStorage.getItem("data"));
+            console.log(data2);
+
+            function limits() {
+                countLim = Math.ceil(data2.length / len);
+                //餘數算一頁向上取整
+                inputs = document.querySelector(".inputs");
+                inputs.innerHTML = "";
+                for (let i = 1; i <= countLim; i++) {
+                    inputs.innerHTML += `<input type="button" value="${i}" onclick="limitinput(this)" >`; //每個頁面按鈕都繫結上一個點選事件
+                }
+            }
+            limits();
+
+            let choose = 0; //建立一個全域性變數用來儲存當前處於第幾個頁面
+
+            function tablestr(num) {
+                //num是指當前哪個頁面
+                // console.log(num);
+                let num1 = (num - 1) * len; //確定迴圈開始的集合下標  1的時候=0 ,2的時候=3 ,8的時候=21
+
+                let num2 = num * len; //確定迴圈結束的結束下標  1的時候 = 3 ,2的時候=6 ,8的時候=24
+
+                wrap.innerHTML = ""; //清空一下
+
+                for (let i = num1; i < num2; i++) {
+                    //遍歷陣列
+                    if (i >= data2.length) {
+                        i = data2.length;
+                        return;
+                    }
+                    let str = "";
+
+                    str += `<div class="pic">
+            <div class="level">${data2[i].course_level}</div>
+            <img src="../../images/29/${data2[i].course_img_s}" alt="" />
+            </div>
+            <h3>${data2[i].course_name}</h3>
+            <p class="card-txt">${data2[i].course_content}</p>
+            <p class="card-txt">NT$${data2[i].course_price}</p>`;
+
+                    wrap.innerHTML += `<div class="card">  ${str}  </div>`; //每迴圈一次新增一條資料
+                }
+            }
+
+            function liminputcolor(choose) {
+                inputs.childNodes[choose - 1].style.backgroundColor = "red";
+            }
+
+            inputs.childNodes[0].style.backgroundColor = "red"; //第一個按鈕的背景顏色為紅色
+            tablestr(1);
+            function levelfun() {
+                for (let i = 0; i < data2.length; i++) {
+                    level = document.querySelectorAll(".level");
+
+                    if (data2[i].course_level === "1") {
+                        level[i].innerHTML = "入門";
+                        level[i].style.backgroundColor = "rgb(20, 155, 53)";
+                    }
+                    if (data2[i].course_level === "2") {
+                        level[i].innerHTML = "普通";
+                        level[i].style.backgroundColor = "#fa0";
+                    }
+                    if (data2[i].course_level === "3") {
+                        level[i].innerHTML = "困難";
+                        level[i].style.backgroundColor = "#f00";
+                    }
+                }
+            }
+            levelfun();
+
             function limitinput(i) {
                 console.log(i);
                 choose = i.value;
-                console.log("choose=" + i);
-                // tablestr(choose); //重新整理table資料
-                // limits(); //重新整理頁面按鈕
-                // i.style.backgroundColor = "red"; //當前點選的頁面按鈕背景顏色改變為紅色
-                // liminputcolor(choose); //頁面按鈕變色
+                tablestr(choose); //重新整理table資料
+                limits(); //重新整理頁面按鈕
+                i.style.backgroundColor = "red"; //當前點選的頁面按鈕背景顏色改變為紅色
+                liminputcolor(choose); //頁面按鈕變色
+                levelfun();
             }
         </script>
     </body>
