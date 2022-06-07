@@ -26,23 +26,18 @@ $member_password = $_POST['member_password'];
 
 $sql = "SELECT * FROM `member` WHERE 1;";
 
-$stmt = $pdo->query($sql);
-
-$rrr = $pdo->query($sql)->fetchAll();
-// echo json_encode($rrr, JSON_UNESCAPED_UNICODE);
+$stmt = $pdo->query($sql)->fetchAll();
 
 
-
-foreach( $rrr as $k => $v){
+foreach( $stmt as $k => $v){
             
     if (isset($_POST['member_account'])) {
     
         if (!empty($_POST['member_account']) and !empty($_POST['member_password'])) {
             
-            if (!empty($rrr[$k])) {
-                // echo json_encode($rrr[1]['member_password'], JSON_UNESCAPED_UNICODE);
+            if (!empty($stmt[$k])) {
     
-                if ($_POST['member_password'] ===  $rrr[$k]['member_password']) {
+                if ($_POST['member_password'] ===  $stmt[$k]['member_password']) {
                     // 登入成功
                     // 把資料設定到 session 裡 
                     $output['success'] = true;
