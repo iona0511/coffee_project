@@ -136,7 +136,7 @@
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
 
-    //寫入優惠卷
+    //寫入coupon_logs
     $sql = "INSERT INTO `coupon_logs`(
         `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
     ) VALUES (
@@ -157,5 +157,10 @@
         $output["message"] = "系統繁忙2";
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
+
+    //寫入coupon_receive
+    $sql = sprintf("UPDATE `coupon_receive` SET `status`= 1 WHERE `sid` = %s;", $decodeCoupon);
+    $stmt = $pdo -> prepare($sql) -> execute();
+
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>
