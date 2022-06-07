@@ -381,6 +381,12 @@
                 }
             },
             async beforeMount() {
+                await fetch("./cart_read_coupon_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    console.log(data);
+                    this.couponArray = data;
+                });
                 fetch("./check_product_session_api.php")
                 .then(data => data.json())
                 .then(data => {
@@ -398,12 +404,6 @@
                             this.radio = parseInt(data);
                         }
                     }
-                });
-                await fetch("./cart_read_coupon_api.php")
-                .then(data => data.json())
-                .then(data => {
-                    console.log(data);
-                    this.couponArray = data;
                 });
                 
                 this.fakeData.forEach((item) => {
