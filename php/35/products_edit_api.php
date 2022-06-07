@@ -48,7 +48,7 @@ foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
     // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
     $filename = $f;
     $output['filenames'][] = $filename;
-    $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
+    $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
     $stmtpic = $pdo->prepare($sqlpic);
     $stmtpic->execute([$filename]);
     // 把上傳的檔案搬移到指定的位置
@@ -60,12 +60,6 @@ foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
 // 複數圖片區
 
 $folder = dirname(dirname(__DIR__, 1)) . '/images/35/';
-
-$extMap = [
-    'image/jpeg' => '.jpg',
-    'image/png' => '.png',
-    'image/gif' => '.gif',
-];
 
 if (empty($_FILES['products_pic_multi'])) {
     $output['error'] = '沒有上傳檔案';
@@ -82,7 +76,7 @@ if (!is_array($_FILES['products_pic_multi']['name'])) {
 $multiName = [];
 foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
 
-    $ext = $extMap[$_FILES['products_pic_multi']['type'][$k]]; // 副檔名
+    // $ext = $extMap[$_FILES['products_pic_multi']['type'][$k]]; // 副檔名
     // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
     $filename = $f;
     $output['filenames'][] = $filename;
@@ -91,13 +85,13 @@ foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
     move_uploaded_file($_FILES['products_pic_multi']['tmp_name'][$k], $folder . $filename);
 }
 $multiNameStr = implode(",", $multiName);
-$sqlmulti = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`SET `products_pic_multi`=? WHERE `products_sid`=$products_sid";
+$sqlmulti = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_multi`=? WHERE `products_sid`=$products_sid";
 $stmtmulti = $pdo->prepare($sqlmulti);
 $stmtmulti->execute([$multiNameStr]);
 
 // 複數圖片區結束
 
-
+$products_sid = $_POST['products_sid'];
 $products_name = $_POST['products_name'];
 $products_introduction = $_POST['products_introduction'] ?? '';
 $products_detail_introduction = $_POST['products_detail_introduction'] ?? '';

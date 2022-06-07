@@ -241,8 +241,8 @@
                                 v-model="radio">{{coupon.name}}
                         </label>
                         <div class="coupon_button_group">
-                            <button @click="couponDeny">不使用優惠卷</button>
                             <button @click="couponConfirm">確定</button>
+                            <button @click="couponDeny">不使用優惠卷</button>
                         </div>
                     </div>
                 </div>
@@ -288,13 +288,20 @@
                 displayTotal() {
                     return parseInt(this.tweened);
                 },
-                couponName() {
+                selectedCoupon() {
                     if(this.radio === undefined) {
-                        return "無";
+                        return undefined;
                     }
                     return this.couponArray.filter((data) => {
                         return data.id === this.radio;
-                    })[0].name;
+                    })[0];
+                },
+                couponName() {
+                    if(this.selectedCoupon === undefined) {
+                        return "無";
+                    } else {
+                        return this.selectedCoupon.name;
+                    }
                 }
             },
             methods: {
@@ -381,6 +388,12 @@
                 }
             },
             async beforeMount() {
+                await fetch("./cart_read_coupon_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    console.log(data);
+                    this.couponArray = data;
+                });
                 fetch("./check_product_session_api.php")
                 .then(data => data.json())
                 .then(data => {
@@ -398,12 +411,6 @@
                             this.radio = parseInt(data);
                         }
                     }
-                });
-                await fetch("./cart_read_coupon_api.php")
-                .then(data => data.json())
-                .then(data => {
-                    console.log(data);
-                    this.couponArray = data;
                 });
                 
                 this.fakeData.forEach((item) => {
