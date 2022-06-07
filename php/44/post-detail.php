@@ -278,7 +278,7 @@ if ($rows['topic_sid'] == 1) {
             el.classList.add("rply-bar");
             el.innerHTML = `
                 <input class="form-control form-control-md msg" type="text" placeholder="留言">
-                <a onclick="cancel_rply(event);" href="javascr:;">取消</a>
+                <a onclick="cancel_rply(event);" href="javascript:;">取消</a>
                 <a href="javascript:send_rply(${cidNumber});">發佈</a>
             `;
             document.querySelector("#rpc" + cidNumber).appendChild(el)
