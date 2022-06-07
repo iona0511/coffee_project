@@ -8,6 +8,14 @@ $sid = isset($_SESSION['user']['member_sid']) ? intval($_SESSION['user']['member
 $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 
 
+// 取得點數欄位的外鍵
+$user=$_SESSION['user']['member_sid'];
+$sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$user );
+$t_points = $pdo->query($sql_points)->fetch();
+// $t_points = $pdo->query($sql_points)->fetchAll();
+// $a = $t_points[0];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -136,6 +144,15 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 .wrap{
     position: relative;
 }
+.nav {
+        text-decoration: none;
+        font-size: 1rem;
+        margin-left: 35px;
+        padding: 5px;
+    }
+a:hover {
+        color: rgb(205, 111, 3);
+    }
 </style>
 
 <body>
@@ -162,7 +179,7 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 
         <div class="card">         
             <div class="cardF">
-                <?php if ($_SESSION['user']['member_level']>1000) : echo "<div class='gold'></div>"; elseif($_SESSION['user']['member_level']>500): echo "<div class='silver'></div>"; endif; ?>
+                <?php if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; ?>
                 <div class="cardLogo">
                     <img src="/coffee_project/images/09/member-card-logo" alt="">
                 </div>
@@ -170,8 +187,8 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
                 <p class="cardID"><span>ID:</span><?= "&nbsp".$_SESSION['user']['member_sid']=str_pad($_SESSION['user']['member_sid'],6,"0",STR_PAD_LEFT) ?></p>                
             </div>
             <div class="cardB">
-                <?php if ($_SESSION['user']['member_level']>1000) : echo "<div class='gold'></div>"; elseif($_SESSION['user']['member_level']>500): echo "<div class='silver'></div>"; endif; ?>
-                <p class="cardText"><?= $_SESSION['user']['member_level']."&nbsp"."&nbsp"."points" ?></p>
+                <?php if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; ?>
+                <p class="cardText"><?= $t_points['total_points']."&nbsp"."&nbsp"."points" ?></p>
             </div>
         </div>
 

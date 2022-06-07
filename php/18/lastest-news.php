@@ -118,7 +118,9 @@ if ($totalRows > 0) {
                         </a>
                     </td>
                     <td>
-                        <a href="javascript : delete_it(<? $r['news_sid'] ?>)"><i class="fa-solid fa-trash-can"></i></a>
+                        <a href="javascript : delete_it(<?= $r['news_sid'] ?>)">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
