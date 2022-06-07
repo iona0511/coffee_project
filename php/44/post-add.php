@@ -14,6 +14,7 @@ require __DIR__ . '/part/connect_db.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pa_style.css">
 </head>
 
 <body>
@@ -49,12 +50,22 @@ require __DIR__ . '/part/connect_db.php';
                 <div class="form-text red"></div>
             </div>
             <div class="mb-3">
-                <label for="tag" class="form-label">HashTag</label>
-                <input type="text" class="form-control" id="tag" name="tag">
-                <div class="form-text red"></div>
+                <label for="tag" class="form-label">標籤</label>
+                <div class="search_col">
+                    <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="#標籤名稱">
+                    <!-- 搜尋列 -->
+                    <div class="s_result">
+
+                    </div>
+                </div>
+
+
             </div>
 
-            <button type="submit" class="btn btn-primary mb-3">發文</button>
+            <div class="tag-rect mt-3 mb-3">
+                <!-- 標籤列 -->
+            </div>
+            <button type="submit" class="btn btn-primary">發文</button>
             <div id="info_bar" class="alert alert-success" role="alert" style="display: none;">
                 發文成功
             </div>
@@ -75,6 +86,8 @@ require __DIR__ . '/part/connect_db.php';
         container.addEventListener("click", (event) => {
             info_bar.style.opacity = "0";
         });
+
+
 
         async function sendData() {
             function show_msg(msg) {
@@ -115,11 +128,13 @@ require __DIR__ . '/part/connect_db.php';
             const f = event.currentTarget.parentNode.dataset.f;
 
             if (photoAr.indexOf(f) !== -1) {
-                photoAr.splice(photoAr.indexOf(f) , 1);
+                photoAr.splice(photoAr.indexOf(f), 1);
             }
             document.main_form.photos.value = JSON.stringify(photoAr);
             console.log(photoAr);
             event.currentTarget.parentNode.parentNode.remove();
+
+            if (document.main_form.photos.value == "[]") document.querySelector("#photo_container").remove();
         }
 
         function photoItem(f) {
@@ -134,18 +149,17 @@ require __DIR__ . '/part/connect_db.php';
         }
 
         photos.addEventListener("change", async function() {
-            if(photos.files.length >5){
-                alert('最多隻能新增五張圖片'); 
-                return; 
+            if (photos.files.length > 5) {
+                alert('最多隻能新增五張圖片');
+                return;
             }
-            
+
             const pData = new FormData(document.form1);
             const r = await fetch("api/uploadPic-api.php", {
                 method: "POST",
                 body: pData
             });
             const obj = await r.json();
-            console.log(obj);
 
             if (obj.filenames && obj.filenames.length) {
                 photo_container.innerHTML += obj.filenames
@@ -155,8 +169,83 @@ require __DIR__ . '/part/connect_db.php';
             document.querySelectorAll(".photoItem").forEach((el) => {
                 photoAr.push(el.getAttribute("data-f"));
             });
-            document.querySelector("#photo_container").style.display="flex";
+            document.querySelector("#photo_container").style.display = "flex";
             document.main_form.photos.value = JSON.stringify(photoAr);
+        });
+
+
+        // 動態搜尋預覽
+        // input會包含注音選自 compositionend輸入法完成後才會
+        async function preview_tag(){
+            
+        }
+
+        document.main_form.tag.addEventListener("input", async () => {
+            const v = document.main_form.tag.value;
+            if (v < 1) {
+                document.querySelector(".s_result").innerHTML = "";
+                return;
+            }
+
+            const pData = new FormData(document.main_form);
+            const r = await fetch("api/preview-tag-api.php", {
+                method: "POST",
+                body: pData
+            });
+            const obj = await r.json();
+
+            if (obj.length > 0) {
+                const el = document.createElement("div");
+                obj.forEach((v, ind) => {
+                    el.innerHTML += `
+                    <div class="s_col" onclick="addTag(event)">${v['name']}</div>`;
+                });
+                document.querySelector(".s_result").innerHTML = el.innerHTML;
+            }
+        });
+
+        const addTag = (event) => {
+            const v = event.target.innerText;
+
+            document.querySelector(".tag-rect").innerHTML += `
+                <span class="h_tag" onclick="removeTag(event)">${v}</span>`;
+
+            document.main_form.tag.value = "";
+        };
+
+        const removeTag = (event) => {
+            event.target.remove();
+        };
+
+        window.addEventListener("click", () => {
+            if (event.target == document.main_form.tag) return;
+            if (document.querySelector(".s_result")) {
+                document.querySelector(".s_result").innerHTML = "";
+            }
+        });
+
+        document.main_form.tag.addEventListener("click", async () => {
+ 
+            const v = document.main_form.tag.value;
+            if (v < 1) {
+                document.querySelector(".s_result").innerHTML = "";
+                return;
+            }
+
+            const pData = new FormData(document.main_form);
+            const r = await fetch("api/preview-tag-api.php", {
+                method: "POST",
+                body: pData
+            });
+            const obj = await r.json();
+
+            if (obj.length > 0) {
+                const el = document.createElement("div");
+                obj.forEach((v, ind) => {
+                    el.innerHTML += `<div class="s_col" onclick="addTag(event)">${v['name']}</div>`;
+                });
+                document.querySelector(".s_result").innerHTML = el.innerHTML;
+            }
         });
     </script>
 </body>
