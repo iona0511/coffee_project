@@ -157,7 +157,7 @@ if ($rows['topic_sid'] == 1) {
                                             <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
                                                 <p>回覆</p>
                                             </a>
-                                            <a href="cmt-delete.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
+                                            <a href="api/cmtDelete-api.php?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
                                                 <p>刪除</p>
                                             </a>
                                         </div>
@@ -293,7 +293,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
 
-            const data = await fetch("api/commentAdd-api.php", {
+            const data = await fetch("api/cmtAdd-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
