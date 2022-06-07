@@ -1,12 +1,13 @@
 <?php 
 require dirname(__DIR__,2) . '/parts/connect_db.php';
-session_start();
 
-if (!isset($_SESSION['user']['admin_account'])){
-    header('Location:/coffee_project/php/18/news-insert.php');
-    // header('Location: http://www.example.com/');
-    exit;
-}
+// session_start();
+
+// if (!isset($_SESSION['user']['admin_account'])){
+//     header('Location:/coffee_project/php/18/news-insert.php');
+//     // header('Location: http://www.example.com/');
+//     exit;
+// }
 
 $pageName = 'news-insert';
 $title = '新增消息';

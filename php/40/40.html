@@ -241,8 +241,8 @@
                                 v-model="radio">{{coupon.name}}
                         </label>
                         <div class="coupon_button_group">
-                            <button @click="couponDeny">不使用優惠卷</button>
                             <button @click="couponConfirm">確定</button>
+                            <button @click="couponDeny">不使用優惠卷</button>
                         </div>
                     </div>
                 </div>
@@ -288,13 +288,20 @@
                 displayTotal() {
                     return parseInt(this.tweened);
                 },
-                couponName() {
+                selectedCoupon() {
                     if(this.radio === undefined) {
-                        return "無";
+                        return undefined;
                     }
                     return this.couponArray.filter((data) => {
                         return data.id === this.radio;
-                    })[0].name;
+                    })[0];
+                },
+                couponName() {
+                    if(this.selectedCoupon === undefined) {
+                        return "無";
+                    } else {
+                        return this.selectedCoupon.name;
+                    }
                 }
             },
             methods: {
