@@ -12,7 +12,7 @@ $extMap = [
 
 
 $output=[
-'success' => true,
+'success' => false,
 'postData' => $_POST,
 'code'=> 0,
 'error'=>'',
@@ -22,12 +22,12 @@ $output=[
 
 // 欄位檢查，後端的檢查
 
-// if(empty($_POST['menu_categories'])){
-//     $output['error']='沒有填寫分類';
-//     $output['code'] = 400;
-//     echo json_encode($output,JSON_UNESCAPED_UNICODE);
-//     exit; 
-// };
+if(empty($_POST['menu_categories'])){
+    $output['error']='沒有填寫分類';
+    $output['code'] = 400;
+    echo json_encode($output,JSON_UNESCAPED_UNICODE);
+    exit; 
+};
 
 $ext = $extMap[$_FILES['menu_photo']['type']];
 
@@ -40,7 +40,6 @@ $menu_photo = md5($_FILES['menu_photo']['name'].rand()). $ext;
 $menu_name = $_POST['menu_name']??'';
 $menu_kcal = $_POST['menu_kcal']??'';
 $menu_price_m = $_POST['menu_price_m'];
-$menu_price_l = empty ($_POST['menu_price_l']) ? NULL : $_POST['menu_price_l'];
 $menu_nutrition = $_POST['menu_nutrition']??'';
 
 // 兩個問號+ '' 代表 沒有給值就給空字串，為的是不要跳出notice
@@ -60,7 +59,7 @@ $output['filename'] = $menu_photo;
 
 
 
-$sql = "INSERT INTO `menu`(`menu_categories`, `menu_photo`, `menu_name`, `menu_kcal`, `menu_price_m`, `menu_price_l`, `menu_nutrition`, `created_at`) VALUES (?,?,?,?,?,?,?,NOW()
+$sql = "INSERT INTO `menu`(`menu_categories`, `menu_photo`, `menu_name`, `menu_kcal`, `menu_price_m`, `menu_nutrition`, `created_at`) VALUES (?,?,?,?,?,?,NOW()
 )";
 $stmt = $pdo->prepare($sql);
 $stmt ->execute([
@@ -69,7 +68,6 @@ $stmt ->execute([
     $menu_name,
     $menu_kcal,
     $menu_price_m,
-    $menu_price_l,
     $menu_nutrition,
     ]);
     
