@@ -76,15 +76,17 @@ if ($rows['topic_sid'] == 1) {
         <div class="post-wrap d-flex">
             <div class="pic-wrap" id="p_wrap">
                 <div class="drag-row">
-
+                    <!--  -->
                 </div>
-                <!-- <img src="" class="pic" alt=""> -->
+                <!-- 如果只有一張圖不需要下面這兩個 -->
                 <div class="drag-nav">
                     <ul class="nav-ul">
-                        <li class="drag-ctrl n-selected"><i class="fa-solid fa-circle"></i></li>
-                        <li class="drag-ctrl"><i class="fa-solid fa-circle"></i></li>
-                        <li class="drag-ctrl"><i class="fa-solid fa-circle"></i></li>
+                        <!-- 小點點放這 -->
                     </ul>
+                </div>
+                <div class="pn-nav">
+                    <!-- 左右 -->
+
                 </div>
             </div>
             <div class="post-content">
@@ -207,8 +209,8 @@ if ($rows['topic_sid'] == 1) {
             </div>
         </div>
         <div class="control" style="text-align:center;margin-top: 10px;">
-            <button type="button" onclick="prev_pic();">prev</button>
-            <button type="button" onclick="next_pic();">next</button>
+
+
         </div>
     </div>
 
@@ -298,12 +300,16 @@ if ($rows['topic_sid'] == 1) {
         }
         // Get pic&reder
         async function getData() {
+            // 取得當下文章的post_sid
             const pd = JSON.stringify({
                 pid: <?= $pid ?>
             });
 
+            // render畫面
             function render(r) {
                 const d_row = document.querySelector(".drag-row");
+
+                // 有幾張圖片d_row就幾倍寬
                 d_row.style.width = r.length * 100 + "%";
                 for (let v of r) {
                     d_row.innerHTML += `
@@ -311,8 +317,21 @@ if ($rows['topic_sid'] == 1) {
                     <img src="uploaded/${v.img_name}" class="pic" alt="">
                     </div>
                     `;
+
+                    // 有一張圖片以上才render 小點跟左右
+                    if (r.length > 1) {
+                        document.querySelector(".nav-ul").innerHTML += `
+                        <li class="drag-ctrl" onclick=""><i class="fa-solid fa-circle"></i></li>
+                        `;
+
+                    }
                 }
+                if (r.length > 1) document.querySelector(".pn-nav").innerHTML = `
+                <i class="fa-solid fa-circle-chevron-left prvnxt prv" onclick="prev_pic()"></i>
+                    <i class="fa-solid fa-circle-chevron-right prvnxt nxt" onclick="next_pic()"></i>
+                    `;
                 document.querySelector(".drag-col").classList.add("selected");
+                document.querySelector(".drag-ctrl").classList.add("n-selected");
 
 
                 // render 編輯/刪除
@@ -334,59 +353,62 @@ if ($rows['topic_sid'] == 1) {
             const response = await data.json();
             console.log(response);
             render(response);
-
+            addPicCtrl();
         }
         getData();
         let s_ind = 0;
 
-        function drag(direction) {
-
-            const p_wrap = document.querySelector("#p_wrap");
+        function slide(direction) {
             const d_row = document.querySelector(".drag-row");
             const d_cols = document.querySelectorAll(".drag-col");
             const cols = d_cols.length;
+            const nav_li = document.querySelectorAll(".drag-ctrl");
 
-            const wrap_width = p_wrap.getBoundingClientRect().width; //wrap寬
-
-            if (direction > 0) {
-                // 往右邊滑
-                d_cols[s_ind].classList.remove("selected");
+            document.querySelector(".drag-col.selected").classList.remove("selected");
+            document.querySelector(".n-selected").classList.remove("n-selected");
+            if (direction == "next") {
                 if (s_ind < (cols - 1)) {
                     s_ind++;
-                    d_row.style.left = (d_row.offsetLeft - wrap_width) + "px";
                 } else {
                     s_ind = 0;
-                    d_row.style.left = "0px";
                 }
-                d_cols[s_ind].classList.add("selected");
-                // d_row.style.left = (d_row.offsetLeft - wrap_width) + "px";
-                const selected = document.querySelector(".selected");
-
-            } else {
-                // 往左邊滑
-                d_cols[s_ind].classList.remove("selected");
+            } else if (direction == "prev") {
                 if (s_ind > 0) {
                     s_ind--;
-                    d_row.style.left = (d_row.offsetLeft + wrap_width) + "px";
                 } else {
                     s_ind = cols - 1;
-                    d_row.style.left = -d_cols[s_ind].offsetLeft + "px";
-                    console.log(d_cols[s_ind].offsetLeft);
-
                 }
-                d_cols[s_ind].classList.add("selected");
-                // d_row.style.left = (d_row.offsetLeft + wrap_width) + "px";
-                const selected = document.querySelector(".selected");
+            } else {
+                s_ind = direction;
             }
+            d_row.style.left = -d_cols[s_ind].offsetLeft + "px";
+            d_cols[s_ind].classList.add("selected");
+            nav_li[s_ind].classList.add("n-selected");
         }
 
-        const prev_pic = () => {
-            drag(-1);
+        function addPicCtrl() {
+            document.querySelectorAll(".drag-ctrl").forEach((v, ind) => {
+                v.addEventListener("click", () => {
+                    slide(ind);
+                    console.log(ind);
+                });
+            });
 
+        }
+
+        // 處理resize
+        window.addEventListener('resize', () => {
+            const d_row = document.querySelector(".drag-row");
+            const d_cols = document.querySelectorAll(".drag-col");
+
+            d_row.style.left = -d_cols[s_ind].offsetLeft + "px";
+        });
+
+        const prev_pic = () => {
+            slide("prev");
         };
         const next_pic = () => {
-            drag(1);
-
+            slide("next");
         };
     </script>
 
