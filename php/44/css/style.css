@@ -416,7 +416,7 @@ li.n-selected {
     color: rgba(28, 28, 28, 0.75);
 }
 
-.tag {
+.tag-bar .tag {
     height: 32px;
     font-weight: 500;
     display: flex;
@@ -425,82 +425,17 @@ li.n-selected {
     color: rgba(0, 0, 0, 0.75);
     font-size: 14px;
     border-radius: 16px;
-    background: rgb(239, 239, 239);
+    background: #e7e7e7da;
     padding: 0px 16px;
     white-space: nowrap;
 }
 
+.tag-bar .tag:hover{
+    background: #c1c1c1c5;
+}
 
 
 /* post-detail */
 /* comment */
 
 
-/* post-add */
-#info_bar {
-    transition: .4s;
-}
-
-#photo_container {
-    overflow-y: hidden;
-    overflow-x: visible;
-    width: 100%;
-    height: 20vw;
-    min-height: 250px;
-    display: flex;
-    padding: 10px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-#photo_container::-webkit-scrollbar {
-    display: none;
-}
-
-.p-card {
-    width: 20%;
-    padding-right: 1rem;
-}
-
-.p-card:last-child {
-    padding-right: 0px;
-}
-
-.photoItem {
-    width: 100%;
-    height: 100%;
-    position: relative;
-
-}
-
-
-.up-photo {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
-.fa-circle-minus {
-    position: absolute;
-    font-size: 20px;
-    text-align: end;
-    width: 26px;
-    height: 26px;
-    top: -6px;
-    right: 0;
-    color: rgba(134, 134, 134, 0.75);
-    cursor: pointer;
-    transform: translateX(33.3%);
-}
-
-.fa-circle-minus:hover {
-    top: -8px;
-    right: 0;
-    color: rgb(0, 0, 0);
-}
