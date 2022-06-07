@@ -1,4 +1,5 @@
-<?php require __DIR__ . '/part/connect_db.php';
+<?php
+require dirname(dirname(__FILE__)) . '/part/connect_db.php';
 
 $sid = isset($_GET['cid']) ? intval($_GET['cid']) : '0';
 
@@ -14,5 +15,5 @@ if (!empty($_SERVER['HTTP_REFERER'])) {
     $come_form = $_SERVER['HTTP_REFERER'];
 }
 
-echo json_encode($sid . "刪除成功", JSON_UNESCAPED_UNICODE);
+echo json_encode("post_sid:".$sid . "delete:success", JSON_UNESCAPED_UNICODE);
 header("Location:$come_form");
