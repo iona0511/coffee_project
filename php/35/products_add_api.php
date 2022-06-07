@@ -47,7 +47,10 @@ foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
     // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
     $filename = $f;
     $output['filenames'][] = $filename;
-    $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
+    $sqlpic = "UPDATE `products_pic`
+    JOIN `products`
+        ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`
+    VALUES(`products_pic_one`=?);";
     $stmtpic = $pdo->prepare($sqlpic);
     $stmtpic->execute([$filename]);
     // 把上傳的檔案搬移到指定的位置
@@ -90,7 +93,10 @@ foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
     move_uploaded_file($_FILES['products_pic_multi']['tmp_name'][$k], $folder . $filename);
 }
 $multiNameStr = implode(",", $multiName);
-$sqlmulti = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`SET `products_pic_multi`=? WHERE `products_sid`=$products_sid";
+$sqlmulti = "INSERT INTO `products_pic`
+JOIN `products`
+    ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`
+VALUES(`products_pic_multi`=?);";
 $stmtmulti = $pdo->prepare($sqlmulti);
 $stmtmulti->execute([$multiNameStr]);
 
@@ -120,8 +126,8 @@ $sql = "INSERT INTO `products` (
     `products_forsale`, 
     `products_onsale`, 
     `products_stocks`, 
-    `products_with_products_categroies_sid`, 
-    `products_with_products_pic`, 
+    -- `products_with_products_categroies_sid`, 
+    -- `products_with_products_pic`, 
     `products_with_products_style_filter_sid`) 
     VALUES (
         NULL, 
@@ -133,8 +139,8 @@ $sql = "INSERT INTO `products` (
         ?, 
         ?, 
         ?, 
-        ?, 
-        NULL, 
+        -- ?, 
+        -- NULL, 
         ?);";
 
 $stmt = $pdo->prepare($sql);

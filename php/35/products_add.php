@@ -17,6 +17,18 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
     .form-text.red {
         color: red;
     }
+
+    .single-img {
+        width: 100px;
+        height: 100px;
+        display: none;
+
+    }
+
+    #multiDiv img {
+        width: 100px;
+        height: 100px;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -91,9 +103,10 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                             <img class="single-img" src="" alt="" id="products_pic_one" />
                         </div>
 
-                        <div class="mb-3" id="multiDiv">
+                        <div class="mb-3">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
                             <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple />
+                            <div id="multiDiv" class="multiDiv"></div>
                         </div>
 
                         <div class="mb-3">
@@ -140,33 +153,40 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 
         // 資料載入後 (讀取完成後)
         reader.onload = function() {
-            console.log(reader.result);
+            // console.log(reader.result);
             document.querySelector("#products_pic_one").style.display = 'block';
             document.querySelector("#products_pic_one").src = reader.result;
         };
         reader.readAsDataURL(file);
     }
 
+
+
     function changeMultiImg() {
-        if (event.currentTarget.files.length <= 3) {
+        if (event.currentTarget.files.length = 3) {
             for (i = 0; i < event.currentTarget.files.length; i++) {
                 let file = event.currentTarget.files[i];
                 console.log(file);
                 let reader = new FileReader();
                 let idName = `#products_pic_multi${i}`;
+                // let imgSet = document.querySelector("#multiDiv");
                 // wrap.innerHTML = '';
                 // 資料載入後 (讀取完成後)
                 // console.log(reader.result);
                 reader.onload = function() {
                     // console.log(reader.result);
                     // console.log(document.querySelector(idName));
-                    document.querySelector(idName).style.display = 'block';
-                    document.querySelector(idName).src = reader.result;
+                    const r = reader.result
+                    let newImg = document.createElement("div");
+                    newImg.innerHTML = `<img src="${r}"/>`
+                    document.getElementById("multiDiv").appendChild(newImg);
+                    // document.querySelector(idName).style.display = 'block';
+                    // document.querySelector(idName).src = reader.result;
                 };
                 reader.readAsDataURL(file);
             };
         } else {
-            alert('圖片上限3張');
+            alert('圖片請上傳3張');
         }
     }
 

@@ -50,6 +50,14 @@ if ($totalRows > 0) {
         margin-bottom: 0px;
         margin-top: 10px;
     }
+    .products_single_img{
+        width: 100px;
+        height: 100px;
+    }
+    .products_multi_img{
+        width: 100px;
+        height: 100px;
+    }
 </style>
 
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
@@ -135,12 +143,12 @@ if ($totalRows > 0) {
                     <td><?= $r['products_onsale'] ? '是' : '否'; ?></td>
                     <td><?= $r['products_stocks'] ?></td>
                     <td><?= $r['products_categroies_name'] ?></td>
-                    <td><img class="single-img" src="
+                    <td><img class="products_single_img" src="
                             <?php if ($r['products_pic_one']) : echo '/../../coffee_project/images/35/' . $r['products_pic_one'];
                             endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" title="<?= $r['products_pic_one'] ?>" /></td>
                     <td> <?php $multiPic =  explode(",", $r['products_pic_multi']) ?>
                         <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
-                            <img class="multi-img" src="<?= '/../../coffee_project/images/35/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" title="<?= $r['products_pic_multi'] ?>" />
+                            <img class="products_multi_img" src="<?= '/../../coffee_project/images/35/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" title="<?= $r['products_pic_multi'] ?>" />
                         <?php endfor; ?>
                     </td>
                     <td><?= $r['products_style_filter_categroies'] ?></td>
