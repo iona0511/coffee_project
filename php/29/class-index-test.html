@@ -98,11 +98,8 @@
                         return response.json();
                     })
                     .then(function (data) {
-                        localStorage.setItem("data", JSON.stringify(data));
-
                         //         function addData() {
                         //             wrap.innerHTML = "";
-
                         //                 const cards = document.createElement("div");
                         //                 cards.className = "card";
                         //                 cards.dataset.index = data[i].course_name;
@@ -114,7 +111,6 @@
                         // <h3>${data[i].course_name}</h3>
                         // <p class="card-txt">${data[i].course_content}</p>
                         // <p class="card-txt">NT$${data[i].course_price}</p>`;
-
                         //         }
                         //         addData();
                     });
@@ -175,18 +171,21 @@
             function levelfun() {
                 for (let i = 0; i < data2.length; i++) {
                     level = document.querySelectorAll(".level");
+                    // console.log("i:" + i + "d:" + data2.length);
 
-                    if (data2[i].course_level === "1") {
-                        level[i].innerHTML = "入門";
-                        level[i].style.backgroundColor = "rgb(20, 155, 53)";
-                    }
-                    if (data2[i].course_level === "2") {
-                        level[i].innerHTML = "普通";
-                        level[i].style.backgroundColor = "#fa0";
-                    }
-                    if (data2[i].course_level === "3") {
-                        level[i].innerHTML = "困難";
-                        level[i].style.backgroundColor = "#f00";
+                    if (i < len) {
+                        if (data2[i].course_level === "1") {
+                            level[i].innerHTML = "入門";
+                            level[i].style.backgroundColor = "rgb(20, 155, 53)";
+                        }
+                        if (data2[i].course_level === "2") {
+                            level[i].innerHTML = "普通";
+                            level[i].style.backgroundColor = "#fa0";
+                        }
+                        if (data2[i].course_level === "3") {
+                            level[i].innerHTML = "困難";
+                            level[i].style.backgroundColor = "#f00";
+                        }
                     }
                 }
             }
