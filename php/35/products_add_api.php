@@ -8,6 +8,8 @@ $output = [
     'postData' => $_POST,
     'code' => 0,
     'error' => '',
+    'fileSingleNames' => '',
+    'fileMultiNames' => [],
 ];
 
 // TODO 
@@ -41,34 +43,6 @@ if (!is_array($_FILES['products_pic_one']['name'])) {
     exit;
 }
 
-foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
-
-    $ext = $extMap[$_FILES['products_pic_one']['type'][$k]]; // 副檔名
-    // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
-    $filename = $f;
-    $output['filenames'][] = $filename;
-    $sqlpic = "UPDATE `products_pic`
-    JOIN `products`
-        ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`
-    VALUES(`products_pic_one`=?);";
-    $stmtpic = $pdo->prepare($sqlpic);
-    $stmtpic->execute([$filename]);
-    // 把上傳的檔案搬移到指定的位置
-    move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $filename);
-}
-
-// 圖片區結束
-
-// 複數圖片區
-
-$folder = dirname(dirname(__DIR__, 1)) . '/images/35/';
-
-$extMap = [
-    'image/jpeg' => '.jpg',
-    'image/png' => '.png',
-    'image/gif' => '.gif',
-];
-
 if (empty($_FILES['products_pic_multi'])) {
     $output['error'] = '沒有上傳檔案';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
@@ -81,28 +55,48 @@ if (!is_array($_FILES['products_pic_multi']['name'])) {
     exit;
 }
 
+
+$singleName = [];
+foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
+    $fileSingle = $f;
+    $output['fileSingleNames'] = $fileSingle;
+    // 把上傳的檔案搬移到指定的位置
+    array_push($singleName, $fileSingle);
+    // 把上傳的檔案搬移到指定的位置
+    move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $fileSingle);
+}
+
 $multiName = [];
 foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
-
-    $ext = $extMap[$_FILES['products_pic_multi']['type'][$k]]; // 副檔名
-    // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
-    $filename = $f;
-    $output['filenames'][] = $filename;
-    array_push($multiName, $filename);
+    $fileMultiName = $f;
+    $output['fileMultiNames'][] = $fileMultiName;
+    array_push($multiName, $fileMultiName);
     // 把上傳的檔案搬移到指定的位置
-    move_uploaded_file($_FILES['products_pic_multi']['tmp_name'][$k], $folder . $filename);
+    move_uploaded_file($_FILES['products_pic_multi']['tmp_name'][$k], $folder . $fileMultiName);
 }
+
+$singleNameStr = implode(",", $singleName);
 $multiNameStr = implode(",", $multiName);
-$sqlmulti = "INSERT INTO `products_pic`
-JOIN `products`
-    ON `products_pic`.`products_pic_sid` = `products`.`products_with_products_pic`
-VALUES(`products_pic_multi`=?);";
+$sqlmulti = "INSERT INTO `products_pic` (    
+    `products_pic_sid`,
+    `products_pic_one`,
+    `products_pic_multi`
+    ) 
+    VALUES (
+        NULL,
+        ?,
+        ?
+        );";
 $stmtmulti = $pdo->prepare($sqlmulti);
-$stmtmulti->execute([$multiNameStr]);
+$stmtmulti->execute([
+    $singleNameStr,
+    $multiNameStr
+]);
 
 // 複數圖片區結束
 
 
+// $products_sid = $_POST['products_sid'];
 $products_name = $_POST['products_name'];
 $products_introduction = $_POST['products_introduction'];
 $products_detail_introduction = $_POST['products_detail_introduction'];
@@ -125,9 +119,8 @@ $sql = "INSERT INTO `products` (
     `products_price`, 
     `products_forsale`, 
     `products_onsale`, 
-    `products_stocks`, 
-    -- `products_with_products_categroies_sid`, 
-    -- `products_with_products_pic`, 
+    `products_stocks`,
+    `products_with_products_categroies_sid`, 
     `products_with_products_style_filter_sid`) 
     VALUES (
         NULL, 
@@ -139,8 +132,7 @@ $sql = "INSERT INTO `products` (
         ?, 
         ?, 
         ?, 
-        -- ?, 
-        -- NULL, 
+        ?, 
         ?);";
 
 $stmt = $pdo->prepare($sql);
@@ -154,8 +146,6 @@ $stmt->execute([
     $products_onsale,
     $products_stocks,
     $products_with_products_categroies_sid,
-    // $products_pic_one,
-    // $products_pic_multi,
     $products_with_products_style_filter_sid,
 ]);
 

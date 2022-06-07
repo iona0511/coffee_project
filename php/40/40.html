@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/reset.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css''/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'/>
     <title>Document</title>
     <style>
         [v-cloak] {
@@ -205,7 +205,7 @@
     </style>
 </head>
 
-<body>
+<body style="opacity: 0;">
     <div id="app" v-cloak>
         <div class="cart_list_left">
             <ul class="cart_list">
@@ -241,8 +241,8 @@
                                 v-model="radio">{{coupon.name}}
                         </label>
                         <div class="coupon_button_group">
-                            <button @click="couponDeny">不使用優惠卷</button>
                             <button @click="couponConfirm">確定</button>
+                            <button @click="couponDeny">不使用優惠卷</button>
                         </div>
                     </div>
                 </div>
@@ -288,13 +288,20 @@
                 displayTotal() {
                     return parseInt(this.tweened);
                 },
-                couponName() {
+                selectedCoupon() {
                     if(this.radio === undefined) {
-                        return "無";
+                        return undefined;
                     }
                     return this.couponArray.filter((data) => {
                         return data.id === this.radio;
-                    })[0].name;
+                    })[0];
+                },
+                couponName() {
+                    if(this.selectedCoupon === undefined) {
+                        return "無";
+                    } else {
+                        return this.selectedCoupon.name;
+                    }
                 }
             },
             methods: {
@@ -384,6 +391,10 @@
                 await fetch("./cart_read_coupon_api.php")
                 .then(data => data.json())
                 .then(data => {
+                    if(data === "login") {
+                        window.location = "../09/login.html";
+                    }
+                    document.querySelector("body").removeAttribute("style");
                     console.log(data);
                     this.couponArray = data;
                 });

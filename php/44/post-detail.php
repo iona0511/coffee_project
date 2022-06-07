@@ -64,6 +64,7 @@ if ($rows['topic_sid'] == 1) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -123,9 +124,9 @@ if ($rows['topic_sid'] == 1) {
                         <?php endforeach; ?>
                     </div>
                     <div class="social mb-2">
-                        <a href="javascript:;" class="">
+                        <a href="javascript:like();" class="">
                             <span style="color:black;" class="like">
-                                <i class="fa-solid fa-heart"></i>
+                                <i class="fa-solid fa-heart animate__animated"></i>
                                 <?= $rows['likes'] ?>
                             </span>
                         </a>
@@ -156,7 +157,7 @@ if ($rows['topic_sid'] == 1) {
                                             <a class="mr-1" data-cid="<?= $v['sid'] ?>" onclick="renderInp(event);" href="javascript:focus_on('<?= $v['member_nickname'] ?>');">
                                                 <p>回覆</p>
                                             </a>
-                                            <a href="cmt-delete.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
+                                            <a href="api/cmtDelete-api.php?cid=<?= $v['sid'] ?>" class="cmt-delete" style="display:<?= $v['member_sid'] == $user['member_sid'] ? 'block' : 'none'  ?>" data-mid="<?= $v['member_sid'] ?>">
                                                 <p>刪除</p>
                                             </a>
                                         </div>
@@ -217,7 +218,37 @@ if ($rows['topic_sid'] == 1) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
         let cidNumber = '';
+        async function like() {
+            const jsonData = JSON.stringify({
+                pid: <?= $pid ?>,
+            });
 
+            const data = await fetch("api/like-api.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            });
+
+            const response = await data.json();
+            console.log(response);
+            // render
+            document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
+            if (response['isLog'] == true) {
+                if (response['isLike'] == true) {
+                    document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
+                } else {
+                    document.querySelector(".fa-heart").classList.remove("heart_red", "animate__heartBeat");
+                }
+            } else {
+                const cof = confirm('您尚未登入,是否前往登入頁面?');
+
+                if (cof) {
+                    location.href = "part/login/login.html";
+                }
+            }
+        }
 
         function cm_toggle() {
             if (document.querySelector(".comment-wrap").style.display == "none") {
@@ -262,7 +293,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
 
-            const data = await fetch("api/commentAdd-api.php", {
+            const data = await fetch("api/cmtAdd-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -273,7 +304,15 @@ if ($rows['topic_sid'] == 1) {
             const response = await data.json();
             console.log(response);
 
-            if (response['success']) history.go(0);
+            if (response['success']) {
+                history.go(0);
+            } else {
+                const cof = confirm('您尚未登入,是否前往登入頁面?');
+
+                if (cof) {
+                    location.href = "part/login/login.html";
+                }
+            }
         }
 
         async function send_rply(cid) {
@@ -326,15 +365,20 @@ if ($rows['topic_sid'] == 1) {
 
                     }
                 }
-                if (r.length > 1) document.querySelector(".pn-nav").innerHTML = `
+                if (r.length > 1) {
+                    document.querySelector(".pn-nav").innerHTML = `
                 <i class="fa-solid fa-circle-chevron-left prvnxt prv" onclick="prev_pic()"></i>
                     <i class="fa-solid fa-circle-chevron-right prvnxt nxt" onclick="next_pic()"></i>
                     `;
-                document.querySelector(".drag-col").classList.add("selected");
-                document.querySelector(".drag-ctrl").classList.add("n-selected");
+                    document.querySelector(".drag-col").classList.add("selected");
+                    document.querySelector(".drag-ctrl").classList.add("n-selected");
+                }
+
+                // 如果登入者有按過讚render紅色愛心
+                if (r[0]['isLike'] == true) document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
 
 
-                // render 編輯/刪除
+                // render是該篇文章作者給編輯/刪除
                 if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
                     document.querySelector(".post-edit").style.display = "block";
 
@@ -343,7 +387,7 @@ if ($rows['topic_sid'] == 1) {
                 }
             }
 
-            const data = await fetch("api/detail-getPic-api.php", {
+            const data = await fetch("api/detail-getInfo-api.php", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

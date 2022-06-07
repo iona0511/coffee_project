@@ -1,27 +1,53 @@
-<?php 
+<?php
 require __DIR__ . '/connect_db.php';
+header('Content-Type: application/json');
 
-header('Content-Type:apllication/json');
+// 把要傳給前端的結果用陣列包起來
+$output = [
+    'success' => false,
+    'postData' => $_POST,
+    'error' => '新增成功'
+];
+$data = json_decode(file_get_contents('php://input'));
 
-$food_choice_size = $_POST ['food_choice_size'];
-$food_choice_ice = $_POST['food_choice_ice'];
-$food_choice_sugar = $_POST['food_choice_sugar'];
 
 
 
-$sql = "INSERT INTO `food_choice`(`food_choice_size`, `food_choice_ice`, `food_choice_sugar`) VALUES (?,?,?)";
 
-$stmt =$pdo->prepare($sql);
-$stmt->execute([$food_choice_size,$food_choice_ice,$food_choice_sugar]);
 
-if($stmt->rowCount()==1){
+
+$questionMark = array();
+$insert_values = array();
+foreach($data as $d){
+    $questionMark[] = '(?,?,?,?,?,NOW())';
+    $item = [
+        $d->menu_name,
+        $d->menu_price_m,
+        $d->food_choice_ice,
+        $d->food_choice_sugar,
+        $d->food_choice_count,
+    ];
+    // var_dump($item);
+    // var_dump(array_values($item));
+    $insert_values = array_merge($insert_values, $item);
+}
+
+// array(array(newData));
+// array(array(newData), array(newData));
+
+$sql = "INSERT INTO `food_choice`(`menu_name`, `menu_price_m`, `food_choice_ice`,`food_choice_sugar`,`food_choice_count`,`created_at`) VALUES ".implode(",", $questionMark);
+
+$stmt = $pdo->prepare($sql);
+
+$stmt->execute($insert_values);
+
+if ($stmt->rowCount() >= 1) {
     $output['success'] = true;
-    // 最近新增資料的primary key
+    // 最近新增資料的 primery key
     $output['lastInsertId'] = $pdo->lastInsertId();
-    }else{
-        $output['error'] = '資料無法新增';
-    };
+} else {
+    $output['error'] = '新增失敗';
+}
 
-echo json_encode($output,JSON_UNESCAPED_UNICODE);
-
-
+// 回應前端一律用JSON
+echo json_encode($output, JSON_UNESCAPED_UNICODE);

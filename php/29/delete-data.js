@@ -35,6 +35,7 @@ function getData(flag) {
         })
         
         .then((data) => {
+         
             
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {

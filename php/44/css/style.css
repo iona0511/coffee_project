@@ -162,6 +162,23 @@ select {
     overflow-y: scroll;
 }
 
+/* 愛心 */
+.fa-heart {
+    color: rgb(252, 162, 162);
+    padding-left: 5px;
+}
+
+
+.heart_red{
+    color: rgb(255, 47, 47) !important;
+ 
+}
+
+.animate__fadeOutUp{
+    animation-fill-mode:backwards;
+}
+
+
 .content-top::-webkit-scrollbar {
     display: none;
 }
@@ -413,13 +430,7 @@ li.n-selected {
     white-space: nowrap;
 }
 
-.fa-heart {
-    color: rgb(252, 162, 162)
-}
 
-.like:hover .fa-heart {
-    color: rgb(245, 76, 76)
-}
 
 /* post-detail */
 /* comment */
