@@ -7,6 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+    />
     <title>Document</title>
     <style>
         [coffee-op0] {
@@ -294,6 +300,7 @@
 </head>
 
 <body coffee-op0>
+    <div class="navBar"></div>
     <div id="app" v-cloak>
         <div class="progress_bar_wrap">
             <div class="rect">
@@ -354,6 +361,17 @@
     <script src="../../js/vue.global.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script>
+        (function getNav() {
+                fetch("../../parts/navbar.php")
+                    .then(function (r) {
+                        return r.text();
+                    })
+                    .then(function (navData) {
+                        console.log(navData);
+                        navBar = document.querySelector(".navBar");
+                        navBar.innerHTML = navData;
+                    });
+        })();
         const vm = Vue.createApp({
             data() {
                 return {
