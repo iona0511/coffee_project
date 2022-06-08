@@ -18,27 +18,23 @@ $t_points = $pdo->query($sql_points)->fetch();
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
+
 <style>
     *{
         box-sizing: border-box;
         margin: 0;
     }
-.container{
-    position: relative;
-    width: 100%;
-    height: 100vh;
+body{
     background-size: cover;
     background-image: url(./imgs/pexels-gradienta-7134986.jpg);
 }
-.card{
+.bg{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+.mycard{
     width: 500px;
     height: 300px;
     border-radius: 20px;
@@ -88,7 +84,7 @@ $t_points = $pdo->query($sql_points)->fetch();
 
 .btn>a{
     display: inline-block;
-    padding: 10px 80px;
+    padding: 10px 60px;
     text-decoration: none;
     color:white;
 }
@@ -135,49 +131,14 @@ $t_points = $pdo->query($sql_points)->fetch();
     border-radius: 20px;
 }
 
-/* nav  */
-.select {
-        margin-top: 0px;
-        margin-bottom: 20px;
-        text-align: center;
-}
-.wrap{
-    position: relative;
-}
-.nav {
-        text-decoration: none;
-        font-size: 1rem;
-        margin-left: 35px;
-        padding: 5px;
-    }
-a:hover {
-        color: rgb(205, 111, 3);
-    }
 </style>
 
 <body>
 
-    <div class="container">
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 
-        <div class="wrap">
-        <div class="select">
-            <img src="" style="width: 60px" />
-            <a href="#nav" class="nav">首頁</a>
-            <a href="" class="nav">店家資訊</a>
-            <a href="" class="nav">商品</a>
-            <a href="" class="nav">訂位點餐</a>
-            <a href="" class="nav">課程資訊</a>
-            <a href="" class="nav">分享牆</a>
-            <a href="" class="nav">客服</a>
-            <a href="" class="nav">遊戲</a>
-            <a href="" class="nav">購物車</a>
-            <a href="welcome.php" class="nav">會員中心</a>
-            <a href="logout.php" class="nav">會員登出</a>
-        </div>
-        </div>
-
-
-        <div class="card">         
+    <div class="bg">
+        <div class="mycard">         
             <div class="cardF">
                 <?php if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; ?>
                 <div class="cardLogo">
@@ -207,7 +168,7 @@ a:hover {
     <script>
 
     
-    const card = document.querySelector(".card");
+    const card = document.querySelector(".mycard");
     const cardF = document.querySelector(".cardF");
     const cardB = document.querySelector(".cardB");
 

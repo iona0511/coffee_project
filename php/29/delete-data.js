@@ -6,6 +6,9 @@ const deleteApi = "./delete-api.php";
 const style = document.querySelector(".style");
 const search = document.querySelector(".search");
 const sort = document.querySelector("#sort");
+const inputs = document.querySelector('.inputs')
+const len = 6; //控制一頁筆幾
+let choose = 0; //建立一個全域性變數用來儲存當前處於第幾個頁面
 
 
 function priceAsc(a, b) {
@@ -23,7 +26,7 @@ function levelDesc(a, b) {
 
 // 資料/畫面生成
 
-function getData(flag) {
+function getData() {
 
     fetch(classIndexApi, {
         method: "POST",
@@ -35,6 +38,7 @@ function getData(flag) {
         })
         
         .then((data) => {
+         
             
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {
@@ -46,8 +50,9 @@ function getData(flag) {
                 } else if (sort.value === "levelDesc") {
                     data.sort(levelDesc);
                 }
-                content();
+                content ()
             });
+           
 
 
         function content (){
@@ -134,12 +139,11 @@ getData();
     // }
     // add();
 
-
-
-
+// 修改取得sid
 function editDataA(value) {
     localStorage.setItem('sid',`${value}`);
 }
+
 
 
 // 資料刪除
@@ -156,13 +160,4 @@ function deleteData(value) {
           })
         : 0;
 }
-
-
-
-
-
-
-
-
-
 

@@ -1,4 +1,5 @@
-<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+<?php 
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 
 $pageName = 'product';
@@ -29,7 +30,7 @@ if ($totalRows > 0) {
                 JOIN `products_categroies` 
                     ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
                 JOIN `products_pic` 
-                    ON`products`.`products_with_products_pic` = `products_pic`.`products_pic_sid`
+                    ON`products`.`products_sid` = `products_pic`.`products_pic_sid`
                 JOIN `products_style_filter`
                     ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filter_sid`
                 ORDER BY products_sid ASC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
@@ -60,7 +61,7 @@ if ($totalRows > 0) {
     }
 </style>
 
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
 <!-- server side render -->
 <div class="container">

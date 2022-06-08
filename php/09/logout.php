@@ -4,7 +4,7 @@ if (! isset($_SESSION)) {
     session_start();
 }
 
-unset($_SESSION['user']['member_sid']); 
+unset($_SESSION["user"]); 
 
 
-header('Location: login.html');
+header('Location: /coffee_project/index_.php');

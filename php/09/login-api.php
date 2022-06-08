@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 
@@ -14,11 +14,18 @@ $output = [
 
 // TODO: 欄位檢查, 後端的檢查
 if (empty($_POST['member_account'])) {
-    $output['error'] = '沒有';
+    $output['error'] = '沒有帳號';
     $output['code'] = 405;
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
+
+// if (empty($_POST['member_name'])) {
+//     $output['error'] = '沒有姓名資料';
+//     $output['code'] = 400;
+//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
+//     exit;
+// }
 
 $member_account = $_POST['member_account'];
 $member_password = $_POST['member_password'];
@@ -67,5 +74,3 @@ foreach( $stmt as $k => $v){
         }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
-
-

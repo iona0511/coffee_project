@@ -15,7 +15,8 @@ $output = [
     'success' => false,
     'postData' => $_POST,
     'code' => 0,
-    'error' => ''
+    'error' => '',
+    'filename'=>''
 ];
 
 // TODO: 欄位檢查, 後端的檢查
@@ -26,8 +27,9 @@ $output = [
 //     exit;
 // }
 
-// $ext = $extMap[$_FILES['news_img']['type']];
-$news_img = $_FILES['news_img'];
+$ext = $extMap[$_FILES['news_img']['type']];
+
+$news_img = md5($_FILES['news_img']['name'].rand()). $ext;
 $news_title = $_POST['news_title'] ?? '';
 $news_class_sid = $_POST['news_class_sid'] ?? '';
 $news_start_date = $_POST['news_start_date'] ?? '';
@@ -51,16 +53,17 @@ if(move_uploaded_file($_FILES['news_img']['tmp_name'],$folder.$news_img)){
 $output['filename'] = $news_img;
 
 
-$sql = "INSERT INTO `lastest_news`(
+$sql = "INSERT INTO `lastest_news`(`news_img`,
     `news_title`, `news_class_sid`, `news_start_date`, 
     `news_end_date`, `news_content`,`news_create_time`	
     ) VALUES (
-        ?,?,?,
+        ?,?,?,?,
         ?,?,NOW()
     )";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
+    $news_img,
     $news_title,
     $news_class_sid,
     $news_start_date,

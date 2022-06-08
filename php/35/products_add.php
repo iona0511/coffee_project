@@ -87,7 +87,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                         <div class="mb-3">
                             <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
                             <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
-                                <option value="">-- 請選擇 --</option>
+                                <option value="1">-- 請選擇 --</option>
                                 <?php foreach ($row_cate as $r) : ?>
                                     <option value="<?= $r['products_categroies_sid'] ?>">
                                         <?= $r['products_categroies_name'] ?>
@@ -112,7 +112,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
                             <select name="products_with_products_style_filter_sid" id="products_with_products_style_filter_sid">
-                                <option value="">-- 請選擇 -- </option>
+                                <option value="1">-- 請選擇 -- </option>
                                 <?php foreach ($row_style as $r) : ?>
                                     <option value="<?= $r['products_style_filter_sid'] ?>">
                                         <?= $r['products_style_filter_categroies'] ?>

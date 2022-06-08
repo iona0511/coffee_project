@@ -15,6 +15,8 @@ require dirname(__DIR__, 2) . '/parts/connect_db.php';
 // $t_sql = "SELECT COUNT(1) FROM course";
 // $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 
+// echo $totalRows;
+// exit;
 
 
 // $totalPages = ceil($totalRows / $perpage);

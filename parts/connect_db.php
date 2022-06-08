@@ -21,6 +21,11 @@
 // $db_pass = 'admin';
 // $db_name = 'coffee';
 
+// $db_host = 'localhost'; // 主機名稱
+// $db_user = 'root'; // 資料庫連線的用戶
+// $db_pass = ''; // 連線用戶的密碼
+// $db_name = 'coffee_course';  // 資料庫名稱
+
 $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
 
 $pdo_options = [
@@ -37,3 +42,8 @@ try {
 } catch (PDOException $ex) {
     echo $ex->getMessage();
 };
+
+
+if (!session_id()) {
+    session_start();
+}

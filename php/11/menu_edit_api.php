@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php'; 
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 header('Content-Type: application/json');
 // 這隻API是用來新增資料的，只有功能 沒有頁面
 
@@ -27,14 +27,13 @@ $menu_photo = $_POST['menu_photo']??'';
 $menu_name = $_POST['menu_name']??'';
 $menu_kcal = $_POST['menu_kcal']??'';
 $menu_price_m = $_POST['menu_price_m'];
-$menu_price_l = empty ($_POST['menu_price_l']) ? NULL : $_POST['menu_price_l'];
 $menu_nutrition = $_POST['menu_nutrition']??'';
 
 // 兩個問號+ '' 代表 沒有給值就給空字串，為的是不要跳出notice
 
 
 
-$sql = "UPDATE `menu` SET `menu_categories`=?, `menu_photo`=?, `menu_name`=?, `menu_kcal`=?, `menu_price_m`=?, `menu_price_l`=?, `menu_nutrition`=? WHERE `menu_sid`=$menu_sid";
+$sql = "UPDATE `menu` SET `menu_categories`=?, `menu_photo`=?, `menu_name`=?, `menu_kcal`=?, `menu_price_m`=?, `menu_nutrition`=? WHERE `menu_sid`=$menu_sid";
 $stmt = $pdo->prepare($sql);
 $stmt ->execute([
     $menu_categories,
@@ -42,7 +41,6 @@ $stmt ->execute([
     $menu_name,
     $menu_kcal,
     $menu_price_m,
-    $menu_price_l,
     $menu_nutrition,
     ]);
     

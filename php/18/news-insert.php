@@ -9,15 +9,34 @@ require dirname(__DIR__,2) . '/parts/connect_db.php';
 //     exit;
 // }
 
+$news_sid = isset($_GET['news_sid']) ? intval($_GET['news_sid']) : 0;
+
 $pageName = 'news-insert';
 $title = '新增消息';
 
-$row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
+// $row_class = $pdo->query("SELECT * FROM `lastest_news` l JOIN `news_class` n on `l`.`news_class_sid` = `n`.`class_sid` where l.news_sid = $news_sid")->fetchAll();
+$row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
 ?>
 <?php include dirname(__DIR__, 2) . '/parts/html-head.php'; ?>
 <?php include dirname(__DIR__, 2) . '/parts/navbar.php'; ?>
 <style>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        }
+
+    body {
+    /* background-color: #CD853F; */
+    background-color:#CAAD87;
+    background-size: cover;
+    opacity: 0.9;
+    }
+
+    .color-y {
+        background-color:aliceblue;
+        opacity: 0.8;
+    }
     .form-control.red {
         border: 1px soid blue;
     }
@@ -30,14 +49,17 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
         flex-direction: row;
         height: 30px;
     }
+    .margin {
+        margin-right: 0,150px;
+    }
 </style>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 margin">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">新增消息</h5>
-                    <form name="form1" onsubmit="sendData();return false;" novalidate>
+                <div class="card-body color-y"">
+                    <h2 class="card-title mb-4">新增消息</h2>
+                    <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <!-- <input type="hidden" name="sid" > -->
                         <div class="mb-3">
                             <label for="news_title" class="form-label">活動標題</label>
@@ -45,14 +67,15 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
                             <input type="text" class="form-control" id="news_title" name="news_title" required>
                             <div class="form-text red"></div>
                         </div>
+
                         <div class="mb-3">
-                            <label for="news_class_name" class="form-label">活動類別</label>
+                            <label for="news_class_sid" class="form-label">活動類別</label>
                             </br>
-                            <select name="news_class_name" id="news_class_name">
-                                <option value="">-- 請選擇 --</option>
+                            <select name="news_class_sid" id="news_class_sid">
+                                <option value="0" selected disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
-                                    <option value="<?= $r['news_class_sid'] ?>">
-                                        <?= $r['news_class_name'] ?>
+                                    <option value="<?= $r['class_sid'] ?>">
+                                        <?= $r['class_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -83,7 +106,7 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
                         <button type="submit" class="btn btn-primary">新增</button>
                     </form>
-                    <div id="info_bar" class="alert alert-success" role="alert" style="display:none;">
+                    <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功
                     </div>
                 </div>
@@ -94,22 +117,23 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
 <?php include dirname(__DIR__, 2) . '/parts/scripts.php'; ?>
 <script>
-    const info_bar = document.querySelector('#info_bar');
+    const info_bar = document.querySelector('#info-bar');
 
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
-    const class_name_f = document.form1.news_class_name;
+    const class_sid_f = document.form1.news_class_sid;
     const start_date_f = document.form1.news_start_date;
     const end_date_f = document.form1.news_end_date;
     const content_f = document.form1.news_content;
     const img_f = document.form1.news_img;
     //這裡要確認資料庫欄位是否名稱有對應到
-    const fields = [title_f, class_name_f, start_date_f, end_date_f, content_f, img_f];
+    const fields = [title_f, class_sid_f, start_date_f, end_date_f, content_f, img_f];
 
+    
     const fieldTexts = [];
 
     for (let f of fields) {
-        fieldTexts.push(f?.nextElementSibling);
+        fieldTexts.push(f.nextElementSibling);
     }
     // console.log(fieldTexts)
 

@@ -1,6 +1,6 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
 $pageName = 'menu_edit';
-$title = '修改菜單資料';
+$title = '修改餐點資料';
 
 
 $menu_sid = isset($_GET['menu_sid']) ? intval($_GET['menu_sid']) : 0;
@@ -19,8 +19,8 @@ if (empty($row)) {
 
 
 ?>
-<?php include __DIR__ . '/parts/html_menu_head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar.php' ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -35,7 +35,7 @@ if (empty($row)) {
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">編輯菜單資料</h5>
+                    <h5 class="card-title">編輯餐點資料</h5>
                     <form name="form1" onsubmit="sendData();return false;novalidate">
                     <input type ="hidden" name="menu_sid" value="<?=$row['menu_sid']?>">
                         <div class="mb-3">
@@ -63,16 +63,11 @@ if (empty($row)) {
                         </div>
                         
                         <div class="mb-3">
-                            <label for="menu_price_m" class="form-label">價格(M)</label>
+                            <label for="menu_price_m" class="form-label">價格</label>
                             <input class="form-control" name="menu_price_m" id="menu_price_m" cols="30" rows="3" value="<?=$row['menu_price_m']?>"></input>
                             <div class="form-text"></div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="menu_price_l" class="form-label">價格(L)</label>
-                            <input class="form-control" name="menu_price_l" id="menu_price_l" cols="30" rows="3" value="<?=$row['menu_price_l']?>"></input>
-                            <div class="form-text"></div>
-                        </div>
                         
                         <div class="mb-3">
                             <label for="menu_nutrition" class="form-label">營養標示資訊</label>
@@ -92,7 +87,7 @@ if (empty($row)) {
     </div>
 
 </div>
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php' ?>
 
 
 
@@ -104,10 +99,9 @@ if (empty($row)) {
     const menu_name_f = document.form1.menu_name;
     const menu_kcal_f	= document.form1.menu_kcal;
     const menu_price_m_f = document.form1.menu_price_m;
-    const menu_price_l_f = document.form1.menu_price_l;
     const menu_nutrition_f = document.form1.menu_nutrition;
 
-    const fields = [menu_categories_f,menu_photo_f,menu_name_f,menu_kcal_f,menu_price_m_f,menu_price_l_f,menu_nutrition_f];
+    const fields = [menu_categories_f,menu_photo_f,menu_name_f,menu_kcal_f,menu_price_m_f,menu_nutrition_f];
 
     const fieldTexts = [];
 
@@ -161,11 +155,6 @@ if (empty($row)) {
             fieldTexts[4].innerText = '姓名至少兩個字';
             isPass = false;
         }
-        if (menu_price_l_f.value.length< 2) {
-            fields[5].classList.add('red');
-            fieldTexts[5].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
         if (menu_nutrition_f.value.length< 2) {
             fields[6].classList.add('red');
             fieldTexts[6].innerText = '姓名至少兩個字';
@@ -190,7 +179,7 @@ if (empty($row)) {
             info_bar.innerText = '編輯成功';
 
             setTimeout(() => {
-                // location.href = 'menu＿list.php'; // 跳轉到列表頁
+                location.href = 'menu_list.php'; // 跳轉到列表頁
             }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
@@ -207,7 +196,7 @@ if (empty($row)) {
 
 
 
-<?php include __DIR__ . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_foot.php' ?>
 
 
 

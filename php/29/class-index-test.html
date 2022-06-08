@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style class="style">
+            * {
+                box-sizing: border-box;
+                margin: auto;
+            }
+            .card {
+                width: 280px;
+                height: 350px;
+                border: 1px solid #333;
+                margin: 20px 20px;
+                text-align: center;
+                border-radius: 10px;
+            }
+            .wrap {
+                display: flex;
+                flex-wrap: wrap;
+                width: 980px;
+            }
+            .pic > img {
+                width: 75%;
+                height: 100%;
+            }
+            .pic {
+                text-align: center;
+                border-bottom: 1px solid #333;
+                width: 100%;
+                height: 180px;
+            }
+
+            .level {
+                position: absolute;
+                border: 1px solid #333;
+
+                border-radius: 10px 0 10px 0;
+            }
+            h3 {
+                margin: 15px;
+            }
+            .card-txt {
+                margin: 0 0 15px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <button><a href="delete-data.html">登入</a></button>
+        <input type="text" placeholder="搜尋" class="search" />
+        <select name="" id="sort">
+            <option value="">--排序--</option>
+            <option value="priceAsc">價格低至高</option>
+            <option value="priceDesc">價格高至低</option>
+            <option value="levelAsc">難度低至高</option>
+            <option value="levelDesc">難度高至低</option>
+        </select>
+        <div class="inputs"></div>
+        <div class="wrap">
+            <!-- <div class="card">
+                <div class="pic">
+                    <div class="level">1</div>
+                    <img src="images/heart.png" alt="" />
+                </div>
+                <h3>name</h3>
+                <p>nt</p>
+                <p>txt</p>
+            </div> -->
+        </div>
+
+        <script>
+            const url = "./class-index-api.php";
+            const wrap = document.querySelector(".wrap");
+            const style = document.querySelector(".style");
+            const search = document.querySelector(".search");
+            const sort = document.querySelector("#sort");
+            const len = 3; //每頁幾筆
+
+            function priceAsc(a, b) {
+                return a.course_price - b.course_price;
+            }
+            function priceDesc(a, b) {
+                return b.course_price - a.course_price;
+            }
+            function levelAsc(a, b) {
+                return a.course_level - b.course_level;
+            }
+            function levelDesc(a, b) {
+                return b.course_level - a.course_level;
+            }
+
+            function getData() {
+                fetch(url)
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        //         function addData() {
+                        //             wrap.innerHTML = "";
+                        //                 const cards = document.createElement("div");
+                        //                 cards.className = "card";
+                        //                 cards.dataset.index = data[i].course_name;
+                        //                 wrap.appendChild(cards);
+                        //                 cards.innerHTML = ` <div class="pic">
+                        //     <div class="level">${data[i].course_level}</div>
+                        //     <img src="../../images/29/${data[i].course_img_s}" alt="" />
+                        // </div>
+                        // <h3>${data[i].course_name}</h3>
+                        // <p class="card-txt">${data[i].course_content}</p>
+                        // <p class="card-txt">NT$${data[i].course_price}</p>`;
+                        //         }
+                        //         addData();
+                    });
+            }
+            getData();
+
+            data2 = JSON.parse(localStorage.getItem("data"));
+            console.log(data2);
+
+            function limits() {
+                countLim = Math.ceil(data2.length / len);
+                //餘數算一頁向上取整
+                inputs = document.querySelector(".inputs");
+                inputs.innerHTML = "";
+                for (let i = 1; i <= countLim; i++) {
+                    inputs.innerHTML += `<input type="button" value="${i}" onclick="limitinput(this)" >`; //每個頁面按鈕都繫結上一個點選事件
+                }
+            }
+            limits();
+
+            let choose = 0; //建立一個全域性變數用來儲存當前處於第幾個頁面
+
+            function tablestr(num) {
+                //num是指當前哪個頁面
+                // console.log(num);
+                let num1 = (num - 1) * len; //確定迴圈開始的集合下標  1的時候=0 ,2的時候=3 ,8的時候=21
+
+                let num2 = num * len; //確定迴圈結束的結束下標  1的時候 = 3 ,2的時候=6 ,8的時候=24
+
+                wrap.innerHTML = ""; //清空一下
+
+                for (let i = num1; i < num2; i++) {
+                    //遍歷陣列
+                    if (i >= data2.length) {
+                        i = data2.length;
+                        return;
+                    }
+                    let str = "";
+
+                    str += `<div class="pic">
+            <div class="level">${data2[i].course_level}</div>
+            <img src="../../images/29/${data2[i].course_img_s}" alt="" />
+            </div>
+            <h3>${data2[i].course_name}</h3>
+            <p class="card-txt">${data2[i].course_content}</p>
+            <p class="card-txt">NT$${data2[i].course_price}</p>`;
+
+                    wrap.innerHTML += `<div class="card">  ${str}  </div>`; //每迴圈一次新增一條資料
+                }
+            }
+
+            function liminputcolor(choose) {
+                inputs.childNodes[choose - 1].style.backgroundColor = "red";
+            }
+
+            inputs.childNodes[0].style.backgroundColor = "red"; //第一個按鈕的背景顏色為紅色
+            tablestr(1);
+            function levelfun() {
+                for (let i = 0; i < data2.length; i++) {
+                    level = document.querySelectorAll(".level");
+                    // console.log("i:" + i + "d:" + data2.length);
+
+                    if (i < len) {
+                        if (data2[i].course_level === "1") {
+                            level[i].innerHTML = "入門";
+                            level[i].style.backgroundColor = "rgb(20, 155, 53)";
+                        }
+                        if (data2[i].course_level === "2") {
+                            level[i].innerHTML = "普通";
+                            level[i].style.backgroundColor = "#fa0";
+                        }
+                        if (data2[i].course_level === "3") {
+                            level[i].innerHTML = "困難";
+                            level[i].style.backgroundColor = "#f00";
+                        }
+                    }
+                }
+            }
+            levelfun();
+
+            function limitinput(i) {
+                console.log(i);
+                choose = i.value;
+                tablestr(choose); //重新整理table資料
+                limits(); //重新整理頁面按鈕
+                i.style.backgroundColor = "red"; //當前點選的頁面按鈕背景顏色改變為紅色
+                liminputcolor(choose); //頁面按鈕變色
+                levelfun();
+            }
+        </script>
+    </body>
+</html>

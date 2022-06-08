@@ -34,6 +34,16 @@ if ($totalRows > 0) {
 
 <head>
     <style>
+        *{
+        box-sizing: border-box;
+        margin: 0;
+        }
+
+        body {
+        background-color: #CAAD87;
+        background-size: cover;
+        opacity: 0.8;
+        }
         .add_btn {
             display: flex;
             justify-content: flex-end;
@@ -118,7 +128,7 @@ if ($totalRows > 0) {
                         </a>
                     </td>
                     <td>
-                        <a href="javascript : delete_it(<?= $r['news_sid'] ?>)">
+                        <a href="javascript: delete_it(<?= $r['news_sid'] ?>)">
                             <i class="fa-solid fa-trash-can"></i>
                         </a>
                     </td>

@@ -1,6 +1,6 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
 $pageName = 'menu_add';
-$title = '新增菜單資料';
+$title = '新增餐點資料';
 
     $items= [
     '經典義式系列'=>'經典義式系列',
@@ -14,8 +14,8 @@ $title = '新增菜單資料';
 
 
 ?>
-<?php include __DIR__ . '/parts/html_menu_head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php'  ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar.php'  ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -30,7 +30,7 @@ $title = '新增菜單資料';
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">新增菜單資料</h5>
+                    <h5 class="card-title">新增餐點資料</h5>
                     <form name="form1" onsubmit="sendData();return false;novalidate" enctype="multipart/form-data">
 
                             <!-- 如果是是用radio,name要一樣才會是相同的group,id可以不一樣,也要記得下value -->
@@ -56,11 +56,13 @@ $title = '新增菜單資料';
                         </div> -->
 
                         <div class="mb-3">
-                            <label for="menu_photo" class="form-label">餐點圖片</label>
+                            <label for="menu_photo" class="form-label ">餐點圖片</label>
                             <!-- <div><img src="" id="myimg" ></div> -->
 
                             <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()" multiple>  
+                            <div class="form-text red"></div>
                             <div id="preview"></div>
+                            
                         
 
 
@@ -77,25 +79,20 @@ $title = '新增菜單資料';
                         <div class="mb-3">
                             <label for="menu_kcal" class="form-label">熱量(Kcal)</label>
                             <input type="text" class="form-control" id="menu_kcal" name="menu_kcal">
-                            <div class="form-text"></div>
+                            <div class="form-text red"></div>
                         </div>
                         
                         <div class="mb-3">
-                            <label for="menu_price_m" class="form-label">價格(M)</label>
+                            <label for="menu_price_m" class="form-label">價格</label>
                             <input class="form-control" name="menu_price_m" id="menu_price_m" cols="30" rows="3"></input>
-                            <div class="form-text"></div>
+                            <div class="form-text red"></div>
                         </div>
                         
-                        <div class="mb-3">
-                            <label for="menu_price_l" class="form-label">價格(L)</label>
-                            <input class="form-control" name="menu_price_l" id="menu_price_l" cols="30" rows="3"></input>
-                            <div class="form-text"></div>
-                        </div>
                         
                         <div class="mb-3">
                             <label for="menu_nutrition" class="form-label">營養標示資訊</label>
-                            <textarea class="form-control" name="menu_nutrition" id="menu_nutrition" cols="30" rows="3"></textarea>
-                            <div class="form-text"></div>
+                            <input class="form-control" name="menu_nutrition" id="menu_nutrition" cols="30" rows="3"></input>
+                            <div class="form-text red"></div>
                         </div>
                         
 
@@ -110,7 +107,7 @@ $title = '新增菜單資料';
     </div>
 
 </div>
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php' ?>
 
 
 
@@ -122,10 +119,9 @@ $title = '新增菜單資料';
     const menu_name_f = document.form1.menu_name;
     const menu_kcal_f	= document.form1.menu_kcal;
     const menu_price_m_f = document.form1.menu_price_m;
-    const menu_price_l_f = document.form1.menu_price_l;
     const menu_nutrition_f = document.form1.menu_nutrition;
     const myimg = document.querySelector('#myimg');
-    const fields = [menu_categories_f,menu_photo_f,menu_name_f,menu_kcal_f,menu_price_m_f,menu_price_l_f,menu_nutrition_f];
+    const fields = [menu_categories_f,menu_photo_f,menu_name_f,menu_kcal_f,menu_price_m_f,menu_nutrition_f];
 
 
     // 預覽圖片
@@ -177,7 +173,7 @@ $title = '新增菜單資料';
             // name_f.nextElementSibling.classList.add('red');
             // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
             fields[0].classList.add('red');
-            fieldTexts[0].innerText = '姓名至少兩個字';
+            fieldTexts[0].innerText = '請選擇餐點類別';
             isPass = false;
         }
         if (menu_photo_f.value.length< 2) {
@@ -185,29 +181,24 @@ $title = '新增菜單資料';
             fieldTexts[1].innerText = '尚未上傳照片';
             isPass = false;
         }
-        if (menu_name_f.value.length< 2) {
+        if (menu_name_f.value.length< 1) {
             fields[2].classList.add('red');
-            fieldTexts[2].innerText = '姓名至少兩個字';
+            fieldTexts[2].innerText = '請輸入餐點名稱';
             isPass = false;
         }
-        if (menu_kcal_f.value.length< 2) {
+        if (menu_kcal_f.value.length< 1) {
             fields[3].classList.add('red');
-            fieldTexts[3].innerText = '姓名至少兩個字';
+            fieldTexts[3].innerText = '請輸入熱量';
             isPass = false;
         }
         if (menu_price_m_f.value.length< 2) {
             fields[4].classList.add('red');
-            fieldTexts[4].innerText = '姓名至少兩個字';
+            fieldTexts[4].innerText = '請輸入餐點價格';
             isPass = false;
         }
-        if (menu_price_l_f.value.length< 2) {
+        if (menu_nutrition_f.value.length< 1) {
             fields[5].classList.add('red');
-            fieldTexts[5].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_nutrition_f.value.length< 2) {
-            fields[6].classList.add('red');
-            fieldTexts[6].innerText = '姓名至少兩個字';
+            fieldTexts[5].innerText = '請輸入營養標示';
             isPass = false;
         }
         if (!isPass) {
@@ -223,12 +214,6 @@ $title = '新增菜單資料';
         console.log(result);
 
 
-
-
-
-
-
-
         info_bar.style.display = 'block'; // 顯示訊息列
         if (result.success) {
             // success是對應到後端
@@ -237,7 +222,7 @@ $title = '新增菜單資料';
             info_bar.innerText = '新增成功';
 
             setTimeout(() => {
-                // location.href = 'menu＿list.php'; // 跳轉到列表頁
+                // location.href = 'menu_list.php'; // 跳轉到列表頁
             }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
@@ -245,17 +230,6 @@ $title = '新增菜單資料';
             info_bar.innerText = result.error || '資料無法新增';
         }
     };
-
-    
-    
-
-    
-
-
-
-
 </script>
 
-
-
-<?php include __DIR__ . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-foot.php' ?>
