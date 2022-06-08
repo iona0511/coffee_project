@@ -16,19 +16,14 @@ if (empty($sid)) {
     exit;
 }
 
-$row = $pdo->query("SELECT * FROM `coupon` WHERE sid=$sid")->fetch();
+$row_s = $pdo->query("SELECT * FROM `coupon` WHERE sid=$sid")->fetch();
 
-// $row = $pdo->query("SELECT * FROM address_book WHERE sid=$sid")->fetch();
-// SELECT * FROM `coupon`
-
-
-
-if (empty($row)) {
+if (empty($row_s)) {
     header('Location:/coffee_project/php/41/coupon_record_list.php');
     exit;
-} //要有資料才會執行 
-
+}
 // ========================
+
 $coupon_send_type = [
     '1' => '1 生日時發送',
     '2' => '2 註冊時發送',
@@ -42,7 +37,7 @@ $coupon_setting_type = [
 // ========================================
 $rows = [];
 
-$sql = sprintf("SELECT `menu_sid` FROM `coupon`");
+$sql = sprintf("SELECT `menu_sid` FROM `menu`");
 
 $rows = $pdo->query($sql)->fetchAll();
 
@@ -50,14 +45,15 @@ $rows = $pdo->query($sql)->fetchAll();
 // ==========================================
 $rows_products = [];
 
-$sql = sprintf("SELECT `menu_sid` FROM `coupon`");
+$sql_p = sprintf("SELECT `products_sid` FROM `products`");
 
-$rows = $pdo->query($sql)->fetchAll();
+$rows_products = $pdo->query($sql_p)->fetchAll();
 
 // =========================================
 $t_type = [
-    '1' => '1 餐點',
-    '2' => '2 打折',
+    '1' => '1 餐點類',
+    '2' => '2 商品類',
+    '3' => '3 全品項',
 ];
 // =========================================
 $coupon_validity_period = [
@@ -80,6 +76,7 @@ $coupon_status  = [
     '1' => '0 不開放',
     '2' => '1 開放',
 ];
+
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
 
@@ -158,10 +155,10 @@ $coupon_status  = [
                     <h5 class="card-title">編輯資料</h5>
 
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
-
+                        <input type="hidden" name="sid" value="<?= $row_s['sid'] ?>">
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
                             <label for="name" >* 優惠券名稱</label>
-                            <input class ="css-qkktdp-TextField" style="border: 1px solid #D0D0D0;padding: 15px 10px;" type="text" id="name" name="coupon_name" required value="<?= htmlentities($row['coupon_name']) ?>">
+                            <input class ="css-qkktdp-TextField" style="border: 1px solid #D0D0D0;padding: 15px 10px;" type="text" id="name" name="coupon_name" required value="<?= htmlentities($row_s['coupon_name']) ?>">
                             <div class="form-text red"></div>
                         </div>
 
@@ -176,6 +173,7 @@ $coupon_status  = [
                                     <option value="<?= $k ?>"> <?= $v ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
@@ -198,14 +196,6 @@ $coupon_status  = [
 
                             <div class="form-text red"></div>
                         </div>
-
-                        <!-- 
-                            <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
-                            <label for="name" >* 優惠券名稱</label>
-                            <input class ="css-qkktdp-TextField" style="border: 1px solid #D0D0D0;padding: 15px 10px;" type="text" id="name" name="coupon_name" required value="<?= htmlentities($row['coupon_name']) ?>">
-                            <div class="form-text red"></div>
-                        </div>
-                        -->
 
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
                             <label for="">餐點編號</label>
@@ -264,8 +254,6 @@ $coupon_status  = [
                                 <?php endforeach; ?>
                             </select>
                         </div>
-
-
                         <button type="submit" class="css-8cha5q-SubmitButton" >新增</button>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
@@ -279,15 +267,13 @@ $coupon_status  = [
 </div>
 <?php include __DIR__ . '/parts/scripts.php' ?>
 <script>
-
-
     const info_bar = document.querySelector('#info-bar');
 
     const coupon_name_f = document.form1.coupon_name;
-    const coupon_name_f = document.form1.coupon_name;
+    const cst_type_f = document.form1.cst_type;
     const number_f = document.form1.number;
 
-    const fields = [coupon_name_f,number_f];
+    const fields = [coupon_name_f,cst_type_f,number_f];
     const fieldTexts = [];
     for (let f of fields) {
         fieldTexts.push(f.nextElementSibling);
@@ -308,19 +294,22 @@ $coupon_status  = [
             fieldTexts[0].innerText = '請輸入內容';
             isPass = false;
         }
+        if (cst_type_f.value.length < 1) {
+            fields[1].classList.add('red');
+            fieldTexts[1].innerText = '請輸入內容';
+            isPass = false;
+        }
         if (number_f.value.length < 1) {
-        fields[1].classList.add('red');
-        fieldTexts[1].innerText = '請輸入內容';
+        fields[2].classList.add('red');
+        fieldTexts[2].innerText = '請輸入內容';
         isPass = false;
 }
-
-
         if (!isPass) {
             return;
         }
 
         const fd = new FormData(document.form1);
-        const r = await fetch('ab-edit-api.php', {
+        const r = await fetch('coupon_record_edit_api.php', {
             method: 'POST',
             body: fd,
         });
@@ -333,7 +322,7 @@ $coupon_status  = [
             info_bar.innerText = '修改成功';
 
             setTimeout(() => {
-                location.href = 'ab-list.php'; 
+                location.href = 'coupon_record_list.php'; 
             }, 2000);
         } else {
             info_bar.classList.remove('alert-success');

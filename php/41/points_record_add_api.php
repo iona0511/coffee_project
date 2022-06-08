@@ -48,15 +48,14 @@ $sql = "INSERT INTO `points_record`(
         ?, ?, ?, NOW()
     )";
 
-
+// ======================
 $sql_member_sid = sprintf("SELECT `member_sid` FROM `member` WHERE`member`.`member_account`= '%s'",$member_account);
-
 
 $t_member_sid = $pdo->query($sql_member_sid)->fetchAll();
 
 $a =$t_member_sid[0];
 $stmt = $pdo->prepare($sql);
-
+// ============================
 $stmt->execute([
     $a['member_sid'],
     $number,

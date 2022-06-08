@@ -1,5 +1,13 @@
 <?php
-require __DIR__ . '/parts/connect_db.php';
+require dirname(__DIR__, 2) . '/parts/connect_db.php';
+
+session_start();
+
+if (!isset($_SESSION['user']['admin_account'])) {
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
 header('Content-Type: application/json');
 
 $output = [
@@ -9,44 +17,51 @@ $output = [
     'error' => ''
 ];
 
+
 $sid = isset($_POST['sid']) ? intval($_POST['sid']) : 0;
 
-if (empty($sid) or empty($_POST['name'])) {
-    $output['error'] = '沒有姓名資料';
+if (empty($sid) or empty($_POST['coupon_name'])) {
+    $output['error'] = '沒有優惠券資料';
     $output['code'] = 400;
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-} 
-
-$name = $_POST['name'];
-$email = $_POST['email'] ?? '';
-$mobile = $_POST['mobile'] ?? '';
-$birthday = empty($_POST['birthday']) ? NULL : $_POST['birthday'];
-$address = $_POST['address'] ?? '';
-
-if (!empty($email) and filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-    $output['error'] = 'email 格式錯誤';
-    $output['code'] = 405;
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
-$sql = "UPDATE `address_book` SET `name`=?, `email`=?, `mobile`=?, `birthday`=?, `address`=? WHERE `sid`=$sid "; 
+// ============
 
+$coupon_name = $_POST['coupon_name'];
+$coupon_send_type = $_POST['coupon_send_type'] ?? '';
+$coupon_setting_type = $_POST['coupon_setting_type'] ?? '';
+$coupon_money = $_POST['coupon_money'] ?? '';
+
+$menu_sid = $_POST['menu_sid'] ?? 0;
+$products_sid = $_POST['products_sid'] ?? 0;
+
+$type = $_POST['type'] ?? '';
+$coupon_validity_period = $_POST['coupon_validity_period'] ?? '';
+$coupon_status = $_POST['coupon_status'] ?? '';
+// ====================
+
+$sql = "UPDATE `coupon` SET `coupon_name`=?, `coupon_send_type`=?, `coupon_setting_type`=?, `coupon_money`=?, `menu_sid`=?, `products_sid`=?, `type`=?, `coupon_validity_period`=?, `coupon_status`=? WHERE `sid`='$sid'";
+// =============================
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute([
-    $name,
-    $email,
-    $mobile,
-    $birthday,
-    $address,
+    $coupon_name,
+    $coupon_send_type,
+    $coupon_setting_type,
+    $coupon_money,
+    $menu_sid,
+    $products_sid,
+    $type,
+    $coupon_validity_period,
+    $coupon_status
 ]);
 
 if ($stmt->rowCount() == 1) {
     $output['success'] = true;
 } else {
     $output['error'] = '資料沒有修改';
-}  
+}
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

@@ -111,14 +111,14 @@ INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `m
 CREATE TABLE `coupon` (
   `sid` int(11) NOT NULL,
   `coupon_name` varchar(255) NOT NULL,
-  `coupon_send_type` int(11) NOT NULL,
-  `coupon_setting_type` int(11) NOT NULL,
+  `coupon_send_type` varchar(11) DEFAULT NULL,
+  `coupon_setting_type` varchar(11) DEFAULT NULL,
   `coupon_money` varchar(255) NOT NULL,
   `menu_sid` int(11) DEFAULT NULL,
   `products_sid` int(11) DEFAULT NULL,
-  `type` int(11) NOT NULL,
-  `coupon_validity_period` int(11) NOT NULL,
-  `coupon_status` int(11) NOT NULL
+  `type` varchar(11) NOT NULL,
+  `coupon_validity_period` varchar(11) NOT NULL,
+  `coupon_status` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -126,16 +126,16 @@ CREATE TABLE `coupon` (
 --
 
 INSERT INTO `coupon` (`sid`, `coupon_name`, `coupon_send_type`, `coupon_setting_type`, `coupon_money`, `menu_sid`, `products_sid`, `type`, `coupon_validity_period`, `coupon_status`) VALUES
-(1, '生日優惠券$100', 1, 1, '100', 0, 0, 3, 12, 1),
-(2, '註冊優惠券$100', 2, 1, '100', 0, 0, 3, 12, 1),
-(3, '咖啡拿鐵5折', 3, 2, '0.5', 1, 0, 1, 6, 1),
-(4, '卡布奇諾5折', 3, 2, '0.5', 3, 0, 1, 6, 1),
-(5, '義式摩卡75折', 3, 2, '0.75', 9, 0, 1, 6, 1),
-(6, '耶加雪菲75折', 3, 2, '0.75', 16, 0, 1, 6, 1),
-(7, '宇治奶茶8折', 3, 2, '0.8', 19, 0, 1, 6, 1),
-(8, '精選曼巴咖啡組8折', 3, 2, '0.8', 0, 1, 2, 6, 1),
-(9, '黃金曼特寧組9折', 3, 2, '0.8', 0, 3, 2, 6, 1),
-(10, '購物優惠券9折', 4, 2, '0.9', 0, 0, 3, 6, 1);
+(1, '生日優惠券$100', '1 生日時發送', '1 折扣金額', '100', 0, 0, '3 全品項', '12', '1'),
+(2, '註冊優惠券$100', '2 註冊時發送', '1 折扣金額', '100', 0, 0, '3 全品項', '12', '1'),
+(3, '咖啡拿鐵5折', '3 玩遊戲時發送', '2 打折', '0.5', 1, 0, '1餐點類', '6', '1'),
+(4, '卡布奇諾 5折', '3 玩遊戲時發送', '2 打折', '0.5', 3, 0, '1餐點類', '6', '1'),
+(5, '義式摩卡75折', '3 玩遊戲時發送', '2 打折', '0.75', 9, 0, '1餐點類', '6', '1'),
+(6, '耶加雪菲75折', '3 玩遊戲時發送', '2 打折', '0.75', 17, 0, '1餐點類', '6', '1'),
+(7, '宇治奶茶8折', '3 玩遊戲時發送', '2 打折', '0.8', 20, 0, '1餐點類', '6', '1'),
+(8, '精選曼巴咖啡組8折', '3 玩遊戲時發送', '2 打折', '0.8', 0, 1, '2 商品類', '6', '1'),
+(9, '黃金曼特寧組9折', '3 玩遊戲時發送', '2 打折', '0.8', 0, 3, '2 商品類', '6', '1'),
+(10, '購物優惠券9折', '4 購物完發送', '2 打折', '0.9', 0, 0, '3 全品項', '6', '1');
 
 -- --------------------------------------------------------
 
