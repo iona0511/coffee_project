@@ -19,7 +19,7 @@ if (empty($row)) {
 
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <style>
     *{
         box-sizing: border-box;
@@ -91,8 +91,7 @@ if (empty($row)) {
 
                         <div class="mb-3">
                             <label for="news_content" class="form-label">活動內容</label>
-                            <input type="text" class="form-control" id="news_content" name="news_content" value="<?= $row['news_content'] ?>">
-                            <!-- <textarea type="text" class="form-control" id="news_content" name="news_content" value="<?= $row['news_content'] ?>"></textarea> -->
+                            <textarea type="text" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
                             <div class="form-text red"></div>
                         </div>
  

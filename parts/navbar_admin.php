@@ -84,14 +84,6 @@
                             </ul>
                     </li>
 
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/09/user_list.php">會員中心</a>
-                    </li>                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/41/points_formanager.php">優惠券</a>
-                    </li> -->
-                        
-
 
                 </ul>
                 <form class="d-flex">

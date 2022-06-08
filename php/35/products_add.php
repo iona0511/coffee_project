@@ -8,7 +8,7 @@ $row_pic = $pdo->query("SELECT * FROM`products_pic`")->fetchAll();
 $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 <style>
     .form-control.red {
         border: 1px solid red;

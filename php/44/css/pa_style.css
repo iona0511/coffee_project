@@ -72,20 +72,55 @@
     font-style: italic;
 }
 
+.tag_rect {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .h_tag {
+    display: inline-block;
     height: 32px;
     font-weight: 500;
-    color: rgba(0, 0, 0, 0.75);
+    color: rgb(6, 95, 212);
     font-size: 14px;
     border-radius: 16px;
     background: rgb(224, 224, 224);
-    padding: 8px 16px;
+    padding: 0 20px;
     white-space: nowrap;
-
+    position: relative;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    line-height: 32px;
 }
 
-.h_tag:hover{
+.h_tag::before {
+    content: '#';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+}
+
+.h_tag::after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 800;
+    font-size: 10px;
+
+    content: '\f2d3';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-42.5%);
+}
+
+.h_tag:hover {
     background-color: #7c7c7ccb;
+}
+
+.h_tag:hover.h_tag::after {
+    color: #f22626df;
 }
 
 .cars {
@@ -97,23 +132,50 @@
 }
 
 #tag {
-    border:none;
+    border: none;
+    padding-left: 18px;
 }
 
-.search_col{
+.wrap {
+    position: relative;
+    z-index: 100;
+}
+
+.search_col {
+    position: absolute;
     width: 20%;
-    border-radius:4px;
+    border-radius: 8px;
     border: 1.1px solid #ccc;
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 2px 2px 6px 3px #d5d5d571;
 
 }
 
 
 
-.s_col{
-    padding:6px 12px;
+.s_col {
+    background-color: #fff;
+    padding: 6px 12px 6px 18px;
+    position: relative;
+}
+
+.s_col::before {
+    display: block;
+    content: '#';
+    position: absolute;
+    left: 6px;
+    font-weight: 900;
+    color: rgb(6, 95, 212)
+}
+
+.s_col:hover {
+    background-color: #bfbfbf;
 
 }
 
-.s_col:hover{
-    background-color: #e1e1e17b;;
+
+
+.form-control:focus {
+    box-shadow: none !important;
 }

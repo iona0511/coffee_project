@@ -3,7 +3,8 @@
 header('Content-Type: application/json');
 
 
-$folder = __DIR__ . '/news_images/';
+$folder = dirname(dirname(__DIR__, 1)) . '/images/18/';
+
 
 $extMap = [
     'image/jpeg'=>'.jpg',

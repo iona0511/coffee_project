@@ -10,14 +10,20 @@
             integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
             crossorigin="anonymous"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
+
         <title>Document</title>
         <style class="style">
             * {
                 box-sizing: border-box;
             }
             body {
-                background: url(../../images/29/pexels-lukas-1419939.jpg);
-                background-size: 100vw;
+                background: url(../../images/29/pexels-lukas-1419939.jpg)
+                    no-repeat;
+                background-size: cover;
             }
 
             .card {
@@ -33,7 +39,7 @@
 
             .card:hover {
                 box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);
-                transform: translate(0, -8px);
+                transform: translate(0, -5px);
                 transition-delay: 0s;
                 box-shadow: 1px 1px 8px 1px #333;
             }
@@ -68,6 +74,30 @@
             .card-txt {
                 margin: 0 0 15px 0;
             }
+
+            .pageBtn {
+                padding: 3px 12px;
+                background-color: #fff;
+                margin: 25px 10px 25px 0;
+                border-radius: 5px;
+            }
+            .pageBtn:hover {
+                background-color: rgb(210, 173, 133);
+            }
+
+            .inputs {
+                text-align: center;
+            }
+
+            .search {
+                border: 2px solid rgb(136, 88, 36);
+                border-radius: 5px;
+            }
+
+            .fa-magnifying-glass {
+                transform: translateX(-25px);
+                color: rgb(136, 88, 36);
+            }
         </style>
     </head>
     <body>
@@ -86,7 +116,11 @@
         </script>
         <div class="navBar"></div>
         <button><a href="delete-data.html">登入</a></button>
-        <input type="text" placeholder="搜尋" class="search" />
+
+        <input type="text" placeholder="搜尋" class="search" /><i
+            class="fa-solid fa-magnifying-glass"
+        ></i>
+
         <select name="" id="sort">
             <option value="">--排序--</option>
             <option value="priceAsc">價格低至高</option>
@@ -231,7 +265,7 @@
 
                 inputs.innerHTML = "";
                 for (let i = 1; i <= countLim; i++) {
-                    inputs.innerHTML += `<input type="button" value="${i}" onclick="limitinput(this)" >`; //每個頁面按鈕都繫結上一個點擊事件,this綁定點擊的元素
+                    inputs.innerHTML += `<input type="button" value="${i}" onclick="limitinput(this)" class="pageBtn">`; //每個頁面按鈕都繫結上一個點擊事件,this綁定點擊的元素
                 }
             }
             limits();
@@ -269,25 +303,25 @@
             function liminputcolor(choose) {
                 console.log(choose);
                 // 這裡childNodes把inputs子節點集合起來索引值0開始,所以-1
-                inputs.childNodes[choose - 1].style.backgroundColor = "red";
+                inputs.childNodes[choose - 1].style.backgroundColor = "#a2642e";
             }
-            inputs.childNodes[0].style.backgroundColor = "red"; //第一個按鈕的背景顏色為紅色
+            inputs.childNodes[0].style.backgroundColor = "#a2642e"; //第一個按鈕的背景顏色為紅色
 
             function levelfun() {
                 for (let i = 0; i < dataCopy.length; i++) {
                     if (i < len) {
                         level = document.querySelectorAll(".level");
-                        if (dataCopy[i].course_level === "1") {
+                        if (dataCopy[i].course_level == "1") {
                             level[i].innerHTML = "入門";
                             level[i].style.backgroundColor =
                                 "rgb(210, 173, 133)";
                         }
-                        if (dataCopy[i].course_level === "2") {
+                        if (dataCopy[i].course_level == "2") {
                             level[i].innerHTML = "中級";
                             level[i].style.backgroundColor =
                                 "rgb(206, 152, 94)";
                         }
-                        if (dataCopy[i].course_level === "3") {
+                        if (dataCopy[i].course_level == "3") {
                             level[i].innerHTML = "高級";
                             level[i].style.backgroundColor = "#a2642e";
                         }
