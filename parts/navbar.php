@@ -48,7 +48,7 @@
                             <a class="nav-link" href="#">店家資訊</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="#">商品</a>
+                            <a class="nav-link" href="/coffee_project/php/35/products_font.php">商品</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" href="/coffee_project/php/11/food_order.html">點餐</a>

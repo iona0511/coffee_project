@@ -542,14 +542,14 @@
                         if (data) {
                             this.fakeData = data;
                         } else {
-                            fetch("./cart_read_food_api.php")
-                            .then(data => data.json())
-                            .then(data => {
-                                this.fakeData = data;
-                            })
                         }
                     });
-
+                fetch("./cart_read_food_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    console.log(data);
+                    // this.fakeData = data;
+                })
                 await fetch("./check_coupon_session_api.php")
                     .then(data => data.json())
                     .then(data => {
