@@ -3,7 +3,9 @@
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 
-
+if(!session_id()) {
+    session_start();
+}
 
 $output = [
     'success' => false,
