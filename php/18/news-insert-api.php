@@ -27,8 +27,9 @@ $output = [
 //     exit;
 // }
 
-// $ext = $extMap[$_FILES['news_img']['type']];
-$news_img = $_FILES['news_img'];
+$ext = $extMap[$_FILES['news_img']['type']];
+
+$news_img = md5($_FILES['news_img']['name'].rand()). $ext;
 $news_title = $_POST['news_title'] ?? '';
 $news_class_sid = $_POST['news_class_sid'] ?? '';
 $news_start_date = $_POST['news_start_date'] ?? '';

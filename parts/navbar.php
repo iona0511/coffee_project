@@ -19,10 +19,10 @@
                         <a class="nav-link" href="#">店家資訊</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">商品</a>
+                        <a class="nav-link" href="#">商品</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">訂位點餐</a>
+                        <a class="nav-link" href="/coffee_project/php/11/food_order.html">點餐</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/coffee_project/php/29/class-index.html">課程資訊</a>
@@ -47,11 +47,11 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <?php if (!empty($_SESSION['user'])) : ?>
+                    <?php if (isset($_SESSION['user'])) : ?>
                         <h5 class="mr-3">會員:<?= $_SESSION['user']['member_name'] ?></h5>
                         <h5 class="mr-3">暱稱:<?= $_SESSION['user']['member_nickname'] ?></h5>
                         <h5 class="mr-3">ID:<?= $_SESSION['user']['member_sid'] ?></h5>
-                        <a href="php/09/logout.php">
+                        <a href="/coffee_project/php/09/logout.php">
                             <h5>登出</h5>
                         </a>
                     <?php else : ?>

@@ -61,7 +61,7 @@ if ($totalRows > 0) {
     }
 </style>
 
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
 <!-- server side render -->
 <div class="container">
