@@ -11,6 +11,8 @@ if (empty($news_sid)) {
 
 $row = $pdo->query("SELECT * FROM lastest_news WHERE news_sid = $news_sid")->fetch();
 
+$row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
+
 if (empty($row)) {
     header('Location: lastest-news.php');
     exit;
@@ -70,10 +72,10 @@ if (empty($row)) {
                             </br>
                             <!-- 這邊無法顯示出資料庫裡的類別，可以參考老師的01 form -->
                             <select name="news_class" id="news_class" value="<?= $row['news_class'] ?>">
-                                <option value="">-- 請選擇 --</option>
+                                <option value="1" selected disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
-                                    <option value="<?= $r['news_class_sid'] ?>">
-                                        <?= $r['news_class_name'] ?>
+                                    <option value="<?= $r['class_sid'] ?>">
+                                        <?= $r['class_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -164,8 +166,8 @@ if (empty($row)) {
             // name_f.classList.add('red');
             // name_f.nextElementSibling.classList.add('red');
             // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
-            fields[0].classList.add('red');
-            fieldTexts[0].innerText = '內容至少要10個字';
+            fields[1].classList.add('red');
+            fieldTexts[1].innerText = '內容至少要10個字';
             isPass = false;
         }
 
