@@ -1,3 +1,4 @@
+
 <style>
     .navinner_pc a{
         color: rgba(0,0,0,.55);
@@ -11,8 +12,11 @@
         cursor: pointer;
         border: none;
         outline: none;
-        /* padding-right: 0.5rem;
-        padding-left: 0.5rem; */
+    }
+    .m_btn{
+        cursor: pointer;
+        border: none;
+        outline: none;
     }
     .is-open{
         opacity: 1;
@@ -75,7 +79,7 @@
                                 <li class="nav-item ">
                                     <a class="nav-link" href="/coffee_project/php/09/user_list.php">會員中心</a>
                                 </li>
-                                <li class="nav-item ">
+                                <li class="nav-item">
                                     <a class="nav-link" href="/coffee_project/php/41/points_formanager.php">優惠券系統</a>
                                 </li>
                                 <li class="nav-item">
