@@ -75,21 +75,21 @@
                             <button class="PCBtn nav-link" type="button" onclick="ShowMyPC()">
                             個人
                             </button>
-                        <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;color: rgba(0,0,0,.55);">
-                                    <li class="nav-item ">
-                                        <a  href="<?php if (isset($_SESSION['user'])) : ?>
-                                        <?= "/coffee_project/php/09/welcome.php" ?>
-                                        <?php else : ?>
-                                            <?= "/coffee_project/php/09/login.html" ?>
-                                        <?php endif ?>">會員中心</a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a href="/coffee_project/php/41/points_formanager.php">優惠券系統</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a  href="/coffee_project/php/41/points_formanager.php">積分系統</a>
-                                    </li>
-                                </ul>
+                            <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;color: rgba(0,0,0,.55);z-index: 999;">
+                                <li class="nav-item ">
+                                    <a  href="<?php if (isset($_SESSION['user'])) : ?>
+                                    <?= "/coffee_project/php/09/welcome.php" ?>
+                                    <?php else : ?>
+                                        <?= "/coffee_project/php/09/login.html" ?>
+                                    <?php endif ?>">會員中心</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/coffee_project/php/41/coupon_foruser.php">我的優惠券</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a  href="/coffee_project/php/41/points_foruser.php">我的積分</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                     <ul class="d-flex nav navbar-nav  me-auto mb-2 mb-lg-0 " style="margin-left:auto;">
