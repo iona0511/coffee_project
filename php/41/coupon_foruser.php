@@ -1,6 +1,6 @@
 <?php 
 require dirname(__DIR__,2) . '/parts/connect_db.php';
-session_start();
+// session_start();
 
 if (!isset($_SESSION['user']['member_account'])){
     header('Location:/coffee_project/php/09/login.html');
@@ -94,15 +94,13 @@ if($type==1){
 
 }
 
-// SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW()
-
-// SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0;
 
 // ===================================
 
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 
 <style>
     .display_justify_content {

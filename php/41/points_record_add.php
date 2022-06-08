@@ -1,6 +1,6 @@
 <?php 
 require dirname(__DIR__,2) . '/parts/connect_db.php';
-session_start();
+// session_start();
 
 if (!isset($_SESSION['user']['admin_account'])){
     header('Location:/coffee_project/php/09/admin-login.html');
@@ -15,6 +15,7 @@ $title = '新增積分歷史紀錄';
 // `WHERE`member`.`member_account`=
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
 <style>
     .form-control.red {
