@@ -118,7 +118,7 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
-                    <td><?= $r['news_img'] ?></td>
+                    <td><img src = "../../images/18/<?= $r['news_img'] ?>" height="100"></td>
                     <td><?= htmlentities($r['news_title']) ?></td>
                     <td><?= $r['news_class_sid'] ?></td>
                     <td><?= htmlentities($r['news_content']) ?></td>
