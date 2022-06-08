@@ -34,7 +34,7 @@ if($totalRows>0){
 ?>
 <!-- 以下是html 呈現 -->
 <?php include __DIR__ . '/parts/html_menu_head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar_admin.php' ?>
 
 <div class="container">
     <div class="row">
