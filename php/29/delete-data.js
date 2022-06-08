@@ -39,7 +39,7 @@ function getData() {
         
         .then((data) => {
          
-            localStorage.setItem("data", JSON.stringify(data));
+            
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {
                     data.sort(priceAsc);

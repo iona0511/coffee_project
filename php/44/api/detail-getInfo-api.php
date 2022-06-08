@@ -14,8 +14,8 @@ if (empty($rows)) {
 }
 
 $sql = sprintf("SELECT * FROM `member_likes` WHERE `member_sid` = '%s' AND `post_sid`= '%s'", $mb_sid,  $data["pid"]);
-$row = $pdo->query($sql)->fetch();
-$isLike = !empty($row);
+$like = $pdo->query($sql)->fetch();
+$isLike = !empty($like);
 
 $memberInfo = [
     'm_sid' => $mb_sid,

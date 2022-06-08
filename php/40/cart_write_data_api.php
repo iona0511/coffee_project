@@ -1,6 +1,8 @@
 <?php
     include dirname(dirname(__DIR__,1)) . "/parts/connect_db.php";
-    session_start();
+    if(!session_id()) {
+        session_start();
+    }
     // $output["order_pay"] = $_POST["order_pay"];
     // $output["bankNumber"] = $_POST["bankNumber"];
     // $output["bankAccount"] = $_POST["bankAccount"];
@@ -135,8 +137,17 @@
         $output["message"] = "系統繁忙";
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
     }
+    // $news["userid"] = $_SESSION["user"]["member_sid"];
+    // $news["couponid"] = $decodeCoupon;
+    // $news["orderid"] = $_SESSION["newestOrder"];
+    // echo json_encode($news, JSON_UNESCAPED_UNICODE);
+    // exit;
 
     //寫入coupon_logs
+    if($decodeCoupon === NULL) {
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
     $sql = "INSERT INTO `coupon_logs`(
         `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
     ) VALUES (

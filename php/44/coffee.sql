@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-07 11:18:51
+-- 產生時間： 2022-06-07 20:46:57
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -350,26 +350,6 @@ INSERT INTO `tag` (`sid`, `name`, `times`) VALUES
 (5, '拉', 2),
 (6, '拉aa', 5);
 
--- --------------------------------------------------------
-
---
--- 資料表結構 `topic`
---
-
-CREATE TABLE `topic` (
-  `sid` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- 傾印資料表的資料 `topic`
---
-
-INSERT INTO `topic` (`sid`, `title`) VALUES
-(1, 'course'),
-(2, 'products'),
-(3, 'others');
-
 --
 -- 已傾印資料表的索引
 --
@@ -435,12 +415,6 @@ ALTER TABLE `tag`
   ADD PRIMARY KEY (`sid`);
 
 --
--- 資料表索引 `topic`
---
-ALTER TABLE `topic`
-  ADD PRIMARY KEY (`sid`);
-
---
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
@@ -503,12 +477,6 @@ ALTER TABLE `review_likes`
 --
 ALTER TABLE `tag`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- 使用資料表自動遞增(AUTO_INCREMENT) `topic`
---
-ALTER TABLE `topic`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

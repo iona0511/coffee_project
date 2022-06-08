@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
 $pageName = 'menu_edit';
 $title = '修改餐點資料';
 
@@ -19,8 +19,8 @@ if (empty($row)) {
 
 
 ?>
-<?php include __DIR__ . '/parts/html_menu_head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar.php' ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -87,7 +87,7 @@ if (empty($row)) {
     </div>
 
 </div>
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php' ?>
 
 
 
@@ -196,7 +196,7 @@ if (empty($row)) {
 
 
 
-<?php include __DIR__ . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_foot.php' ?>
 
 
 

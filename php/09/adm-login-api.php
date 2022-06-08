@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 
