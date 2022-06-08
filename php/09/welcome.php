@@ -162,7 +162,7 @@ a:hover {
         <div class="wrap">
         <div class="select">
             <img src="" style="width: 60px" />
-            <a href="#nav" class="nav">首頁</a>
+            <a href="/coffee_project/index_.php" class="nav">首頁</a>
             <a href="" class="nav">店家資訊</a>
             <a href="" class="nav">商品</a>
             <a href="" class="nav">訂位點餐</a>

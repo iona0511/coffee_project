@@ -1,4 +1,5 @@
-<?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+<?php 
+require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 
 $pageName = 'product';
