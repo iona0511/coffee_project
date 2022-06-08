@@ -14,19 +14,16 @@
                         <a class="nav-link" href="#">店家資訊</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/35/products.php">商品</a>
+                        <a class="nav-link" href="">商品</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">訂位點餐</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/29/class-index.html">課程資訊</a>
+                        <a class="nav-link" href="/coffee_project/php/29/class-index.html">課程資訊</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/29/delete-data.html">課程後台</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="php/44/post-list.php">分享牆</a>
+                        <a class="nav-link" href="">分享牆</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">客服</a>
@@ -35,10 +32,13 @@
                         <a class="nav-link" href="#">遊戲</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="php/40/40.html">購物車</a>
+                        <a class="nav-link" href="/coffee_project/php/40/40.html">購物車</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">會員中心</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/coffee_project/php/41/points_foruser.php">優惠券</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -50,7 +50,7 @@
                             <h5>登出</h5>
                         </a>
                     <?php else : ?>
-                        <a href="php/09/login.html">
+                        <a href="/coffee_project/php/09/login.html">
                             <h5 class="mr-3">會員登入</h5>
                         </a>
                     <?php endif ?>

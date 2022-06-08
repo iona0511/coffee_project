@@ -1,6 +1,6 @@
 <?php
     require dirname(__DIR__,2) . '/parts/connect_db.php';
-    session_start();
+    // session_start();
 
     if (!isset($_SESSION['user']['member_account'])){
         echo json_encode("login", JSON_UNESCAPED_UNICODE);

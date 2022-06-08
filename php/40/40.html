@@ -487,11 +487,14 @@
                 }
             },
             async beforeMount() {
+                console.log("vue");
                 await fetch("./cart_read_coupon_api.php")
                     .then(data => data.json())
                     .then(data => {
+                        console.log(0);
                         if (data === "login") {
-                            alert("結帳請先登入會員");
+                            console.log(1);
+                            // alert("結帳請先登入會員");
                             setTimeout(() => {
                                 window.location = "../09/login.html";
                             },100);
