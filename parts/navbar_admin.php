@@ -51,6 +51,9 @@
                         <a class="nav-link" href="#">店家資訊</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/coffee_project/php/18/lastest-news.php">活動消息</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/coffee_project/php/35/products.php">商品</a>
                     </li>
                     <li class="nav-item">
