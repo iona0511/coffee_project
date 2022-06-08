@@ -33,6 +33,10 @@
         appearance: none;
         outline: none;
     }
+
+    .bac-img{
+        background: url(./images/18/coffee_img1.jpg);
+    }
 </style>
 
 <div style="width: 100%;">
@@ -45,10 +49,13 @@
             <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
                 <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0" style="height: 45px;">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">首頁</a>
+                        <a class="nav-link bac-img" aria-current="page" href="#">首頁</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">店家資訊</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/coffee_project/php/18/lastest-news.php">活動消息</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/coffee_project/php/35/products.php">商品</a>
