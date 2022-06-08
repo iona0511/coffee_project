@@ -42,7 +42,7 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                        <a href="/coffee_project/index_.php">
+                        <a href="/coffee_project/php/09/logout.php">
                             <h5>登出</h5>
                         </a>
                 </form>
