@@ -36,6 +36,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">會員中心</a>
+                    </li>                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="php/41/points_formanager.php">優惠券</a>
                     </li>
                 </ul>
                 <form class="d-flex">
