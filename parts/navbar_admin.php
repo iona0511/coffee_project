@@ -8,7 +8,7 @@
             <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
                 <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/coffee_project/index_.php">首頁</a>
+                        <a class="nav-link" aria-current="page" href="#">首頁</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">店家資訊</a>
@@ -18,9 +18,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">訂位點餐</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="php/29/class-index.html">課程資訊</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="php/29/delete-data.html">課程後台</a>
@@ -42,18 +39,9 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <?php if (!empty($_SESSION['user'])) : ?>
-                        <h5 class="mr-3">會員:<?= $_SESSION['user']['member_name'] ?></h5>
-                        <h5 class="mr-3">暱稱:<?= $_SESSION['user']['member_nickname'] ?></h5>
-                        <h5 class="mr-3">ID:<?= $_SESSION['user']['member_sid'] ?></h5>
-                        <a href="php/09/logout.php">
+                        <a href="/coffee_project/index_.php">
                             <h5>登出</h5>
                         </a>
-                    <?php else : ?>
-                        <a href="php/09/login.html">
-                            <h5 class="mr-3">會員登入</h5>
-                        </a>
-                    <?php endif ?>
                 </form>
             </div>
         </div>
