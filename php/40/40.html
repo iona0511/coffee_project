@@ -6,18 +6,97 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/reset.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css''/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
     <title>Document</title>
     <style>
+        [coffee-op0] {
+            opacity: 0;
+        }
         [v-cloak] {
             display: none !important;
         }
 
         #app {
-            display: flex;
-            padding: 0px 20px;
             user-select: none;
             font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .rect {
+            width: 70%;
+            height: 6px;
+            background-color: #ddd;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .ball {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ddd;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ball:first-child {
+            left: -12px;
+            background-color: rgb(255, 177, 68);
+        }
+
+        .ball:nth-child(2) {
+            left: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ball:nth-child(3) {
+            right: -12px;
+        }
+
+        .tri {
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 9px 0 9px 24px;
+            border-color: transparent transparent transparent rgb(255, 177, 68);
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            /* left: calc(50% - 12px); */
+            transform: translateY(-50%);
+            animation: arrow 1.5s ease infinite;
+        }
+        @keyframes arrow {
+            0% {
+                left: 12px;
+            }
+            100% {
+                left: calc(50% - 12px);
+            }
+        }
+        .orange_bar {
+            display: block;
+            width: 0px;
+            height: 6px;
+            background-color: rgb(255, 177, 68);
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            animation: bar 1.5s ease infinite;
+        }
+        @keyframes bar {
+            0% {
+                width: 0px;
+            }
+            100% {
+                width: calc(50% - 12px);
+            }
+        }
+        .cart_wrap {
+            display: flex;
+            padding: 0px 20px;
         }
 
         .cart_list_left {
@@ -131,9 +210,11 @@
             cursor: pointer;
             border: 1px solid transparent;
         }
+
         .coupon_bord_label:hover {
             border: 1px solid rgb(140, 203, 255);
         }
+
         .coupon_bord input {
             display: none;
         }
@@ -155,6 +236,7 @@
             transform: translateX(30px);
             opacity: 0;
         }
+
         .coupon_select_btn {
             background-color: rgb(123, 82, 31);
             border-radius: 5px;
@@ -164,6 +246,7 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+
         .coupon_bg {
             position: fixed;
             top: 0px;
@@ -175,15 +258,18 @@
             justify-content: center;
             align-items: center;
         }
+
         .coupon_bord {
             background-color: #fff;
             padding: 20px 20px;
             border-radius: 10px;
         }
+
         .coupon_button_group {
             margin-left: auto;
             margin-top: 16px;
         }
+
         .coupon_button_group button {
             margin: 0px 5px;
             padding: 5px 10px;
@@ -194,60 +280,73 @@
             color: #fff;
             cursor: pointer;
         }
+
         .cart_price {
             position: fixed;
             top: 20px;
             right: 0px;
         }
+
         .cart_price_paddging h1 {
             margin: 24px;
         }
     </style>
 </head>
 
-<body>
+<body coffee-op0>
     <div id="app" v-cloak>
-        <div class="cart_list_left">
-            <ul class="cart_list">
-                <transition-group name="list" mode="out-in">
-                    <li class="cart_list_li" v-for="item of fakeData" v-show="item.display === 1" key="item">
-                        <div class="cart_card">
-                            <div class="cart_list_img_wrap">
-                                <img :src="item.src" :alt="item.productName">
-                            </div>
-                            <p>{{item.productName}}</p>
-                            <p>單價 {{item.productPrice}}</p>
-                            <div class="cart_list_button_group">
-                                <button @click="change(item,-1)">-</button>
-                                <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
-                                <button @click="change(item,1)">+</button>
-                            </div>
-                            <p id="subtotal">小記 {{item.productPrice * item.quantity}}</p>
-                            <button @click="deleteHandler(item)"><i class="fa-solid fa-trash-can"></i></button>
-                        </div>
-                    </li>
-                </transition-group>
-            </ul>
+        <div class="progress_bar_wrap">
+            <div class="rect">
+                <div class="ball"></div>
+                <div class="ball"></div>
+                <div class="ball"></div>
+                <span class="tri"></span>
+                <span class="orange_bar"></span>
+            </div>
         </div>
-        <div class="cart_price">
-            <div class="cart_price_paddging">
-                <button @click="couponShowHandler" class="coupon_select_btn">選擇優惠卷</button>
-                <p>優惠卷: {{couponName}}</p>
-                <div class="coupon_bg" v-show="couponShow === true" @click="couponConfirm">
-                    <div class="coupon_bord" @click.stop>
-                        <label :for="'id' + coupon.id" v-for="coupon of couponArray"
-                            :class="{coupon_checked: coupon.id == radio}" class="coupon_bord_label">
-                            <input type="radio" :id="'id' + coupon.id" :value="coupon.id"
-                                v-model="radio">{{coupon.name}}
-                        </label>
-                        <div class="coupon_button_group">
-                            <button @click="couponDeny">不使用優惠卷</button>
-                            <button @click="couponConfirm">確定</button>
+        <div class="cart_wrap">
+            <div class="cart_list_left">
+                <ul class="cart_list">
+                    <transition-group name="list" mode="out-in">
+                        <li class="cart_list_li" v-for="item of fakeData" v-show="item.display === 1" key="item">
+                            <div class="cart_card">
+                                <div class="cart_list_img_wrap">
+                                    <img :src="item.src" :alt="item.productName">
+                                </div>
+                                <p>{{item.productName}}</p>
+                                <p>單價 {{item.productPrice}}</p>
+                                <div class="cart_list_button_group">
+                                    <button @click="change(item,-1)">-</button>
+                                    <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
+                                    <button @click="change(item,1)">+</button>
+                                </div>
+                                <p id="subtotal">小記 {{item.productPrice * item.quantity}}</p>
+                                <button @click="deleteHandler(item)"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </li>
+                    </transition-group>
+                </ul>
+            </div>
+            <div class="cart_price">
+                <div class="cart_price_paddging">
+                    <button @click="couponShowHandler" class="coupon_select_btn">選擇優惠卷</button>
+                    <p>優惠卷: {{couponName}}</p>
+                    <div class="coupon_bg" v-show="couponShow === true" @click="couponConfirm">
+                        <div class="coupon_bord" @click.stop>
+                            <label :for="'id' + coupon.id" v-for="coupon of couponArray"
+                                :class="{coupon_checked: coupon.id == radio}" class="coupon_bord_label">
+                                <input type="radio" :id="'id' + coupon.id" :value="coupon.id"
+                                    v-model="radio">{{coupon.name}}
+                            </label>
+                            <div class="coupon_button_group">
+                                <button @click="couponConfirm">確定</button>
+                                <button @click="couponDeny">不使用優惠卷</button>
+                            </div>
                         </div>
                     </div>
+                    <h1>總計 NT$ {{displayTotal}}</h1>
+                    <button @click="sendDataHandler">前往結帳頁</button>
                 </div>
-                <h1>總計 NT$ {{displayTotal}}</h1>
-                <button @click="sendDataHandler">前往結帳頁</button>
             </div>
         </div>
     </div>
@@ -288,13 +387,20 @@
                 displayTotal() {
                     return parseInt(this.tweened);
                 },
-                couponName() {
-                    if(this.radio === undefined) {
-                        return "無";
+                selectedCoupon() {
+                    if (this.radio === undefined) {
+                        return undefined;
                     }
                     return this.couponArray.filter((data) => {
                         return data.id === this.radio;
-                    })[0].name;
+                    })[0];
+                },
+                couponName() {
+                    if (this.selectedCoupon === undefined) {
+                        return "無";
+                    } else {
+                        return this.selectedCoupon.name;
+                    }
                 }
             },
             methods: {
@@ -333,7 +439,7 @@
                     this.couponShow = !this.couponShow
                 },
                 couponConfirm() {
-                    if(this.radio === undefined) {
+                    if (this.radio === undefined) {
                         this.couponShowHandler();
                         return false;
                     }
@@ -349,8 +455,8 @@
                 sendDataHandler() {
                     const fd = new FormData();
                     const myJSON = JSON.stringify(this.fakeData);
-                    fd.append("fakeData",myJSON);
-                    if(this.radio === undefined) {
+                    fd.append("fakeData", myJSON);
+                    if (this.radio === undefined) {
                         const myCoupon = JSON.stringify("-1");
                         fd.append("couponSelect", myCoupon);
                     } else {
@@ -382,30 +488,38 @@
             },
             async beforeMount() {
                 await fetch("./cart_read_coupon_api.php")
-                .then(data => data.json())
-                .then(data => {
-                    console.log(data);
-                    this.couponArray = data;
-                });
-                fetch("./check_product_session_api.php")
-                .then(data => data.json())
-                .then(data => {
-                    if(data) {
-                        this.fakeData = data;
-                    }
-                });
-                await fetch("./check_coupon_session_api.php")
-                .then(data => data.json())
-                .then(data => {
-                    if(data) {
-                        if(data === "-1") {
-                            this.radio = undefined
+                    .then(data => data.json())
+                    .then(data => {
+                        if (data === "login") {
+                            alert("結帳請先登入會員");
+                            setTimeout(() => {
+                                window.location = "../09/login.html";
+                            },100);
                         } else {
-                            this.radio = parseInt(data);
+                            document.querySelector("body").removeAttribute("coffee-op0");
                         }
-                    }
-                });
-                
+                        console.log(data);
+                        this.couponArray = data;
+                    });
+                fetch("./check_product_session_api.php")
+                    .then(data => data.json())
+                    .then(data => {
+                        if (data) {
+                            this.fakeData = data;
+                        }
+                    });
+                await fetch("./check_coupon_session_api.php")
+                    .then(data => data.json())
+                    .then(data => {
+                        if (data) {
+                            if (data === "-1") {
+                                this.radio = undefined
+                            } else {
+                                this.radio = parseInt(data);
+                            }
+                        }
+                    });
+
                 this.fakeData.forEach((item) => {
                     this.tweened += item.productPrice * item.quantity;
                 });

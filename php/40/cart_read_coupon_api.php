@@ -3,7 +3,7 @@
     session_start();
 
     if (!isset($_SESSION['user']['member_account'])){
-        header('Location:/coffee_project/php/09/login.html');
+        echo json_encode("login", JSON_UNESCAPED_UNICODE);
         exit;
     }
 

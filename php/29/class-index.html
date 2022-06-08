@@ -4,6 +4,12 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+        />
         <title>Document</title>
         <style class="style">
             * {
@@ -49,6 +55,22 @@
         </style>
     </head>
     <body>
+        <script>
+            function getNav() {
+                fetch("../../parts/navbar.php")
+                    .then(function (response) {
+                        // console.log(response);
+                        return response.text();
+                    })
+                    .then(function (navData) {
+                        console.log(navData);
+                        navBar = document.querySelector(".navBar");
+                        navBar.innerHTML = navData;
+                    });
+            }
+            getNav();
+        </script>
+        <div class="navBar"></div>
         <button><a href="delete-data.html">登入</a></button>
         <input type="text" placeholder="搜尋" class="search" />
         <select name="" id="sort">
@@ -118,12 +140,12 @@
                                 cards.dataset.index = data[i].course_name;
                                 wrap.appendChild(cards);
                                 cards.innerHTML = ` <div class="pic">
-                    <div class="level">${data[i].course_level}</div>
-                    <img src="../../images/29/${data[i].course_img_s}" alt="" />
-                </div>
-                <h3>${data[i].course_name}</h3>
-                <p class="card-txt">${data[i].course_content}</p>
-                <p class="card-txt">NT$${data[i].course_price}</p>`;
+                            <div class="level">${data[i].course_level}</div>
+                            <img src="../../images/29/${data[i].course_img_s}" alt="" />
+                        </div>
+                        <h3>${data[i].course_name}</h3>
+                        <p class="card-txt">${data[i].course_content}</p>
+                        <p class="card-txt">NT$${data[i].course_price}</p>`;
 
                                 level = document.querySelectorAll(".level");
 

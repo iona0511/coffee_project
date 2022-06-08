@@ -1,8 +1,8 @@
 
 post-add多筆標籤
-
 post-edit
-post-likes
+
+post-list前台
 
 -----------------------------------------------
 商品評論 
@@ -35,3 +35,5 @@ detail 多筆圖片顯示
 
 6/7
 圖片slider
+post-likes
+post-add tag搜尋動態預覽

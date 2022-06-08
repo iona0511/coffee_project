@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-06 10:53:08
+-- 產生時間： 2022-06-07 10:39:28
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.5
 
@@ -212,8 +212,97 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`course_sid`, `course_name`, `course_price`, `course_level`, `course_img_s`, `course_content`, `course_people`, `course_material`) VALUES
-(1, '25', 525, 3, 'bbef68b71607a389c94b837201bdd66b.png', '52', '252', '52525'),
-(2, '25', 25, 0, '286e7e4adedb9326d35feba14f79a9d1.png', '255', '121', '252'),
+(2, '花型拉花', 1000, 1, 'ec3b2315e87074b1a4960ce54752dd9f.jpg', '拉花基礎課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
+(3, '咖啡烘焙', 2000, 2, '61651b51c6597c04d04dd42225a90db7.png', '體驗自己親手烘焙咖啡豆的樂趣', '想體驗自己烘咖啡豆的人', '咖啡豆.相關沖煮器材設備(課程提供)'),
+(4, '咖啡生豆認識及風味鑑嘗學', 3000, 3, '3260a68f2561fadba070c5d2917951e0.jpg', '認識不同咖啡產地及品種，加強自己品嚐咖啡思維', '對咖啡豆有濃厚興趣及對咖啡烘焙有興趣朋友參加', '咖啡豆.相關沖煮器材設備(課程提供)'),
+(6, '聖誕樹拉花', 1500, 2, 'e571a854c4e0b747648c324c83bf4bec.jpg', '拉花中級課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
+(26, '測試', 100, 1, 'd1952dc3601c54b3ae87297187002ba6.jpg', '424', '12', '242'),
+(27, '測試', 100, 2, '491e7312d307eda9bcfabc1d05e4cf4e.jpg', '121', '1212', '211'),
+(28, '測試', 100, 2, '9719fa4c06f23c29c66080187811bcab.jpg', '212', '1', '2121'),
+(29, '測試', 100, 2, '', '', '', ''),
+(30, '測試', 100, 2, '', '', '', ''),
+(31, '測試', 100, 2, '', '', '', ''),
+(32, '測試', 100, 2, '', '', '', ''),
+(34, '測試', 100, 2, '', '', '', ''),
+(35, '測試', 100, 2, '', '', '', ''),
+(40, '測試ccccc', 2, 3, '4', '', '', ''),
+(41, '測試', 100, 1, '', '', '', ''),
+(42, '測試', 100, 1, '123', '', '', ''),
+(43, '測試', 100, 1, '', '', '', ''),
+(49, '測試', 100, 1, '', '', '', ''),
+(50, '測試', 200, 2, '', '', '', ''),
+(51, '測試', 200, 2, '', '', '', ''),
+(52, '測試', 100, 1, '', '', '', ''),
+(53, '測試', 200, 1, '', '', '', ''),
+(54, '測試', 100, 2, '', '', '', ''),
+(55, '測試', 100, 2, '', '', '', ''),
+(56, '測試', 100, 2, '', '', '', ''),
+(57, '測試', 100, 2, '', '', '', ''),
+(58, '測試', 100, 2, '', '', '', ''),
+(59, '測試', 100, 2, '', '', '', ''),
+(60, '測試', 100, 2, '', '', '', ''),
+(61, '測試', 100, 2, '', '', '', ''),
+(62, '測試', 100, 2, '', '', '', ''),
+(63, '測試', 100, 2, '', '', '', ''),
+(64, '測試', 100, 2, '', '', '', ''),
+(65, '測試', 100, 2, '', '', '', ''),
+(66, '測試', 100, 2, '', '', '', ''),
+(68, '測試', 100, 1, '', '', '', ''),
+(69, '測試', 100, 1, '', '', '', ''),
+(70, '測試', 100, 1, '', '', '', ''),
+(71, '測試', 100, 1, '', '', '', ''),
+(72, '測試', 100, 1, '', '', '', ''),
+(73, '測試', 100, 1, '', '', '', ''),
+(74, '測試', 100, 1, '', '', '', ''),
+(75, '測試', 100, 1, '', '', '', ''),
+(76, '測試', 100, 1, '', '', '', ''),
+(77, '測試', 100, 1, '', '', '', ''),
+(78, '測試', 100, 2, '', '', '', ''),
+(79, '測試', 100, 1, '', '', '', ''),
+(80, '測試', 100, 1, '', '', '', ''),
+(81, '測試', 100, 1, '', '', '', ''),
+(82, '測試', 100, 1, '', '', '', ''),
+(83, '測試', 100, 1, '', '', '', ''),
+(84, '測試', 100, 1, '', '', '', ''),
+(85, '測試', 100, 1, '', '', '', ''),
+(86, '測試', 100, 1, '', '', '', ''),
+(87, '測試', 100, 1, '', '', '', ''),
+(88, '測試', 100, 1, '', '', '', ''),
+(89, '測試', 100, 1, '', '', '', ''),
+(90, '測試', 100, 1, '', '', '', ''),
+(91, '測試', 100, 1, '', '', '', ''),
+(92, '測試', 100, 1, '', '', '', ''),
+(93, '測試', 100, 1, '', '', '', ''),
+(94, '測試', 200, 1, '', '', '', ''),
+(95, '測試', 100, 1, '', '', '', ''),
+(96, '測試', 100, 1, '', '', '', ''),
+(97, '測試', 100, 2, '', '', '', ''),
+(98, '測試', 100, 1, '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `course_backup`
+--
+
+CREATE TABLE `course_backup` (
+  `course_sid` int(11) NOT NULL,
+  `course_name` varchar(255) NOT NULL,
+  `course_price` int(11) NOT NULL,
+  `course_level` int(11) NOT NULL,
+  `course_img_s` varchar(255) NOT NULL,
+  `course_content` varchar(255) NOT NULL,
+  `course_people` varchar(255) NOT NULL,
+  `course_material` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- 傾印資料表的資料 `course_backup`
+--
+
+INSERT INTO `course_backup` (`course_sid`, `course_name`, `course_price`, `course_level`, `course_img_s`, `course_content`, `course_people`, `course_material`) VALUES
+(1, '測試', 123, 1, '93583e83c60b1594e60f6d4728187c60.jpg', '221', '212', '11'),
+(2, '12', 121, 1, 'd89814e1706d044b7e474815c54909c2.jpg', '21', '21', '12'),
 (3, '咖啡烘焙', 2000, 2, 'img', '體驗自己親手烘焙咖啡豆的樂趣', '想體驗自己烘咖啡豆的人', '咖啡豆.相關沖煮器材設備(課程提供)'),
 (4, '咖啡生豆認識及風味鑑嘗學', 3000, 3, 'img', '認識不同咖啡產地及品種，加強自己品嚐咖啡思維', '對咖啡豆有濃厚興趣及對咖啡烘焙有興趣朋友參加', '咖啡豆.相關沖煮器材設備(課程提供)'),
 (5, '手沖咖啡基礎訓練班', 1500, 1, 'img', '學會從風味中了解自己沖煮手法', '適合初學者或希望了解自己沖煮技巧缺點人士', '咖啡豆.相關沖煮器材設備(課程提供)');
@@ -688,7 +777,6 @@ CREATE TABLE `products` (
   `products_onsale` int(11) DEFAULT NULL,
   `products_stocks` int(11) DEFAULT NULL,
   `products_with_products_categroies_sid` int(11) DEFAULT NULL,
-  `products_with_products_pic` int(11) DEFAULT NULL,
   `products_with_products_style_filter_sid` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -696,15 +784,17 @@ CREATE TABLE `products` (
 -- 傾印資料表的資料 `products`
 --
 
-INSERT INTO `products` (`products_sid`, `products_number`, `products_name`, `products_introduction`, `products_detail_introduction`, `products_price`, `products_forsale`, `products_onsale`, `products_stocks`, `products_with_products_categroies_sid`, `products_with_products_pic`, `products_with_products_style_filter_sid`) VALUES
-(1, '1653962198', '曼巴咖啡(一包十入)', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 310, 1, 0, 2800, 0, 1, 0),
-(2, '1653962417', '曼特寧咖啡(一包十入)', '精選曼特寧咖啡, 一包十入', '香濃甘苦的滋味，不帶酸味順口香醇。', 320, 0, 1, 3200, 1, 2, 2),
-(3, '1653969575', '黃金曼特寧(半磅)', '曼特寧咖啡豆, 半磅包裝', '曼特寧咖啡豆', 470, 1, 0, 4000, 2, 3, 2),
-(4, '1653972891', '濾紙(大)', '大片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 1, 0, 5000, 3, 4, 4),
-(5, '1653972907', '濾紙(小)', '小片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 1, 0, 5000, 3, 4, 4),
-(6, '1654050346', '巴西咖啡', '巴西咖啡', '巴西咖啡', 320, 1, 0, 3200, 1, NULL, 1),
-(7, '1654050441', '巴西咖啡2', '巴西咖啡2', '巴西咖啡2', 320, 1, 0, 3200, 1, NULL, 1),
-(8, '1654050701', '巴西咖啡(一包十入)5', '精選巴西咖啡5', '11', 320, 1, 0, 2500, 1, NULL, 1);
+INSERT INTO `products` (`products_sid`, `products_number`, `products_name`, `products_introduction`, `products_detail_introduction`, `products_price`, `products_forsale`, `products_onsale`, `products_stocks`, `products_with_products_categroies_sid`, `products_with_products_style_filter_sid`) VALUES
+(1, '1653962198', '曼巴咖啡(一包十入)', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 310, 1, 0, 3100, 2, 2),
+(2, '1653962417', '曼特寧咖啡(一包十入)', '精選曼特寧咖啡, 一包十入', '香濃甘苦的滋味，不帶酸味順口香醇。', 320, 0, 1, 3200, 1, 2),
+(3, '1653969575', '黃金曼特寧(半磅)', '曼特寧咖啡豆, 半磅包裝', '曼特寧咖啡豆', 470, 1, 0, 4000, 1, 2),
+(4, '1653972891', '濾紙(大)', '大片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 0, 0, 4500, 4, 4),
+(5, '1653972907', '濾紙(小)', '小片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 1, 0, 5000, 3, 4),
+(6, '1654050346', '巴西咖啡', '巴西咖啡', '巴西咖啡', 320, 1, 0, 3200, 1, 1),
+(7, '1654050441', '巴西咖啡2', '巴西咖啡2', '巴西咖啡2', 320, 1, 0, 3200, 1, 1),
+(8, '1654050701', '巴西咖啡(一包十入)5', '精選巴西咖啡5', '11', 320, 1, 0, 2500, 1, 1),
+(9, '1654589950', 'AA咖啡(一包十入)', '精緻AA咖啡', '精緻AA咖啡', 320, 1, 0, 5000, 1, 2),
+(10, '1654590367', 'BB咖啡(一包十入)', '精緻BB咖啡', '精緻BB咖啡', 0, 1, 0, 20, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -722,11 +812,12 @@ CREATE TABLE `products_categroies` (
 --
 
 INSERT INTO `products_categroies` (`products_categroies_sid`, `products_categroies_name`) VALUES
-(1, '濾掛式咖啡'),
-(2, '咖啡豆'),
-(3, '咖啡周邊器具'),
-(4, '禮盒'),
-(5, '電子禮物卡');
+(1, '未確定分類'),
+(2, '濾掛式咖啡'),
+(3, '咖啡豆'),
+(4, '咖啡周邊器具'),
+(5, '禮盒'),
+(6, '電子禮物卡');
 
 -- --------------------------------------------------------
 
@@ -736,8 +827,8 @@ INSERT INTO `products_categroies` (`products_categroies_sid`, `products_categroi
 
 CREATE TABLE `products_pic` (
   `products_pic_sid` int(11) NOT NULL,
-  `products_pic_one` varchar(255) NOT NULL,
-  `products_pic_multi` varchar(255) NOT NULL
+  `products_pic_one` varchar(255) DEFAULT NULL,
+  `products_pic_multi` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -745,10 +836,16 @@ CREATE TABLE `products_pic` (
 --
 
 INSERT INTO `products_pic` (`products_pic_sid`, `products_pic_one`, `products_pic_multi`) VALUES
-(1, 'slide3.jpg', 'puckered.png,slide2.jpg,slide3.jpg'),
+(1, 'ATT00012.gif', 'ATT00012.gif,ATT00015.gif,ATT00018.gif'),
 (2, 'slide4.jpg', 'puckered.png,slide2.jpg,slide3.jpg'),
-(3, 'products_mandheling_bean_01.png', 'details_mandheling_bean_01.png, details_mandheling_bean_02.png, details_mandheling_bean_03.png, details_mandheling_bean_04.png'),
-(4, 'products_filter_01.png', 'details_filter_01.png, details_filter_02.png, details_filter_03.png, details_filter_04.png');
+(3, 'atlanta-4829076.jpg', 'shutterstock_516937234.jpg,shutterstock_756931720.jpg,shutterstock_766093174.jpg'),
+(4, 'composing-2391033__340.jpg', 'composing-2391033__340.jpg,eyes-5248678__340.webp,fantasy-2506830__340.jpg'),
+(5, NULL, NULL),
+(6, NULL, NULL),
+(7, NULL, NULL),
+(8, NULL, NULL),
+(9, 'ATT00012.gif', 'ATT00012.gif,ATT00015.gif,ATT00018.gif'),
+(10, 'ATT00039.gif', 'ATT00033.gif,ATT00036.gif,ATT00039.gif');
 
 -- --------------------------------------------------------
 
@@ -920,6 +1017,12 @@ ALTER TABLE `course`
   ADD PRIMARY KEY (`course_sid`);
 
 --
+-- 資料表索引 `course_backup`
+--
+ALTER TABLE `course_backup`
+  ADD PRIMARY KEY (`course_sid`);
+
+--
 -- 資料表索引 `course_related`
 --
 ALTER TABLE `course_related`
@@ -1083,6 +1186,12 @@ ALTER TABLE `coupon_receive`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `course`
 --
 ALTER TABLE `course`
+  MODIFY `course_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `course_backup`
+--
+ALTER TABLE `course_backup`
   MODIFY `course_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
@@ -1155,19 +1264,19 @@ ALTER TABLE `post_tag`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products`
 --
 ALTER TABLE `products`
-  MODIFY `products_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `products_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products_categroies`
 --
 ALTER TABLE `products_categroies`
-  MODIFY `products_categroies_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `products_categroies_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products_pic`
 --
 ALTER TABLE `products_pic`
-  MODIFY `products_pic_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `products_pic_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products_style_filter`

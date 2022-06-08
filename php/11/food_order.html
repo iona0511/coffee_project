@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./fontawesome/css/all.css" />
+    <link rel="stylesheet" href="../fontawesome/css/all.css" />
 
     <title>Document</title>
     <style>
@@ -94,8 +94,7 @@
         border-radius: 5px;
       }
       .select {
-        margin-top: 20px;
-        margin-bottom: 20px;
+        padding-bottom: 20px;
         text-align: center;
       }
       .nav {
@@ -103,6 +102,7 @@
         font-size: 1rem;
         margin-left: 35px;
         padding: 5px;
+        line-height: 2.5rem;
       }
       a:hover {
         color: rgb(205, 111, 3);
@@ -121,12 +121,12 @@
 
       .menu_food {
         display: flex;
-        width: 35vw;
+        width: 30vw;
         border: 1px solid #ccc;
         border-radius: 10px;
         box-shadow: 1px 1px 5px rgb(109, 108, 108);
         margin: 10px auto;
-        padding: 5px;
+        padding: 15px;
       }
       .menu_food_text {
         width: 80%;
@@ -146,9 +146,9 @@
         height: 100%;
         border-radius: 10px;
       }
-      .menu_name {
+      /* .menu_name {
         line-height: 3rem;
-      }
+      } */
       .menu_nutrition {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -172,7 +172,7 @@
         width: 100vw;
         height: auto;
         background-color: rgba(52, 49, 49, 0.529);
-        transform: translateY(-480px);
+        transform: translateY(-100px);
       }
 
       .afterclick.hide {
@@ -192,30 +192,32 @@
       }
       .all_choice_photo_img {
         width: 100%;
+        object-fit: contain;
       }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <div class="select">
-        <img src="../coffee/coffeelogo.jpeg" style="width: 60px" />
+      <div class="select" style="background-color:rgba(222, 193, 148, 0.462);">
+        <img src="./menu_images/picwish.png" style="width: 60px;transform: translateY(25%);margin-right: 80px;" />
         <a href="#nav" class="nav">首頁</a>
         <a href="" class="nav">店家資訊</a>
         <a href="" class="nav">商品</a>
-        <a href="" class="nav">訂位點餐</a>
+        <a href="" class="nav">點餐</a>
         <a href="" class="nav">課程資訊</a>
         <a href="" class="nav">分享牆</a>
-        <a href="" class="nav">客服</a>
         <a href="" class="nav">遊戲</a>
+        <a href="" class="nav">客服</a>
+        <a href="" class="nav">優惠券</a>
         <a href="" class="nav">購物車</a>
         <a href="" class="nav">會員中心</a>
+        
+
       </div>
       <section>
-        <figure>
-          <img src="" alt="" width="" height="250px" />
-        </figure>
 
-        <div class="menu">
+
+        <div class="menu" >
           <!-- <form class="forhere" id="forhere">
                     <div class="btn">
 
@@ -255,7 +257,10 @@
                     </fieldset>           
                 </form> -->
         </div>
-        <div class="menu_area">
+        <div>
+        <img src="./menu_images/bg.jpeg" style="width:80vw;height: 400px;">
+        </div>
+        <div class="menu_area" >
           <!-- 這裡放訂餐 -->
         </div>
 
@@ -272,8 +277,8 @@
             <h4>飲料名稱</h4> -->
         </div>
       </section>
-      <aside>
-        <div class="aside">
+      <aside style="margin:0 auto;">
+        <div class="aside" >
           <!-- <div style="display:flex;margin: 6px;">
                   <div style="flex-grow:1;">卡布奇諾 (熱)
                   </div>
@@ -306,12 +311,16 @@
         <div
           style="
             width: 280px;
-            height: 50;
+            height: 30px;
             background-color: #ccc;
             position: fixed;
             bottom: 0;
+            transform: translateX(18%);
             text-align: center;
-            margin-bottom: 10px;
+            padding-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 1px 1px #000;
           "
           onclick="sendData()"
         >
@@ -351,7 +360,7 @@
       // takeout.addEventListener("click", turnToTakeout);
       // delivery.addEventListener("click",turnTodelivery);
 
-      // 訂餐 
+      // 訂餐
       const menu_area = document.querySelector(".menu_area");
       const menu_food = document.querySelector(".menu_food");
       const detail = document.querySelector("#detail");
@@ -359,7 +368,7 @@
 
       fetch("menu_api.php")
         .then((response) => {
-          return response.json();  
+          return response.json();
         })
         .then((result) => {
           this.data = result;
@@ -375,23 +384,25 @@
       //   element.innerHTML = content;
       //   return element;
       // };
+      // http://localhost/IOIOIOIONA_php/menu/menu_images/2f54f07fd23d864d8a299ed04a09fea5.jpg
 
       const menulist = () => {
         const { data } = this;
         if (!data || !data.length) return false;
 
         menu_area.innerHTML = "";
-        for (let i = 35; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           menu_area.innerHTML += `<div class="menu_food">
-                <div class="menu_food_text" >
+                <div class="menu_food_text">
                     <h4 class="menu_sid" style="display:none;">${data[i].menu_sid}</h4>
-                    <h4 class="menu_name">${data[i].menu_name}</h4>
+                    <h4 class="menu_name" style="line-height:3rem">${data[i].menu_name}</h4>
                     <p class="menu_nutrition">${data[i].menu_nutrition}</p>
-                    <p class="menu_kcal">${data[i].menu_kcal} 大卡</p>
-                    <p class="menu_price_m">${data[i].menu_price_m} 元 起</p>
+                    <p class="menu_kcal">總熱量 ${data[i].menu_kcal} 大卡</p>
+                    <p class="menu_price_m">${data[i].menu_price_m} 元</p>
                 </div>
                 <figure class="photo">
-                    <img class="menu_photo" src="http://localhost/IOIOIOIONA_php//20220526_project_server/menu_images/${data[i].menu_photo}" />
+                  
+                    <img class="menu_photo" src="http://localhost/IOIOIOIONA_php/menu/menu_images/${data[i].menu_photo}" />
                 </figure>
              
                 <i class="fa-solid fa-circle-plus add-cart" data-sid="${data[i].menu_sid}"></i>
@@ -414,27 +425,26 @@
         if (!item) return false;
         console.log(item);
 
+
+
+
+        //    暫時不賣大杯  <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_size" value="2"><label for="">大杯(L)</label> <p class="menu_price_l">${item.menu_price_l} 元 </p></div><h3 style="border-top:1px solid #ccc;">尺寸選擇<h3><div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_size" value="1"><label for="">中杯(M)</label> <p class="menu_price_m">${item.menu_price_m} 元 </p></div>
+
         detail.innerHTML = `
          
          <div class="all_choice">
           <a href="#nav"> <i class="fa-solid fa-circle-xmark close" style="font-size: 35px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
 
-         <div class="all_choice_photo"">
-           <img src="http://localhost/IOIOIOIONA_php//20220526_project_server/menu_images/${item.menu_photo}"class="all_choice_photo_img" style="height:300px">
+          <div class="all_choice_photo"">
+           <img src="http://localhost/IOIOIOIONA_php/menu/menu_images/${item.menu_photo}"class="all_choice_photo_img" style="height:300px">
          </div>
 
          <div class ="choice_textarea" style="padding:30px">
-             <h2 class="menu_name">${item.menu_name}</h2>
-
+             <div style="display:flex;margin-bottom:20px;"><h2 class="menu_name" style="flex-grow:1;">${item.menu_name}</h2>   <h3 style="" class="onesize">$ ${item.menu_price_m}元<h3></div>
              <p class="menu_nutrition1" name="menu_nutrition">${item.menu_nutrition}</p>
-             <h3 style="border-top:1px solid #ccc;">尺寸選擇<h3>
-
-             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_size" value="1">
-             <label for="">中杯(M)</label> <p class="menu_price_m">${item.menu_price_m} 元 </p></div>
+          
+        
              
-             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_size" value="2">
-             <label for="">大杯(L)</label> <p class="menu_price_l">${item.menu_price_l} 元 </p></div>
-
 
 
              <h3 style="border-top:1px solid #ccc;">冰熱選擇<h3>
@@ -450,7 +460,6 @@
              <label for="">常溫</label>  </div>      
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="5">
              <label for="">熱</label> </div>
-
 
              <h3 style="border-top:1px solid #ccc;">甜度選擇<h3>
 
@@ -471,11 +480,7 @@
                <i class="fa-solid fa-plus" onclick="plus_number()"style="margin-left:20px;margin-right:20px"></i>
                
                <button class="addtocart_button" style="width:20vw;height:30px;background-color:rgb(248, 179, 5);text-align:center" id="add_to_cart" data-sid=${sid}>加入購物車</button>
-                <br><br>
-                
-
-                
-                
+                <br><br>                
                </div>
          </div>
          
@@ -503,7 +508,7 @@
         }
         detail.classList.add("hide");
         const size = document.querySelector(
-          'input[name="food_choice_size"]:checked'
+          'h3[class="onesize"]'
         ).value;
         const ice = document.querySelector(
           'input[name="food_choice_ice"]:checked'
@@ -528,7 +533,7 @@
                   <div class="subtotal">${subTotal}元</div>
               </div>
               <div style="display:flex;margin: 6px;">
-                  <div style="flex-grow:1;">${food_choice_size[size]}</div>
+                  <div style="flex-grow:1">數量</div>
 
                   <div style="display:flex;">
 
@@ -549,16 +554,11 @@
       }
 
       // 選餐
-
-      
-
       const setListener = () => {
         const addCarts = document.querySelectorAll(".add-cart");
         for (let i = 0; i < addCarts.length; i++) {
           addCarts[i].addEventListener("click", foodorder);
         }
-        // console.log(foodorder);
-        // addCart.addEventListener("click", foodorder);
       };
 
       //  新增刪減飲品數量
@@ -610,7 +610,7 @@
         }
       }
 
-      const sendData = () => {
+        const sendData = () => {
         const menu_name = document.querySelectorAll(".menu_name");
         const menu_price_m = document.querySelectorAll(".menu_price");
         const ice = document.querySelectorAll(".ice");
@@ -629,38 +629,44 @@
           });
         }
         console.log("result ", result);
+        console.log("result ", JSON.stringify(result));
 
 
-     const fd = new FormData()
+           // POST 資料到購物車
+
+        // 傳資料給後端的方法一
+        // let xhr = new XMLHttpRequest();
+        // xhr.open("post", "food_choice_api.php", true); //post 告知後端
+        // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
+        // let data = JSON.stringify(result); //將物件資料轉成字串
+        // xhr.send(data);
+
+        // 傳資料給後端的方法二
+
+    fetch("food_choice_api.php", {
+      method: "POST",
+      body: JSON.stringify(result),
+      headers: {'Content-Type':'application/json'},
+    })
+    .then(res => res.json())
+
+    .then(res => console.log(res));
+
+        // 傳資料給後端的方法三
+        // 
+        //         const r = await fetch("food_choice_api.php", {
+        //             method: "POST",
+        //             body: data,
+        //         });
+        //         const qq = await r.json();
+        //         console.log(qq);
 
 
-
-
-
-        // POST 資料到購物車
-ㄋ
-
-
-        fetch("food_choice_api.php", {
-    method: "POST",
-    body: result,
-    headers: {'Content-Type':'application/json'},
-
-})
-    .then(response => response)
-
-    .then(json => console.log(json));
-
-
-
-
-
-
-
-
+        sessionStorage.setItem('food_order',JSON.stringify(result));
+        //     
       };
 
-
+// sessionStorage.setItem('name','haha');
 
     </script>
   </body>

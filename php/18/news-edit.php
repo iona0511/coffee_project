@@ -21,6 +21,22 @@ if (empty($row)) {
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
 <style>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        }
+
+    body {
+    /* background-color: #CD853F; */
+    background-color:#CAAD87;
+    background-size: cover;
+    opacity: 0.9;
+    }
+
+    .color-y {
+        background-color:aliceblue;
+        opacity: 0.8;
+    }
     .form-control.red {
         border: 1px solid red;
     }
@@ -38,10 +54,10 @@ if (empty($row)) {
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card color-y">
                 <div class="card-body">
-                    <h5 class="card-title">消息編輯頁</h5>
-                    <form name="form1" onsubmit="sendData();return false;" novalidate>
+                    <h2 class="card-title mb-4">編輯消息</h2>
+                    <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <input type="hidden" name="sid" value="<?= $row['news_sid'] ?>">
                         <div class="mb-3">
                             <label for="news_title" class="form-label">活動標題</label>
@@ -64,7 +80,6 @@ if (empty($row)) {
                             <div class="form-text red"></div>
                         </div>
 
-                      
                         <label for="news_start_date" class="form-label">活動區間</label>
                         <div class="mb-3 act">                         
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date" value="<?= $row['news_start_date'] ?>">
