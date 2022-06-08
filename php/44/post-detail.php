@@ -70,7 +70,7 @@ if ($rows['topic_sid'] == 1) {
 </head>
 
 <body>
-    <?php include __DIR__ . "/part/nav.php" ?>
+    <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
     <div class="page">
 
         <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
