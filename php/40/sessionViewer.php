@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if(!session_id()) {
+        session_start();
+    }
     $output["rawJSON"] = json_decode($_SESSION["rawJSON"], true);
     $output["rawCoupon"] = json_decode($_SESSION["rawCoupon"], true);
     $output["user"] = $_SESSION["user"];
