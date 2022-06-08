@@ -40,7 +40,12 @@
                         <a class="nav-link" href="/coffee_project/php/40/40.html">購物車</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">會員中心</a>
+                        <a class="nav-link" href="<?php if (isset($_SESSION['user'])) : ?>
+                            <?= "/coffee_project/php/09/welcome.php" ?>
+                            <?php else : ?>
+                                <?= "/coffee_project/php/09/login.html" ?>
+                            <?php endif ?>">
+                                會員中心</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/coffee_project/php/41/points_foruser.php">優惠券</a>
