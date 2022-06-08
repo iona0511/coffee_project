@@ -9,6 +9,9 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
     <title>Document</title>
     <style>
+        [coffee-op0] {
+            opacity: 0;
+        }
         [v-cloak] {
             display: none !important;
         }
@@ -290,7 +293,7 @@
     </style>
 </head>
 
-<body style="opacity: 0;">
+<body coffee-op0>
     <div id="app" v-cloak>
         <div class="progress_bar_wrap">
             <div class="rect">
@@ -488,9 +491,13 @@
                     .then(data => data.json())
                     .then(data => {
                         if (data === "login") {
-                            window.location = "../09/login.html";
+                            alert("結帳請先登入會員");
+                            setTimeout(() => {
+                                window.location = "../09/login.html";
+                            },100);
+                        } else {
+                            document.querySelector("body").removeAttribute("coffee-op0");
                         }
-                        document.querySelector("body").removeAttribute("style");
                         console.log(data);
                         this.couponArray = data;
                     });
