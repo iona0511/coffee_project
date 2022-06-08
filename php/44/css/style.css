@@ -30,6 +30,10 @@ a {
     margin-right: 20px;
 }
 
+.mb-10{
+    margin-bottom: 4.5rem;
+}
+
 
 .mr-1 {
     margin-right: .5rem;
@@ -41,6 +45,10 @@ a {
 
 .mr-3 {
     margin-right: 1.5rem;
+}
+
+.pr-3{
+    padding-right: 1.5rem;
 }
 
 .mt-3 {

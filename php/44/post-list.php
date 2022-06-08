@@ -308,7 +308,7 @@ if ($totalRows > 0) {
                         <td>${v['likes']}</td>
                         <td>${v['comments']}</td>
                         <td>${v['topic_sid']}</td>
-                        <td>${v['created_at']}></td>
+                        <td>${v['created_at']}</td>
                         <td>${v['updated_at']}</td>
                         <td><i class="fa-solid fa-pen-to-square"></i></td>`;
 
