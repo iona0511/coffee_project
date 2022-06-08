@@ -68,7 +68,7 @@ if ($totalRows > 0) {
 </head>
 
 <body>
-    <?php include __DIR__ . "/part/nav.php"; ?>
+    <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
     <div class="container">
         <h2 class="text-primary mb-3" style="font-weight:bold;">文章列表</h2>
 
