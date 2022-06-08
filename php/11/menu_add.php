@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php';
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
 $pageName = 'menu_add';
 $title = '新增餐點資料';
 
@@ -14,8 +14,8 @@ $title = '新增餐點資料';
 
 
 ?>
-<?php include __DIR__ . '/parts/html_menu_head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php'  ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar.php'  ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -107,7 +107,7 @@ $title = '新增餐點資料';
     </div>
 
 </div>
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php' ?>
 
 
 
@@ -232,4 +232,4 @@ $title = '新增餐點資料';
     };
 </script>
 
-<?php include __DIR__ . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_foot.php' ?>

@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php'; 
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 // MVC是把資料處理 呈現 用戶的互動
 $perPage = 5; // 每一頁有幾筆
 $page = isset($_GET['page'])? intval($_GET['page']) : 1; // 用戶要看第幾頁
@@ -83,7 +83,7 @@ if($totalRows>0){
                     </td>
                     <td><?= $r['menu_sid'] ?></td>
                     <td><?= htmlentities($r['menu_categories'])?></td>
-                    <td><img src = "./menu_images/<?= $r['menu_photo'] ?>" height="100"></td>
+                    <td><img src = "../../images/11/<?= $r['menu_photo'] ?>" height="100"></td>
                     <td><?= $r['menu_name'] ?></td>
                     <td><?= $r['menu_kcal'] ?>大卡</td>
                     <td><?= $r['menu_price_m'] ?>元</td>
@@ -101,7 +101,7 @@ if($totalRows>0){
 
 </div>
 
-<?php include __DIR__ . '/parts/scripts.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php' ?>
 <script>
     function delete_it(menu_sid){
         if (confirm(`確定要刪除資料編號為${menu_sid}的資料嗎`)){
@@ -114,4 +114,4 @@ if($totalRows>0){
                 
 </script>
 
-<?php include __DIR__ . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/connect_db.php'; ?>

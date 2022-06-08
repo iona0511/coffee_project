@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php'; 
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 
 // intval 轉換成整數就不會有sql injection的問題
 $menu_sid = isset($_GET['menu_sid']) ? intval($_GET['menu_sid']) : 0;

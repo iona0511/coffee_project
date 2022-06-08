@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php'; 
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 $pageName = 'index';
 $title = '喝咖啡-首頁';
 
@@ -6,7 +6,7 @@ $title = '喝咖啡-首頁';
 
 <!-- 以下是HTML -->
 
-<?php include __DIR__ . '/parts/html_menu_head.php' ?>
-<?php include __DIR__ . '/parts/navbar.php' ?>
-<?php include __DIR__ . '/parts/scripts.php' ?>
-<?php include __DIR__ . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/scripts.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html_menu_foot.php' ?>
