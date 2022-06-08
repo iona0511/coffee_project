@@ -121,18 +121,18 @@
                     })
                     .then(function (data) {
                         localStorage.setItem("data", JSON.stringify(data));
-                        sort.addEventListener("change", function () {
-                            if (sort.value === "priceAsc") {
-                                data.sort(priceAsc);
-                            } else if (sort.value === "priceDesc") {
-                                data.sort(priceDesc);
-                            } else if (sort.value === "levelAsc") {
-                                data.sort(levelAsc);
-                            } else if (sort.value === "levelDesc") {
-                                data.sort(levelDesc);
-                            }
-                            addData();
-                        });
+                        // sort.addEventListener("change", function () {
+                        //     if (sort.value === "priceAsc") {
+                        //         data.sort(priceAsc);
+                        //     } else if (sort.value === "priceDesc") {
+                        //         data.sort(priceDesc);
+                        //     } else if (sort.value === "levelAsc") {
+                        //         data.sort(levelAsc);
+                        //     } else if (sort.value === "levelDesc") {
+                        //         data.sort(levelDesc);
+                        //     }
+                        //     addData();
+                        // });
 
                         // function addData() {
                         //     wrap.innerHTML = "";
@@ -194,6 +194,20 @@
             // 分頁
             dataCopy = JSON.parse(localStorage.getItem("data"));
             console.log(dataCopy);
+
+            sort.addEventListener("change", function () {
+                if (sort.value === "priceAsc") {
+                    dataCopy.sort(priceAsc);
+                } else if (sort.value === "priceDesc") {
+                    dataCopy.sort(priceDesc);
+                } else if (sort.value === "levelAsc") {
+                    dataCopy.sort(levelAsc);
+                } else if (sort.value === "levelDesc") {
+                    dataCopy.sort(levelDesc);
+                }
+                tablestr(choose);
+                levelfun();
+            });
             //分頁按鈕生成
             function limits() {
                 countLim = Math.ceil(dataCopy.length / len); //總頁數
@@ -235,7 +249,7 @@
                 }
             }
             tablestr(1); // 初始第一頁
-
+            choose = 1;
             function liminputcolor(choose) {
                 console.log(choose);
                 // 這裡childNodes把inputs子節點集合起來索引值0開始,所以-1
