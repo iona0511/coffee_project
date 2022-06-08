@@ -1,6 +1,8 @@
 <?php
     include dirname(dirname(__DIR__,1)) . "/parts/connect_db.php";
-    session_start();
+    if(!session_id()) {
+        session_start();
+    }
     // $output["order_pay"] = $_POST["order_pay"];
     // $output["bankNumber"] = $_POST["bankNumber"];
     // $output["bankAccount"] = $_POST["bankAccount"];
@@ -137,6 +139,12 @@
     }
 
     //寫入coupon_logs
+    if($decodeCoupon === NULL) {
+        unset($SESSION["rawCoupon"]);
+        unset($SESSION["rawJSON"]);
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
     $sql = "INSERT INTO `coupon_logs`(
         `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
     ) VALUES (
@@ -150,8 +158,6 @@
     ]);
     if($stmt -> rowCount() == 1) {
         $output["success"] = true;
-        //最近新增資料的 primary key
-        // $pdo -> lastInsertId();
     } else {
         $output["success"] = false;
         $output["message"] = "系統繁忙2";

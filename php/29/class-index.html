@@ -14,8 +14,12 @@
         <style class="style">
             * {
                 box-sizing: border-box;
-                margin: auto;
             }
+            body {
+                background: url(../../images/29/pexels-lukas-1419939.jpg);
+                background-size: 100vw;
+            }
+
             .card {
                 width: 280px;
                 height: 350px;
@@ -23,15 +27,27 @@
                 margin: 20px 20px;
                 text-align: center;
                 border-radius: 10px;
+                -webkit-transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
+                transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
             }
+
+            .card:hover {
+                box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);
+                transform: translate(0, -8px);
+                transition-delay: 0s;
+                box-shadow: 1px 1px 8px 1px #333;
+            }
+
             .wrap {
                 display: flex;
                 flex-wrap: wrap;
                 width: 980px;
+                margin: auto;
             }
             .pic > img {
-                width: 75%;
+                width: 100%;
                 height: 100%;
+                border-radius: 10px 10px 0 0;
             }
             .pic {
                 text-align: center;
@@ -59,11 +75,9 @@
             function getNav() {
                 fetch("../../parts/navbar.php")
                     .then(function (response) {
-                        // console.log(response);
                         return response.text();
                     })
                     .then(function (navData) {
-                        console.log(navData);
                         navBar = document.querySelector(".navBar");
                         navBar.innerHTML = navData;
                     });
@@ -80,7 +94,7 @@
             <option value="levelAsc">難度低至高</option>
             <option value="levelDesc">難度高至低</option>
         </select>
-
+        <div class="inputs"></div>
         <div class="wrap">
             <!-- <div class="card">
                 <div class="pic">
@@ -99,6 +113,9 @@
             const style = document.querySelector(".style");
             const search = document.querySelector(".search");
             const sort = document.querySelector("#sort");
+            const inputs = document.querySelector(".inputs");
+            const len = 9; //控制一頁筆幾
+            let choose = 0; //建立一個全域性變數用來儲存當前處於第幾個頁面
 
             function priceAsc(a, b) {
                 return a.course_price - b.course_price;
@@ -119,52 +136,53 @@
                         return response.json();
                     })
                     .then(function (data) {
-                        sort.addEventListener("change", function () {
-                            if (sort.value === "priceAsc") {
-                                data.sort(priceAsc);
-                            } else if (sort.value === "priceDesc") {
-                                data.sort(priceDesc);
-                            } else if (sort.value === "levelAsc") {
-                                data.sort(levelAsc);
-                            } else if (sort.value === "levelDesc") {
-                                data.sort(levelDesc);
-                            }
-                            addData();
-                        });
+                        localStorage.setItem("data", JSON.stringify(data));
+                        // sort.addEventListener("change", function () {
+                        //     if (sort.value === "priceAsc") {
+                        //         data.sort(priceAsc);
+                        //     } else if (sort.value === "priceDesc") {
+                        //         data.sort(priceDesc);
+                        //     } else if (sort.value === "levelAsc") {
+                        //         data.sort(levelAsc);
+                        //     } else if (sort.value === "levelDesc") {
+                        //         data.sort(levelDesc);
+                        //     }
+                        //     addData();
+                        // });
 
-                        function addData() {
-                            wrap.innerHTML = "";
-                            for (let i = 0; i < data.length; i++) {
-                                const cards = document.createElement("div");
-                                cards.className = "card";
-                                cards.dataset.index = data[i].course_name;
-                                wrap.appendChild(cards);
-                                cards.innerHTML = ` <div class="pic">
-                            <div class="level">${data[i].course_level}</div>
-                            <img src="../../images/29/${data[i].course_img_s}" alt="" />
-                        </div>
-                        <h3>${data[i].course_name}</h3>
-                        <p class="card-txt">${data[i].course_content}</p>
-                        <p class="card-txt">NT$${data[i].course_price}</p>`;
+                        // function addData() {
+                        //     wrap.innerHTML = "";
+                        //     for (let i = 0; i < data.length; i++) {
+                        //         const cards = document.createElement("div");
+                        //         cards.className = "card";
+                        //         cards.dataset.index = data[i].course_name;
+                        //         wrap.appendChild(cards);
+                        //         cards.innerHTML = ` <div class="pic">
+                        //     <div class="level">${data[i].course_level}</div>
+                        //     <img src="../../images/29/${data[i].course_img_s}" alt="" />
+                        // </div>
+                        // <h3>${data[i].course_name}</h3>
+                        // <p class="card-txt">${data[i].course_content}</p>
+                        // <p class="card-txt">NT$${data[i].course_price}</p>`;
 
-                                level = document.querySelectorAll(".level");
+                        //         level = document.querySelectorAll(".level");
 
-                                if (data[i].course_level === "1") {
-                                    level[i].innerHTML = "入門";
-                                    level[i].style.backgroundColor =
-                                        "rgb(20, 155, 53)";
-                                }
-                                if (data[i].course_level === "2") {
-                                    level[i].innerHTML = "普通";
-                                    level[i].style.backgroundColor = "#fa0";
-                                }
-                                if (data[i].course_level === "3") {
-                                    level[i].innerHTML = "困難";
-                                    level[i].style.backgroundColor = "#f00";
-                                }
-                            }
-                        }
-                        addData();
+                        //         if (data[i].course_level === "1") {
+                        //             level[i].innerHTML = "入門";
+                        //             level[i].style.backgroundColor =
+                        //                 "rgb(20, 155, 53)";
+                        //         }
+                        //         if (data[i].course_level === "2") {
+                        //             level[i].innerHTML = "普通";
+                        //             level[i].style.backgroundColor = "#fa0";
+                        //         }
+                        //         if (data[i].course_level === "3") {
+                        //             level[i].innerHTML = "困難";
+                        //             level[i].style.backgroundColor = "#f00";
+                        //         }
+                        //     }
+                        // }
+                        // addData();
 
                         search.addEventListener("input", () => {
                             if (search.value === "") {
@@ -188,6 +206,106 @@
                     });
             }
             getData();
+
+            // 分頁
+            dataCopy = JSON.parse(localStorage.getItem("data"));
+            console.log(dataCopy);
+
+            sort.addEventListener("change", function () {
+                if (sort.value === "priceAsc") {
+                    dataCopy.sort(priceAsc);
+                } else if (sort.value === "priceDesc") {
+                    dataCopy.sort(priceDesc);
+                } else if (sort.value === "levelAsc") {
+                    dataCopy.sort(levelAsc);
+                } else if (sort.value === "levelDesc") {
+                    dataCopy.sort(levelDesc);
+                }
+                tablestr(choose);
+                levelfun();
+            });
+            //分頁按鈕生成
+            function limits() {
+                countLim = Math.ceil(dataCopy.length / len); //總頁數
+                //餘數算一頁向上取整
+
+                inputs.innerHTML = "";
+                for (let i = 1; i <= countLim; i++) {
+                    inputs.innerHTML += `<input type="button" value="${i}" onclick="limitinput(this)" >`; //每個頁面按鈕都繫結上一個點擊事件,this綁定點擊的元素
+                }
+            }
+            limits();
+
+            function tablestr(num) {
+                //num是指當前哪個頁面
+                // console.log(num);
+                let num1 = (num - 1) * len; //確定迴圈開始的集合下標  1的時候=0 ,2的時候=3 ,8的時候=21
+
+                let num2 = num * len; //確定迴圈結束的結束下標  1的時候 = 3 ,2的時候=6 ,8的時候=24
+
+                wrap.innerHTML = ""; //清空一下
+
+                for (let i = num1; i < num2; i++) {
+                    //遍歷陣列
+                    if (i >= dataCopy.length) {
+                        i = dataCopy.length;
+                        return;
+                    }
+                    str = "";
+
+                    str += `<div class="pic">
+                    <div class="level">${dataCopy[i].course_level}</div>
+                    <img src="../../images/29/${dataCopy[i].course_img_s}" alt="" />
+                </div>
+                <h3>${dataCopy[i].course_name}</h3>
+                <p class="card-txt">${dataCopy[i].course_content}</p>
+                <p class="card-txt">NT$${dataCopy[i].course_price}</p>`;
+
+                    wrap.innerHTML += `<div class="card" data-index="${dataCopy[i].course_name}">  ${str}  </div>`; //每迴圈一次新增一條資料
+                }
+            }
+            tablestr(1); // 初始第一頁
+            choose = 1;
+            function liminputcolor(choose) {
+                console.log(choose);
+                // 這裡childNodes把inputs子節點集合起來索引值0開始,所以-1
+                inputs.childNodes[choose - 1].style.backgroundColor = "red";
+            }
+            inputs.childNodes[0].style.backgroundColor = "red"; //第一個按鈕的背景顏色為紅色
+
+            function levelfun() {
+                for (let i = 0; i < dataCopy.length; i++) {
+                    if (i < len) {
+                        level = document.querySelectorAll(".level");
+                        if (dataCopy[i].course_level == "1") {
+                            level[i].innerHTML = "入門";
+                            level[i].style.backgroundColor =
+                                "rgb(210, 173, 133)";
+                        }
+                        if (dataCopy[i].course_level == "2") {
+                            level[i].innerHTML = "中級";
+                            level[i].style.backgroundColor =
+                                "rgb(206, 152, 94)";
+                        }
+                        if (dataCopy[i].course_level == "3") {
+                            level[i].innerHTML = "高級";
+                            level[i].style.backgroundColor = "#a2642e";
+                        }
+                    }
+                }
+            }
+            levelfun();
+
+            function limitinput(i) {
+                console.log(i);
+                //監聽事件的this會把點擊當下的value帶進來,用來改變現在點擊的CSS,跟渲染當頁資料
+                choose = i.value;
+                tablestr(choose); //重新整理table資料
+                limits(); //重新整理頁面按鈕
+                // i.style.backgroundColor = "red"; //當前點選的頁面按鈕背景顏色改變為紅色,函式就有這個功能了所以先關掉
+                liminputcolor(choose); //頁面按鈕變色
+                levelfun();
+            }
         </script>
     </body>
 </html>

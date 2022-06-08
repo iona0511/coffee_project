@@ -4,10 +4,22 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../fontawesome/css/all.css" />
-
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+    crossorigin="anonymous"
+/>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+/>
     <title>Document</title>
     <style>
+      body{
+        background: url(../../images/11/pexels-dominika-roseclay-894612.jpg);
+        background-size:100vw;
+      }
       * {
         margin: 0px;
         color: rgb(47, 46, 46);
@@ -172,7 +184,7 @@
         width: 100vw;
         height: auto;
         background-color: rgba(52, 49, 49, 0.529);
-        transform: translateY(-100px);
+        transform: translateY(-50px);
       }
 
       .afterclick.hide {
@@ -196,10 +208,17 @@
       }
     </style>
   </head>
+  <script>if (! isset($_SESSION)) {
+    session_start();
+}
+</script>
+
+
   <body>
     <div class="wrap">
-      <div class="select" style="background-color:rgba(222, 193, 148, 0.462);">
-        <img src="./menu_images/picwish.png" style="width: 60px;transform: translateY(25%);margin-right: 80px;" />
+      <div class="navBar"></div>
+      <!-- <div class="select" style="background-color:rgba(222, 193, 148, 0.462);">
+        <img src="../../images/11/picwish.png" style="width: 60px;transform: translateY(25%);margin-right: 80px;" />
         <a href="#nav" class="nav">首頁</a>
         <a href="" class="nav">店家資訊</a>
         <a href="" class="nav">商品</a>
@@ -213,7 +232,7 @@
         <a href="" class="nav">會員中心</a>
         
 
-      </div>
+      </div> -->
       <section>
 
 
@@ -257,9 +276,7 @@
                     </fieldset>           
                 </form> -->
         </div>
-        <div>
-        <img src="./menu_images/bg.jpeg" style="width:80vw;height: 400px;">
-        </div>
+      
         <div class="menu_area" >
           <!-- 這裡放訂餐 -->
         </div>
@@ -277,7 +294,7 @@
             <h4>飲料名稱</h4> -->
         </div>
       </section>
-      <aside style="margin:0 auto;">
+      <aside style="margin:0 auto;background-color: rgb(247, 243, 215);">
         <div class="aside" >
           <!-- <div style="display:flex;margin: 6px;">
                   <div style="flex-grow:1;">卡布奇諾 (熱)
@@ -392,7 +409,7 @@
 
         menu_area.innerHTML = "";
         for (let i = 0; i < data.length; i++) {
-          menu_area.innerHTML += `<div class="menu_food">
+          menu_area.innerHTML += `<div class="menu_food" style="background-color:#fff; color:#fff">
                 <div class="menu_food_text">
                     <h4 class="menu_sid" style="display:none;">${data[i].menu_sid}</h4>
                     <h4 class="menu_name" style="line-height:3rem">${data[i].menu_name}</h4>
@@ -402,7 +419,7 @@
                 </div>
                 <figure class="photo">
                   
-                    <img class="menu_photo" src="http://localhost/IOIOIOIONA_php/menu/menu_images/${data[i].menu_photo}" />
+                    <img class="menu_photo" src="../../images/11/${data[i].menu_photo}" />
                 </figure>
              
                 <i class="fa-solid fa-circle-plus add-cart" data-sid="${data[i].menu_sid}"></i>
@@ -436,7 +453,7 @@
           <a href="#nav"> <i class="fa-solid fa-circle-xmark close" style="font-size: 35px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
 
           <div class="all_choice_photo"">
-           <img src="http://localhost/IOIOIOIONA_php/menu/menu_images/${item.menu_photo}"class="all_choice_photo_img" style="height:300px">
+           <img src="../../images/11/${item.menu_photo}"class="all_choice_photo_img" style="height:300px">
          </div>
 
          <div class ="choice_textarea" style="padding:30px">
@@ -667,6 +684,23 @@
       };
 
 // sessionStorage.setItem('name','haha');
+
+
+
+function getNav() {
+                fetch("../../parts/navbar.php")
+                    .then(function (r) {
+                        return r.text();
+                    })
+                    .then(function (navData) {
+                        console.log(navData);
+                        navBar = document.querySelector(".navBar");
+                        navBar.innerHTML = navData;
+                    });
+            }
+            getNav();
+
+
 
     </script>
   </body>

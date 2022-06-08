@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+        crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
     <title>Document</title>
@@ -354,6 +360,17 @@
     <script src="../../js/vue.global.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script>
+        (function getNav() {
+            const el = document.createElement("div");
+            const docBody = document.querySelector("body");
+            
+            fetch("../../parts/navbar.php")
+                .then(data => data.text())
+                .then(data => {
+                    el.innerHTML = data;
+                    docBody.insertBefore(el,docBody.childNodes[0]);
+                });
+        })();
         const vm = Vue.createApp({
             data() {
                 return {
@@ -487,11 +504,14 @@
                 }
             },
             async beforeMount() {
+                console.log("vue");
                 await fetch("./cart_read_coupon_api.php")
                     .then(data => data.json())
                     .then(data => {
+                        console.log(0);
                         if (data === "login") {
-                            alert("結帳請先登入會員");
+                            console.log(1);
+                            // alert("結帳請先登入會員");
                             setTimeout(() => {
                                 window.location = "../09/login.html";
                             },100);
