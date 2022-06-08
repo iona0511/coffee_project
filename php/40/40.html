@@ -394,10 +394,10 @@
             data() {
                 return {
                     fakeData: [
-                        { cartSid: 1, display: 1, productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
-                        { cartSid: 2, display: 1, productName: "曼特寧咖啡(一包十入)", productPrice: 150, quantity: 1, src: "https://cs-f.ecimg.tw/items/DBAT8QA900C013E/000001_1637306487.jpg" },
-                        { cartSid: 3, display: 1, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
-                        { cartSid: 4, display: 1, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
+                        // { cartSid: 1, display: 1, productName: "曼巴咖啡(一包十入)", productPrice: 120, quantity: 2, src: "https://img.udnfunlife.com/image/product/DS003672/APPROVED/DU00076198/20220504161845768_1000.jpg?t=20220505195157" },
+                        // { cartSid: 2, display: 1, productName: "曼特寧咖啡(一包十入)", productPrice: 150, quantity: 1, src: "https://cs-f.ecimg.tw/items/DBAT8QA900C013E/000001_1637306487.jpg" },
+                        // { cartSid: 3, display: 1, productName: "濾紙(大)", productPrice: 70, quantity: 3, src: "https://shoplineimg.com/55e539fd03905545b6000009/61138438db4a1b0017cc91e3/800x.webp?source_format=png" },
+                        // { cartSid: 4, display: 1, productName: "濾紙(小)", productPrice: 45, quantity: 5, src: "https://cdn.shopify.com/s/files/1/0254/0393/products/77b7fd011e91a11fd8046ab778ef1510_7cc777a2-2640-4bda-b599-23109e1108f5_1500x.jpg?v=1574688781" },
                     ],
                     couponArray: [],
                     radio: undefined,
@@ -536,20 +536,19 @@
                         }
                         this.couponArray = data;
                     });
-                fetch("./check_product_session_api.php")
-                    .then(data => data.json())
-                    .then(data => {
-                        if (data) {
-                            this.fakeData = data;
-                        } else {
-                            fetch("./cart_read_food_api.php")
-                            .then(data => data.json())
-                            .then(data => {
-                                this.fakeData = data;
-                            })
-                        }
-                    });
-
+                // fetch("./check_product_session_api.php")
+                //     .then(data => data.json())
+                //     .then(data => {
+                //         if (data) {
+                //             this.fakeData = data;
+                //         } else {
+                //         }
+                //     });
+                fetch("./cart_read_food_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    this.fakeData = data;
+                })
                 await fetch("./check_coupon_session_api.php")
                     .then(data => data.json())
                     .then(data => {
