@@ -97,7 +97,7 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td>
-                        <a href="javascript:" onclick="trashCanClicked(event); return false;">
+                        <a href="javascript: delete_it(<?= $r['sid'] ?>)">
                             <img style="width:24px ;" src="./copon_img/6154713uV6k8WyP.gif" alt="">
                         </a>
                     </td>
@@ -112,7 +112,6 @@ if ($totalRows > 0) {
                     <td><?= $r['coupon_validity_period'] ?></td>
                     <td><?= $r['coupon_status'] ?></td>
                     <td>
-                        <!-- <a href="ab-edit.php?sid=<?= $r['sid'] ?>"><img style="width:24px " src="./copon_img/6154151jyaaGIbA.gif" alt=""></a> -->
                         <a href="coupon_record_edit.php?sid=<?= $r['sid'] ?>"><img style="width:24px " src="./copon_img/6154151jyaaGIbA.gif" alt=""></a>
                     </td>
                     
@@ -143,11 +142,10 @@ if ($totalRows > 0) {
 
 <?php include __DIR__ . '/parts/scripts.php' ?>
     <script>
-        function trashCanClicked(event) {
-        const a_tag = event.currentTarget;
-        const tr = a_tag.closest('tr');
-        console.log(tr);
-        tr.remove();
+        function delete_it(sid) {
+        if (confirm(`確定要刪除編號為 ${sid} 的資料嗎?`)) {
+            location.href = `coupon_record_delete.php?sid=${sid}`; //去執行delete，再回來
+        }
     }
 
     </script>

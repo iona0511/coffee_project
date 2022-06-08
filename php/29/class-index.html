@@ -291,17 +291,17 @@
                 for (let i = 0; i < dataCopy.length; i++) {
                     if (i < len) {
                         level = document.querySelectorAll(".level");
-                        if (dataCopy[i].course_level === "1") {
+                        if (dataCopy[i].course_level == "1") {
                             level[i].innerHTML = "入門";
                             level[i].style.backgroundColor =
                                 "rgb(210, 173, 133)";
                         }
-                        if (dataCopy[i].course_level === "2") {
+                        if (dataCopy[i].course_level == "2") {
                             level[i].innerHTML = "中級";
                             level[i].style.backgroundColor =
                                 "rgb(206, 152, 94)";
                         }
-                        if (dataCopy[i].course_level === "3") {
+                        if (dataCopy[i].course_level == "3") {
                             level[i].innerHTML = "高級";
                             level[i].style.backgroundColor = "#a2642e";
                         }
