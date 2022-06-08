@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/connect_db.php'; 
+<?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 header('Content-Type: application/json');
 // 這隻API是用來新增資料的，只有功能 沒有頁面
 
