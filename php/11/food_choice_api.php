@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/connect_db.php';
+require dirname(__DIR__, 2) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 
 // 把要傳給前端的結果用陣列包起來
