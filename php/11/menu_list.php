@@ -44,12 +44,12 @@ if($totalRows>0){
                 <li class="page-item <?=$page == 1 ? 'disabled' : ''?>"><a class="page-link" href="?page=1"><i class="fa-solid fa-angles-left"></i></a></li>
                 <li class="page-item <?=$page ==$page ? '$page-1' : ''?>"><a class="page-link" href="?page=<?=$page-1?>"><i class="fa-solid fa-angle-left"></i></a></li>
 
-                <? for($i=1;$i<=$totalPages;$i++):?>
+                <?php for($i=1;$i<=$totalPages;$i++):?>
                     <!-- active這段是為了讓頁碼反白 -->
                     <li class="page-item <?= $page ==$i?'active' : '' ?>">
                         <a class="page-link" href="?page=<?=$i?>"><?=$i?></a>
                     </li>
-                <?endfor;?>
+                <?php endfor;?>
                 <li class="page-item <?=$page ==$page ? '$page' : ''?>"><a class="page-link" href="?page=<?=$page+1?>"><i class="fa-solid fa-angle-right"></i></a></li>
                 <li class="page-item <?= $page ==$totalPages ? 'disabled' : '' ?>"><a class="page-link" href="?page=<?=$totalPages?>"><i class="fa-solid fa-angles-right"></i></a></li>
             </ul>
@@ -114,4 +114,3 @@ if($totalRows>0){
                 
 </script>
 
-<?php include dirname(__DIR__, 2) . '/parts/connect_db.php'; ?>

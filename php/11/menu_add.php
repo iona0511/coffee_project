@@ -14,7 +14,7 @@ $title = '新增餐點資料';
 
 
 ?>
-<?php include dirname(__DIR__, 2) . '/parts/html_menu_head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-head.php' ?>
 <?php include dirname(__DIR__, 2) . '/parts/navbar.php'  ?>
 <style>
     .form-control.red {
@@ -232,4 +232,4 @@ $title = '新增餐點資料';
     };
 </script>
 
-<?php include dirname(__DIR__, 2) . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-foot.php' ?>

@@ -19,10 +19,10 @@
                         <a class="nav-link" href="#">店家資訊</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">商品</a>
+                        <a class="nav-link" href="#">商品</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">訂位點餐</a>
+                        <a class="nav-link" href="/coffee_project/php/11/food_order.html">點餐</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/coffee_project/php/29/class-index.html">課程資訊</a>
