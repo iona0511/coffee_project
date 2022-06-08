@@ -19,8 +19,8 @@ if (empty($row)) {
 
 
 ?>
-<?php include dirname(__DIR__, 2) . '/parts/html_menu_head.php' ?>
-<?php include dirname(__DIR__, 2) . '/parts/navbar.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-head.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar_admin.php' ?>
 <style>
     .form-control.red {
         border: 1px solid red;
@@ -196,7 +196,7 @@ if (empty($row)) {
 
 
 
-<?php include dirname(__DIR__, 2) . '/parts/html_menu_foot.php' ?>
+<?php include dirname(__DIR__, 2) . '/parts/html-foot.php' ?>
 
 
 

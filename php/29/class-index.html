@@ -10,6 +10,11 @@
             integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
             crossorigin="anonymous"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
+
         <title>Document</title>
         <style class="style">
             * {
@@ -83,6 +88,16 @@
             .inputs {
                 text-align: center;
             }
+
+            .search {
+                border: 2px solid rgb(136, 88, 36);
+                border-radius: 5px;
+            }
+
+            .fa-magnifying-glass {
+                transform: translateX(-25px);
+                color: rgb(136, 88, 36);
+            }
         </style>
     </head>
     <body>
@@ -101,7 +116,11 @@
         </script>
         <div class="navBar"></div>
         <button><a href="delete-data.html">登入</a></button>
-        <input type="text" placeholder="搜尋" class="search" />
+
+        <input type="text" placeholder="搜尋" class="search" /><i
+            class="fa-solid fa-magnifying-glass"
+        ></i>
+
         <select name="" id="sort">
             <option value="">--排序--</option>
             <option value="priceAsc">價格低至高</option>
