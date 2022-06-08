@@ -1,5 +1,6 @@
 <?php 
-require dirname(__DIR__,2) . '/parts/connect_db.php';
+require __DIR__ . '/parts/connect_db.php';
+// require dirname(__DIR__,2) . '/parts/connect_db.php';
 // session_start();
 
 if (!isset($_SESSION['user']['admin_account'])){
@@ -39,6 +40,7 @@ if ($totalRows > 0) {
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
 <style>
 .display_justify_content {
@@ -57,10 +59,6 @@ if ($totalRows > 0) {
         background-color: #B79973;
         border-color: #B79973;
     }
-    /* a {
-        color: #B79973;
-        text-decoration: underline;
-    } */
     .page-link{
         color: #B79973;
     }
@@ -69,7 +67,38 @@ if ($totalRows > 0) {
         background-size: cover;
         opacity: 0.9;
     }
-    
+
+    .trash_img a .a1{
+        display: none;
+    }
+    .trash_img a .b1{
+        display: block;
+    }
+    .trash_img a:hover .a1{
+        display: block;
+    }
+    .trash_img a:hover .b1{
+        display: none;
+    }
+
+
+    .edit_img a .c1{
+        
+    }
+
+
+    .edit_img a .c1{
+        display: none;
+    }
+    .edit_img a .d1{
+        display: block;
+    }
+    .edit_img a:hover .c1{
+        display: block;
+    }
+    .edit_img a:hover .d1{
+        display: none;
+    }
 </style>
 
 <div class="display_justify_content" style=" width:1200px;margin:20px auto;font-size:24px;">優惠券管理</div>
@@ -85,7 +114,6 @@ if ($totalRows > 0) {
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">優惠券金額</th>
 
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">餐點編號</th>
-
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">產品編號</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">類別</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">優惠券有效期限</th>
@@ -97,9 +125,12 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td>
-                        <a href="javascript: delete_it(<?= $r['sid'] ?>)">
-                            <img style="width:24px ;" src="./copon_img/6154713uV6k8WyP.gif" alt="">
+                        <div class="trash_img">
+                        <a style="width:30px;height:30px;"  href="javascript: delete_it(<?= $r['sid'] ?>)" >
+                            <img class="a1" style="width:25px ;" src="./copon_img/6154713uV6k8WyP.gif" alt="">
+                            <img class="b1" style="width:24px ;" src="./copon_img/nnihi123-removebg-preview.png" alt="">
                         </a>
+                        </div>
                     </td>
                     <td><?= $r['sid'] ?></td>
                     <td><?= $r['coupon_name'] ?></td>
@@ -112,7 +143,12 @@ if ($totalRows > 0) {
                     <td><?= $r['coupon_validity_period'] ?></td>
                     <td><?= $r['coupon_status'] ?></td>
                     <td>
-                        <a href="coupon_record_edit.php?sid=<?= $r['sid'] ?>"><img style="width:24px " src="./copon_img/6154151jyaaGIbA.gif" alt=""></a>
+                        <div class="edit_img">
+                        <a style="width:30px;height:30px;" class="edit_img" href="coupon_record_edit.php?sid=<?= $r['sid'] ?>">
+                            <img class="c1" style="width:24px " src="./copon_img/6154151jyaaGIbA.gif" alt="">
+                            <img class="d1" style="width:24px " src="./copon_img/nnneji90-removebg-preview.png" alt="">
+                        </a>
+                        </div>
                     </td>
                     
                 </tr>

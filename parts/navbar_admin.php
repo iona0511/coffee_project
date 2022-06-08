@@ -80,7 +80,7 @@
                                     <a class="nav-link" href="/coffee_project/php/09/user_list.php">會員中心</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/coffee_project/php/41/points_formanager.php">優惠券系統</a>
+                                    <a class="nav-link" href="/coffee_project/php/41/coupon_record_list.php">優惠券系統</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/coffee_project/php/41/points_formanager.php">積分系統</a>
