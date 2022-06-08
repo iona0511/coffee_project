@@ -1,5 +1,5 @@
 <?php
-require dirname(__DIR__, 2) . '/connect_db.php';
+require __DIR__ . '/connect_db.php';
 header('Content-Type: application/json');
 
 // 把要傳給前端的結果用陣列包起來
@@ -8,7 +8,9 @@ $output = [
     'postData' => $_POST,
     'error' => '新增成功'
 ];
-$data = json_decode(file_get_contents('php://input'));
+$_SESSION["food_order"] = file_get_contents('php://input');
+exit;
+// $data = json_decode(file_get_contents('php://input'));
 
 
 
