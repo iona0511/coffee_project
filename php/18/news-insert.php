@@ -9,10 +9,13 @@ require dirname(__DIR__,2) . '/parts/connect_db.php';
 //     exit;
 // }
 
+$news_sid = isset($_GET['news_sid']) ? intval($_GET['news_sid']) : 0;
+
 $pageName = 'news-insert';
 $title = '新增消息';
 
-$row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
+// $row_class = $pdo->query("SELECT * FROM `lastest_news` l JOIN `news_class` n on `l`.`news_class_sid` = `n`.`class_sid` where l.news_sid = $news_sid")->fetchAll();
+$row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
 ?>
 <?php include dirname(__DIR__, 2) . '/parts/html-head.php'; ?>
@@ -66,13 +69,13 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
                         </div>
 
                         <div class="mb-3">
-                            <label for="news_class_name" class="form-label">活動類別</label>
+                            <label for="news_class_sid" class="form-label">活動類別</label>
                             </br>
-                            <select name="news_class_name" id="news_class_name">
-                                <option value="" selected disabled>-- 請選擇 --</option>
+                            <select name="news_class_sid" id="news_class_sid">
+                                <option value="0" selected disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
-                                    <option value="<?= $r['news_class_sid'] ?>">
-                                        <?= $r['news_class_name'] ?>
+                                    <option value="<?= $r['class_sid'] ?>">
+                                        <?= $r['class_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -118,18 +121,19 @@ $row_class = $pdo->query("SELECT * FROM `news_class`")->fetchAll();
 
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
-    const class_name_f = document.form1.news_class_name;
+    const class_sid_f = document.form1.news_class_sid;
     const start_date_f = document.form1.news_start_date;
     const end_date_f = document.form1.news_end_date;
     const content_f = document.form1.news_content;
     const img_f = document.form1.news_img;
     //這裡要確認資料庫欄位是否名稱有對應到
-    const fields = [title_f, class_name_f, start_date_f, end_date_f, content_f, img_f];
+    const fields = [title_f, class_sid_f, start_date_f, end_date_f, content_f, img_f];
 
+    
     const fieldTexts = [];
 
     for (let f of fields) {
-        fieldTexts.push(f?.nextElementSibling);
+        fieldTexts.push(f.nextElementSibling);
     }
     // console.log(fieldTexts)
 
