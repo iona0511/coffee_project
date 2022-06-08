@@ -30,7 +30,6 @@ body{
     background-image: url(./imgs/pexels-gradienta-7134986.jpg);
 }
 .bg{
-    position: relative;
     width: 100%;
     height: 100vh;
 }
