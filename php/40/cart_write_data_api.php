@@ -1,6 +1,8 @@
 <?php
     include dirname(dirname(__DIR__,1)) . "/parts/connect_db.php";
-    session_start();
+    if(!session_id()) {
+        session_start();
+    }
     // $output["order_pay"] = $_POST["order_pay"];
     // $output["bankNumber"] = $_POST["bankNumber"];
     // $output["bankAccount"] = $_POST["bankAccount"];

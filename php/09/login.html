@@ -25,7 +25,7 @@
         width:500px;
         height:650px;
         position:relative;
-        margin:6% auto;
+        margin:5% auto;
         background:rgba(255, 255, 255, 0.3);
         padding:10px;
     }
@@ -218,11 +218,16 @@
                     <div class="form-title">暱稱：</div>
                     <input type='text'class='input-field' id="member_nickname" name="member_nickname" placeholder='暱稱' required>
                 </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
             <div class="form-row">
-                <div class="form-title">帳號：</div>
-                <input type='text'class='input-field' id="member_account" name="member_account" placeholder='帳號' required>
-                <!-- <div class="form-text"></div> -->
+                <div class="f-input">
+                    <div class="form-title">帳號：</div>
+                    <input type='text'class='input-field' id="member_account" name="member_account" placeholder='帳號' required>
+                </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
             <div class="form-row">
                 <div class="form-title">密碼：</div>
