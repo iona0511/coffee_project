@@ -4,23 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fontawesome/css/all.css" />
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+    />
     <title>Document</title>
     <style>
     *{
         box-sizing: border-box;
     }
+    body{
+        background-image: url('/coffee_project/images/09/content-pixie-Xv0CHwbn6O8-unsplash.jpg');
+        background-size: cover;
+        background-position: 50%;
+    }
     .form-box{
         width:500px;
         height:650px;
         position:relative;
-        margin:2% auto;
-        background:rgba(0,0,0,0.3);
+        margin:6% auto;
+        background:rgba(255, 255, 255, 0.3);
         padding:10px;
     }
     .input-field{
         width: 50%;
         padding:10px 0;
-        margin:5px 0;
+        margin-bottom:8px;
         border-left:0;
         border-top:0;
         border-right:0;
@@ -28,7 +40,42 @@
         outline:none;
         background: transparent;
     }
-    .form-row{
+    /* 解決input輸入歷史的問題 */
+    /* input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    } */
+    .form_row{
+        position: relative;
+    }
+    .errorMsg{
+        margin: 0;
+        color: red;
+        font-size: .7rem;
+        position: relative;
+        top: 0;
+        left: 31.5%;
+        visibility: hidden;
+    }
+    .form_row>i{
+        position: absolute;
+        visibility: hidden;
+        top: 11px;
+        right: 90px;
+    }
+    /* .form_row.success i.fa-circle-check {
+	color: #2ecc71;
+	visibility: visible;
+    } */
+
+    .form_row.error i.fa-circle-exclamation {
+	color: red;
+	visibility: visible;
+    }
+
+    .f-input{
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -39,12 +86,13 @@
     .buttonBox{
         width:220px;
         margin:35px auto;
+        margin-bottom: 0;
         position:relative;
         border-radius: 30px;
     }
     .input-group-register{
         display: none;
-        margin-top: 50px;
+        margin-top: 40px;
         transition:.5s;
     }
     .toggle-btn{
@@ -125,12 +173,16 @@
         background: transparent;
     }
     .shuffle:hover{
-        color: white;
+        color: #B79973;
+    }
+    .formFail{
+        color: red;
     }
 
     </style>
 </head>
 <body>
+    <div class="navBar"></div>
     <div id='login-form'class='login-page'>
         <div class="form-box">
             <div class='buttonBox'>
@@ -152,15 +204,20 @@
         </form>
 
         <form id='register' class='input-group-register' name="form1" onsubmit="sendData();return false;" novalidate>
-            <div class="form-row">
-                <div class="form-title">姓名：</div>
-                <input type='text'class='input-field' id="member_name" name="member_name" placeholder='姓名' required>
-                <!-- <div class="form-text"></div> -->
+            <div class="form_row">
+                <div class="f-input">
+                    <div class="form-title">姓名：</div>
+                    <input type='text'class='input-field' id="member_name" name="member_name" placeholder='姓名' autocomplete="off" required>
+                </div>
+                <!-- <i class="fa-solid fa-circle-check"></i> -->
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
             <div class="form-row">
-                <div class="form-title">暱稱：</div>
-                <input type='text'class='input-field' id="member_nickname" name="member_nickname" placeholder='暱稱' required>
-                <!-- <div class="form-text"></div> -->
+                <div class="f-input">
+                    <div class="form-title">暱稱：</div>
+                    <input type='text'class='input-field' id="member_nickname" name="member_nickname" placeholder='暱稱' required>
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-title">帳號：</div>
@@ -221,7 +278,30 @@
         window.location.href='admin-login.html';
     })
 
+    const errorMsg = document.querySelector('.errorMsg');
+    const form_row = document.querySelector('.form_row');
+    const email_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zAZ]{2,}))$/;
+    const mobile_re = /^09\d{2}-?\d{3}-?\d{3}$/;
+    const name_f = document.form1.member_name;
+    // const email_f = document.form1.email;
+    // const mobile_f = document.form1.mobile;
+
     async function sendData() {
+
+        // 前端欄位檢查
+        let isPass = true;
+
+        if (name_f.value.length < 2) {
+            errorMsg.style.visibility = 'visible';
+            errorMsg.innerHTML = '姓名至少兩個字';
+            form_row.className = 'form_row error';
+            isPass = false;
+        }
+
+        if (!isPass) {
+            return; // 結束函式
+        }
+
         const fd = new FormData(document.form1);
         await fetch("register-api.php",{
         method:'POST',
@@ -265,6 +345,20 @@
     });
 
     }
+
+    // navbar
+    function getNav() {
+                fetch("../../parts/navbar.php")
+                    .then(function (r) {
+                        return r.text();
+                    })
+                    .then(function (navData) {
+                        console.log(navData);
+                        navBar = document.querySelector(".navBar");
+                        navBar.innerHTML = navData;
+                    });
+            }
+            getNav();
     
 
 </script>
