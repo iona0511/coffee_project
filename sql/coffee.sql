@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-07 10:39:28
+-- 產生時間： 2022-06-08 10:55:45
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 8.1.5
 
@@ -111,14 +111,14 @@ INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `m
 CREATE TABLE `coupon` (
   `sid` int(11) NOT NULL,
   `coupon_name` varchar(255) NOT NULL,
-  `coupon_send_type` varchar(11) DEFAULT NULL,
-  `coupon_setting_type` varchar(11) DEFAULT NULL,
+  `coupon_send_type` int(11) NOT NULL,
+  `coupon_setting_type` int(11) NOT NULL,
   `coupon_money` varchar(255) NOT NULL,
   `menu_sid` int(11) DEFAULT NULL,
   `products_sid` int(11) DEFAULT NULL,
-  `type` varchar(11) NOT NULL,
-  `coupon_validity_period` varchar(11) NOT NULL,
-  `coupon_status` varchar(11) NOT NULL
+  `type` int(11) NOT NULL,
+  `coupon_validity_period` int(11) NOT NULL,
+  `coupon_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -126,16 +126,16 @@ CREATE TABLE `coupon` (
 --
 
 INSERT INTO `coupon` (`sid`, `coupon_name`, `coupon_send_type`, `coupon_setting_type`, `coupon_money`, `menu_sid`, `products_sid`, `type`, `coupon_validity_period`, `coupon_status`) VALUES
-(1, '生日優惠券$100', '1 生日時發送', '1 折扣金額', '100', 0, 0, '3 全品項', '12', '1'),
-(2, '註冊優惠券$100', '2 註冊時發送', '1 折扣金額', '100', 0, 0, '3 全品項', '12', '1'),
-(3, '咖啡拿鐵5折', '3 玩遊戲時發送', '2 打折', '0.5', 1, 0, '1餐點類', '6', '1'),
-(4, '卡布奇諾 5折', '3 玩遊戲時發送', '2 打折', '0.5', 3, 0, '1餐點類', '6', '1'),
-(5, '義式摩卡75折', '3 玩遊戲時發送', '2 打折', '0.75', 9, 0, '1餐點類', '6', '1'),
-(6, '耶加雪菲75折', '3 玩遊戲時發送', '2 打折', '0.75', 17, 0, '1餐點類', '6', '1'),
-(7, '宇治奶茶8折', '3 玩遊戲時發送', '2 打折', '0.8', 20, 0, '1餐點類', '6', '1'),
-(8, '精選曼巴咖啡組8折', '3 玩遊戲時發送', '2 打折', '0.8', 0, 1, '2 商品類', '6', '1'),
-(9, '黃金曼特寧組9折', '3 玩遊戲時發送', '2 打折', '0.8', 0, 3, '2 商品類', '6', '1'),
-(10, '購物優惠券9折', '4 購物完發送', '2 打折', '0.9', 0, 0, '3 全品項', '6', '1');
+(1, '生日優惠券$100', 1, 1, '100', 0, 0, 3, 12, 1),
+(2, '註冊優惠券$100', 2, 1, '100', 0, 0, 3, 12, 1),
+(3, '咖啡拿鐵5折', 3, 2, '0.5', 1, 0, 1, 6, 1),
+(4, '卡布奇諾5折', 3, 2, '0.5', 3, 0, 1, 6, 1),
+(5, '義式摩卡75折', 3, 2, '0.75', 9, 0, 1, 6, 1),
+(6, '耶加雪菲75折', 3, 2, '0.75', 16, 0, 1, 6, 1),
+(7, '宇治奶茶8折', 3, 2, '0.8', 19, 0, 1, 6, 1),
+(8, '精選曼巴咖啡組8折', 3, 2, '0.8', 0, 1, 2, 6, 1),
+(9, '黃金曼特寧組9折', 3, 2, '0.8', 0, 3, 2, 6, 1),
+(10, '購物優惠券9折', 4, 2, '0.9', 0, 0, 3, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -157,7 +157,8 @@ CREATE TABLE `coupon_logs` (
 
 INSERT INTO `coupon_logs` (`sid`, `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`) VALUES
 (1, 1, 2, 0, NULL),
-(2, 2, 4, 0, '2022-06-01 00:00:00');
+(2, 2, 4, 0, '2022-06-01 00:00:00'),
+(23, 1, 3, 20, '2022-06-08 13:14:45');
 
 -- --------------------------------------------------------
 
@@ -181,7 +182,7 @@ CREATE TABLE `coupon_receive` (
 INSERT INTO `coupon_receive` (`sid`, `member_sid`, `coupon_sid`, `create_time`, `end_time`, `status`) VALUES
 (1, 1, 1, '2021-03-24 00:00:00', '2022-03-24 00:00:00', 0),
 (2, 1, 2, '2022-03-31 00:00:00', '2023-03-31 00:00:00', 0),
-(3, 1, 3, '2022-05-07 00:00:00', '2023-11-07 00:00:00', 0),
+(3, 1, 3, '2022-05-07 00:00:00', '2023-11-07 00:00:00', 1),
 (4, 2, 4, '2022-05-07 00:00:00', '2023-11-07 00:00:00', 0),
 (5, 2, 4, '2022-05-08 00:00:00', '2022-11-08 00:00:00', 0),
 (6, 3, 5, '2022-05-09 00:00:00', '2022-11-09 00:00:00', 0),
@@ -212,72 +213,17 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`course_sid`, `course_name`, `course_price`, `course_level`, `course_img_s`, `course_content`, `course_people`, `course_material`) VALUES
-(2, '花型拉花', 1000, 1, 'ec3b2315e87074b1a4960ce54752dd9f.jpg', '拉花基礎課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
+(2, '花型拉花', 1000, 1, 'bd16328bba4e61b07178f3186987d073.jpg', '拉花基礎課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
 (3, '咖啡烘焙', 2000, 2, '61651b51c6597c04d04dd42225a90db7.png', '體驗自己親手烘焙咖啡豆的樂趣', '想體驗自己烘咖啡豆的人', '咖啡豆.相關沖煮器材設備(課程提供)'),
-(4, '咖啡生豆認識及風味鑑嘗學', 3000, 3, '3260a68f2561fadba070c5d2917951e0.jpg', '認識不同咖啡產地及品種，加強自己品嚐咖啡思維', '對咖啡豆有濃厚興趣及對咖啡烘焙有興趣朋友參加', '咖啡豆.相關沖煮器材設備(課程提供)'),
+(4, '咖啡生豆認識', 3000, 3, '2661187eb4393f92a96e40d91d514c1b.jpg', '認識不同咖啡產地及品種，加強自己品嚐咖啡思維', '對咖啡豆有濃厚興趣及對咖啡烘焙有興趣朋友參加', '咖啡豆.相關沖煮器材設備(課程提供)'),
 (6, '聖誕樹拉花', 1500, 2, 'e571a854c4e0b747648c324c83bf4bec.jpg', '拉花中級課程、親子同樂好選擇', '適合所有人', '牛奶.咖啡豆(課程提供)'),
 (26, '測試', 100, 1, 'd1952dc3601c54b3ae87297187002ba6.jpg', '424', '12', '242'),
 (27, '測試', 100, 2, '491e7312d307eda9bcfabc1d05e4cf4e.jpg', '121', '1212', '211'),
 (28, '測試', 100, 2, '9719fa4c06f23c29c66080187811bcab.jpg', '212', '1', '2121'),
-(29, '測試', 100, 2, '', '', '', ''),
-(30, '測試', 100, 2, '', '', '', ''),
-(31, '測試', 100, 2, '', '', '', ''),
-(32, '測試', 100, 2, '', '', '', ''),
-(34, '測試', 100, 2, '', '', '', ''),
-(35, '測試', 100, 2, '', '', '', ''),
-(40, '測試ccccc', 2, 3, '4', '', '', ''),
-(41, '測試', 100, 1, '', '', '', ''),
-(42, '測試', 100, 1, '123', '', '', ''),
-(43, '測試', 100, 1, '', '', '', ''),
-(49, '測試', 100, 1, '', '', '', ''),
-(50, '測試', 200, 2, '', '', '', ''),
-(51, '測試', 200, 2, '', '', '', ''),
-(52, '測試', 100, 1, '', '', '', ''),
-(53, '測試', 200, 1, '', '', '', ''),
-(54, '測試', 100, 2, '', '', '', ''),
-(55, '測試', 100, 2, '', '', '', ''),
-(56, '測試', 100, 2, '', '', '', ''),
-(57, '測試', 100, 2, '', '', '', ''),
-(58, '測試', 100, 2, '', '', '', ''),
-(59, '測試', 100, 2, '', '', '', ''),
-(60, '測試', 100, 2, '', '', '', ''),
-(61, '測試', 100, 2, '', '', '', ''),
-(62, '測試', 100, 2, '', '', '', ''),
-(63, '測試', 100, 2, '', '', '', ''),
-(64, '測試', 100, 2, '', '', '', ''),
-(65, '測試', 100, 2, '', '', '', ''),
-(66, '測試', 100, 2, '', '', '', ''),
-(68, '測試', 100, 1, '', '', '', ''),
-(69, '測試', 100, 1, '', '', '', ''),
-(70, '測試', 100, 1, '', '', '', ''),
-(71, '測試', 100, 1, '', '', '', ''),
-(72, '測試', 100, 1, '', '', '', ''),
-(73, '測試', 100, 1, '', '', '', ''),
-(74, '測試', 100, 1, '', '', '', ''),
-(75, '測試', 100, 1, '', '', '', ''),
-(76, '測試', 100, 1, '', '', '', ''),
-(77, '測試', 100, 1, '', '', '', ''),
-(78, '測試', 100, 2, '', '', '', ''),
-(79, '測試', 100, 1, '', '', '', ''),
-(80, '測試', 100, 1, '', '', '', ''),
-(81, '測試', 100, 1, '', '', '', ''),
-(82, '測試', 100, 1, '', '', '', ''),
-(83, '測試', 100, 1, '', '', '', ''),
-(84, '測試', 100, 1, '', '', '', ''),
-(85, '測試', 100, 1, '', '', '', ''),
-(86, '測試', 100, 1, '', '', '', ''),
-(87, '測試', 100, 1, '', '', '', ''),
-(88, '測試', 100, 1, '', '', '', ''),
-(89, '測試', 100, 1, '', '', '', ''),
-(90, '測試', 100, 1, '', '', '', ''),
-(91, '測試', 100, 1, '', '', '', ''),
-(92, '測試', 100, 1, '', '', '', ''),
-(93, '測試', 100, 1, '', '', '', ''),
-(94, '測試', 200, 1, '', '', '', ''),
-(95, '測試', 100, 1, '', '', '', ''),
-(96, '測試', 100, 1, '', '', '', ''),
-(97, '測試', 100, 2, '', '', '', ''),
-(98, '測試', 100, 1, '', '', '', '');
+(91, '測試', 100, 1, '7e92e05eceb555488f9360f976addbd0.jpg', '4', '1212', '4'),
+(92, '測試', 100, 1, '0ee8d34bd1ffaa00595b1e051122d1c0.jpg', '424', '24', '4'),
+(96, '測試123', 100, 1, '81ad932bddb2760e1bef0a2a1eecd0b0.jpg', '34', '12', '24'),
+(99, '999', 888, 2, '28d59d90ad054b0644024dc7dcd973fe.jpg', '888', '888', '888');
 
 -- --------------------------------------------------------
 
@@ -334,6 +280,58 @@ INSERT INTO `course_related` (`sid`, `course_sid`, `course_date`, `course_time`,
 -- --------------------------------------------------------
 
 --
+-- 資料表結構 `food_choice`
+--
+
+CREATE TABLE `food_choice` (
+  `food_choice_sid` int(11) NOT NULL,
+  `menu_name` varchar(255) NOT NULL,
+  `menu_price_m` varchar(255) NOT NULL,
+  `food_choice_ice` varchar(255) NOT NULL,
+  `food_choice_sugar` varchar(255) NOT NULL,
+  `food_choice_count` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='food_choice';
+
+--
+-- 傾印資料表的資料 `food_choice`
+--
+
+INSERT INTO `food_choice` (`food_choice_sid`, `menu_name`, `menu_price_m`, `food_choice_ice`, `food_choice_sugar`, `food_choice_count`, `created_at`) VALUES
+(39, '0606', '432', '1', '1', '1', '2022-06-07 11:27:22'),
+(40, '0606', '432', '1', '1', '1', '2022-06-07 11:27:23'),
+(41, '0606', '432', '1', '1', '1', '2022-06-07 11:27:23'),
+(42, '0606', '432', '1', '1', '1', '2022-06-07 11:27:23'),
+(43, '蔬菜歐姆蛋', '70', '1', '1', '3', '2022-06-07 12:38:11'),
+(44, '蔬菜歐姆蛋', '70', '1', '1', '3', '2022-06-07 12:38:14'),
+(45, '蔬菜歐姆蛋', '32', '1', '1', '4', '2022-06-07 13:09:26'),
+(46, '蔬菜歐姆蛋', '12', '3', '1', '4', '2022-06-07 13:10:04'),
+(47, '蔬菜歐姆蛋', '12', '3', '1', '4', '2022-06-07 13:10:05'),
+(48, '蔬菜歐姆蛋', '12', '3', '1', '4', '2022-06-07 13:10:05'),
+(49, '蔬菜歐姆蛋', '12', '3', '1', '4', '2022-06-07 13:10:05'),
+(50, '咖啡拿鐵 (冰)', '70', '1', '1', '1', '2022-06-07 14:56:12'),
+(51, '咖啡拿鐵 (冰)', '32', '1', '1', '2', '2022-06-07 16:14:21'),
+(52, '咖啡拿鐵', '80', '1', '1', '3', '2022-06-07 16:55:21'),
+(53, '咖啡拿鐵', '70', '1', '1', '4', '2022-06-07 17:03:17'),
+(54, '咖啡拿鐵', '80', '1', '1', '4', '2022-06-07 17:29:04'),
+(55, '咖啡拿鐵', '80', '1', '1', '4', '2022-06-07 18:33:32'),
+(56, '咖啡拿鐵', '80', '1', '1', '4', '2022-06-07 18:33:33'),
+(57, '咖啡拿鐵', '80', '1', '1', '4', '2022-06-07 18:33:33'),
+(58, '咖啡拿鐵', '80', '1', '1', '4', '2022-06-07 19:45:27'),
+(59, '咖啡拿鐵', '100', '1', '1', '4', '2022-06-07 20:12:15'),
+(60, '咖啡拿鐵', '80', '1', '1', '3', '2022-06-07 20:13:29'),
+(61, '咖啡拿鐵', '80', '1', '1', '3', '2022-06-07 20:15:39'),
+(62, '咖啡拿鐵', '80', '1', '1', '5', '2022-06-07 20:15:45'),
+(63, '咖啡拿鐵', '80', '1', '1', '4', '2022-06-07 20:18:02'),
+(64, '咖啡拿鐵', '80', '1', '1', '5', '2022-06-07 21:51:58'),
+(65, '咖啡拿鐵', '80', '1', '1', '3', '2022-06-07 22:25:18'),
+(66, '咖啡拿鐵', '80', '1', '1', '3', '2022-06-08 12:49:23'),
+(67, '咖啡拿鐵', '80', '1', '1', '2', '2022-06-08 13:30:37'),
+(68, '莊園級拿鐵 ', '50', '2', '1', '4', '2022-06-08 13:30:37');
+
+-- --------------------------------------------------------
+
+--
 -- 資料表結構 `lastest_news`
 --
 
@@ -355,7 +353,13 @@ CREATE TABLE `lastest_news` (
 
 INSERT INTO `lastest_news` (`news_sid`, `news_img`, `news_title`, `news_class_sid`, `news_start_date`, `news_end_date`, `news_content`, `news_create_time`, `news_status`) VALUES
 (1, '123.jpg', '精選好好喝咖啡豆即日起購買任兩件，第二件即可打七折呦，分享優惠再送濾掛式咖啡一包。', 1, '2017-08-10', '2018-08-10', '快來揪朋友做分享拿好禮喔', '2022-05-31 11:14:27', 5),
-(2, '123.jpg', '行動預點專屬 – 週一週二星禮遇', 2, '2022-01-01', '2022-06-30', '一般會員於週一或週二購買輕食即可享8折優惠', '2022-05-31 11:23:10', 1);
+(2, '123.jpg', '行動預點專屬 – 週一週二星禮遇', 2, '2022-01-01', '2022-06-30', '一般會員於週一或週二購買輕食即可享8折優惠', '2022-05-31 11:23:10', 1),
+(4, 'Array', '123', 1, '2022-06-08', '2022-06-22', '233', '2022-06-08 15:15:55', 0),
+(5, 'Array', '123', 1, '2022-06-08', '2022-06-22', '233', '2022-06-08 15:16:45', 0),
+(6, '8a9720b0dc7df73098d17caf28f438f9.jpg', '123', 1, '2022-06-01', '2022-06-23', '123', '2022-06-08 15:34:19', 0),
+(7, 'fcff46c1a3b853ca23247d1ecf12b1a7.jpg', 'df', 1, '2022-06-01', '2022-06-24', '123', '2022-06-08 16:09:18', 0),
+(8, '3ac88f41b776445cac1a48d5724c8aac.jpg', '123', 1, '2022-05-31', '2022-06-06', '123', '2022-06-08 16:22:09', 0),
+(9, 'fc7cc7f44845b508ca502fd1b13d3c72.jpg', 'fd', 1, '2022-06-01', '2022-06-17', '123', '2022-06-08 16:39:23', 0);
 
 -- --------------------------------------------------------
 
@@ -416,16 +420,45 @@ CREATE TABLE `menu` (
   `menu_name` varchar(255) NOT NULL,
   `menu_kcal` float DEFAULT NULL,
   `menu_price_m` varchar(5) DEFAULT NULL,
-  `menu_price_l` varchar(5) DEFAULT NULL,
   `menu_nutrition` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 傾印資料表的資料 `menu`
 --
 
-INSERT INTO `menu` (`menu_sid`, `menu_categories`, `menu_photo`, `menu_name`, `menu_kcal`, `menu_price_m`, `menu_price_l`, `menu_nutrition`, `created_at`) VALUES
+INSERT INTO `menu` (`menu_sid`, `menu_categories`, `menu_photo`, `menu_name`, `menu_kcal`, `menu_price_m`, `menu_nutrition`, `created_at`) VALUES
+(188, '經典義式系列', 'd1eb9c095ac94e523067f2a167b322e1.jpg', '咖啡拿鐵', 381.411, '70', '咖啡因含量:黃101-200mg/杯', '2022-06-07 22:23:34'),
+(189, '精品咖啡', 'c92e70256fb8cf814daa982af0664bc9.jpg', '莊園級拿鐵 ', 267.7, '80', '咖啡因含量:紅201mg/杯以上', '2022-06-07 16:32:11'),
+(190, '經典義式系列', '792fa71cf16327b18c713b8744215ec0.jpg', '美式黑咖啡', 23.4, '50', '咖啡因含量:黃101-200mg/杯', '2022-06-07 18:40:43'),
+(191, '精品咖啡', '76fe22f4d781963a711e25e517c9110e.jpg', '耶加雪菲  ', 4, '100', '咖啡因含量:黃101-200mg/', '2022-06-07 18:43:36'),
+(192, '經典義式系列', 'f7051d3f87bcc0c79dbf9a837388d7f9.png', '義式摩卡 ', 368, '80', '咖啡因含量:黃101-200mg/杯', '2022-06-07 18:46:33'),
+(193, '其他飲品', '8d7e9afe5978766f19b3279389b1c467.jpg', '宇治奶茶', 345, '50', '茶葉產地:日本京都府 ', '2022-06-07 21:53:06');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `menu1`
+--
+
+CREATE TABLE `menu1` (
+  `menu_sid` int(11) NOT NULL,
+  `menu_categories` varchar(255) NOT NULL,
+  `menu_photo` varchar(255) DEFAULT NULL,
+  `menu_name` varchar(255) NOT NULL,
+  `menu_kcal` float DEFAULT NULL,
+  `menu_price_m` varchar(5) DEFAULT NULL,
+  `menu_price_l` varchar(5) DEFAULT NULL,
+  `menu_nutrition` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `menu1`
+--
+
+INSERT INTO `menu1` (`menu_sid`, `menu_categories`, `menu_photo`, `menu_name`, `menu_kcal`, `menu_price_m`, `menu_price_l`, `menu_nutrition`, `created_at`) VALUES
 (1, '經典義式系列', NULL, '咖啡拿鐵 (冰)', 381.4, '70', '90', NULL, '2022-05-28 00:00:00'),
 (3, '經典義式系列', NULL, '卡布奇諾 (冰)', 266.7, '70', '90', NULL, '2022-05-30 00:00:00'),
 (4, '經典義式系列', NULL, '卡布奇諾 (熱)', 260.5, '70', '90', NULL, '2022-05-31 00:00:00'),
@@ -535,7 +568,7 @@ CREATE TABLE `order` (
 INSERT INTO `order` (`order_sid`, `order_time`, `order_pay`, `order_pay_info`, `order_deliver`, `order_address`, `order_member_id`, `order_coupon_id`, `order_price`, `order_id`) VALUES
 (1, '2022-05-31 14:29:48', '店內取貨付款', '店內取貨付款', '店內取貨', '本店', 1, 2, 1160, '531142948'),
 (2, '2022-05-31 14:50:43', 'ATM轉帳', '700-24416794519754', '郵寄', '655 雲林縣元長鄉子茂33號', 3, 7, 872, '531145043'),
-(3, '2022-06-06 15:00:43', 'ATM轉帳', '700-5615614', '郵寄', '220 新北市板橋區文華街27號', 1, 6, 1248, '1654498843');
+(20, '2022-06-08 13:14:45', 'ATM轉帳', '700-561356135614', '郵寄', '932 屏東縣新園鄉仙鯉路19號', 1, 3, 412, '1654665285');
 
 -- --------------------------------------------------------
 
@@ -785,7 +818,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`products_sid`, `products_number`, `products_name`, `products_introduction`, `products_detail_introduction`, `products_price`, `products_forsale`, `products_onsale`, `products_stocks`, `products_with_products_categroies_sid`, `products_with_products_style_filter_sid`) VALUES
-(1, '1653962198', '曼巴咖啡(一包十入)', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 310, 1, 0, 3100, 2, 2),
+(1, '1653962198', '曼巴咖啡(一包十入)', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 310, 1, 0, 3300, 2, 1),
 (2, '1653962417', '曼特寧咖啡(一包十入)', '精選曼特寧咖啡, 一包十入', '香濃甘苦的滋味，不帶酸味順口香醇。', 320, 0, 1, 3200, 1, 2),
 (3, '1653969575', '黃金曼特寧(半磅)', '曼特寧咖啡豆, 半磅包裝', '曼特寧咖啡豆', 470, 1, 0, 4000, 1, 2),
 (4, '1653972891', '濾紙(大)', '大片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 0, 0, 4500, 4, 4),
@@ -836,7 +869,7 @@ CREATE TABLE `products_pic` (
 --
 
 INSERT INTO `products_pic` (`products_pic_sid`, `products_pic_one`, `products_pic_multi`) VALUES
-(1, 'ATT00012.gif', 'ATT00012.gif,ATT00015.gif,ATT00018.gif'),
+(1, 'manba_bean.jfif', ''),
 (2, 'slide4.jpg', 'puckered.png,slide2.jpg,slide3.jpg'),
 (3, 'atlanta-4829076.jpg', 'shutterstock_516937234.jpg,shutterstock_756931720.jpg,shutterstock_766093174.jpg'),
 (4, 'composing-2391033__340.jpg', 'composing-2391033__340.jpg,eyes-5248678__340.webp,fantasy-2506830__340.jpg'),
@@ -1029,6 +1062,12 @@ ALTER TABLE `course_related`
   ADD PRIMARY KEY (`sid`);
 
 --
+-- 資料表索引 `food_choice`
+--
+ALTER TABLE `food_choice`
+  ADD PRIMARY KEY (`food_choice_sid`);
+
+--
 -- 資料表索引 `lastest_news`
 --
 ALTER TABLE `lastest_news`
@@ -1050,6 +1089,12 @@ ALTER TABLE `member_likes`
 -- 資料表索引 `menu`
 --
 ALTER TABLE `menu`
+  ADD PRIMARY KEY (`menu_sid`);
+
+--
+-- 資料表索引 `menu1`
+--
+ALTER TABLE `menu1`
   ADD PRIMARY KEY (`menu_sid`);
 
 --
@@ -1174,7 +1219,7 @@ ALTER TABLE `coupon`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `coupon_logs`
 --
 ALTER TABLE `coupon_logs`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `coupon_receive`
@@ -1186,7 +1231,7 @@ ALTER TABLE `coupon_receive`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `course`
 --
 ALTER TABLE `course`
-  MODIFY `course_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `course_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `course_backup`
@@ -1201,16 +1246,22 @@ ALTER TABLE `course_related`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `food_choice`
+--
+ALTER TABLE `food_choice`
+  MODIFY `food_choice_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `lastest_news`
 --
 ALTER TABLE `lastest_news`
-  MODIFY `news_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `news_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
+  MODIFY `member_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1008;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member_likes`
@@ -1222,13 +1273,19 @@ ALTER TABLE `member_likes`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `menu`
 --
 ALTER TABLE `menu`
+  MODIFY `menu_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `menu1`
+--
+ALTER TABLE `menu1`
   MODIFY `menu_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_record`
