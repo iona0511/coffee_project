@@ -50,7 +50,7 @@ if ($totalRows > 0) {
         }
     </style>
 </head>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <div class="container">
     <div class="row">
         <div class="col">
