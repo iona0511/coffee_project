@@ -19,7 +19,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
 ?>
 <?php include dirname(__DIR__, 2) . '/parts/html-head.php'; ?>
-<?php include dirname(__DIR__, 2) . '/parts/navbar.php'; ?>
+<?php include dirname(__DIR__, 2) . '/parts/navbar_admin.php'; ?>
 <style>
     *{
         box-sizing: border-box;
