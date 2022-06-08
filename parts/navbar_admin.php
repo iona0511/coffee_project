@@ -11,7 +11,7 @@
                     <img style="width: 50px; aspect-ratio:1;" src="/coffee_project/images/09/picwish.png" alt="">
                     <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0">
                         <li class="nav-item px-2">
-                            <a class="nav-link" aria-current="page" href="#">首頁</a>
+                            <a class="nav-link" aria-current="page" href="/coffee_project/php/18/lastest-news.php">首頁</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" href="#">店家資訊</a>
