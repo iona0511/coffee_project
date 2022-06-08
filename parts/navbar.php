@@ -1,3 +1,8 @@
+<?php
+    if(!session_id()) {
+        session_start();
+    }
+?>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
