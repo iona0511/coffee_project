@@ -25,6 +25,9 @@
                 background-size: cover;
                 background-attachment: fixed;
             }
+            .bgcimg {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
 
             .card {
                 width: 280px;
@@ -93,10 +96,37 @@
                 border: 2px solid rgb(136, 88, 36);
                 border-radius: 5px;
                 outline: none;
+                position: absolute;
+                left: 191px;
+                top: 30px;
             }
 
             .fa-magnifying-glass {
                 transform: translateX(-25px);
+                color: rgb(136, 88, 36);
+                position: absolute;
+                left: 375px;
+                top: 36px;
+            }
+            #sort {
+                border: 1px solid rgb(210, 173, 133);
+                border-radius: 5px;
+                padding: 6px 12px;
+                text-align: center;
+                color: rgb(136, 88, 36);
+                outline: none;
+                position: absolute;
+                right: 215px;
+                top: 25px;
+            }
+            .container {
+                position: relative;
+                margin-top: 30px;
+            }
+            .titleH2 {
+                position: absolute;
+                top: -30px;
+                left: 190px;
                 color: rgb(136, 88, 36);
             }
         </style>
@@ -115,31 +145,34 @@
             }
             getNav();
         </script>
-        <div class="navBar"></div>
-        <button><a href="delete-data.html">登入</a></button>
-
-        <input type="text" placeholder="搜尋" class="search" /><i
-            class="fa-solid fa-magnifying-glass"
-        ></i>
-
-        <select name="" id="sort">
-            <option value="">--排序--</option>
-            <option value="priceAsc">價格低至高</option>
-            <option value="priceDesc">價格高至低</option>
-            <option value="levelAsc">難度低至高</option>
-            <option value="levelDesc">難度高至低</option>
-        </select>
-        <div class="inputs"></div>
-        <div class="wrap">
-            <!-- <div class="card">
-                <div class="pic">
-                    <div class="level">1</div>
-                    <img src="images/heart.png" alt="" />
-                </div>
-                <h3>name</h3>
-                <p>nt</p>
-                <p>txt</p>
-            </div> -->
+        <div class="bgcimg">
+            <div class="navBar"></div>
+            <button><a href="delete-data.html">登入</a></button>
+            <div class="container">
+                <h2 class="titleH2">課程資訊</h2>
+                <input type="text" placeholder="" class="search" /><i
+                    class="fa-solid fa-magnifying-glass"
+                ></i>
+                <select name="" id="sort">
+                    <option value="">--排序--</option>
+                    <option value="priceAsc">價格低至高</option>
+                    <option value="priceDesc">價格高至低</option>
+                    <option value="levelAsc">難度低至高</option>
+                    <option value="levelDesc">難度高至低</option>
+                </select>
+            </div>
+            <div class="inputs"></div>
+            <div class="wrap">
+                <!-- <div class="card">
+                    <div class="pic">
+                        <div class="level">1</div>
+                        <img src="images/heart.png" alt="" />
+                    </div>
+                    <h3>name</h3>
+                    <p>nt</p>
+                    <p>txt</p>
+                </div> -->
+            </div>
         </div>
 
         <script>

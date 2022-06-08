@@ -72,7 +72,7 @@
                 left: 170px;
             }
             .table {
-                margin-top: 110px;
+                margin-top: 90px;
             }
 
             #sort {
@@ -85,6 +85,11 @@
                 text-align: center;
                 color: rgb(136, 88, 36);
                 outline: none;
+            }
+            .titleH2 {
+                position: absolute;
+                top: -100px;
+                color: rgb(136, 88, 36);
             }
         </style>
     </head>
@@ -103,9 +108,12 @@
             getNav();
         </script>
         <div class="navBar"></div>
-        <button><a href="class-index.html">登出</a></button>
+        <button style="transform: translateX(1200px)">
+            <a href="class-index.html">登出</a>
+        </button>
 
         <div class="container">
+            <h2 class="titleH2">課程管理</h2>
             <input type="text" placeholder="" class="search" /><i
                 class="fa-solid fa-magnifying-glass"
             ></i>
