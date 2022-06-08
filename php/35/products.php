@@ -106,7 +106,6 @@ if ($totalRows > 0) {
     <table class="table table-success table-striped">
         <thead>
             <tr>
-                <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
                 <th scope="col">#</th>
                 <th scope="col">商品編號</th>
                 <th scope="col">商品名稱</th>
@@ -126,14 +125,6 @@ if ($totalRows > 0) {
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <td>
-                        <?php /*    
-                    <a href="ab-delete.php?sid=<?= $r['sid'] ?>" onclick="return comfirm('確定要刪除編號為<?= $r['sid'] ?>的資料嗎?'">
-                    */ ?>
-                        <a href="javascript: delete_it(<?= $r['products_sid'] ?>)">
-                            <i class=" fa-solid fa-trash-can"></i>
-                        </a>
-                    </td>
                     <td><?= htmlentities($r['products_sid']) ?></td>
                     <td><?= $r['products_number'] ?></td>
                     <td><?= htmlentities($r['products_name']) ?></td>

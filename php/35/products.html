@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0px;
+                color: rgb(47, 46, 46);
+                box-sizing: border-box;
+            }
+            .menu {
+                display: flex;
+                justify-content: center;
+            }
+            .forhere {
+                display: block;
+            }
+            .togo {
+                display: none;
+            }
+
+            .takeout {
+                text-align: center;
+                font-size: 20px;
+                width: 150px;
+                padding: 20px;
+                margin: 0 15px;
+                border-radius: 5px 5px 0 0 /5px 5px 0 0;
+                background-color: rgba(208, 165, 119, 0.376);
+            }
+            .delivery {
+                text-align: center;
+                font-size: 20px;
+                width: 150px;
+                padding: 20px;
+                margin: 0 15px;
+                border-radius: 5px 5px 0 0 /5px 5px 0 0;
+                background-color: rgb(171, 174, 173);
+            }
+
+            .btn {
+                display: flex;
+            }
+            .location {
+                width: 60vw;
+                border: 1.8px solid rgb(176, 171, 171);
+                border-radius: 5px;
+            }
+            .city,
+            .district {
+                width: 37vw;
+                height: 50px;
+                border: 1px solid rgb(176, 171, 171);
+                border-radius: 5px;
+                color: rgb(72, 69, 69);
+                font-size: 18px;
+            }
+            label {
+                line-height: 2.5rem;
+                font-size: 1rem;
+            }
+            .presstobook {
+                width: 75vw;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 10px auto;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: rgba(208, 165, 119, 0.376);
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            input .address {
+                border: 0px;
+                width: 100px;
+                height: 50px;
+                padding-left: 140px;
+                padding-right: 140px;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .address {
+                margin-top: 10px;
+                width: 78vw;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .select {
+                padding-bottom: 20px;
+                text-align: center;
+            }
+            .nav {
+                text-decoration: none;
+                font-size: 1rem;
+                margin-left: 35px;
+                padding: 5px;
+                line-height: 2.5rem;
+            }
+            a:hover {
+                color: rgb(205, 111, 3);
+            }
+
+            section {
+                width: 80%;
+                float: left;
+            }
+            aside {
+                width: 20%;
+                height: 100vh;
+                border-left: 1px solid #ccc;
+                float: right;
+            }
+
+            .menu_food {
+                display: flex;
+                width: 30vw;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                box-shadow: 1px 1px 5px rgb(109, 108, 108);
+                margin: 10px auto;
+                padding: 15px;
+            }
+            .menu_food_text {
+                width: 80%;
+            }
+            .menu_area {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .photo {
+                width: 100px;
+                height: 100px;
+                display: flex;
+                align-self: center;
+            }
+            .menu_photo {
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+            }
+            .menu_nutrition {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                font-size: 0.8rem;
+                letter-spacing: 0.1rem;
+            }
+            .menu_kcal {
+                line-height: 2rem;
+            }
+
+            .fa-circle-plus {
+                font-size: 30px;
+                margin-top: 90px;
+                margin-left: 10px;
+                color: rgb(248, 179, 5);
+            }
+            .afterclick {
+                width: 100vw;
+                height: auto;
+                background-color: rgba(52, 49, 49, 0.529);
+                transform: translateY(-100px);
+            }
+
+            .afterclick.hide {
+                display: none;
+            }
+
+            .all_choice {
+                width: 40vw;
+                height: auto;
+                margin: 0 auto;
+                background-color: #fff;
+                position: relative;
+            }
+
+            .all_choice_photo {
+                width: 40vw;
+            }
+            .all_choice_photo_img {
+                width: 100%;
+                object-fit: contain;
+            }
+        </style>
+    </head>
+
+    <script>
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    </script>
+
+    <body>
+        <div class="wrap">
+            <div class="navBar"></div>
+
+            <section>
+                <div class="menu"></div>
+                <div>
+                    <img
+                        src="../../images/11/bg.jpeg"
+                        style="width: 80vw; height: 400px"
+                    />
+                </div>
+                <div class="menu_area">
+                    <!-- 這裡放訂餐 -->
+                </div>
+
+                <!-- 這裡放點擊後選冰熱 甜度 -->
+
+                <div class="afterclick" id="detail">
+                    <!-- <div class="all_choice">
+             <a href="#nav"> <i class="fa-solid fa-circle-xmark" style="font-size: 30px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
+            </div>
+
+            <div>
+              <img src=""class="">
+            </div>
+            <h4>飲料名稱</h4> -->
+                </div>
+            </section>
+            <aside style="margin: 0 auto">
+                <div class="aside">
+                </div>
+
+                <div
+                    style="
+                        position: fixed;
+                        bottom: 0;
+                        text-align: center;
+                        margin-bottom: 40px;
+                    "
+                ></div>
+                <div
+                    style="
+                        width: 280px;
+                        height: 30px;
+                        background-color: #ccc;
+                        position: fixed;
+                        bottom: 0;
+                        transform: translateX(18%);
+                        text-align: center;
+                        padding-top: 5px;
+                        margin-bottom: 20px;
+                        border-radius: 10px;
+                        box-shadow: 1px 1px #000;
+                    "
+                    onclick="sendData()"
+                >
+                    結帳
+                </div>
+            </aside>
+        </div>
+
+        <script>
+            // 設定檔（config）
+            const food_choice_ice = {
+                1: "正常冰",
+                2: "少冰",
+                3: "去冰",
+                4: "常溫",
+                5: "熱",
+            };
+            const food_choice_sugar = {
+                1: "無糖",
+                2: "微糖",
+                3: "半糖",
+                4: "全糖",
+            };
+
+            // 訂餐
+            const menu_area = document.querySelector(".menu_area");
+            const menu_food = document.querySelector(".menu_food");
+            const detail = document.querySelector("#detail");
+            const plus_minus_number =
+                document.querySelector(".plus_minus_number");
+
+            fetch("menu_api.php")
+                .then((response) => {
+                    return response.json();
+                })
+                .then((result) => {
+                    this.data = result;
+                    menulist();
+                    setListener();
+                });
+
+                const menulist = () => {
+                const { data } = this;
+                if (!data || !data.length) return false;
+
+                menu_area.innerHTML = "";
+                for (let i = 0; i < data.length; i++) {
+                    menu_area.innerHTML += `<div class="menu_food">
+                <div class="menu_food_text">
+                    <h4 class="menu_sid" style="display:none;">${data[i].menu_sid}</h4>
+                    <h4 class="menu_name" style="line-height:3rem">${data[i].menu_name}</h4>
+                    <p class="menu_nutrition">${data[i].menu_nutrition}</p>
+                    <p class="menu_kcal">總熱量 ${data[i].menu_kcal} 大卡</p>
+                    <p class="menu_price_m">${data[i].menu_price_m} 元</p>
+                </div>
+                <figure class="photo">
+
+                    <img class="menu_photo" src="../../images/11/${data[i].menu_photo}" />
+                </figure>
+
+                <i class="fa-solid fa-circle-plus add-cart" data-sid="${data[i].menu_sid}"></i>
+                </div>`;
+                }
+            };
+
+            const foodorder = (e) => {
+                const { data } = this;
+                if (!data || !data.length) return false;
+                // 冰涼選擇
+                const sid = e.target.getAttribute("data-sid");
+                let item;
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].menu_sid == sid) {
+                        item = data[i];
+                    }
+                }
+                // const item = data.find((i) => i.menu_sid == sid)
+                if (!item) return false;
+                console.log(item);
+
+                detail.innerHTML = `
+         
+         <div class="all_choice">
+          <a href="#nav"> <i class="fa-solid fa-circle-xmark close" style="font-size: 35px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
+
+          <div class="all_choice_photo"">
+           <img src="../../images/11/${item.menu_photo}"class="all_choice_photo_img" style="height:300px">
+         </div>
+
+         <div class ="choice_textarea" style="padding:30px">
+             <div style="display:flex;margin-bottom:20px;"><h2 class="menu_name" style="flex-grow:1;">${item.menu_name}</h2>   <h3 style="" class="onesize">$ ${item.menu_price_m}元<h3></div>
+             <p class="menu_nutrition1" name="menu_nutrition">${item.menu_nutrition}</p>
+          
+        
+             
+
+
+             <h3 style="border-top:1px solid #ccc;">冰熱選擇<h3>
+
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="1">
+             <label for="">正常冰</label> </div>
+
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="2">
+             <label for="">少冰</label> </div>
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="3">
+             <label for="">去冰</label></div>
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="4">
+             <label for="">常溫</label>  </div>      
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="5">
+             <label for="">熱</label> </div>
+
+             <h3 style="border-top:1px solid #ccc;">甜度選擇<h3>
+
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_sugar" value="1">
+             <label for="">無糖</label> </div>
+
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_sugar" value="2">
+             <label for="">微糖</label> </div>
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_sugar" value="3">
+             <label for="">半糖</label></div>
+             <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_sugar" value="4">
+             <label for="">全糖</label>  </div>            
+             </div>
+
+             <div style="display:flex">
+               <i class="fa-solid fa-minus" onclick="minus_number()"style="margin-left:20px;margin-right:20px"></i>
+               <p class="plus_minus_number" name="plus_minus_number">1</p>
+               <i class="fa-solid fa-plus" onclick="plus_number()"style="margin-left:20px;margin-right:20px"></i>
+               
+               <button class="addtocart_button" style="width:20vw;height:30px;background-color:rgb(248, 179, 5);text-align:center" id="add_to_cart" data-sid=${sid}>加入購物車</button>
+                <br><br>                
+               </div>
+         </div>
+         
+`;
+                detail.classList.remove("hide");
+                const addtocart_button =
+                    document.querySelector(".addtocart_button");
+                addtocart_button.addEventListener("click", addtocart);
+                const close = document.querySelector(".close");
+                close.addEventListener("click", closedetail);
+            };
+
+            //按ＸＸ關閉視窗
+            function closedetail() {
+                detail.classList.add("hide");
+            }
+            // 加到購物車後關閉視窗
+            function addtocart(e) {
+                console.log(e.target);
+                const sid1 = e.target.getAttribute("data-sid");
+                let item;
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].menu_sid == sid1) {
+                        item = data[i];
+                    }
+                }
+                detail.classList.add("hide");
+                const size = document.querySelector(
+                    'h3[class="onesize"]'
+                ).value;
+                const ice = document.querySelector(
+                    'input[name="food_choice_ice"]:checked'
+                ).value;
+                const sugar = document.querySelector(
+                    'input[name="food_choice_sugar"]:checked'
+                ).value;
+                const count = document.querySelector(
+                    'p[name="plus_minus_number"]'
+                ).textContent;
+                const id = +new Date();
+                const subTotal = count * item.menu_price_m;
+
+                const aside = document.querySelector(".aside");
+                aside.innerHTML += `
+          <div id="${id}" class="item">
+              <div style="display:flex;margin: 6px;">
+
+                  <div style="display:none;" class="menu_price" data-price="${item.menu_price_m}">${item.menu_price_m}</div>
+                  <div style="flex-grow:1;" class="menu_name">${item.menu_name}
+                  </div>
+                  <div class="subtotal">${subTotal}元</div>
+              </div>
+              <div style="display:flex;margin: 6px;">
+                  <div style="flex-grow:1">數量</div>
+
+                  <div style="display:flex;">
+
+
+                    <i class="fa-solid fa-minus" onclick="minus_number1(${id})"style="margin-left:20px;margin-right:20px"></i>
+                    <p class="plus_minus_number1">${count}</p>
+                    <i class="fa-solid fa-plus " style="padding-left: 5px;padding-right:5px;" onclick="plus_number1(${id})"></i>
+                  </div>
+              
+            </div>
+
+              <div style="margin:6px;" class="ice" data-ice="${ice}">${food_choice_ice[ice]}</div>
+              <div style="margin: 6px;" class="sugar" data-sugar="${sugar}">${food_choice_sugar[sugar]}</div>
+            
+              <div style="border-bottom:1px solid #ccc;margin:5px"></div>
+         </div>
+          `;
+            }
+
+            // 選餐
+            const setListener = () => {
+                const addCarts = document.querySelectorAll(".add-cart");
+                for (let i = 0; i < addCarts.length; i++) {
+                    addCarts[i].addEventListener("click", foodorder);
+                }
+            };
+
+            //  新增刪減飲品數量
+            function plus_number() {
+                let x = document.querySelector(".plus_minus_number").innerHTML;
+                x = parseInt(x) + 1;
+                document.querySelector(".plus_minus_number").innerHTML = x;
+                console.log("x", x);
+            }
+            function minus_number() {
+                let x = document.querySelector(".plus_minus_number").innerHTML;
+                if (x > 1) {
+                    x = parseInt(x) - 1;
+                    document.querySelector(".plus_minus_number").innerHTML = x;
+                }
+                console.log("x1", x);
+            }
+
+            function plus_number1(id) {
+                let x = document.querySelector(
+                    `[id="${id}"] .plus_minus_number1`
+                ).innerHTML;
+                x = parseInt(x) + 1;
+                document.querySelector(
+                    `[id="${id}"] .plus_minus_number1`
+                ).innerHTML = x;
+                const menu_price_m = document.querySelector(
+                    `[id="${id}"] div[class="menu_price"]`
+                ).textContent;
+                const subtotal = document.querySelector(
+                    `[id="${id}"] .subtotal`
+                );
+                document.querySelector(`[id="${id}"] .subtotal`).innerHTML = `${
+                    menu_price_m * x
+                }元`;
+            }
+            function minus_number1(id) {
+                let x = document.querySelector(
+                    `[id="${id}"] .plus_minus_number1`
+                ).innerHTML;
+                if (x > 0) {
+                    x = parseInt(x) - 1;
+                    document.querySelector(
+                        `[id="${id}"] .plus_minus_number1`
+                    ).innerHTML = x;
+                    const menu_price_m = document.querySelector(
+                        `[id="${id}"] div[class="menu_price"]`
+                    ).textContent;
+                    const subtotal = document.querySelector(
+                        `[id="${id}"] .subtotal`
+                    );
+                    document.querySelector(
+                        `[id="${id}"] .subtotal`
+                    ).innerHTML = `${menu_price_m * x}元`;
+                }
+            }
+
+            const sendData = () => {
+                const menu_name = document.querySelectorAll(".menu_name");
+                const menu_price_m = document.querySelectorAll(".menu_price");
+                const ice = document.querySelectorAll(".ice");
+                const sugar = document.querySelectorAll(".sugar");
+                const count = document.querySelectorAll(".plus_minus_number1");
+                const items = document.querySelectorAll(".item");
+                const result = [];
+                for (let i = 0; i < items.length; i++) {
+                    result.push({
+                        // food_choice_sid: 555,
+                        menu_name: menu_name[i].textContent,
+                        menu_price_m:
+                            +menu_price_m[i].getAttribute("data-price"),
+                        food_choice_ice: +ice[i].getAttribute("data-ice"),
+                        food_choice_sugar: +sugar[i].getAttribute("data-sugar"),
+                        food_choice_count: +count[i].innerHTML,
+                    });
+                }
+                console.log("result ", result);
+                console.log("result ", JSON.stringify(result));
+
+                // POST 資料到購物車
+
+                // 傳資料給後端的方法一
+                // let xhr = new XMLHttpRequest();
+                // xhr.open("post", "food_choice_api.php", true); //post 告知後端
+                // xhr.setRequestHeader("Content-type", "application/json"); //告訴後端是用 JSON 格式
+                // let data = JSON.stringify(result); //將物件資料轉成字串
+                // xhr.send(data);
+
+                // 傳資料給後端的方法二
+
+                fetch("food_choice_api.php", {
+                    method: "POST",
+                    body: JSON.stringify(result),
+                    headers: { "Content-Type": "application/json" },
+                })
+                    .then((res) => res.json())
+
+                    .then((res) => console.log(res));
+
+                // 傳資料給後端的方法三
+                //
+                //         const r = await fetch("food_choice_api.php", {
+                //             method: "POST",
+                //             body: data,
+                //         });
+                //         const qq = await r.json();
+                //         console.log(qq);
+
+                sessionStorage.setItem("food_order", JSON.stringify(result));
+            };
+
+
+            function getNav() {
+                fetch("../../parts/navbar.php")
+                    .then(function (r) {
+                        return r.text();
+                    })
+                    .then(function (navData) {
+                        console.log(navData);
+                        navBar = document.querySelector(".navBar");
+                        navBar.innerHTML = navData;
+                    });
+            }
+            getNav();
+        </script>
+    </body>
+</html>

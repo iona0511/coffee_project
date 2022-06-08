@@ -30,7 +30,7 @@ if (empty($row)) {
 
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 <style>
     .form-control.red {
         border: 1px solid red;
