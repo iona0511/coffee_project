@@ -300,7 +300,6 @@
 </head>
 
 <body coffee-op0>
-    <div class="navBar"></div>
     <div id="app" v-cloak>
         <div class="progress_bar_wrap">
             <div class="rect">
@@ -362,15 +361,19 @@
     <script src="../../js/gsap.min.js"></script>
     <script>
         (function getNav() {
-                fetch("../../parts/navbar.php")
-                    .then(function (r) {
-                        return r.text();
-                    })
-                    .then(function (navData) {
-                        console.log(navData);
-                        navBar = document.querySelector(".navBar");
-                        navBar.innerHTML = navData;
-                    });
+            const el = document.createElement("div");
+            const docBody = document.querySelector("body");
+            
+            el.setAttribute("class", "navBar");
+            
+            fetch("../../parts/navbar.php")
+                .then(function (r) {
+                    return r.text();
+                })
+                .then(function (navData) {
+                    el.innerHTML = navData;
+                    docBody.insertBefore(el,docBody.childNodes[0]);
+                });
         })();
         const vm = Vue.createApp({
             data() {
