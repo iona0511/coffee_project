@@ -17,7 +17,7 @@
     <title>Document</title>
     <style>
       body{
-        background: url(../../images/11/pexels-adrienne-andersen-2237798.jpg);
+        background: url(../../images/11/pexels-dominika-roseclay-894612.jpg);
         background-size:100vw;
       }
       * {
@@ -184,7 +184,7 @@
         width: 100vw;
         height: auto;
         background-color: rgba(52, 49, 49, 0.529);
-        transform: translateY(-100px);
+        transform: translateY(-50px);
       }
 
       .afterclick.hide {
@@ -294,7 +294,7 @@
             <h4>飲料名稱</h4> -->
         </div>
       </section>
-      <aside style="margin:0 auto;">
+      <aside style="margin:0 auto;background-color: rgb(247, 243, 215);">
         <div class="aside" >
           <!-- <div style="display:flex;margin: 6px;">
                   <div style="flex-grow:1;">卡布奇諾 (熱)
@@ -409,7 +409,7 @@
 
         menu_area.innerHTML = "";
         for (let i = 0; i < data.length; i++) {
-          menu_area.innerHTML += `<div class="menu_food">
+          menu_area.innerHTML += `<div class="menu_food" style="background-color:#fff; color:#fff">
                 <div class="menu_food_text">
                     <h4 class="menu_sid" style="display:none;">${data[i].menu_sid}</h4>
                     <h4 class="menu_name" style="line-height:3rem">${data[i].menu_name}</h4>

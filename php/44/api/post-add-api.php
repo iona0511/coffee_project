@@ -8,7 +8,6 @@ $op_msg = [
     'postData' => $_POST,
     'error' => '',
     'postId' => 0,
-    'tag' => '',
     'poster' => '',
     'pics' => 0
 ];
@@ -16,6 +15,8 @@ $op_msg = [
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
 $m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
 $photos = json_decode($_POST['photos'], true);
+$tags =  json_decode($_POST['tags'], true);
+
 
 if (empty($_POST['title'])) {
     $op_msg['error'] = '沒有文章標題';
@@ -37,14 +38,14 @@ if (empty($_POST['title'])) {
     $op_msg['code'] = 300;
     echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
     exit;
-} 
+}
 
-if (count($photos) >= 1 ) {
+if (count($photos) >= 1) {
     $op_msg['error'] = '沒有上傳圖片';
     $op_msg['code'] = 400;
     echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
     exit;
-}elseif(count($photos) >5){
+} elseif (count($photos) > 5) {
     $op_msg['error'] = '圖片超過規定上傳數量';
     $op_msg['code'] = 400;
     echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
@@ -99,41 +100,72 @@ foreach ($photos as $k => $f_name) {
 
 
 
-if ($stmt->rowCount() == 1) {
-    $op_msg['success'] = true;
-    $op_msg['postId'] = $postSid;
-    $op_msg['poster'] = $m_sid;
 
-    if (!empty($tag)) {
-        // Table Tag處理 //
-        $search_tag_sql = sprintf("SELECT * FROM `tag` WHERE `name` = '%s'", $tag);
-        $tag_in_sql = $pdo->query($search_tag_sql)->fetch();
+if (!empty($tags)) {
+    foreach ($tags as $k => $tag_name) {
+        $sql = sprintf("SELECT * FROM `tag` WHERE `name` = '%s'", $tag_name);
+        $tag_in_sql = $pdo->query($sql)->fetch();
+
         // 找tag表內有沒有名稱一樣的tag
+        // echo json_encode($tag_in_sql, JSON_UNESCAPED_UNICODE);
+        // exit;
         if (!empty($tag_in_sql)) {
-            $tagTimes = $tag_in_sql['times'] + 1;
-            //紀錄tagSid
             $tagSid = $tag_in_sql['sid'];
-
-            // 若有此tag tag使用次數+1
-            $sql = sprintf("UPDATE `tag` SET `times` = '%s' WHERE `name` = '%s'", $tagTimes, $tag);
+            $sql = sprintf("UPDATE `tag` SET `times` = `times` +1 WHERE `name` = '%s'", $tag);
             $pdo->query($sql);
-            $op_msg['tag'] = "標籤使用${tagTimes}次";
         } else {
             $sql = "INSERT INTO `tag` (`name`) VALUES (?)";
             $stmt = $pdo->prepare($sql);
 
-            $stmt->execute([$tag]);
-            //紀錄tagSid
+            $stmt->execute([$tag_name]);
             $tagSid = $pdo->lastInsertId();
-            $op_msg['tag'] = "新增標籤${tag}";
         }
 
-        //Table Post_tag處理
         //新增post_tag關聯
         $sql = "INSERT INTO `post_tag` (`post_sid`, `tag_sid`) VALUES (?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$postSid, $tagSid]);
     }
+}
+
+
+
+
+
+if ($stmt->rowCount() == 1) {
+    $op_msg['success'] = true;
+    $op_msg['postId'] = $postSid;
+    $op_msg['poster'] = $m_sid;
+
+    // if (!empty($tag)) {
+    //     // Table Tag處理 //
+    //     $search_tag_sql = sprintf("SELECT * FROM `tag` WHERE `name` = '%s'", $tag);
+    //     $tag_in_sql = $pdo->query($search_tag_sql)->fetch();
+    //     // 找tag表內有沒有名稱一樣的tag
+    //     if (!empty($tag_in_sql)) {
+    //         $tagTimes = $tag_in_sql['times'] + 1;
+    //         //紀錄tagSid
+    //         $tagSid = $tag_in_sql['sid'];
+
+    //         // 若有此tag tag使用次數+1
+    //         $sql = sprintf("UPDATE `tag` SET `times` = '%s' WHERE `name` = '%s'", $tagTimes, $tag);
+    //         $pdo->query($sql);
+    //     } else {
+    //         $sql = "INSERT INTO `tag` (`name`) VALUES (?)";
+    //         $stmt = $pdo->prepare($sql);
+
+    //         $stmt->execute([$tag]);
+    //         //紀錄tagSid
+    //         $tagSid = $pdo->lastInsertId();
+    //         $op_msg['tag'] = "新增標籤${tag}";
+    //     }
+
+    //     //Table Post_tag處理
+    //     //新增post_tag關聯
+    //     $sql = "INSERT INTO `post_tag` (`post_sid`, `tag_sid`) VALUES (?, ?)";
+    //     $stmt = $pdo->prepare($sql);
+    //     $stmt->execute([$postSid, $tagSid]);
+    // }
 }
 
 

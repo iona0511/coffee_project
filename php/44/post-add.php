@@ -21,21 +21,27 @@ require __DIR__ . '/part/connect_db.php';
     <?php
     include __DIR__ . "/part/nav.php";
     ?>
-    <div class="container">
+    <div class="container" style="max-width: 960px;">
         <h3 class="card-title text-primary" style="font-weight: bold;">新增文章</h3>
-        <form name="main_form" onsubmit="sendData();return false;" novalidate>
-            <div class="mb-3">
-                <label for="title" class="form-label">文章標題</label>
-                <input type="title" class="form-control" id="title" name="title">
-                <div class="form-text red"></div>
-            </div>
-            <div class="mb-3">
-                <label for="topic" class="form-label">文章分類</label>
-                <select name="topic" class="form-select w-25" aria-label="Default select example">
-                    <option value="1" selected>課程分享</option>
-                    <option value="2">商品分享</option>
-                    <option value="3">其他分享</option>
-                </select>
+        <form name="main_form" onsubmit="sendData();return false;" novalidate id="main_form">
+            <div class="d-flex mb-3">
+                <div class="col-2 pr-3">
+                    <label for="topic" class="form-label">文章分類</label>
+                    <select name="topic" class="form-select" aria-label="Default select example">
+                        <option value="1" selected>課程分享</option>
+                        <option value="2">商品分享</option>
+                        <option value="3">其他分享</option>
+                    </select>
+                </div>
+                <div class="col-10">
+                    <label for="title" class="form-label">文章標題</label>
+                    <input type="title" class="form-control" id="title" name="title">
+                    <div class="form-text red"></div>
+                </div>
+
+
+
+
             </div>
             <button type="button" class="btn btn-primary mb-3" id="upload-btn" onclick="uploadPhotos()">
                 上傳多張照片
@@ -46,26 +52,29 @@ require __DIR__ . '/part/connect_db.php';
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">文章內容</label>
-                <textarea type="text" class="form-control" id="content" name="content" col="30" rows="6"></textarea>
+                <textarea type="text" class="form-control" id="content" name="content" col="30" rows="4"></textarea>
                 <div class="form-text red"></div>
             </div>
-            <div class="mb-3">
+            <div class="mb-5">
                 <label for="tag" class="form-label">標籤</label>
-                <div class="search_col">
-                    <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="#標籤名稱">
-                    <!-- 搜尋列 -->
-                    <div class="s_result">
-
+                <div class="wrap mb-5">
+                    <div class="search_col">
+                        <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="標籤名稱" autocomplete="off">
+                        <!-- 搜尋列 -->
+                        <div class="s_result">
+                            <!-- 預覽搜尋 -->
+                        </div>
                     </div>
                 </div>
+                <input type="hidden" name="tags" value="[]" />
 
-
+                <div class="tag-rect">
+                    <!-- 標籤列 -->
+                </div>
             </div>
 
-            <div class="tag-rect mt-3 mb-3">
-                <!-- 標籤列 -->
-            </div>
-            <button type="submit" class="btn btn-primary">發文</button>
+
+            <button type="submit" class="btn btn-primary mt-2   ">發文</button>
             <div id="info_bar" class="alert alert-success" role="alert" style="display: none;">
                 發文成功
             </div>
@@ -81,6 +90,7 @@ require __DIR__ . '/part/connect_db.php';
         const container = document.querySelector(".container");
         const p_container = document.querySelector("#photo_container");
         let photoAr = [];
+        let tagAr = [];
 
 
         container.addEventListener("click", (event) => {
@@ -176,11 +186,8 @@ require __DIR__ . '/part/connect_db.php';
 
         // 動態搜尋預覽
         // input會包含注音選自 compositionend輸入法完成後才會
-        async function preview_tag(){
-            
-        }
+        async function preview_tag() {
 
-        document.main_form.tag.addEventListener("input", async () => {
             const v = document.main_form.tag.value;
             if (v < 1) {
                 document.querySelector(".s_result").innerHTML = "";
@@ -198,26 +205,30 @@ require __DIR__ . '/part/connect_db.php';
                 const el = document.createElement("div");
                 obj.forEach((v, ind) => {
                     el.innerHTML += `
-                    <div class="s_col" onclick="addTag(event)">${v['name']}</div>`;
+                    <div class="s_col" onclick="render_h_tag(event);">${v['name']}</div>`;
                 });
                 document.querySelector(".s_result").innerHTML = el.innerHTML;
             }
-        });
+        }
 
-        const addTag = (event) => {
-            const v = event.target.innerText;
+        document.main_form.tag.addEventListener("input", preview_tag);
 
-            document.querySelector(".tag-rect").innerHTML += `
-                <span class="h_tag" onclick="removeTag(event)">${v}</span>`;
 
-            document.main_form.tag.value = "";
-        };
 
         const removeTag = (event) => {
+            const f = event.target.innerText;
             event.target.remove();
+
+            if (tagAr.indexOf(f) !== -1) {
+                tagAr.splice(photoAr.indexOf(f), 1);
+            }
+            document.main_form.tags.value = JSON.stringify(tagAr);
         };
 
         window.addEventListener("click", () => {
+
+            document.querySelector(".search_col").style.width = "20%";
+
             if (event.target == document.main_form.tag) return;
             if (document.querySelector(".s_result")) {
                 document.querySelector(".s_result").innerHTML = "";
@@ -225,7 +236,10 @@ require __DIR__ . '/part/connect_db.php';
         });
 
         document.main_form.tag.addEventListener("click", async () => {
- 
+            event.cancelBubble = true;
+
+            document.querySelector(".search_col").style.width = "28%";
+
             const v = document.main_form.tag.value;
             if (v < 1) {
                 document.querySelector(".s_result").innerHTML = "";
@@ -242,10 +256,49 @@ require __DIR__ . '/part/connect_db.php';
             if (obj.length > 0) {
                 const el = document.createElement("div");
                 obj.forEach((v, ind) => {
-                    el.innerHTML += `<div class="s_col" onclick="addTag(event)">${v['name']}</div>`;
+                    el.innerHTML += `<div class="s_col" onclick="render_h_tag(event)">${v['name']}</div>`;
                 });
                 document.querySelector(".s_result").innerHTML = el.innerHTML;
             }
+        });
+
+
+        function render_h_tag(event) {
+            // 判斷是用click來的還是keydown(按enter)來的
+            let v = event.target.innerText || document.main_form.tag.value;
+
+            let exist = false;
+
+            // 如果已經有現有標籤
+            if (document.querySelector(".h_tag")) {
+                document.querySelectorAll(".h_tag").forEach((now_tag) => {
+                    if (v == now_tag.innerText) {
+                        exist = (v == now_tag.innerText);
+                        return
+                    }
+                });
+            }
+
+            // 不存在才render並清空input value
+            if (!exist) {
+                document.querySelector(".tag-rect").innerHTML += `
+                <span class="h_tag" onclick="removeTag(event)">${v}</span>`;
+                tagAr.push(v);
+                document.main_form.tags.value = JSON.stringify(tagAr);
+
+                document.main_form.tag.value = "";
+            }
+
+        }
+
+        document.main_form.tag.addEventListener("keydown", (event) => {
+
+            if (event.key == "Enter") {
+                // render h_tag
+                render_h_tag(event);
+                event.preventDefault();
+            }
+            document.querySelector("#main_form").setAttribute("onsubmit", "event.preventDefault();sendData();return false;");
         });
     </script>
 </body>
