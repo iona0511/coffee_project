@@ -71,9 +71,73 @@
             #photo_container {
                 margin-top: 20px;
             }
+            .btn-primary {
+                background-color: rgb(210, 173, 133);
+                border: 1px solid rgb(210, 173, 133);
+            }
+
+            .btn-primary:hover {
+                background: linear-gradient(
+                    135deg,
+                    rgb(108, 160, 202) 0%,
+                    blue 100%
+                );
+                animation: btnB 2s 0s infinite linear;
+            }
+            @keyframes btnB {
+                0% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 20%,
+                        blue 80%
+                    );
+                }
+                50% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 40%,
+                        blue 60%
+                    );
+                }
+                75% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 20%,
+                        blue 80%
+                    );
+                }
+                100% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 0%,
+                        blue 100%
+                    );
+                }
+            }
             .btn-danger {
                 padding: 0;
                 margin-right: 30px;
+                background-color: rgb(210, 173, 133);
+                border: 1px solid rgb(210, 173, 133);
+            }
+            .btn-danger:hover {
+                background: linear-gradient(135deg, #faa 0%, red 100%);
+                animation: btnR 2s 0s infinite linear;
+            }
+
+            @keyframes btnR {
+                0% {
+                    background: linear-gradient(135deg, #faa 20%, red 80%);
+                }
+                50% {
+                    background: linear-gradient(135deg, #faa 40%, red 60%);
+                }
+                75% {
+                    background: linear-gradient(135deg, #faa 20%, red 80%);
+                }
+                100% {
+                    background: linear-gradient(135deg, #faa 0%, red 100%);
+                }
             }
             .btn-danger > a {
                 display: block;
