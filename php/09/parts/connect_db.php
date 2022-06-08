@@ -5,7 +5,6 @@
 // $db_pass = 'admin'; // 連線用戶的密碼
 // $db_name = 'coffee';  // 資料庫名稱
 
-
 $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
 
 $pdo_options = [
