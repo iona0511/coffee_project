@@ -6,10 +6,10 @@
 // $db_name = 'coffee'; //資料庫名稱, 所選定的資料庫
 
 
-// $db_host = 'localhost';
-// $db_user = 'Trista';
-// $db_pass = 'admin';
-// $db_name = 'mydb';
+$db_host = 'localhost';
+$db_user = 'Trista';
+$db_pass = 'admin';
+$db_name = 'mydb';
 
 // $db_host = 'localhost'; 
 // $db_user = 'Rowan'; 
