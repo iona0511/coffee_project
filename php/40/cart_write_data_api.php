@@ -84,9 +84,9 @@
         exit;
     }
     //檢查優惠卷
-    if(isset($_SESSION["rawCoupon"])) {
+    if(isset($_SESSION["couponJSON"])) {
         //因為不用優惠卷 優惠卷欄位是undefined 而undefined無法以json格式傳送 因此以id -1 傳送 php判斷若優惠卷id為-1則寫入NULL
-        $decodeCoupon = json_decode($_SESSION["rawCoupon"],true);
+        $decodeCoupon = json_decode($_SESSION["couponJSON"],true);
         if($decodeCoupon == -1) {
             $decodeCoupon = NULL;
         }
@@ -97,7 +97,7 @@
         exit;
     }
     if(isset($_SESSION["displayTotal"])) {
-        $price = $_SESSION["displayTotal"];
+        $price = json_decode($_SESSION["displayTotal"], true);
     } else {
         $output["success"] = false;
         $output["message"] = "訂單價格遺失";
@@ -140,33 +140,82 @@
 
     //寫入coupon_logs
     if($decodeCoupon === NULL) {
-        unset($SESSION["rawCoupon"]);
-        unset($SESSION["rawJSON"]);
-        echo json_encode($output, JSON_UNESCAPED_UNICODE);
-        exit;
-    }
-    $sql = "INSERT INTO `coupon_logs`(
-        `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
-    ) VALUES (
-        ?, ?, ?, NOW()
-    )";
-    $stmt = $pdo -> prepare($sql);
-    $stmt -> execute([
-        $_SESSION["user"]["member_sid"],
-        $decodeCoupon,
-        $_SESSION["newestOrder"]
-    ]);
-    if($stmt -> rowCount() == 1) {
-        $output["success"] = true;
+        unset($_SESSION["couponJSON"]);
     } else {
-        $output["success"] = false;
-        $output["message"] = "系統繁忙2";
-        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        $sql = "INSERT INTO `coupon_logs`(
+            `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
+        ) VALUES (
+            ?, ?, ?, NOW()
+        )";
+        $stmt = $pdo -> prepare($sql);
+        $stmt -> execute([
+            $_SESSION["user"]["member_sid"],
+            $decodeCoupon,
+            $_SESSION["newestOrder"]
+        ]);
+        if($stmt -> rowCount() == 1) {
+            $output["success"] = true;
+        } else {
+            $output["success"] = false;
+            $output["message"] = "系統繁忙2";
+            echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        }
+    
+        //寫入coupon_receive
+        $sql = sprintf("UPDATE `coupon_receive` SET `status`= 1 WHERE `sid` = %s;", $decodeCoupon);
+        $stmt = $pdo -> prepare($sql) -> execute();
     }
 
-    //寫入coupon_receive
-    $sql = sprintf("UPDATE `coupon_receive` SET `status`= 1 WHERE `sid` = %s;", $decodeCoupon);
-    $stmt = $pdo -> prepare($sql) -> execute();
+    //寫入order
+    $products = json_decode($_SESSION["productJSON"], true);
+    foreach($products as $v) {
+        $sql = "INSERT INTO `cart`(
+            `cart_product_id`, `cart_price`, `cart_quantity`, `cart_member_id`, `cart_order_id`
+        ) VALUES (
+            ?,?,?,?,?
+        )";
+        $stmt = $pdo -> prepare($sql);
+        $stmt -> execute([
+            $v["id"],
+            $v["price"],
+            $v["quantity"],
+            $_SESSION["user"]["member_sid"],
+            $_SESSION["newestOrder"]
+        ]);
+    }
+    foreach($products as $v) {
+        $sql = sprintf("UPDATE `products` SET `products_stocks`= `products_stocks` - '%s' WHERE `products_sid` = '%s'", $v["quantity"], $v["id"]);
+        $stmt = $pdo -> prepare($sql) -> execute();
+    }
 
+    //寫入food_choice
+    $foods = json_decode($_SESSION["foodJSON"], true);
+    foreach($foods as $v) {
+        $sql = "INSERT INTO `food_choice`(
+            `food_id`, `food_price`, `food_ice`, `food_sugar`, `food_quantity`, `food_member_id`, `food_order_id`
+        ) VALUES (
+            ?,?,?,?,?,?,?
+        )";
+        $stmt = $pdo -> prepare($sql);
+        $stmt -> execute([
+            $v["id"],
+            $v["price"],
+            $v["ice"],
+            $v["sugar"],
+            $v["quantity"],
+            $_SESSION["user"]["member_sid"],
+            $_SESSION["newestOrder"]
+        ]);
+    }
+
+    //unset所有有關購物車的session
+    unset($_SESSION["products_order"]);
+    unset($_SESSION["food_order"]);
+    unset($_SESSION["productJSON"]);
+    unset($_SESSION["foodJSON"]);
+    unset($_SESSION["displayTotal"]);
+    if(isset($_SESSION["couponJSON"])) {
+        unset($_SESSION["couponJSON"]);
+    }
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>

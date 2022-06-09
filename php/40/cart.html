@@ -19,6 +19,16 @@
         [v-cloak] {
             display: none !important;
         }
+        .visaully_hidden {
+            position: absolute;
+            clip: rect(1px 1px 1px 1px);
+            clip-path: inset(0px 0px 99.9% 99.9%);
+            overflow: hidden;
+            height: 1px;
+            width: 1px;
+            padding: 0;
+            border: 0;
+        }
         input[type=number]::-webkit-inner-spin-button {
             appearance: none;
         }
@@ -102,6 +112,7 @@
             </div>
             <a href="javascript:;" @click="sendData">前往結帳頁</a>
         </div>
+        <pre class="visaully_hidden">{{discountDisplay}}</pre>
     </div>
 
     <script src="../../js/vue.global.js"></script>
@@ -144,67 +155,6 @@
                     });
                     return output;
                 },
-                discount() {
-                    if (this.selectedCoupon.type === 3) {
-                        if(this.selectedCoupon.money < 1) {
-                            return this.total * (1 - this.selectedCoupon.money);
-                        } else {
-                            this.discountDisplay = this.selectedCoupon.money;
-                            return this.selectedCoupon.money;
-                        }
-                    } else if (this.selectedCoupon.type === 2) {
-                        if(this.selectedCoupon.money < 1) {
-                            let output = 0;
-                            this.dataArray[1].forEach((data) => {
-                                if(data.id === this.selectedCoupon.menu_id) {
-                                    output += data.price * data.quantity * this.selectedCoupon.money;
-                                }
-                            });
-                            this.discountDisplay = output;
-                            return output;
-                        } else {
-                            let total = 0;
-                            this.dataArray[1].forEach((data) => {
-                                if(data.id === this.selectedCoupon.menu_id) {
-                                    total += data.price * data.quantity;
-                                }
-                            });
-                            if(total >= this.selectedCoupon.money) {
-                                this.discountDisplay = this.selectedCoupon.money;
-                                return this.selectedCoupon.money;
-                            } else {
-                                return total;
-                            }
-                        }
-                    } else if (this.selectedCoupon.type === 1) {
-                        if(this.selectedCoupon.money < 1) {
-                            let output = 0;
-                            this.dataArray[0].forEach((data) => {
-                                if(data.id === this.selectedCoupon.menu_id) {
-                                    output += data.price * data.quantity * this.selectedCoupon.money;
-                                }
-                            });
-                            this.discountDisplay = output;
-                            return output;
-                        } else {
-                            let total = 0;
-                            this.dataArray[0].forEach((data) => {
-                                if(data.id === this.selectedCoupon.menu_id) {
-                                    total += data.price * data.quantity;
-                                }
-                            });
-                            if(total >= this.selectedCoupon.money) {
-                                this.discountDisplay = this.selectedCoupon.money;
-                                return this.selectedCoupon.money;
-                            } else {
-                                this.discountDisplay = total;
-                                return total;
-                            }
-                        }
-                    } else {
-                        return 0;
-                    }
-                },
                 //真正的最後價格
                 settle() {
                     return this.total - this.discountDisplay;
@@ -245,7 +195,25 @@
                     this.radio = undefined;
                 },
                 sendData() {
-                    
+                    const fd = new FormData();
+                    fd.append("product", JSON.stringify(this.dataArray[0]));
+                    fd.append("food", JSON.stringify(this.dataArray[1]));
+                    fd.append("displayTotal", JSON.stringify(this.settle));
+                    if(this.radio === undefined) {
+                        fd.append("selectedCoupon", JSON.stringify("-1"));
+                    } else {
+                        fd.append("selectedCoupon", JSON.stringify(this.radio));
+                    }
+                    fetch("./cart_write_session_api.php", {
+                        method: "POST",
+                        body: fd
+                    })
+                    .then(data => data.json())
+                    .then(data => {
+                        if(data) {
+                            window.location = "./cart_form.html";
+                        }
+                    })
                 }
             },
             watch: {
@@ -256,6 +224,65 @@
                 },
                 settle(newNum) {
                     gsap.to(this, { duration: 0.5, tweened: Number(newNum) || 0 });
+                },
+                radio(newNum) {
+                    if(newNum === undefined) {
+                        this.discountDisplay = 0;
+                    } else {
+                        if (this.selectedCoupon.type === 3) {
+                            if(this.selectedCoupon.money < 1) {
+                                this.discountDisplay = this.total * (1 - this.selectedCoupon.money);
+                            } else {
+                                this.discountDisplay = this.selectedCoupon.money;
+                            }
+                        } else if (this.selectedCoupon.type === 2) {
+                            if(this.selectedCoupon.money < 1) {
+                                let output = 0;
+                                this.dataArray[1].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        output += data.price * data.quantity * this.selectedCoupon.money;
+                                    }
+                                });
+                                this.discountDisplay = output;
+                            } else {
+                                let total = 0;
+                                this.dataArray[1].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        total += data.price * data.quantity;
+                                    }
+                                });
+                                if(total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = total;
+                                }
+                            }
+                        } else if (this.selectedCoupon.type === 1) {
+                            if(this.selectedCoupon.money < 1) {
+                                let output = 0;
+                                this.dataArray[0].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        output += data.price * data.quantity * this.selectedCoupon.money;
+                                    }
+                                });
+                                this.discountDisplay = output;
+                            } else {
+                                let total = 0;
+                                this.dataArray[0].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        total += data.price * data.quantity;
+                                    }
+                                });
+                                if(total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = total;
+                                }
+                            }
+                        } else {
+                            return 0;
+                        }
+                    }
                 }
             },
             beforeMount() {
@@ -282,6 +309,12 @@
                     // console.log("product: ",data.product);
                     // console.log("food: ",data.food);
                     // console.log("coupon: ",data.coupon);
+                    if(data.product.length ===0 && data.food.length === 0) {
+                        alert("購物車沒有東西")
+                        setTimeout(() => {
+                            window.location = "../../index_.php"
+                        },100);
+                    }
                     this.productArray = data.product;
                     this.foodArray = data.food;
                     this.couponArray = data.coupon;
