@@ -95,7 +95,9 @@ $title = '新增餐點資料';
                             <div class="form-text red"></div>
                         </div>
                         
-
+                        <button type="button" class="btn btn-danger">
+                            <a href="./menu_list.php">取消</a>
+                        </button>
                         <button type="submit" class="btn btn-info">新增</button>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">

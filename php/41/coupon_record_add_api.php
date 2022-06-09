@@ -1,8 +1,6 @@
 <?php
 require __DIR__ . '/parts/connect_db.php';
-// require dirname(__DIR__, 2) . '/parts/connect_db.php';
 
-// session_start();
 
 if (!isset($_SESSION['user']['admin_account'])) {
     header('Location:/coffee_project/php/09/admin-login.html');
@@ -43,7 +41,14 @@ $coupon_validity_period = $_POST['coupon_validity_period'] ?? '';
 $coupon_status = $_POST['coupon_status'] ?? '';
 // ====================
 
-$sql = "UPDATE `coupon` SET `coupon_name`=?, `coupon_send_type`=?, `coupon_setting_type`=?, `coupon_money`=?, `menu_sid`=?, `products_sid`=?, `type`=?, `coupon_validity_period`=?, `coupon_status`=? WHERE `sid`='$sid'";
+// $sql = "UPDATE `coupon` SET `coupon_name`=?, `coupon_send_type`=?, `coupon_setting_type`=?, `coupon_money`=?, `menu_sid`=?, `products_sid`=?, `type`=?, `coupon_validity_period`=?, `coupon_status`=? WHERE `sid`='$sid'";
+
+$sql = "INSERT INTO `coupon`(
+    `coupon_name`, `coupon_send_type`, `coupon_setting_type`,`coupon_money`,`menu_sid`, `products_sid`, `type`, `coupon_validity_period`,`coupon_status`
+    ) VALUES (
+        ?, ?, ?, ?, ?, ?, ?, ?, ?
+    )";
+
 // =============================
 $stmt = $pdo->prepare($sql);
 
