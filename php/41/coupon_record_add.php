@@ -12,20 +12,6 @@ $pageName = 'coupon_record_add';
 $title = '新增優惠券條件設定';
 
 
-$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
-if (empty($sid)) {
-    header('Location:/coffee_project/php/41/coupon_record_list.php');
-    exit;
-}
-
-$row_s = $pdo->query("SELECT * FROM `coupon` WHERE sid=$sid")->fetch();
-
-if (empty($row_s)) {
-    header('Location:/coffee_project/php/41/coupon_record_list.php');
-    exit;
-}
-// ========================
-
 $coupon_send_type = [
     '1' => '1 生日時發送',
     '2' => '2 註冊時發送',
@@ -147,10 +133,10 @@ $coupon_status  = [
 
                     <h5 >新增優惠券資料</h5>
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
-                        <input type="hidden" name="sid" value="<?= $row_s['sid'] ?>">
+                        <input type="hidden" name="sid" value="">
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
                             <label for="name" >* 優惠券名稱</label>
-                            <input class ="css-qkktdp-TextField" style="border: 1px solid #D0D0D0;padding: 15px 10px;" type="text" id="name" name="coupon_name" required value="<?= htmlentities($row_s['coupon_name']) ?>">
+                            <input class ="css-qkktdp-TextField" style="border: 1px solid #D0D0D0;padding: 15px 10px;" type="text" id="name" name="coupon_name" required value="">
                             <div class="form-text red"></div>
                         </div>
 
@@ -341,7 +327,7 @@ $coupon_status  = [
         }
 
         const fd = new FormData(document.form1);
-        const r = await fetch('coupon_record_edit_api.php', {
+        const r = await fetch('coupon_record_add_api.php', {
             method: 'POST',
             body: fd,
         });
@@ -359,7 +345,7 @@ $coupon_status  = [
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');
-            info_bar.innerText = result.error || '資料沒有修改';
+            info_bar.innerText =  '資料沒有修改';
         }
     }
 </script>

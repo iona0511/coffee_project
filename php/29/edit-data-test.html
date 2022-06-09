@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
+
+        <title>來拎+B</title>
+        <style>
+            .mb {
+                margin-bottom: 70px;
+            }
+            .title {
+                font-weight: bold;
+                padding-bottom: 10px;
+            }
+            .pic {
+                width: 200px;
+                border: 1px solid #333;
+            }
+            .pic > img {
+                width: 100%;
+            }
+            .wrap {
+                border: 1px solid #333;
+                width: 600px;
+                position: relative;
+                border-radius: 10px;
+                box-shadow: 1px 1px 6px 1px #333;
+            }
+            .btnWrap {
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .btn {
+                width: 250px;
+            }
+            a {
+                color: #fff;
+                text-decoration: none;
+                padding: 6px 12px;
+                display: inline-block;
+            }
+            a:hover {
+                color: #fff;
+            }
+            .photoItem > img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .photoItemImg > img {
+                width: 200px;
+                height: 200px;
+            }
+
+            #photo_container2 {
+                margin-top: 20px;
+            }
+            #photo_container {
+                margin-top: 20px;
+            }
+            .btn-primary {
+                background-color: rgb(210, 173, 133);
+                border: 1px solid rgb(210, 173, 133);
+            }
+
+            .btn-primary:hover {
+                background: linear-gradient(
+                    135deg,
+                    rgb(108, 160, 202) 0%,
+                    blue 100%
+                );
+                animation: btnB 2s 0s infinite linear;
+            }
+            @keyframes btnB {
+                0% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 20%,
+                        blue 80%
+                    );
+                }
+                50% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 40%,
+                        blue 60%
+                    );
+                }
+                75% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 20%,
+                        blue 80%
+                    );
+                }
+                100% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(108, 160, 202) 0%,
+                        blue 100%
+                    );
+                }
+            }
+            .btn-danger {
+                padding: 0;
+                margin-right: 30px;
+                background-color: rgb(210, 173, 133);
+                border: 1px solid rgb(210, 173, 133);
+            }
+            .btn-danger:hover {
+                background: linear-gradient(135deg, #faa 0%, red 100%);
+                animation: btnR 2s 0s infinite linear;
+            }
+
+            @keyframes btnR {
+                0% {
+                    background: linear-gradient(135deg, #faa 20%, red 80%);
+                }
+                50% {
+                    background: linear-gradient(135deg, #faa 40%, red 60%);
+                }
+                75% {
+                    background: linear-gradient(135deg, #faa 20%, red 80%);
+                }
+                100% {
+                    background: linear-gradient(135deg, #faa 0%, red 100%);
+                }
+            }
+            .btn-danger > a {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .form1 {
+                justify-content: space-between;
+            }
+
+            #btn {
+                padding: 3px 0;
+                width: 200px;
+                position: absolute;
+                top: 30.5%;
+                background-color: #333;
+                color: #fff;
+                border-radius: 5px;
+            }
+
+            .borderTop {
+                border-top: 2px dotted #333;
+                padding-top: 20px;
+            }
+            .titleH3 {
+                color: rgb(136, 88, 36);
+                padding-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container wrap">
+            <h3 class="titleH3">課程管理/修改課程</h3>
+            <div class="txtWrap">
+                <form
+                    action=""
+                    name="form1"
+                    onsubmit="sendData();return false;"
+                >
+                    <div class="d-flex form1">
+                        <div>
+                            <div id="photo_container"></div>
+                            <div id="photo_container2"></div>
+                            <button id="btn" onclick="uploadAvatar()">
+                                課程照片
+                            </button>
+                            <input type="hidden" name="course_img_s" value="" />
+                        </div>
+                        <div>
+                            <div class="mt-3 title">課程名稱</div>
+                            <div class="form-floating mb-5">
+                                <input
+                                    type="text"
+                                    class="course_name"
+                                    name="course_name"
+                                />
+                                <label for="course_name"></label>
+                            </div>
+                            <div class="title">課程價格</div>
+                            <div class="form-floating mb">
+                                <input
+                                    type="text"
+                                    class="course_price"
+                                    name="course_price"
+                                />
+                                <label for="course_price"></label>
+                            </div>
+                            <select
+                                class="form-select form-select-sm mb-5 course_level"
+                                aria-label=".form-select-sm example"
+                                name="course_level"
+                            >
+                                <option selected>課程分級</option>
+                                <option value="1">入門</option>
+                                <option value="2">中級</option>
+                                <option value="3">高級</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="borderTop title">適合對象</div>
+                    <div class="form-floating mb-3">
+                        <textarea
+                            class="course_people"
+                            name="course_people"
+                            rows="3"
+                            cols="69"
+                            required
+                        ></textarea>
+                        <label for="course_people"></label>
+                    </div>
+                    <div class="title">課程內容</div>
+                    <div class="form-floating mb-3">
+                        <textarea
+                            class="course_content"
+                            name="course_content"
+                            rows="3"
+                            cols="69"
+                            required
+                        ></textarea>
+                        <label for="course_content"></label>
+                    </div>
+                    <div class="title">需要材料</div>
+                    <div class="form-floating mb-5">
+                        <textarea
+                            class="course_material"
+                            name="course_material"
+                            rows="3"
+                            cols="69"
+                            required
+                        ></textarea>
+                        <label for="course_material"></label>
+                    </div>
+                    <div class="container btnWrap">
+                        <button type="button" class="btn btn-danger">
+                            <a href="./delete-data.html">取消</a>
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            送出
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="picWrap">
+                <form name="form2" style="display: none">
+                    <input
+                        type="file"
+                        name="avatar[]"
+                        accept="image/*"
+                        multiple
+                    />
+                </form>
+            </div>
+        </div>
+        <!-- <script type="text/javascript" src="delete-data.js"></script> -->
+        <script>
+            const btn = document.querySelector("#btn");
+            const photoContainer = document.querySelector("#photo_container");
+            const photoContainer2 = document.querySelector("#photo_container2");
+            const avatar = document.form2.elements[0];
+
+            function editData() {
+                fetch("./class-index-api.php")
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((data) => {
+                        sid = localStorage.getItem("sid");
+                        // console.log(sid);
+                        for (let j = 0; j < data.length; j++) {
+                            courseName = document.querySelector(".course_name");
+                            course_price =
+                                document.querySelector(".course_price");
+                            course_level =
+                                document.querySelector(".course_level");
+                            course_content =
+                                document.querySelector(".course_content");
+                            course_people =
+                                document.querySelector(".course_people");
+                            course_material =
+                                document.querySelector(".course_material");
+                            function addImg() {
+                                if (sid == data[j].course_sid) {
+                                    console.log(typeof data[j].course_sid);
+                                    console.log(typeof sid);
+                                    courseName.value = data[j].course_name;
+                                    course_price.value = data[j].course_price;
+                                    course_level.value = data[j].course_level;
+                                    course_content.value =
+                                        data[j].course_content;
+                                    course_people.value = data[j].course_people;
+                                    course_material.value =
+                                        data[j].course_material;
+
+                                    data[j].course_img_s === ""
+                                        ? 0
+                                        : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
+                                }
+                            }
+
+                            addImg();
+                        }
+                    });
+            }
+            editData();
+
+            async function sendData() {
+                const fd = new FormData(document.form1);
+
+                fd.append("course_sid", sid);
+                const r = await fetch("./edit-api.php", {
+                    method: "POST",
+                    body: fd,
+                });
+                const result = await r.json();
+
+                if (result.success === true) {
+                    window.location.href = "delete-data.html";
+                }
+            }
+
+            const photoItem = (f) => {
+                photoContainer2.style.display = "none";
+
+                return ` <div class="photoItem" style="display: inline-block" data-f="${f}">
+                                            <img src="../../images/29/${f}" alt="" />
+                                        </div>
+                                        `;
+            };
+
+            avatar.addEventListener("change", async function () {
+                // 上傳表單
+                const fd = new FormData(document.form2);
+                const r = await fetch("./upload-photos-api.php", {
+                    method: "POST",
+                    body: fd,
+                });
+                const obj = await r.json();
+
+                // myimg.src = "./uploaded/" + obj.filename;
+                if (obj.filename && obj.filename.length) {
+                    photoContainer.innerHTML += obj.filename
+                        .map((f) => photoItem(f))
+                        .join("");
+                }
+                const photoAr = [];
+                document.querySelectorAll(".photoItem").forEach((el) => {
+                    photoAr.push(el.getAttribute("data-f"));
+                });
+                document.form1.course_img_s.value = photoAr;
+            });
+
+            function uploadAvatar() {
+                avatar.click(); // 模擬點擊
+            }
+        </script>
+    </body>
+</html>

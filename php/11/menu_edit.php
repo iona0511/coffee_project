@@ -75,7 +75,9 @@ if (empty($row)) {
                             <div class="form-text"></div>
                         </div>
                         <!-- htmlentities是為了跳脫字元，strip_tags是為了把內容的tag移除 -->
-
+                        <button type="button" class="btn btn-danger">
+                            <a href="./menu_edit.php">取消</a>
+                        </button>
                         <button type="submit" class="btn btn-primary">編輯</button>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
