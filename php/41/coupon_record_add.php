@@ -8,8 +8,9 @@ if (!isset($_SESSION['user']['admin_account'])) {
     exit;
 }
 
-$pageName = 'coupon_record_edit';
-$title = '優惠券條件設定';
+$pageName = 'coupon_record_add';
+$title = '新增優惠券條件設定';
+
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 if (empty($sid)) {
@@ -78,7 +79,12 @@ $coupon_status  = [
     '2' => '1 開放',
 ];
 
+
 ?>
+
+
+
+
 <?php include __DIR__ . '/parts/html-head.php' ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
@@ -90,38 +96,27 @@ $coupon_status  = [
     .form-text.red {
         color: red;
     }
-
-    .form-control.red {
-        border: 1px solid red;
-    }
-
-    .form-text.red {
-        color: red;
-    }
-
     .display_justify_content {
         display: flex;
         justify-content: center;
 
     }
-
     .css-8cha5q-SubmitButton {
-        color: rgb(255, 255, 255);
-        background: rgb(51, 51, 51);
-        margin: 40px 0px 0px;
-        width: 100%;
-        font-size: 14px;
-        text-align: center;
-        padding: 40px 16px;
-        letter-spacing: 0.2em;
-        line-height: 1.4;
-        transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
-        transition-property: background, color;
-        transition-duration: 0.4s, 0.3s;
-        transition-timing-function: ease-out, ease-out;
-        transition-delay: 0s, 0s;
+    color: rgb(255, 255, 255);
+    background: rgb(51, 51, 51);
+    margin: 40px 0px 0px;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+    padding: 40px 16px;
+    letter-spacing: 0.2em;
+    line-height: 1.4;
+    transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
+    transition-property: background, color;
+    transition-duration: 0.4s, 0.3s;
+    transition-timing-function: ease-out, ease-out;
+    transition-delay: 0s, 0s;
     }
-
     .css-qkktdp-TextField {
         background: rgb(255, 255, 255);
         border: 1px solid rgba(0, 0, 0, 0.08);
@@ -129,15 +124,13 @@ $coupon_status  = [
         width: 100%;
         padding: 15px 20px;
         letter-spacing: 0.05em;
-
+        
     }
-
-    button:hover {
+    button:hover{
         background-color: #B2ADAA;
         border: 1px solid #B2ADAA;
     }
-
-    body {
+    body{
         background-color: #F2F0ED;
     }
     .d_colum{
@@ -151,11 +144,8 @@ $coupon_status  = [
 
 <div class="display_justify_content" style="margin-top: 50px;">
     <div style="width: 636px;padding: 20px;border: 1px solid #000; border-bottom: 1px solid #000;">
-        <div>
-            <div>
-                <div>
-                    <h5 class="card-title">編輯資料</h5>
 
+                    <h5 >新增優惠券資料</h5>
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
                         <input type="hidden" name="sid" value="<?= $row_s['sid'] ?>">
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
@@ -266,11 +256,8 @@ $coupon_status  = [
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料編輯成功
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
+    </div>
 </div>
 <?php include __DIR__ . '/parts/scripts.php' ?>
 <script>
@@ -374,7 +361,6 @@ $coupon_status  = [
             info_bar.classList.add('alert-danger');
             info_bar.innerText = result.error || '資料沒有修改';
         }
-
     }
 </script>
 <?php include __DIR__ . '/parts/html-foot.php' ?>
