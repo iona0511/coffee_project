@@ -20,12 +20,10 @@
     }
     .is-open{
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(52px);
         z-index: 100;
     }
     .PCBtn{
-        position: relative;
-        z-index: 999;
         border: none;
         border-radius: 0;
         box-shadow: none;
@@ -78,20 +76,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="">購物車</a>
                     </li>
-                    <li class="nav-item">
-                        <button class="PCBtn nav-link" type="button" onclick="ShowMyPC()">
+                    <li class="nav-item" style="position: relative;">
+                        <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">
                         會員
                         </button>
-                            <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;">
-                                <li class="nav-item ">
+                            <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;position:absolute;width: 100px;">
+                                <div class="nav-item ">
                                     <a class="nav-link" href="/coffee_project/php/09/user_list.php">會員中心</a>
-                                </li>
-                                <li class="nav-item">
+                                </div>
+                                <div class="nav-item">
                                     <a class="nav-link" href="/coffee_project/php/41/coupon_record_list.php">優惠券系統</a>
-                                </li>
-                                <li class="nav-item">
+                                </div>
+                                <div class="nav-item">
                                     <a class="nav-link" href="/coffee_project/php/41/points_formanager.php">積分系統</a>
-                                </li>
+                                </div>
                             </ul>
                     </li>
 

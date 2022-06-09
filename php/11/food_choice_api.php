@@ -1,22 +1,21 @@
 <?php
 require dirname(__DIR__, 2) . '/parts/connect_db.php';
 header('Content-Type: application/json');
-
+if(!session_id()) {
+    session_start();
+}
 // 把要傳給前端的結果用陣列包起來
 $output = [
     'success' => false,
     'postData' => $_POST,
     'error' => '新增成功'
 ];
-// $_SESSION["food_order"] = file_get_contents('php://input');
-// exit;
+// 貫文的！！！！！我不能刪！！！！！！！
+$_SESSION["food_order"] = file_get_contents('php://input');
+
+
+
 $data = json_decode(file_get_contents('php://input'));
-
-
-
-
-
-
 
 $questionMark = array();
 $insert_values = array();
