@@ -1,5 +1,5 @@
 <?php
-require  dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+require  dirname(__DIR__, 2) . '/parts/connect_db.php';
 
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
