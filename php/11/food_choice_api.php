@@ -1,7 +1,9 @@
 <?php
 require dirname(__DIR__, 2) . '/parts/connect_db.php';
 header('Content-Type: application/json');
-
+if(!session_id()) {
+    session_start();
+}
 // 把要傳給前端的結果用陣列包起來
 $output = [
     'success' => false,

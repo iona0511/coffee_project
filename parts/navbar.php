@@ -65,7 +65,7 @@
                             <a class="nav-link" href="#">遊戲</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="/coffee_project/php/40/40.html">購物車</a>
+                            <a class="nav-link" href="/coffee_project/php/40/cart.html">購物車</a>
                         </li>
                         <li class="nav-item" style="position: relative;">
                             <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">
