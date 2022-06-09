@@ -52,12 +52,7 @@ $stmt->execute([
 
 
 if ($stmt->rowCount() == 1) {
-    if ($img == '') {
-        $output['success'] = false;
-        $output['error'] = '不能沒有照片';
-    } else {
-        $output['success'] = true;
-    }
+    $output['success'] = true;
 } else {
     $output['error'] = '資料沒有修改';
 }

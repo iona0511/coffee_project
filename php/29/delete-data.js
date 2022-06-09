@@ -80,7 +80,7 @@ function getData() {
             <td>NT$${data[i].course_price}</td>
             <td><a href="edit-data.html"><i class="fa-solid fa-pen-to-square" onclick="editDataA(${data[i].course_sid})"></i></a></td>
             <td><a href=""><i class="fa-solid fa-trash-can" onclick="deleteData(${data[i].course_sid})"></i></a></td>`;
-             
+           
         
                 courseLevel =
                     document.querySelectorAll(".course_level");

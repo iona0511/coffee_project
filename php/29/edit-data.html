@@ -181,9 +181,18 @@
                         <div>
                             <div id="photo_container"></div>
                             <div id="photo_container2"></div>
-                            <button id="btn" onclick="uploadAvatar()">
+                            <button
+                                id="btn"
+                                onclick="uploadAvatar()"
+                                type="button"
+                            >
                                 課程照片
                             </button>
+                            <img
+                                src=""
+                                id="myimg"
+                                style="width: 200px; height: 200px"
+                            />
                             <input type="hidden" name="course_img_s" value="" />
                         </div>
                         <div>
@@ -250,6 +259,7 @@
                         ></textarea>
                         <label for="course_material"></label>
                     </div>
+                    <div class="editWindows"></div>
                     <div class="container btnWrap">
                         <button type="button" class="btn btn-danger">
                             <a href="./delete-data.html">取消</a>
@@ -262,21 +272,18 @@
             </div>
             <div class="picWrap">
                 <form name="form2" style="display: none">
-                    <input
-                        type="file"
-                        name="avatar[]"
-                        accept="image/*"
-                        multiple
-                    />
+                    <input type="file" name="avatar" accept="image/*" />
                 </form>
             </div>
         </div>
-        <!-- <script type="text/javascript" src="delete-data.js"></script> -->
+
         <script>
             const btn = document.querySelector("#btn");
             const photoContainer = document.querySelector("#photo_container");
             const photoContainer2 = document.querySelector("#photo_container2");
-            const avatar = document.form2.elements[0];
+            const avatar = document.form2.avatar;
+            const myimg = document.querySelector("#myimg");
+            const editWindows = document.querySelector(".editWindows");
 
             function editData() {
                 fetch("./class-index-api.php")
@@ -285,7 +292,7 @@
                     })
                     .then((data) => {
                         sid = localStorage.getItem("sid");
-                        // console.log(sid);
+
                         for (let j = 0; j < data.length; j++) {
                             courseName = document.querySelector(".course_name");
                             course_price =
@@ -300,8 +307,6 @@
                                 document.querySelector(".course_material");
                             function addImg() {
                                 if (sid == data[j].course_sid) {
-                                    console.log(typeof data[j].course_sid);
-                                    console.log(typeof sid);
                                     courseName.value = data[j].course_name;
                                     course_price.value = data[j].course_price;
                                     course_level.value = data[j].course_level;
@@ -310,10 +315,13 @@
                                     course_people.value = data[j].course_people;
                                     course_material.value =
                                         data[j].course_material;
+                                    myimg.src = `../../images/29/${data[j].course_img_s}`;
 
-                                    data[j].course_img_s === ""
-                                        ? 0
-                                        : (photoContainer2.innerHTML = ` <img src="../../images/29/${data[j].course_img_s}" alt="" style="width:200px; height: 200px;" />`);
+                                    document.form1.course_img_s.value = `${data[j].course_img_s}`;
+                                    myimg.setAttribute(
+                                        "data-f",
+                                        `${data[j].course_img_s}`
+                                    );
                                 }
                             }
 
@@ -332,19 +340,34 @@
                     body: fd,
                 });
                 const result = await r.json();
+                console.log(result);
+                btnOn = document.querySelector(".btn-primary");
 
                 if (result.success === true) {
-                    window.location.href = "delete-data.html";
+                    editWindows.innerHTML = `   <div
+                    class="alert alert-success d-flex align-items-center addSuccess edit"
+                    role="alert"
+                >
+                    <svg
+                        class="bi flex-shrink-0 me-2"
+                        width="24"
+                        height="24"
+                        role="img"
+                        aria-label="Success:"
+                    >
+                        <use xlink:href="#check-circle-fill" />
+                    </svg>
+                    <div>課程修改成功</div>
+                </div>`;
+                    setTimeout(() => {
+                        window.location.href = "delete-data.html";
+                    }, 1000);
                 }
             }
 
             const photoItem = (f) => {
-                photoContainer2.style.display = "none";
-
-                return ` <div class="photoItem" style="display: inline-block" data-f="${f}">
-                                            <img src="../../images/29/${f}" alt="" />
-                                        </div>
-                                        `;
+                myimg.setAttribute("data-f", `${f}`);
+                return `../../images/29/${f}`;
             };
 
             avatar.addEventListener("change", async function () {
@@ -355,18 +378,13 @@
                     body: fd,
                 });
                 const obj = await r.json();
-
-                // myimg.src = "./uploaded/" + obj.filename;
-                if (obj.filename && obj.filename.length) {
-                    photoContainer.innerHTML += obj.filename
-                        .map((f) => photoItem(f))
-                        .join("");
+                // console.log(obj);
+                if (obj.filename) {
+                    myimg.src = photoItem(obj.filename);
                 }
-                const photoAr = [];
-                document.querySelectorAll(".photoItem").forEach((el) => {
-                    photoAr.push(el.getAttribute("data-f"));
-                });
-                document.form1.course_img_s.value = photoAr;
+                imgs = myimg.getAttribute("data-f");
+                console.log(imgs);
+                document.form1.course_img_s.value = imgs;
             });
 
             function uploadAvatar() {
