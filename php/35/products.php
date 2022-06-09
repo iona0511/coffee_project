@@ -59,6 +59,9 @@ if ($totalRows > 0) {
         width: 100px;
         height: 100px;
     }
+
+
+
 </style>
 
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
