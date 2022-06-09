@@ -10,7 +10,7 @@ $output = [
 ];
 // $_SESSION["food_order"] = file_get_contents('php://input');
 // exit;
-$data = json_encode(file_get_contents('php://input'));
+$data = json_decode(file_get_contents('php://input'));
 
 
 
