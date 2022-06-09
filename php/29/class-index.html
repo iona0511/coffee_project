@@ -15,7 +15,7 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         />
 
-        <title>Document</title>
+        <title>來拎+B</title>
         <style class="style">
             * {
                 box-sizing: border-box;
@@ -244,7 +244,7 @@
                     dataCopy.sort(levelDesc);
                 }
                 tablestr(choose);
-                levelfun();
+                levelfun(choose);
             });
             //分頁按鈕生成
             function limits() {
@@ -293,37 +293,27 @@
                 // 這裡childNodes把inputs子節點集合起來索引值0開始,所以-1
                 inputs.childNodes[choose - 1].style.backgroundColor = "#a2642e";
             }
-            inputs.childNodes[0].style.backgroundColor = "#a2642e"; //第一個按鈕的背景顏色為紅色
+            inputs.childNodes[0].style.backgroundColor = "#a2642e"; //第一個按鈕的背景顏色
 
-            function levelfun() {
+            function levelfun(choose) {
                 for (let i = 0; i <= dataCopy.length; i++) {
-                    // console.log(i);
-                    // console.log(dataCopy[i].course_level);
-                    // if (i < len) {
-                    // console.log("c:" + choose);
-                    console.log(choose !== 1);
-                    // if (choose !== 1) {
-                    //     i += len;
-                    // }
-
-                    console.log(i);
                     level = document.querySelectorAll(".level");
-                    if (dataCopy[i].course_level == "1") {
+                    // 帶頁數的值進來 -1 * 上一頁幾筆資料 (假設頁數值為2,2-1*len(9) = 9,就是從第9筆開始)
+                    if (dataCopy[i + (choose - 1) * len].course_level == "1") {
                         level[i].innerHTML = "入門";
                         level[i].style.backgroundColor = "rgb(210, 173, 133)";
                     }
-                    if (dataCopy[i].course_level == "2") {
+                    if (dataCopy[i + (choose - 1) * len].course_level == "2") {
                         level[i].innerHTML = "中級";
                         level[i].style.backgroundColor = "rgb(206, 152, 94)";
                     }
-                    if (dataCopy[i].course_level == "3") {
+                    if (dataCopy[i + (choose - 1) * len].course_level == "3") {
                         level[i].innerHTML = "高級";
                         level[i].style.backgroundColor = "#a2642e";
                     }
-                    // }
                 }
             }
-            levelfun();
+            levelfun(choose);
 
             function limitinput(i) {
                 // console.log(i);
@@ -331,9 +321,8 @@
                 choose = i.value;
                 tablestr(choose); //重新整理table資料
                 limits(); //重新整理頁面按鈕
-                // i.style.backgroundColor = "red"; //當前點選的頁面按鈕背景顏色改變為紅色,函式就有這個功能了所以先關掉
                 liminputcolor(choose); //頁面按鈕變色
-                levelfun();
+                levelfun(choose);
             }
         </script>
     </body>

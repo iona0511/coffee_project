@@ -1,5 +1,7 @@
 <?php
-require __DIR__ . '/part/connect_db.php';
+require  dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+
+
 
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : '';
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];

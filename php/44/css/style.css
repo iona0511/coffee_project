@@ -3,6 +3,11 @@
     box-sizing: border-box;
 }
 
+.container{
+    position: relative;
+    z-index: 1;
+}
+
 h1,
 h2,
 h3,
@@ -80,6 +85,16 @@ select {
     border-radius: 4px 0 0 4px;
     border-color: #dee2e6;
 
+}
+
+.pl-img-wrap{
+    width: 100%;
+    max-height: 200px;
+}
+
+.pl-img{
+    width: 100%;
+    max-height: 200px;
 }
 
 #search {

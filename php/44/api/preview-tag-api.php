@@ -1,5 +1,6 @@
 <?php
-require dirname(dirname(__FILE__)) . '/part/connect_db.php';
+require  dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
+
 
 if (empty($_POST)) exit;
 
