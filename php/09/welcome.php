@@ -138,10 +138,13 @@ body{
 
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 
+
+
+
     <div class="bg">
         <div class="mycard">         
             <div class="cardF">
-                <?php if (isset($t_points['total_points'])>1000) : echo "<div class='gold'></div>"; elseif(isset($t_points['total_points'])>500): echo "<div class='silver'></div>"; endif; ?>
+            <?php if (isset($t_points['total_points'])) :  if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; endif; ?> 
                 <div class="cardLogo">
                     <img src="/coffee_project/images/09/member-card-logo.png" alt="">
                 </div>
@@ -149,7 +152,7 @@ body{
                 <p class="cardID"><span>ID:</span><?= "&nbsp".$_SESSION['user']['member_sid']=str_pad($_SESSION['user']['member_sid'],6,"0",STR_PAD_LEFT) ?></p>                
             </div>
             <div class="cardB">
-                <?php if (isset($t_points['total_points'])>1000) : echo "<div class='gold'></div>"; elseif(isset($t_points['total_points'])>500): echo "<div class='silver'></div>"; endif; ?>
+            <?php if (isset($t_points['total_points'])) :  if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; endif; ?> 
 
                 <p class="cardText">
                     <?= isset($t_points['total_points']) ? ($t_points['total_points'])."&nbsp"."&nbsp"."points" : "0" ."&nbsp"."&nbsp"."points" ?>

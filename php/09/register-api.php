@@ -9,6 +9,7 @@ $output = [
     'error' => ''
 ];
 
+
 // TODO: 欄位檢查, 後端的檢查
 if (empty($_POST['member_name'])) {
     $output['error'] = '沒有姓名資料';
@@ -27,13 +28,6 @@ $member_address = $_POST['member_address'] ?? '';
 $member_mail = $_POST['member_mail'] ?? '';
 
 
-// if (!empty($member_mail) and filter_var($member_mail, FILTER_VALIDATE_EMAIL) === false) {
-//     $output['error'] = '信箱 格式錯誤';
-//     $output['code'] = 405;
-//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     exit;
-// }
-
 
 $sql = "INSERT INTO `member` ( 
     `member_name`, `member_nickname`, `member_account`, `member_password`,
@@ -44,6 +38,19 @@ $sql = "INSERT INTO `member` (
     );";
 
 $stmt = $pdo->prepare($sql);
+
+$sqlaccount = "SELECT `member_account` FROM `member` WHERE `member_account`= '$member_account'";
+$row = $pdo->query($sqlaccount)->fetch();
+
+
+if(!empty($row['member_account'])){
+    $output['success'] = false;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+else{
+
 
 $stmt->execute([
     $member_name,
@@ -56,14 +63,14 @@ $stmt->execute([
     $member_mail
 ]);
 
+}
 
 if ($stmt->rowCount() == 1) {
     $output['success'] = true;
-    // 最近新增資料的 primery key
-    // $output['lastInsertId'] = $pdo->lastInsertId();
 } else {
     $output['error'] = '資料無法新增';
 }
 
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
+
