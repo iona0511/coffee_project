@@ -98,13 +98,14 @@
             <div class="price_bord">
                 <p>總計: {{total}}</p>
                 <p>折扣: {{discountDisplay}}</p>
-                <p>結算價: {{total - discountDisplay}}</p>
+                <p>結算價: {{parseInt(tweened)}}</p>
             </div>
             <a href="javascript:;" @click="sendData">前往結帳頁</a>
         </div>
     </div>
 
     <script src="../../js/vue.global.js"></script>
+    <script src="../../js/gsap.min.js"></script>
     <script>
         const vm = Vue.createApp({
             data() {
@@ -114,7 +115,8 @@
                     dataArray: [],
                     couponArray: [],
                     discountDisplay: 0,
-                    radio: undefined
+                    radio: undefined,
+                    tweened: 0,
                 }
             },
             computed: {
@@ -203,6 +205,10 @@
                         return 0;
                     }
                 },
+                //真正的最後價格
+                settle() {
+                    return this.total - this.discountDisplay;
+                }
             },
             methods: {
                 change(obj,num) {
@@ -247,6 +253,9 @@
                     if(newStr === "無") {
                         this.discountDisplay = 0;
                     }
+                },
+                settle(newNum) {
+                    gsap.to(this, { duration: 0.5, tweened: Number(newNum) || 0 });
                 }
             },
             beforeMount() {
