@@ -122,9 +122,7 @@ if ($totalRows > 0) {
 
 <div class="display_justify_content" style=" margin:20px auto;font-size:24px;">優惠券管理</div>
 <div class="display_justify_content" style="width:100px; margin:5px auto;font-size:12px;">
-    
-        <a type="submit" class="css-8cha5q-SubmitButton" href="coupon_record_add.php?sid=<?= $r['sid'] ?>">新增</a>
-    
+    <a type="submit" class="css-8cha5q-SubmitButton" href="/coffee_project/php/41/coupon_record_add.php">新增</a>
 </div>
 <div class="display_justify_content" style="height: 500px; width:1200px;margin-top:25px; margin:20px auto;" >
     <table class="table table-striped" >
