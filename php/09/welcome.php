@@ -10,7 +10,7 @@ $row = $pdo->query("SELECT * FROM member WHERE `member_sid`=$sid")->fetch();
 
 // 取得點數欄位的外鍵
 $user=$_SESSION['user']['member_sid'];
-$sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$user );
+$sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`,`member`.`member_level`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$user );
 $t_points = $pdo->query($sql_points)->fetch();
 // $t_points = $pdo->query($sql_points)->fetchAll();
 // $a = $t_points[0];
@@ -27,9 +27,10 @@ $t_points = $pdo->query($sql_points)->fetch();
     }
 body{
     background-size: cover;
-    background-image: url(./imgs/pexels-gradienta-7134986.jpg);
+    background-image: url('/coffee_project/images/09/henry-co-tqu0IOMaiU8-unsplash.jpg');
 }
 .bg{
+    position: relative;
     width: 100%;
     height: 100vh;
 }
@@ -124,7 +125,8 @@ body{
     border-radius: 20px;
 }
 .gold{
-    background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+    /* background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); */
+    background-image: linear-gradient(to top, #fae1c0 0%, #eacda3 100%);
     width: 500px;
     height: 300px;
     border-radius: 20px;
@@ -139,16 +141,19 @@ body{
     <div class="bg">
         <div class="mycard">         
             <div class="cardF">
-                <?php if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; ?>
+                <?php if (isset($t_points['total_points'])>1000) : echo "<div class='gold'></div>"; elseif(isset($t_points['total_points'])>500): echo "<div class='silver'></div>"; endif; ?>
                 <div class="cardLogo">
-                    <img src="/coffee_project/images/09/member-card-logo" alt="">
+                    <img src="/coffee_project/images/09/member-card-logo.png" alt="">
                 </div>
                 <p class="cardText"><?= $row['member_name'] ?></p>
                 <p class="cardID"><span>ID:</span><?= "&nbsp".$_SESSION['user']['member_sid']=str_pad($_SESSION['user']['member_sid'],6,"0",STR_PAD_LEFT) ?></p>                
             </div>
             <div class="cardB">
-                <?php if ($t_points['total_points']>1000) : echo "<div class='gold'></div>"; elseif($t_points['total_points']>500): echo "<div class='silver'></div>"; endif; ?>
-                <p class="cardText"><?= $t_points['total_points']."&nbsp"."&nbsp"."points" ?></p>
+                <?php if (isset($t_points['total_points'])>1000) : echo "<div class='gold'></div>"; elseif(isset($t_points['total_points'])>500): echo "<div class='silver'></div>"; endif; ?>
+
+                <p class="cardText">
+                    <?= isset($t_points['total_points']) ? ($t_points['total_points'])."&nbsp"."&nbsp"."points" : "0" ."&nbsp"."&nbsp"."points" ?>
+                </p>
             </div>
         </div>
 
@@ -158,7 +163,7 @@ body{
                 <h2 class="userText"><?= $row['member_nickname'] ?> <span>您好！</span></h2>
             <?php endif; ?>  
         
-            <button type='submit'class='btn'><a href="edit.html">進入會員中心</a></button>
+            <button type='submit'class='btn'><a href="edit.html">修改會員資料</a></button>
         </div>
         
     </div>
