@@ -2,3 +2,4 @@
 /fontawesome
 .gitignore
 /images
+/connect_db.php
