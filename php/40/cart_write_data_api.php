@@ -140,7 +140,7 @@
 
     //寫入coupon_logs
     if($decodeCoupon === NULL) {
-        unset($SESSION["couponJSON"]);
+        unset($_SESSION["couponJSON"]);
     } else {
         $sql = "INSERT INTO `coupon_logs`(
             `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`
@@ -187,5 +187,27 @@
         $sql = sprintf("UPDATE `products` SET `products_stocks`= `products_stocks` - '%s' WHERE `products_sid` = '%s'", $v["quantity"], $v["id"]);
         $stmt = $pdo -> prepare($sql) -> execute();
     }
+
+    //寫入food_choice
+    $foods = json_decode($_SESSION["foodJSON"], true);
+    foreach($foods as $v) {
+        $sql = "INSERT INTO `food_choice`(
+            `food_id`, `food_price`, `food_ice`, `food_sugar`, `food_quantity`, `food_member_id`, `food_order_id`
+        ) VALUES (
+            ?,?,?,?,?,?,?
+        )";
+        $stmt = $pdo -> prepare($sql);
+        $stmt -> execute([
+            $v["id"],
+            $v["price"],
+            $v["ice"],
+            $v["sugar"],
+            $v["quantity"],
+            $_SESSION["user"]["member_sid"],
+            $_SESSION["newestOrder"]
+        ]);
+    }
+
+    //unset所有有關購物車的session
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>
