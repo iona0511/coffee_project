@@ -44,7 +44,9 @@ if ($totalRows > 0) {
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php' ?>
 <style>
-
+    * {
+        box-sizing: border-box;
+    }
 </style>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 <section>
@@ -76,10 +78,10 @@ if ($totalRows > 0) {
 
     </nav>
     <div class="container">
-        <div class="row">
-            <div class="col-8 d-flex flex-wrap justify-content-around">
+        <div class="row justify-content-around">
+            <div class="col-12 d-flex flex-wrap justify-content-around">
                 <?php foreach ($rows as $r) : ?>
-                    <div class="card col-4 py-3 my-2" style="width: 18rem;">
+                    <div class="card col-3 py-3 m-3">
 
                         <img class="card-img-top" src="
                                         <?php if ($r['products_pic_one']) : echo '/../../coffee_project/images/35/' . $r['products_pic_one'];
@@ -119,14 +121,15 @@ if ($totalRows > 0) {
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="card col" id="products_cart">
+            <!-- <div class="card col" id="products_cart">
                 <?php
-                if (isset($_SESSION['products_order'])) :
-                    echo implode(",", $_SESSION['products_order']);
-                else :
-                    echo '';
-                endif; ?>
-            </div>
+                // if (isset($_SESSION['products_order'])) :
+                //    echo implode(",", $_SESSION['products_order']);
+                // else :
+                //    echo '';
+                // endif; 
+                ?>
+            </div> -->
         </div>
     </div>
 </section>
@@ -152,9 +155,6 @@ if ($totalRows > 0) {
         console.log("x1", x);
     }
 
-    function sendToArray() {
-
-    }
 
     async function sendData() {
         const fd = new FormData(event.currentTarget.closest("form"));
@@ -166,6 +166,7 @@ if ($totalRows > 0) {
         const result = await r.json();
         productsCart.innerHTML += result + "</br>";
         console.log(result);
+        
 
     }
 </script>
