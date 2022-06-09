@@ -545,9 +545,11 @@
           <div id="${id}" class="item">
               <div style="display:flex;margin: 6px;">
 
+                
+                <div style="display:none;" class="from_menu_sid" data-frommenusid="${sid1}">${sid1}</div>
+
                   <div style="display:none;" class="menu_price" data-price="${item.menu_price_m}">${item.menu_price_m}</div>
-                  <div style="flex-grow:1;" class="menu_name1">${item.menu_name}
-                  </div>
+                  <div style="flex-grow:1;" class="menu_name1">${item.menu_name}</div>
                   <div class="subtotal">${subTotal}元</div>
               </div>
               <div style="display:flex;margin: 6px;">
@@ -569,6 +571,8 @@
               <div style="border-bottom:1px solid #ccc;margin:5px"></div>
          </div>
           `;
+     
+
       }
 
       // 選餐
@@ -629,6 +633,7 @@
       }
 
         const sendData = () => {
+        const menu_sid = document.querySelectorAll(".from_menu_sid")
         const menu_name = document.querySelectorAll(".menu_name1");
         const menu_price_m = document.querySelectorAll(".menu_price");
         const ice = document.querySelectorAll(".ice");
@@ -639,6 +644,7 @@
         for (let i = 0; i < items.length; i++) {
           result.push({
             // food_choice_sid: 555,
+            menu_sid: menu_sid[i].getAttribute("data-frommenusid"),
             menu_name: menu_name[i].textContent,
             menu_price_m: +menu_price_m[i].getAttribute("data-price"),
             food_choice_ice: +ice[i].getAttribute("data-ice"),
@@ -666,7 +672,7 @@
       body: JSON.stringify(result),
       headers: {'Content-Type':'application/json'},
     })
-    .then(res => res.json())
+    .then(resp => res.json())
 
     .then(res => console.log(res));
 
@@ -681,27 +687,11 @@
 
 
         sessionStorage.setItem('food_order',JSON.stringify(result));
+        
         //     
       };
 
 // sessionStorage.setItem('name','haha');
-
-
-
-function getNav() {
-                fetch("../../parts/navbar.php")
-                    .then(function (r) {
-                        return r.text();
-                    })
-                    .then(function (navData) {
-                        console.log(navData);
-                        navBar = document.querySelector(".navBar");
-                        navBar.innerHTML = navData;
-                    });
-            }
-            getNav();
-
-
 
     </script>
   </body>

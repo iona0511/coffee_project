@@ -12,13 +12,20 @@
     />
     <title>Document</title>
     <style>
+    body{
+        background-image: url('/coffee_project/images/09/peter-pivak-Iiqo64hiwZo-unsplash.jpg');
+        background-size: cover;
+        background-position: 50%;
+    }
     .form-box{
         width:500px;
         height:600px;
         position:relative;
         margin:2% auto;
-        background:rgba(0,0,0,0.3);
+        background:rgba(255, 255, 255, 0.3);
         padding:10px;
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
     }
     .input-field{
         width: 50%;
@@ -27,7 +34,7 @@
         border-left:0;
         border-top:0;
         border-right:0;
-        border-bottom: 1px solid #999;
+        border-bottom: 1px solid white;
         outline:none;
         background: transparent;
     }
@@ -80,30 +87,9 @@
         outline: none;
         border-radius: 30px;
     }
-    .re-btn{
-        width: 280px;
-        padding: 10px 30px;
-        cursor: pointer;
-        display: block;
-        margin: auto;
-        margin-top: 50px;
-        background: hsl(24, 100%, 86%);
-        border: 0;
-        outline: none;
-        border-radius: 30px;
-    }
-    .btn{
-        position: absolute;
-        top: 0;
-        left:0;
-        width: 90px;
-        height: 38px;
-        background: hsl(24, 100%, 86%);
-        border-radius: 30px;
-        transition: .65s;
-    } 
-    .btn-right{
-        transform: translateX(100%);
+    .submit-btn:hover{
+        background: #B79973;
+        color: white;
     }
     .shuffle{
         position: absolute;
@@ -120,6 +106,10 @@
     .shuffle:hover{
         color: white;
     }
+    ::placeholder{
+        font-size: 0.8rem;
+        color: white;
+    }
     </style>
 </head>
 <body>
@@ -128,8 +118,8 @@
         <div class="form-box">
             <form id='login' class='input-group-login'name="form1" onsubmit="sendLog();return false;" novalidate>
                 <div class="login-form">
-                    <input type='text' class='input-field' name="admin_account" placeholder='帳號' required >
-                    <input type='password'class='input-field' name="admin_password" placeholder='密碼' required>
+                    <input type='text' class='input-field' name="admin_account" placeholder='帳號' autocomplete="off" required >
+                    <input type='password'class='input-field' name="admin_password" placeholder='密碼' autocomplete="off" required>
                 </div>
                 <div>
                     <button type='submit'class='submit-btn'>管理者登入</button>
@@ -156,6 +146,8 @@
 
     if(data.success){
         window.location.href='user_list.php';
+    }else{
+        alert('帳號或密碼錯誤');
     }
 
     }
