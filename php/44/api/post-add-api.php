@@ -40,7 +40,7 @@ if (empty($_POST['title'])) {
     exit;
 }
 
-if (count($photos) >= 1) {
+if (count($photos) < 1) {
     $op_msg['error'] = '沒有上傳圖片';
     $op_msg['code'] = 400;
     echo json_encode($op_msg, JSON_UNESCAPED_UNICODE);
