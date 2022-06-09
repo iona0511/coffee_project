@@ -390,7 +390,7 @@
             avatar.addEventListener("change", async function () {
                 // 上傳表單
                 const fd = new FormData(document.form2);
-                const r = await fetch("./upload-photos-api.php", {
+                const r = await fetch("./upload-photos-add-api.php", {
                     method: "POST",
                     body: fd,
                 });
