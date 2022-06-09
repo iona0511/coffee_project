@@ -23,22 +23,23 @@ if (empty($row)) {
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <style>
-    *{
+    * {
         box-sizing: border-box;
         margin: 0;
-        }
+    }
 
     body {
-    /* background-color: #CD853F; */
-    background-color:#CAAD87;
-    background-size: cover;
-    opacity: 0.9;
+        /* background-color: #CD853F; */
+        background-color: #CAAD87;
+        background-size: cover;
+        opacity: 0.9;
     }
 
     .color-y {
-        background-color:aliceblue;
+        background-color: aliceblue;
         opacity: 0.8;
     }
+
     .form-control.red {
         border: 1px solid red;
     }
@@ -71,10 +72,10 @@ if (empty($row)) {
                             <label for="news_class" class="form-label">活動類別</label>
                             </br>
                             <!-- 這邊無法顯示出資料庫裡的類別，可以參考老師的01 form -->
-                            <select name="news_class" id="news_class" value="<?= $row['news_class'] ?>">
-                                <option value="1" selected disabled>-- 請選擇 --</option>
+                            <select name="news_class" id="news_class" value="">
+                                <option value="0" disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
-                                    <option value="<?= $r['class_sid'] ?>">
+                                    <option value="<?= $r['class_sid'] ?>" <?= $r['class_sid'] == $row['news_class_sid'] ? 'selected' : '' ?>>
                                         <?= $r['class_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -83,7 +84,7 @@ if (empty($row)) {
                         </div>
 
                         <label for="news_start_date" class="form-label">活動區間</label>
-                        <div class="mb-3 act">                         
+                        <div class="mb-3 act">
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date" value="<?= $row['news_start_date'] ?>">
                             <div class="form-text red"></div>
                             <p>~</p>
@@ -96,10 +97,10 @@ if (empty($row)) {
                             <textarea type="text" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
                             <div class="form-text red"></div>
                         </div>
- 
+
                         <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
-                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>  
+                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>
                             <div id="preview"></div>
                             <div class="form-text red"></div>
                         </div>
@@ -123,13 +124,13 @@ if (empty($row)) {
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
     // const class_sid_f = document.form1.news_class_sid;
-    const class_name_f = document.form1.news_class_name;
+    const class_sid_f = document.form1.news_class_sid;
     const start_date_f = document.form1.news_start_date;
     const end_date_f = document.form1.news_end_date;
     const content_f = document.form1.news_content;
     const img_f = document.form1.news_img;
     //這裡要確認資料庫欄位是否名稱有對應到
-    const fields = [title_f, class_name_f, start_date_f, end_date_f, content_f, img_f];
+    const fields = [title_f, class_sid_f, start_date_f, end_date_f, content_f, img_f];
 
     const fieldTexts = [];
 
