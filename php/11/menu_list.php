@@ -56,7 +56,9 @@ if($totalRows>0){
 </nav>
         </div>
     </div>
-
+    <button type="button" class="btn btn-outline-success">
+                <a href="./menu_add.php"> 新增餐點</a>
+            </button>
     <table class="table table-warning table-striped">
         <thead>
             <tr>                
