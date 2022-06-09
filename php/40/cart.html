@@ -198,6 +198,7 @@
                     const fd = new FormData();
                     fd.append("product", JSON.stringify(this.dataArray[0]));
                     fd.append("food", JSON.stringify(this.dataArray[1]));
+                    fd.append("displayTotal", JSON.stringify(this.settle));
                     if(this.radio === undefined) {
                         fd.append("selectedCoupon", JSON.stringify("-1"));
                     } else {
