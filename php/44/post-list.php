@@ -65,6 +65,9 @@ if ($totalRows > 0) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -132,7 +135,7 @@ if ($totalRows > 0) {
         <div class="search-result" style="display: none;">
             <h3 style="font-weight:bold;" class="mr-1">搜尋紀錄</h3>
             <span class="mr-1" id="rows_length"></span>
-            <span><a href="?page=1" class="link-danger">清除</a></span>
+            <span><a href="?page=1" class="link-danger" style="position:relative;z-index:1;">清除</a></span>
         </div>
 
         <div class="ml-auto d-flex h-75">

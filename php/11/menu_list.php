@@ -111,11 +111,7 @@ if($totalRows>0){
     a{
         text-decoration: none;
     }
-    a:hover{
-        background-color: #B2ADAA;
-        text-decoration: none;
-        color: #fff;
-    }
+
 
 </style>
 
@@ -151,7 +147,7 @@ if($totalRows>0){
     <table class="table ">
         <thead>
             <tr>                
-                <th scope="col" style="background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius: 20px 0 0 0;"><i class="fa-solid fa-trash-can"></i></th>
+                <th scope="col" style="background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius: 20px 0 0 0;"><i class="fa-solid fa-trash-can" style="color:#B79973"></i></th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">編號</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">種類</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">圖片</th>
@@ -169,7 +165,7 @@ if($totalRows>0){
                 <tr>
                     <td> 
                         <a href="javascript: delete_it(<?= $r['menu_sid'] ?>)">
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i class="fa-solid fa-trash-can" style="color:#B79973"></i>
                         </a>
                     </td>
                     <td><?= $r['menu_sid'] ?></td>
@@ -182,7 +178,7 @@ if($totalRows>0){
                     <td><?= $r['created_at'] ?></td>
                     <td>
                         <a href="menu_edit.php?menu_sid=<?= $r['menu_sid'] ?>">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <i class="fa-solid fa-pen-to-square" style="color:#B79973"></i>
                         </a>
                     </td>
                 </tr>
