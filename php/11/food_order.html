@@ -688,7 +688,7 @@
       body: JSON.stringify(result),
       headers: {'Content-Type':'application/json'},
     })
-    .then(resp => res.json())
+    .then(res => res.json())
 
     .then(res => console.log(res));
 
