@@ -216,6 +216,19 @@
 
 
   <body>
+    <script>
+      function getNav() {
+          fetch("../../parts/navbar.php")
+              .then(function (response) {
+                  return response.text();
+              })
+              .then(function (navData) {
+                  navBar = document.querySelector(".navBar");
+                  navBar.innerHTML = navData;
+              });
+      }
+      getNav();
+  </script>
     <div class="wrap">
       <div class="navBar"></div>
       <!-- <div class="select" style="background-color:rgba(222, 193, 148, 0.462);">
