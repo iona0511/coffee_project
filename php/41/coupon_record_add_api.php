@@ -17,6 +17,14 @@ $output = [
 ];
 
 
+// $sid = isset($_POST['sid']) ? intval($_POST['sid']) : 0;
+
+// if (empty($sid) or empty($_POST['coupon_name'])) {
+//     $output['error'] = '沒有優惠券資料';
+//     $output['code'] = 400;
+//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
+//     exit;
+// }
 
 $coupon_name = $_POST['coupon_name'];
 $coupon_send_type = $_POST['cst_type'] ?? '';
@@ -36,7 +44,7 @@ $coupon_status = $_POST['coupon_status'] ?? '';
 $sql = "INSERT INTO `coupon`(
     `coupon_name`,`coupon_send_type`,`coupon_setting_type`,`coupon_money`,`menu_sid`,`products_sid`, `type`,`coupon_validity_period`,`coupon_status`
     ) VALUES (
-        '?', '?', '?', ?, ?, ?, '?', '?', ?
+        ?, ?, ?, ?, ?, ?, ?, ?, ?
     )";
 
 // =============================

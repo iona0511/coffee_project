@@ -11,23 +11,19 @@
     }
     .nav_pc{
         transition: 0.3s;
-        transform: translateY(-180px);
+        transform: translateY(-150px);
     }
     button{
         cursor: pointer;
         border: none;
         outline: none;
-        /* padding-right: 0.5rem;
-        padding-left: 0.5rem; */
     }
     .is-open{
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(52px);
         z-index: 100;
     }
     .PCBtn{
-        position: relative;
-        z-index: 999;
         border: none;
         border-radius: 0;
         box-shadow: none;
@@ -40,7 +36,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent" style="width: 100%;">
                     <img style="width: 50px; aspect-ratio:1;" src="/coffee_project/images/09/picwish.png" alt="">
-                    <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0"  style="height: 45px;">
+                    <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0"  style="height: 45px;position: relative;">
                         <li class="nav-item px-2">
                             <a class="nav-link" aria-current="page" href="/coffee_project/index_.php">首頁</a>
                         </li>
@@ -71,24 +67,24 @@
                         <li class="nav-item px-2">
                             <a class="nav-link" href="/coffee_project/php/40/40.html">購物車</a>
                         </li>
-                        <li class="nav-item">
-                            <button class="PCBtn nav-link" type="button" onclick="ShowMyPC()">
+                        <li class="nav-item" style="position: relative;">
+                            <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">
                             個人
                             </button>
-                            <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;color: rgba(0,0,0,.55);z-index: 999;">
-                                <li class="nav-item ">
+                            <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;color: rgba(0,0,0,.55);position:absolute;width: 100px;">
+                                <div class="nav-item ">
                                     <a  href="<?php if (isset($_SESSION['user'])) : ?>
                                     <?= "/coffee_project/php/09/welcome.php" ?>
                                     <?php else : ?>
                                         <?= "/coffee_project/php/09/login.html" ?>
                                     <?php endif ?>">會員中心</a>
-                                </li>
-                                <li class="nav-item">
+                                </div>
+                                <div class="nav-item">
                                     <a href="/coffee_project/php/41/coupon_foruser.php">我的優惠券</a>
-                                </li>
-                                <li class="nav-item">
+                                </div>
+                                <div class="nav-item">
                                     <a  href="/coffee_project/php/41/points_foruser.php">我的積分</a>
-                                </li>
+                                </div>
                             </ul>
                         </li>
                     </ul>
