@@ -47,6 +47,11 @@ if ($totalRows > 0) {
     * {
         box-sizing: border-box;
     }
+    body{
+        background: url(../../images/35/frontbg.jpg) no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
 </style>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 <section>
