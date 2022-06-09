@@ -10,24 +10,30 @@
     $output = [];
 
     $memId = $_SESSION["user"]["member_sid"];
-    // $sql = sprintf("SELECT * FROM `coupon_receive` JOIN `coupon` ON `coupon_receive`.`coupon_sid`=`coupon`.`sid` WHERE `end_time` > NOW() AND `status` = 0 AND `member_sid` = %s;", $memId);
-    // $sql = sprintf("SELECT `coupon_receive`.`sid`, `coupon`.`coupon_name`, `coupon`.`coupon_money`, `coupon`.`menu_sid`, `coupon`.`products_sid`, `coupon`.`type` FROM `coupon_receive` JOIN `coupon` ON `coupon_receive`.`coupon_sid`=`coupon`.`sid` WHERE `end_time` > NOW() AND `status` = 0 AND `member_sid` = %s;", $memId);
     $sql = sprintf("SELECT `coupon_receive`.`sid`, `coupon`.`coupon_name`, `coupon`.`coupon_money`, `coupon`.`menu_sid`, `coupon`.`products_sid`, `coupon`.`type` FROM `coupon_receive` JOIN `coupon` ON `coupon_receive`.`coupon_sid`=`coupon`.`sid` WHERE `end_time` > NOW() AND `status` = 0 AND `member_sid` = %s;", $memId);
-    echo json_encode($sql,JSON_UNESCAPED_UNICODE);
-    exit;
     $arr = $pdo -> query($sql) -> fetchAll();
-    echo implode(",",$arr);
-    exit;
     $output["coupon"] = [];
     foreach($arr as $v) {
-        $obj = [];
-        $obj["id"] = intval($v["sid"]);
-        $obj["name"] = $v["coupon_name"];
-        $obj["money"] = floatval($v["coupon_money"]);
-        $obj["menu_id"] = intval($v["menu_sid"]);
-        $obj["products_id"] = intval($v["products_sid"]);
-        $obj["type"] = intval($v["type"]);
-        $output["coupon"][] = $obj;
+        $objCoupon = [];
+        $objCoupon["id"] = intval($v["sid"]);
+        $objCoupon["name"] = $v["coupon_name"];
+        $objCoupon["money"] = floatval($v["coupon_money"]);
+        $objCoupon["menu_id"] = intval($v["menu_sid"]);
+        $objCoupon["products_id"] = intval($v["products_sid"]);
+        $objCoupon["type"] = intval($v["type"]);
+        $output["coupon"][] = $objCoupon;
     }
+
+    $output["product"] = [];
+    foreach($_SESSION["products_order"] as $v) {
+        $objProduct["id"] = $v["products_sid"];
+        $objProduct["name"] = $v["products_name"];
+        $objProduct["price"] = $v["products_price"];
+        $objProduct["quantity"] = $v["products_buy_count"];
+        $objProduct["stock"] = $v["products_stocks"];
+        $objProduct["src"] = "../../images/35/" . $v["products_pic_one"];
+        $objProduct["display"] = 1;
+        $output["product"][] = $objProduct;
+    }
+
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-?>
