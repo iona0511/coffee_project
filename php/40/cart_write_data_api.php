@@ -209,5 +209,13 @@
     }
 
     //unset所有有關購物車的session
+    unset($_SESSION["products_order"]);
+    unset($_SESSION["food_order"]);
+    unset($_SESSION["productJSON"]);
+    unset($_SESSION["foodJSON"]);
+    unset($_SESSION["displayTotal"]);
+    if(isset($_SESSION["couponJSON"])) {
+        unset($_SESSION["couponJSON"]);
+    }
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>
