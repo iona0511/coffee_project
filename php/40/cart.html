@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        [coffee-op0] {
+            opacity: 0;
+        }
+        [v-cloak] {
+            display: none !important;
+        }
+        .cart_block {
+            list-style-type: none;
+            padding: 0px;
+        }
+        .cart_img_wrap {
+            width: 100px;
+            aspect-ratio: 1;
+        }
+        .cart_img_wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+        .cart_card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-leave-active {
+            transition: all .5s ease;
+        }
+
+        .list-leave-from {
+            transform: translateX(0px);
+            opacity: 1;
+        }
+
+        .list-leave-to {
+            transform: translateX(30px);
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body coffee-op0>
+    <div id="app" v-cloak>
+        <div class="cart_wrap">
+            <div class="list_bord">
+                <ul class="cart_block" v-for="(data,index) of dataArray">
+                    <transition-group name="list" mode="out-in">
+                        <li v-for="item of data" v-show="item.display === 1" key="item">
+                            <div class="cart_card">
+                                <div class="cart_img_wrap">
+                                    <img :src="item.src" :alt="item.name">
+                                </div>
+                                <p>
+                                    {{item.name}}
+                                    <span v-if="item.ice">({{item.ice}})</span>
+                                    <span v-if="item.sugar">({{item.sugar}})</span>
+                                </p>
+                                <p>{{item.price}} 元</p>
+                                <div class="cart_list_button_group">
+                                    <button @click="change(item,-1)">-</button>
+                                    <input type="number" v-model.number="item.quantity">
+                                    <button @click="change(item,1)">+</button>
+                                </div>
+                                <p>小記 {{item.price * item.quantity}}</p>
+                                <button @click="deleteHandler(index,item)"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </li>
+                    </transition-group>
+                </ul>
+            </div>
+            <div class="price_bord">
+                <label :for="'id' + coupon.id" v-for="coupon of couponArray">
+                    <input type="radio" :id="'id' + coupon.id" :value="coupon.id" v-model="radio">
+                    {{coupon.name}}
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/vue.global.js"></script>
+    <script>
+        const vm = Vue.createApp({
+            data() {
+                return {
+                    productArray: [],
+                    foodArray: [],
+                    dataArray: [],
+                    couponArray: [],
+                    radio: undefined
+                }
+            },
+            methods: {
+                change(obj,num) {
+                    obj.quantity += num;
+                    if (obj.quantity <= 0) {
+                        obj.quantity = 0;
+                    }
+                },
+                deleteHandler(index,obj) {
+                    let deleteLIst = window.confirm("您確定要刪除嗎?");
+                    if(deleteLIst) {
+                        obj.display = 0;
+                        setTimeout(() => {
+                            this.dataArray[index] = this.dataArray[index].filter((data) => {
+                                return obj.key !== data.key;
+                            })
+                        },470)
+                    }
+                }
+            },
+            beforeMount() {
+                const el = document.createElement("div");
+                const docBody = document.querySelector("body");
+                fetch("../../parts/navbar.php")
+                .then(data => data.text())
+                .then(data => {
+                    el.innerHTML = data;
+                    docBody.insertBefore(el, docBody.childNodes[0]);
+                    scrollTo({ top: 0, behavior: "instant" });
+                })
+                fetch("./cart_read_all_data.php")
+                .then(data => data.json())
+                .then(data => {
+                    if(data === "login") {
+                        alert("結帳請先登入會員");
+                        setTimeout(() => {
+                            window.location = "../09/login.html";
+                        }, 100);
+                    } else {
+                        document.querySelector("body").removeAttribute("coffee-op0");
+                    }
+                    // console.log("product: ",data.product);
+                    // console.log("food: ",data.food);
+                    // console.log("coupon: ",data.coupon);
+                    this.productArray = data.product;
+                    this.foodArray = data.food;
+                    this.couponArray = data.coupon;
+                    this.dataArray.push(data.product);
+                    this.dataArray.push(data.food);
+                })
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

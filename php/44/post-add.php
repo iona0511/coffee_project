@@ -1,8 +1,3 @@
-<?php
-require __DIR__ . '/part/connect_db.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +13,7 @@ require __DIR__ . '/part/connect_db.php';
 </head>
 
 <body>
-    <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
+    <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
     <div class="container" style="max-width: 960px;">
         <h3 class="card-title text-primary" style="font-weight: bold;">新增文章</h3>
         <form name="main_form" onsubmit="sendData();return false;" novalidate id="main_form">
@@ -104,12 +99,13 @@ require __DIR__ . '/part/connect_db.php';
                     info_bar.classList.remove('alert-danger');
                     info_bar.classList.add('alert-success');
                     info_bar.style.display = "block";
+                    info_bar.innerText = `分享成功`;
                 } else {
                     info_bar.style.opacity = "1";
                     info_bar.classList.remove('alert-success');
                     info_bar.classList.add('alert-danger');
                     info_bar.style.display = "block";
-                    info_bar.innerText = `發文失敗 : ${msg.error}。`;
+                    info_bar.innerText = `分享失敗 : ${msg.error}。`;
                 }
             }
 

@@ -81,12 +81,6 @@ if ($totalRows > 0) {
         display: none;
     }
 
-
-    .edit_img a .c1{
-        
-    }
-
-
     .edit_img a .c1{
         display: none;
     }
@@ -99,9 +93,39 @@ if ($totalRows > 0) {
     .edit_img a:hover .d1{
         display: none;
     }
+    .css-8cha5q-SubmitButton {
+    color: rgb(255, 255, 255);
+    background: rgb(51, 51, 51);
+    /* margin: 40px 0px 0px; */
+    /* width: 100%; */
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 16px;
+    letter-spacing: 0.2em;
+    line-height: 1.4;
+    transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
+    transition-property: background, color;
+    transition-duration: 0.4s, 0.3s;
+    transition-timing-function: ease-out, ease-out;
+    transition-delay: 0s, 0s;
+    }
+    a{
+        text-decoration: none;
+    }
+    a:hover{
+        background-color: #B2ADAA;
+        text-decoration: none;
+        color: #fff;
+    }
+
 </style>
 
-<div class="display_justify_content" style=" width:1200px;margin:20px auto;font-size:24px;">優惠券管理</div>
+<div class="display_justify_content" style=" margin:20px auto;font-size:24px;">優惠券管理</div>
+<div class="display_justify_content" style="width:100px; margin:5px auto;font-size:12px;">
+    
+        <a type="submit" class="css-8cha5q-SubmitButton" href="coupon_record_add.php?sid=<?= $r['sid'] ?>">新增</a>
+    
+</div>
 <div class="display_justify_content" style="height: 500px; width:1200px;margin-top:25px; margin:20px auto;" >
     <table class="table table-striped" >
         <thead>
@@ -125,9 +149,9 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td>
-                        <div class="trash_img">
+                        <div class="trash_img" >
                         <a style="width:30px;height:30px;"  href="javascript: delete_it(<?= $r['sid'] ?>)" >
-                            <img class="a1" style="width:25px ;" src="./copon_img/6154713uV6k8WyP.gif" alt="">
+                            <img class="a1" style="width:24px ;" src="./copon_img/6154713uV6k8WyP.gif" alt="">
                             <img class="b1" style="width:24px ;" src="./copon_img/nnihi123-removebg-preview.png" alt="">
                         </a>
                         </div>
@@ -143,10 +167,10 @@ if ($totalRows > 0) {
                     <td><?= $r['coupon_validity_period'] ?></td>
                     <td><?= $r['coupon_status'] ?></td>
                     <td>
-                        <div class="edit_img">
+                        <div class="edit_img" >
                         <a style="width:30px;height:30px;" class="edit_img" href="coupon_record_edit.php?sid=<?= $r['sid'] ?>">
-                            <img class="c1" style="width:24px " src="./copon_img/6154151jyaaGIbA.gif" alt="">
-                            <img class="d1" style="width:24px " src="./copon_img/nnneji90-removebg-preview.png" alt="">
+                            <img class="c1" style="width:24px; " src="./copon_img/6154151jyaaGIbA.gif" alt="">
+                            <img class="d1" style="width:24px; " src="./copon_img/nnneji90-removebg-preview.png" alt="">
                         </a>
                         </div>
                     </td>
@@ -159,7 +183,7 @@ if ($totalRows > 0) {
 <div class="row  display_justify_content" style="margin:20px auto;width:300px;">
         <div class="col">
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
+                <ul class="pagination display_justify_content"  >
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page - 1 ?>">Previous</a>
                     </li>

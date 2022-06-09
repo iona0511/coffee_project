@@ -23,22 +23,23 @@ if (empty($row)) {
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <style>
-    *{
+    * {
         box-sizing: border-box;
         margin: 0;
-        }
+    }
 
     body {
-    /* background-color: #CD853F; */
-    background-color:#CAAD87;
-    background-size: cover;
-    opacity: 0.9;
+        /* background-color: #CD853F; */
+        background-color: #CAAD87;
+        background-size: cover;
+        opacity: 0.9;
     }
 
     .color-y {
-        background-color:aliceblue;
+        background-color: aliceblue;
         opacity: 0.8;
     }
+
     .form-control.red {
         border: 1px solid red;
     }
@@ -63,6 +64,7 @@ if (empty($row)) {
                         <input type="hidden" name="sid" value="<?= $row['news_sid'] ?>">
                         <div class="mb-3">
                             <label for="news_title" class="form-label">活動標題</label>
+                            
                             <!-- label for跟input id 是對應的-->
                             <input type="text" class="form-control" id="news_title" name="news_title" required value="<?= htmlentities($row['news_title']) ?>">
                             <div class="form-text red"></div>
@@ -71,10 +73,10 @@ if (empty($row)) {
                             <label for="news_class" class="form-label">活動類別</label>
                             </br>
                             <!-- 這邊無法顯示出資料庫裡的類別，可以參考老師的01 form -->
-                            <select name="news_class" id="news_class" value="<?= $row['news_class'] ?>">
-                                <option value="1" selected disabled>-- 請選擇 --</option>
+                            <select name="news_class_sid" id="news_class_sid" value="">
+                                <option value="0" disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
-                                    <option value="<?= $r['class_sid'] ?>">
+                                    <option value="<?= $r['class_sid'] ?>" <?= $r['class_sid'] == $row['news_class_sid'] ? 'selected' : '' ?>>
                                         <?= $r['class_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -83,7 +85,7 @@ if (empty($row)) {
                         </div>
 
                         <label for="news_start_date" class="form-label">活動區間</label>
-                        <div class="mb-3 act">                         
+                        <div class="mb-3 act">
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date" value="<?= $row['news_start_date'] ?>">
                             <div class="form-text red"></div>
                             <p>~</p>
@@ -96,12 +98,14 @@ if (empty($row)) {
                             <textarea type="text" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
                             <div class="form-text red"></div>
                         </div>
- 
+
                         <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
-                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>  
+                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>   
+                            <div class="form-text red">
+                                <img src="" alt="">
+                            </div>                    
                             <div id="preview"></div>
-                            <div class="form-text red"></div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">修改</button>
@@ -119,17 +123,17 @@ if (empty($row)) {
 <script>
     const row = <?= json_encode($row, JSON_UNESCAPED_UNICODE); ?>;
 
-    const info_bar = document.querySelector('#info_bar');
+    const info_bar = document.querySelector('#info-bar');
     // const news_img = document.querySelector('#news_img');
     const title_f = document.form1.news_title;
     // const class_sid_f = document.form1.news_class_sid;
-    const class_name_f = document.form1.news_class_name;
-    const start_date_f = document.form1.news_start_date;
-    const end_date_f = document.form1.news_end_date;
+    const class_sid_f = document.form1.news_class_sid;
+    // const start_date_f = document.form1.news_start_date;
+    // const end_date_f = document.form1.news_end_date;
     const content_f = document.form1.news_content;
     const img_f = document.form1.news_img;
     //這裡要確認資料庫欄位是否名稱有對應到
-    const fields = [title_f, class_name_f, start_date_f, end_date_f, content_f, img_f];
+    const fields = [title_f,class_sid_f,content_f,img_f];
 
     const fieldTexts = [];
 
@@ -138,13 +142,29 @@ if (empty($row)) {
     }
     console.log(fieldTexts)
 
+    // showphoto照片上傳的功能要再看一下
+    function showphoto() {
+    // let container = document.querySelector('#preview');
+    // let files    = document.querySelector('input[type=file]').files;
+ 
+    // for (i = 0; i < files.length; i++) {
+    //     const reader  = new FileReader();
+    //     reader.addEventListener("load", function () {
+    //         container.innerHTML += `<img height="200" alt="" src="${reader.result}">`;
+    //     }, false);
 
+    //     if (files[i]) {
+    //             reader.readAsDataURL(files[i]);
+    
+    //     }                       
+    // }    
+};
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
         for (let i in fields) {
             fields[i].classList.remove('red');
-            console.log('fieldTexts ', fieldTexts)
+            // console.log('fieldTexts ', fieldTexts)
             fieldTexts[i].innerText = '';
         }
         info_bar.style.display = 'none'; // 隱藏訊息列
@@ -161,13 +181,20 @@ if (empty($row)) {
             fieldTexts[0].innerText = '標題至少要2個字';
             isPass = false;
         }
-        if (content_f.value.length < 10) {
-            // alert('姓名至少兩個字');
-            // name_f.classList.add('red');
-            // name_f.nextElementSibling.classList.add('red');
-            // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
+        if (class_sid_f.value.length < 1) {
             fields[1].classList.add('red');
-            fieldTexts[1].innerText = '內容至少要10個字';
+            fieldTexts[1].innerText = '請輸入內容';
+            isPass = false;
+        }
+        if (content_f.value.length < 5) {
+            fields[2].classList.add('red');
+            fieldTexts[2].innerText = '內容至少要5個字';
+            isPass = false;
+        }
+
+        if (img_f.value.length< 1) {
+            fields[3].classList.add('red');
+            fieldTexts[3].innerText = '請先上傳圖片';
             isPass = false;
         }
 
@@ -189,7 +216,7 @@ if (empty($row)) {
             info_bar.innerText = '修改成功';
 
             setTimeout(() => {
-                location.href = 'lastest-news.php'; // 跳轉到列表頁
+                // location.href = 'lastest-news.php'; // 跳轉到列表頁
             }, 1500);
         } else {
             info_bar.classList.remove('alert-success');
@@ -198,5 +225,7 @@ if (empty($row)) {
         }
 
     }
+
+   
 </script>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>

@@ -57,7 +57,7 @@
                             <a class="nav-link" href="/coffee_project/php/29/class-index.html">課程資訊</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="">分享牆</a>
+                            <a class="nav-link" href="/coffee_project/php/44/share.html">分享牆</a>
                         </li>
                         <li class="nav-item px-2">
                             <a class="nav-link" href="/coffee_project/php/44/post-add.php">新增分享</a>

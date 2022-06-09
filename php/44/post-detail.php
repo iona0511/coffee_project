@@ -1,5 +1,7 @@
 <?php
-require __DIR__ . '/part/connect_db.php';
+require  dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+
+
 
 $pid = isset($_GET['pid']) ? intval($_GET['pid']) : '';
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
@@ -70,7 +72,7 @@ if ($rows['topic_sid'] == 1) {
 </head>
 
 <body>
-    <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
+    <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
     <div class="page">
 
         <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
