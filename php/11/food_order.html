@@ -5,20 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-    crossorigin="anonymous"
-/>
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-/>
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../css/reset.css" />
+
     <title>Document</title>
     <style>
-      body{
-        background: url(../../images/11/pexels-dominika-roseclay-894612.jpg) no-repeat;
-        background-attachment:fixed;
+      body {
+        background: url(../../images/11/pexels-dominika-roseclay-894612.jpg)
+          no-repeat;
+        background-attachment: fixed;
       }
       * {
         margin: 0px;
@@ -123,12 +132,14 @@
       section {
         width: 80%;
         float: left;
+        height: 2000px;
       }
       aside {
         width: 20%;
-        height: 100vh;
+        height: 2000px;
         border-left: 1px solid #ccc;
         float: right;
+        
       }
 
       .menu_food {
@@ -148,8 +159,8 @@
         flex-wrap: wrap;
       }
       .photo {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         display: flex;
         align-self: center;
       }
@@ -185,7 +196,11 @@
         width: 100vw;
         height: auto;
         background-color: rgba(52, 49, 49, 0.529);
-        transform: translateY(50px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
       }
 
       .afterclick.hide {
@@ -209,26 +224,28 @@
       }
     </style>
   </head>
-  <script>if (! isset($_SESSION)) {
-    session_start();
-}
-</script>
-
+  <!-- 重要 不能刪 -->
+  <script>
+    if (!isset($_SESSION)) {
+      session_start();
+    }
+  </script>
+  <!-- 重要  不能刪 -->
 
   <body>
     <script>
       function getNav() {
-          fetch("../../parts/navbar.php")
-              .then(function (response) {
-                  return response.text();
-              })
-              .then(function (navData) {
-                  navBar = document.querySelector(".navBar");
-                  navBar.innerHTML = navData;
-              });
+        fetch("../../parts/navbar.php")
+          .then(function (response) {
+            return response.text();
+          })
+          .then(function (navData) {
+            navBar = document.querySelector(".navBar");
+            navBar.innerHTML = navData;
+          });
       }
       getNav();
-  </script>
+    </script>
     <div class="wrap">
       <div class="navBar"></div>
       <!-- <div class="select" style="background-color:rgba(222, 193, 148, 0.462);">
@@ -247,15 +264,23 @@
         
 
       </div> -->
-      <section>
-
-        <div style="display:flex;">
-          <img src="./menu_images/beans.png">
-          <h3>餐點訂購</h3>
+      <section style="background-color: rgb(238, 237, 234)">
+        <img src="./menu_images/banner.jpg" style="width: 80vw" />
+        <div style="display: flex; align-items: center; margin: 50px">
+          <img src="./menu_images/beans.png" />
+          <h3
+            style="
+              padding-left: 20px;
+              color: rgb(162, 93, 34);
+              font-size: 30px;
+              font-weight: 700;
+            "
+          >
+            餐點訂購
+          </h3>
         </div>
 
-
-        <div class="menu" >
+        <div class="menu">
           <!-- <form class="forhere" id="forhere">
                     <div class="btn">
 
@@ -295,14 +320,13 @@
                     </fieldset>           
                 </form> -->
         </div>
-      
-        <div class="menu_area" >
+        <div class="menu_area">
           <!-- 這裡放訂餐 -->
         </div>
 
         <!-- 這裡放點擊後選冰熱 甜度 -->
 
-        <div class="afterclick" id="detail">
+        <div class="afterclick hide" id="detail">
           <!-- <div class="all_choice">
              <a href="#nav"> <i class="fa-solid fa-circle-xmark" style="font-size: 30px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
             </div>
@@ -313,8 +337,8 @@
             <h4>飲料名稱</h4> -->
         </div>
       </section>
-      <aside style="margin:0 auto;background-color: rgb(247, 243, 215);">
-        <div class="aside" >
+      <aside style="margin: 0 auto; background-color: rgb(247, 243, 215);">
+        <div class="aside">
           <!-- <div style="display:flex;margin: 6px;">
                   <div style="flex-grow:1;">卡布奇諾 (熱)
                   </div>
@@ -357,6 +381,7 @@
             margin-bottom: 20px;
             border-radius: 10px;
             box-shadow: 1px 1px rgb(250, 134, 57);
+            font-weight: 700;
           "
           onclick="sendData()"
         >
@@ -428,13 +453,13 @@
 
         menu_area.innerHTML = "";
         for (let i = 0; i < data.length; i++) {
-          menu_area.innerHTML += `<div class="menu_food" style="background-color:#fff; color:#fff">
+          menu_area.innerHTML += `<div class="menu_food" style="background-color:rgb(234,234,234);margin-bottom:30px">
                 <div class="menu_food_text">
                     <h4 class="menu_sid" style="display:none;">${data[i].menu_sid}</h4>
-                    <h4 class="menu_name" style="line-height:3rem">${data[i].menu_name}</h4>
-                    <p class="menu_nutrition">${data[i].menu_nutrition}</p>
-                    <p class="menu_kcal">總熱量 ${data[i].menu_kcal} 大卡</p>
-                    <p class="menu_price_m">${data[i].menu_price_m} 元</p>
+                    <h4 class="menu_name" style="line-height:3.5rem;color:rgb(130,43,13);font-size:20px;font-family: 'Noto Sans TC', sans-serif;">${data[i].menu_name}</h4>
+                    <p class="menu_nutrition" style="line-height:1.8rem;">${data[i].menu_nutrition}</p>
+                    <p class="menu_kcal" style="line-height:1.8rem;">${data[i].menu_kcal} 大卡</p>
+                    <p class="menu_price_m" style="line-height:1.9rem;font-weight:700;font-size:20px;">$ ${data[i].menu_price_m}</p>
                 </div>
                 <figure class="photo">
                   
@@ -461,35 +486,34 @@
         if (!item) return false;
         console.log(item);
 
-
-
-
         //    暫時不賣大杯  <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_size" value="2"><label for="">大杯(L)</label> <p class="menu_price_l">${item.menu_price_l} 元 </p></div><h3 style="border-top:1px solid #ccc;">尺寸選擇<h3><div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_size" value="1"><label for="">中杯(M)</label> <p class="menu_price_m">${item.menu_price_m} 元 </p></div>
 
         detail.innerHTML = `
          
-         <div class="all_choice">
-          <a href="#nav"> <i class="fa-solid fa-circle-xmark close" style="font-size: 35px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
+         <div class="all_choice"  style="height: 100vh;overflow:scroll;border-top-right-radius:20px">
+          <a href="#nav"> 
+            <i class="fa-solid fa-circle-xmark close" style="font-size: 35px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);padding:10px"></i></a>
 
+            
           <div class="all_choice_photo"">
            <img src="../../images/11/${item.menu_photo}"class="all_choice_photo_img" style="height:300px">
          </div>
 
          <div class ="choice_textarea" style="padding:30px">
-             <div style="display:flex;margin-bottom:20px;"><h2 class="menu_name" style="flex-grow:1;">${item.menu_name}</h2>   <h3 style="" class="onesize">$ ${item.menu_price_m}元<h3></div>
-             <p class="menu_nutrition1" name="menu_nutrition">${item.menu_nutrition}</p>
+             <div style="display:flex;margin-bottom:20px;"><h2 class="menu_name" style="flex-grow:1;color:rgb(130,43,13);font-size:25px;font-weight:700">${item.menu_name}</h2>   <h3 style="font-size:25px;font-weight:600" class="onesize">$ ${item.menu_price_m}元<h3></div>
+             <p class="menu_nutrition1" name="menu_nutrition" style="padding-top:20px;padding-bottom:20px">${item.menu_nutrition}</p>
           
         
              
 
 
-             <h3 style="border-top:1px solid #ccc;">冰熱選擇<h3>
+             <h3 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">冰熱選擇<h3>
 
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="1">
              <label for="">正常冰</label> </div>
 
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="2">
-             <label for="">少冰</label> </div>
+             <label for="" >少冰</label> </div>
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="3">
              <label for="">去冰</label></div>
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="4">
@@ -497,7 +521,7 @@
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_ice" value="5">
              <label for="">熱</label> </div>
 
-             <h3 style="border-top:1px solid #ccc;">甜度選擇<h3>
+             <h3 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">甜度選擇<h3>
 
              <div style="display:flex; align-items:center"><input type="radio" id="" name="food_choice_sugar" value="1">
              <label for="">無糖</label> </div>
@@ -515,7 +539,7 @@
                <p class="plus_minus_number" name="plus_minus_number">1</p>
                <i class="fa-solid fa-plus" onclick="plus_number()"style="margin-left:20px;margin-right:20px"></i>
                
-               <button class="addtocart_button" style="width:20vw;height:30px;background-color:rgb(248, 179, 5);text-align:center;border-radius:10px;" id="add_to_cart" data-sid=${sid}>加入清單</button>
+               <button class="addtocart_button" style="width:20vw;height:30px;background-color:rgb(248, 179, 5);text-align:center;border-radius:10px;" id="add_to_cart" data-sid=${sid}>加入</button>
                 <br><br>                
                </div>
          </div>
@@ -543,9 +567,7 @@
           }
         }
         detail.classList.add("hide");
-        const size = document.querySelector(
-          'h3[class="onesize"]'
-        ).value;
+        const size = document.querySelector('h3[class="onesize"]').value;
         const ice = document.querySelector(
           'input[name="food_choice_ice"]:checked'
         ).value;
@@ -590,8 +612,6 @@
               <div style="border-bottom:1px solid #ccc;margin:5px"></div>
          </div>
           `;
-     
-
       }
 
       // 選餐
@@ -652,8 +672,8 @@
       }
 
       const sendData = () => {
-        const menu_sid = document.querySelectorAll(".from_menu_sid")
-        const menu_photo = document.querySelectorAll(".from_menu_photo")
+        const menu_sid = document.querySelectorAll(".from_menu_sid");
+        const menu_photo = document.querySelectorAll(".from_menu_photo");
         const menu_name = document.querySelectorAll(".menu_name1");
         const menu_price_m = document.querySelectorAll(".menu_price");
         const ice = document.querySelectorAll(".ice");
@@ -676,8 +696,7 @@
         console.log("result ", result);
         console.log("result ", JSON.stringify(result));
 
-
-           // POST 資料到購物車
+        // POST 資料到購物車
 
         // 傳資料給後端的方法一
         // let xhr = new XMLHttpRequest();
@@ -688,17 +707,17 @@
 
         // 傳資料給後端的方法二
 
-    fetch("food_choice_api.php", {
-      method: "POST",
-      body: JSON.stringify(result),
-      headers: {'Content-Type':'application/json'},
-    })
-    .then(res => res.json())
+        fetch("food_choice_api.php", {
+          method: "POST",
+          body: JSON.stringify(result),
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => res.json())
 
-    .then(res => console.log(res));
+          .then((res) => console.log(res));
 
         // 傳資料給後端的方法三
-        // 
+        //
         //         const r = await fetch("food_choice_api.php", {
         //             method: "POST",
         //             body: data,
@@ -706,14 +725,12 @@
         //         const qq = await r.json();
         //         console.log(qq);
 
+        sessionStorage.setItem("food_order", JSON.stringify(result));
 
-        sessionStorage.setItem('food_order',JSON.stringify(result));
-        
-        //     
+        //
       };
 
-// sessionStorage.setItem('name','haha');
-
+      // sessionStorage.setItem('name','haha');
     </script>
   </body>
 </html>
