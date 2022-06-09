@@ -13,27 +13,59 @@
 
     <style>
         body {
-            width: 100vw;
+            width: calc(100vw-10px);
             margin: 0;
             overflow-x: hidden;
         }
 
+
         .wrapper {
             width: 90%;
-            margin: 20px 35px 0;
+            margin: 20px auto 0;
         }
 
         #photos__container {
+
             position: relative;
-            width: 100vw;
+            width: 100%;
+            margin-left: calc(1.8%);
+            margin-right: auto;
+
+        }
+
+        .fig {
+            position: absolute;
+            color: blue;
+            font-weight: bold;
+            bottom: 10px;
+            left: 10px;
         }
 
         .photo {
-            width: 161px;
-            /* width: 18%; */
+            width: 18%;
+            min-width: 161px;
             height: auto;
+            min-height: 100px;
+            max-height: 400px;
             position: absolute;
+            overflow: hidden;
         }
+        
+        .cover{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: #000;
+            opacity: 0;
+            border-radius: 15px;
+        }
+        .cover:hover{
+            opacity: .2;
+        }
+
+
 
         .photo img {
             width: 100%;
@@ -46,11 +78,23 @@
 
 <body>
     <div class="wrapper">
-        <div class="title">
+        <div class="title mb-3">
             <h2>分享牆</h2>
         </div>
         <div id="photos__container">
+            <!-- 放照片 -->
 
+            <!-- <div class="photo">
+                <div class="cover"></div>
+                <a href="">
+                    <img src="uploaded/GOLDEN2.PNG" alt="photo">
+                </a>
+
+
+                <div class="fig">
+                    <p>你好</p>
+                </div>
+            </div> -->
 
         </div>
     </div>
@@ -74,7 +118,7 @@
 
         })();
 
-        const gap = 14
+        const gap = 14;
         const photosContainer = document.getElementById('photos__container')
         const photos = document.getElementsByClassName('photo')
 
@@ -82,7 +126,7 @@
             const photosContainerWidth = photosContainer.offsetWidth
             const photoWidth = photos[0].offsetWidth
             // 計算一列最多有幾欄
-            const columnsCount = parseInt((photosContainerWidth) / (photoWidth + gap))
+            const columnsCount = parseInt((photosContainerWidth) / (photoWidth + gap + 2))
             const fistRowPhotosHeightArray = []
             // 進行照片排序
             for (let i = 0; i < photos.length; i++) {
@@ -112,32 +156,18 @@
         // 畫面一進來
         function render(rows) {
             const p_c = document.querySelector("#photos__container");
-            rows.forEach(v => {
+            rows.forEach((v) => {
                 p_c.innerHTML += `
                     <div class="photo">
-                        <img src="uploaded/${v['img_name']}" alt="photo">
+                        <a href="share-detail.php?pid=${v['sid']}"><img src="uploaded/${v['img_name']}" alt="photo"></a>
+                        <div class="fig">
+
+                        </div>
                     </div>
                 `;
             });
         }
 
-
-        async function getImg() {
-            const data = await fetch("api/share-api.php");
-            const rows = await data.json();
-
-            console.log(rows);
-
-            const p_c = document.querySelector("#photos__container");
-            rows.forEach(v => {
-                p_c.innerHTML += `
-                    <div class="photo">
-                        <img src="uploaded/${v['img_name']}" alt="photo">
-                    </div>
-                `;
-            });
-            cascadeDisplay();
-        }
 
         window.onload = async function () {
             const data = await fetch("api/share-api.php");
@@ -145,16 +175,8 @@
 
             console.log(rows);
 
-            const p_c = document.querySelector("#photos__container");
-            rows.forEach((v) => {
-                p_c.innerHTML += `
-                    <div class="photo">
-                        <img src="uploaded/${v['img_name']}" alt="photo">
-                    </div>
-                `;
-            });
+            render(rows);
             cascadeDisplay();
-
         }
 
         // 畫面寬度有變動
