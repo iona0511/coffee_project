@@ -9,6 +9,7 @@
     }
     $output = [];
 
+    //讀coupon
     $memId = $_SESSION["user"]["member_sid"];
     $sql = sprintf("SELECT `coupon_receive`.`sid`, `coupon`.`coupon_name`, `coupon`.`coupon_money`, `coupon`.`menu_sid`, `coupon`.`products_sid`, `coupon`.`type` FROM `coupon_receive` JOIN `coupon` ON `coupon_receive`.`coupon_sid`=`coupon`.`sid` WHERE `end_time` > NOW() AND `status` = 0 AND `member_sid` = %s;", $memId);
     $arr = $pdo -> query($sql) -> fetchAll();
@@ -24,6 +25,7 @@
         $output["coupon"][] = $objCoupon;
     }
 
+    //讀product
     $output["product"] = [];
     foreach($_SESSION["products_order"] as $v) {
         $objProduct["id"] = $v["products_sid"];
@@ -34,6 +36,23 @@
         $objProduct["src"] = "../../images/35/" . $v["products_pic_one"];
         $objProduct["display"] = 1;
         $output["product"][] = $objProduct;
+    }
+
+    //讀food
+    $foodJSON = json_decode($_SESSION["food_order"],true);
+    $output["food"] = [];
+    foreach($foodJSON as $v) {
+        $objFood["id"] = $v["menu_sid"];
+        $objFood["name"] = $v["menu_name"];
+        $objFood["price"] = $v["menu_price_m"];
+        $objFood["quantity"] = $v["food_choice_count"];
+        $sql = sprintf("SELECT `menu_photo` FROM `menu` WHERE `menu_sid` = %s", $v["menu_sid"]);
+        $arr = $pdo -> query($sql) -> fetch();
+        $objFood["src"] = "../../images/11/" . $arr["menu_photo"];
+        $objFood["display"] = 1;
+        $objFood["ice"] = $v["food_choice_ice"];
+        $objFood["sugar"] = $v["food_choice_sugar"];
+        $output["food"][] = $objFood;
     }
 
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
