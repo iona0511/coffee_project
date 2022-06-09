@@ -25,7 +25,9 @@
         const vm = Vue.createApp({
             data() {
                 return {
-
+                    productArray: [],
+                    foodArray: [],
+                    couponArray: [],
                 }
             },
             beforeMount() {
@@ -49,8 +51,13 @@
                     } else {
                         document.querySelector("body").removeAttribute("coffee-op0");
                     }
-                    console.log("coupon: ",data.coupon);
                     console.log("product: ",data.product);
+                    console.log("food: ",data.food);
+                    console.log("coupon: ",data.coupon);
+                    this.productArray = data.product;
+                    this.foodArray = data.food;
+                    this.couponArray = data.coupon;
+
                 })
             }
         }).mount("#app");
