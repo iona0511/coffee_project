@@ -18,11 +18,9 @@
         <title>來拎+B</title>
         <style class="style"></style>
         <style>
-            /* body {
-                background: url(../../images/29/04-bgimg.jpg) no-repeat;
-                background-size: cover;
-                background-attachment: fixed;
-            } */
+            body {
+                background-color: #b79973;
+            }
             .pic > img {
                 width: 100px;
                 height: 100px;
@@ -42,21 +40,51 @@
             }
             .container {
                 position: relative;
+                background-color: #eee;
+                border-radius: 20px 20px 0 0;
+                padding: 0;
             }
             .btn {
                 padding: 0;
                 position: absolute;
                 right: 15px;
                 top: -95px;
+                border: 1px solid rgb(136, 88, 36);
+                background-color: rgb(136, 88, 36);
             }
             .btn > a {
                 text-decoration: none;
-                color: green;
+                color: #eee;
                 display: inline-block;
                 padding: 6px 30px;
             }
             .btn:hover > a {
-                color: #fff;
+                background: linear-gradient(
+                    135deg,
+                    rgb(177, 255, 170) 0%,
+                    rgb(17, 182, 17) 100%
+                );
+                border: 1px solid rgb(177, 255, 170);
+                animation: btnG 1s 0s infinite linear;
+                border-radius: 3px;
+                color: #333;
+            }
+
+            @keyframes btnG {
+                0% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(177, 255, 170) 20%,
+                        rgb(17, 182, 17) 80%
+                    );
+                }
+                100% {
+                    background: linear-gradient(
+                        135deg,
+                        rgb(177, 255, 170) 40%,
+                        rgb(17, 182, 17) 60%
+                    );
+                }
             }
             .search {
                 border: 2px solid rgb(136, 88, 36);
@@ -69,7 +97,7 @@
                 position: absolute;
                 color: rgb(136, 88, 36);
                 top: -34px;
-                left: 170px;
+                left: 160px;
             }
             .table {
                 margin-top: 90px;
@@ -107,11 +135,12 @@
             }
             getNav();
         </script>
+
         <div class="navBar"></div>
+
         <button style="transform: translateX(1200px)">
             <a href="class-index.html">登出</a>
         </button>
-
         <div class="container">
             <h2 class="titleH2">課程管理</h2>
             <input type="text" placeholder="" class="search" /><i
@@ -127,7 +156,6 @@
                 <option value="levelAsc">難度低至高</option>
                 <option value="levelDesc">難度高至低</option>
             </select>
-
             <table class="table">
                 <thead>
                     <tr>
@@ -142,17 +170,18 @@
                 </thead>
                 <tbody class="wrap">
                     <!-- <tr>
-                        <td scope="row" class="pic">
-                            <img src="images/heart.png" alt="" />
-                        </td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>NT$</td>
-                        <td><i class="fa-solid fa-trash-can"></i></td>
-                    </tr> -->
+                            <td scope="row" class="pic">
+                                <img src="images/heart.png" alt="" />
+                            </td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>NT$</td>
+                            <td><i class="fa-solid fa-trash-can"></i></td>
+                        </tr> -->
                 </tbody>
             </table>
         </div>
+
         <script src="./delete-data.js"></script>
     </body>
 </html>
