@@ -8,9 +8,9 @@ $output = [
     'postData' => $_POST,
     'error' => '新增成功'
 ];
-$_SESSION["food_order"] = file_get_contents('php://input');
-exit;
-// $data = json_decode(file_get_contents('php://input'));
+// $_SESSION["food_order"] = file_get_contents('php://input');
+// exit;
+$data = json_encode(file_get_contents('php://input'));
 
 
 
@@ -21,8 +21,10 @@ exit;
 $questionMark = array();
 $insert_values = array();
 foreach($data as $d){
-    $questionMark[] = '(?,?,?,?,?,NOW())';
+    $questionMark[] = '(?,?,?,?,?,?,?,NOW())';
     $item = [
+        $d->menu_sid,
+        $d->menu_photo,
         $d->menu_name,
         $d->menu_price_m,
         $d->food_choice_ice,
@@ -37,7 +39,8 @@ foreach($data as $d){
 // array(array(newData));
 // array(array(newData), array(newData));
 
-$sql = "INSERT INTO `food_choice`(`menu_name`, `menu_price_m`, `food_choice_ice`,`food_choice_sugar`,`food_choice_count`,`created_at`) VALUES ".implode(",", $questionMark);
+$sql = "INSERT INTO `food_choice`(`menu_sid`,`menu_photo`,`menu_name`, `menu_price_m`, `food_choice_ice`,`food_choice_sugar`,`food_choice_count`,`created_at`) VALUES ".implode(",", $questionMark);
+
 
 $stmt = $pdo->prepare($sql);
 

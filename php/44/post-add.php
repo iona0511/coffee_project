@@ -1,8 +1,3 @@
-<?php
-require __DIR__ . '/part/connect_db.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,12 +99,13 @@ require __DIR__ . '/part/connect_db.php';
                     info_bar.classList.remove('alert-danger');
                     info_bar.classList.add('alert-success');
                     info_bar.style.display = "block";
+                    info_bar.innerText = `分享成功`;
                 } else {
                     info_bar.style.opacity = "1";
                     info_bar.classList.remove('alert-success');
                     info_bar.classList.add('alert-danger');
                     info_bar.style.display = "block";
-                    info_bar.innerText = `發文失敗 : ${msg.error}。`;
+                    info_bar.innerText = `分享失敗 : ${msg.error}。`;
                 }
             }
 

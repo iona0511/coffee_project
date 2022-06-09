@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    position: relative;
+    z-index: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    color: #3397cf;
+}
+
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+.mb-10{
+    margin-bottom: 4.5rem;
+}
+
+
+.mr-1 {
+    margin-right: .5rem;
+}
+
+.mr-2 {
+    margin-right: 1rem;
+}
+
+.mr-3 {
+    margin-right: 1.5rem;
+}
+
+.pr-3{
+    padding-right: 1.5rem;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+
