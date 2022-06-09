@@ -6,3 +6,5 @@
 /php/29/images
 /php/29/uploaded
 /parts/connect_db.php
+/connect_db.php
+parts/connect_db.php
