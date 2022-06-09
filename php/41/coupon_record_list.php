@@ -96,8 +96,6 @@ if ($totalRows > 0) {
     .css-8cha5q-SubmitButton {
     color: rgb(255, 255, 255);
     background: rgb(51, 51, 51);
-    /* margin: 40px 0px 0px; */
-    /* width: 100%; */
     font-size: 14px;
     text-align: center;
     padding: 10px 16px;

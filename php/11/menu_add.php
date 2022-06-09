@@ -17,6 +17,9 @@ $title = '新增餐點資料';
 <?php include dirname(__DIR__, 2) . '/parts/html-head.php' ?>
 <?php include dirname(__DIR__, 2) . '/parts/navbar.php'  ?>
 <style>
+    body{
+        color:rgb(61,52,41);
+    }
     .form-control.red {
         border: 1px solid red;
     }
@@ -24,13 +27,26 @@ $title = '新增餐點資料';
     .form-text.red {
         color: red;
     }
+
+    .a{
+        border: 1px solid rgb(156,121,93);
+    }
+    .b{
+        background: rgb(61,52,41);
+        color:bisque;
+    }
+    .b:hover{
+  
+        color: #fff;
+    }
 </style>
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">新增餐點資料</h5>
+                    <h5 class="card-title"><img src="./menu_images/beans.png" style="width:35px">
+新增餐點資料</h5><br>
                     <form name="form1" onsubmit="sendData();return false;novalidate" enctype="multipart/form-data">
 
                             <!-- 如果是是用radio,name要一樣才會是相同的group,id可以不一樣,也要記得下value -->
@@ -95,10 +111,10 @@ $title = '新增餐點資料';
                             <div class="form-text red"></div>
                         </div>
                         
-                        <button type="button" class="btn btn-danger">
-                            <a href="./menu_list.php">取消</a>
+                        <button type="button" class="btn a">
+                            <a href="./menu_list.php" style="text-decoration:none;color:rgb(60,40,35)">取消</a>
                         </button>
-                        <button type="submit" class="btn btn-info">新增</button>
+                        <button type="submit" class="btn b">新增</button>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功

@@ -5,6 +5,6 @@ if (! isset($_SESSION)) {
 }
 
 unset($_SESSION["user"]); 
-
+unset($_SESSION);
 
 header('Location: /coffee_project/index_.php');
