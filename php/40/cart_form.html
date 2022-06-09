@@ -188,7 +188,7 @@
                 },
                 sendData() {
                     this.denySending();
-                    const fd = new FormData(document.payForm)
+                    const fd = new FormData(document.payForm);
                     fetch("./cart_write_data_api.php", {
                         method: "POST",
                         body: fd
@@ -225,7 +225,15 @@
                         this.addressWrongMsg = false;
                     }
                 },
-
+                bankAccount(newNum) {
+                    this.bankAccount = newNum.replace(/ +/g, "");
+                },
+                bankNumber(newNum) {
+                    this.bankNumber = newNum.replace(/ +/g, "");
+                },
+                deliverAddress(newStr) {
+                    this.deliverAddress = newStr.replace(/ +/g, " ");
+                }
             }
         }).mount("#app");
     </script>
