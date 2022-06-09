@@ -2,8 +2,9 @@
     if(!session_id()) {
         session_start();
     }
-    $output["rawJSON"] = json_decode($_SESSION["rawJSON"], true);
-    $output["rawCoupon"] = json_decode($_SESSION["rawCoupon"], true);
+    $output["product"] = json_decode($_SESSION["productJSON"], true);
+    $output["food"] = json_decode($_SESSION["foodJSON"], true);
+    $output["couponId"] = json_decode($_SESSION["couponJSON"], true);
     $output["user"] = $_SESSION["user"];
     if(isset($_SESSION["products_order"])) {
         $output["product"] = $_SESSION["products_order"];
