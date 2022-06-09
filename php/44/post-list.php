@@ -7,6 +7,7 @@ $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
 $topic = isset($_GET['topic']) ? intval($_GET['topic']) : '';
 $topic = empty($topic) ? '' : $topic;
+$odb = isset($_GET['odb']) ? $_GET['odb'] : '';
 
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
@@ -17,7 +18,6 @@ $by = isset($_GET['by']) ? intval($_GET['by']) : '1';
 if ($page < 1) {
     header("Location:?topic=$topic&page=1");
 }
-
 
 if ($by == 1 and isset($search)) {
     $t_sql = sprintf("SELECT COUNT(1) FROM post WHERE `delete_state`='0' AND `topic_sid` LIKE '%%%s' AND `title` LIKE'%%%s%%'", $topic, $search);
@@ -40,12 +40,12 @@ if ($totalRows > 0) {
     }
 
     if ($by == 1 and isset($search)) {
-        $sql = sprintf("SELECT * FROM post WHERE `delete_state`='0' AND `topic_sid` LIKE '%%%s' AND `title` LIKE'%%%s%%'", $topic, $search);
+        $sql = sprintf("SELECT p.*,pi.img_name FROM `post` p JOIN `post_img` pi ON p.sid = pi.post_sid WHERE `delete_state`='0' AND pi.sort = 1 AND `topic_sid` LIKE '%%%s' AND `title` LIKE'%%%s%%'", $topic, $search);
     } elseif ($by == 2 and isset($search)) {
-        $sql = sprintf("SELECT * FROM post WHERE `delete_state`='0' AND `topic_sid` LIKE '%%%s' AND `member_sid` LIKE'%%%s%%' ORDER BY `post`.`member_sid` ASC", $topic, $search);
+        $sql = sprintf("SELECT p.*,pi.img_name FROM `post` p JOIN `post_img` pi ON p.sid = pi.post_sid  WHERE `delete_state`='0' AND pi.sort = 1 AND `topic_sid` LIKE '%%%s' AND `member_sid` LIKE'%%%s%%' ORDER BY `post`.`member_sid` ASC", $topic, $search);
     } else {
         //選資料by topic,page,perPages
-        $sql = sprintf("SELECT * FROM post WHERE `delete_state`='0' AND `topic_sid`LIKE '%%%s' LIMIT %s,%s", $topic, ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT p.*,pi.img_name FROM `post` p JOIN `post_img` pi ON p.sid = pi.post_sid WHERE `delete_state`='0' AND pi.sort = 1 AND `topic_sid` LIKE '%%%s' LIMIT %s,%s", $topic, ($page - 1) * $perPage, $perPage);
     }
 
     $rows = $pdo->query($sql)->fetchAll();
@@ -173,7 +173,8 @@ if ($totalRows > 0) {
             <thead>
                 <tr>
                     <th style="width: 5%"><i class="fa-solid fa-trash-can"></i></th>
-                    <th scope="col" style="width: 10%">Post#</th>
+                    <th scope="col" style="width: 5%">Post#</th>
+                    <th scope="col" style="width: 10%">分享圖</th>
                     <th scope="col" style="width: 10%">會員暱稱</th>
                     <th scope="col" style="width: 10%">會員編號</th>
                     <th scope="col">文章標題</th>
@@ -181,7 +182,7 @@ if ($totalRows > 0) {
                     <th scope="col" style="width: 5%">回覆</th>
                     <th scope="col" style="width: 8%">主題編號</th>
                     <th scope="col" style="width: 10%">貼文</th>
-                    <th scope="col" style="width: 10%">修改</th>
+                    <th scope="col" style="width: 5%">修改</th>
                     <th style="width: 5%"><i class="fa-solid fa-pen-to-square"></i></th>
                 </tr>
             </thead>
@@ -194,6 +195,11 @@ if ($totalRows > 0) {
                             </a>
                         </td>
                         <td><?= $r['sid'] ?></td>
+                        <td>
+                            <div class="pl-img-wrap">
+                                <img class="pl-img" src="uploaded/<?= $r['img_name'] ?>" alt="">
+                            </div>
+                        </td>
                         <td><?= $r['member_nickname'] ?></td>
                         <td><?= $r['member_sid'] ?></td>
                         <td><a href="post-detail.php?pid=<?= $r['sid'] ?>"><?= $r['title'] ?></a></td>
@@ -298,6 +304,11 @@ if ($totalRows > 0) {
                             </a>
                         </td>
                         <td>${v['sid']}</td>
+                        <td>
+                            <div class="pl-img-wrap">
+                                <img class="pl-img" src="uploaded/${v['img_name']}" alt="">
+                            </div>
+                        </td>
                         <td>${v['member_nickname']}</td>
                         <td>${v['member_sid']}</td>
                         <td>
