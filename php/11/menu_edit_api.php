@@ -34,6 +34,7 @@ $menu_nutrition = $_POST['menu_nutrition']??'';
 
 
 $sql = "UPDATE `menu` SET `menu_categories`=?, `menu_photo`=?, `menu_name`=?, `menu_kcal`=?, `menu_price_m`=?, `menu_nutrition`=? WHERE `menu_sid`=$menu_sid";
+
 $stmt = $pdo->prepare($sql);
 $stmt ->execute([
     $menu_categories,

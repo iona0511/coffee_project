@@ -8,9 +8,9 @@ $output = [
     'postData' => $_POST,
     'error' => '新增成功'
 ];
-$_SESSION["food_order"] = file_get_contents('php://input');
-exit;
-// $data = json_decode(file_get_contents('php://input'));
+// $_SESSION["food_order"] = file_get_contents('php://input');
+// exit;
+$data = json_decode(file_get_contents('php://input'));
 
 
 
