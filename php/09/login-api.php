@@ -3,9 +3,7 @@
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 header('Content-Type: application/json');
 
-if(!session_id()) {
-    session_start();
-}
+
 
 $output = [
     'success' => false,
@@ -21,13 +19,6 @@ if (empty($_POST['member_account'])) {
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
-
-// if (empty($_POST['member_name'])) {
-//     $output['error'] = '沒有姓名資料';
-//     $output['code'] = 400;
-//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     exit;
-// }
 
 $member_account = $_POST['member_account'];
 $member_password = $_POST['member_password'];

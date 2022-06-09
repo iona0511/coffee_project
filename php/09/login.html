@@ -23,11 +23,13 @@
     }
     .form-box{
         width:500px;
-        height:650px;
+        height:750px;
         position:relative;
-        margin:5% auto;
+        margin:3% auto;
         background:rgba(255, 255, 255, 0.3);
         padding:10px;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
     }
     .input-field{
         width: 50%;
@@ -54,15 +56,15 @@
         color: red;
         font-size: .7rem;
         position: relative;
-        top: 0;
+        top: -8px;
         left: 31.5%;
-        visibility: hidden;
     }
     .form_row>i{
         position: absolute;
         visibility: hidden;
-        top: 11px;
+        top: 19px;
         right: 90px;
+        font-size: .7rem;
     }
     /* .form_row.success i.fa-circle-check {
 	color: #2ecc71;
@@ -92,7 +94,7 @@
     }
     .input-group-register{
         display: none;
-        margin-top: 40px;
+        margin-top: 20px;
         transition:.5s;
     }
     .toggle-btn{
@@ -105,7 +107,7 @@
     }
     .input-group-login{
         position:absolute;
-        top: 200px;
+        top: 250px;
 	    width: 500px;
 	    transition: .5s;
     }
@@ -125,21 +127,30 @@
         outline: none;
         border-radius: 30px;
     }
+    .submit-btn:hover{
+        background: #B79973;
+        color: white;
+    }
     .re-btn{
         width: 280px;
         padding: 10px 30px;
         cursor: pointer;
         display: block;
         margin: auto;
-        margin-top: 50px;
+        position: relative;
+        top: 40px;
         background: hsl(24, 100%, 86%);
         border: 0;
         outline: none;
         border-radius: 30px;
     }
+    .re-btn:hover{
+        background: #B79973;
+        color: white;
+    }
     .btn{
         position: absolute;
-        top: 0;
+        top: 2px;
         left:0;
         width: 90px;
         height: 38px;
@@ -150,19 +161,18 @@
     .btn-right{
         transform: translateX(100%);
     }
-    .fail{
+    /* .fail{
         width: 250px;
         height: 50px;
         margin: auto;
         margin-top: 80px;
-        color: white;
-        background-color: red;
+        color: red;
         text-align: center;
         padding: 15px 0;
-    }
+    } */
     .shuffle{
         position: absolute;
-        bottom: -230px;
+        bottom: -250px;
         right: 50px;
         font-size: .6rem;
         border: 0;
@@ -173,10 +183,10 @@
         background: transparent;
     }
     .shuffle:hover{
-        color: #B79973;
+        color: white;
     }
-    .formFail{
-        color: red;
+    ::placeholder{
+        font-size: 0.8rem;
     }
 
     </style>
@@ -193,8 +203,8 @@
 
         <form id='login' class='input-group-login'name="form2" onsubmit="sendLog();return false;" novalidate>
             <div class="login-form">
-                <input type='text' class='input-field' name="member_account" placeholder='帳號' required >
-                <input type='password'class='input-field' name="member_password" placeholder='密碼' required>
+                <input type='text' class='input-field' name="member_account" placeholder='帳號' autocomplete="off" required >
+                <input type='password'class='input-field' name="member_password" placeholder='密碼' autocomplete="off" required>
             </div>
             <div>
                 <button type='submit'class='submit-btn'>登入</button>
@@ -213,45 +223,61 @@
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
+            <div class="form_row">
                 <div class="f-input">
                     <div class="form-title">暱稱：</div>
-                    <input type='text'class='input-field' id="member_nickname" name="member_nickname" placeholder='暱稱' required>
+                    <input type='text'class='input-field' id="member_nickname" name="member_nickname" placeholder='暱稱' autocomplete="off" required>
                 </div>
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
+            <div class="form_row">
                 <div class="f-input">
                     <div class="form-title">帳號：</div>
-                    <input type='text'class='input-field' id="member_account" name="member_account" placeholder='帳號' required>
+                    <input type='text'class='input-field' id="member_account" name="member_account" placeholder='帳號' autocomplete="off" required>
                 </div>
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
-                <div class="form-title">密碼：</div>
-                <input type='password'class='input-field' id="member_password" name="member_password" placeholder='密碼' required>
-                <!-- <div class="form-text"></div> -->
+            <div class="form_row">
+                <div class="f-input">
+                    <div class="form-title">密碼：</div>
+                    <input type='password'class='input-field' id="member_password" name="member_password" placeholder='密碼' autocomplete="off" required>
+                </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
-                <div class="form-title">生日：</div>
-                <input type="date" class= 'input-field' id="member_birthday" name="member_birthday">      
+            <div class="form_row">
+                <div class="f-input">
+                    <div class="form-title">生日：</div>
+                    <input type="date" class= 'input-field' id="member_birthday" name="member_birthday" autocomplete="off">      
+                </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
-                <div class="form-title">手機：</div>
-                <input type='text'class='input-field' id="member_mobile" name="member_mobile" placeholder='手機號碼' required>
-                <!-- <div class="form-text"></div> -->
+            <div class="form_row">
+                <div class="f-input">
+                    <div class="form-title">手機：</div>
+                    <input type='text'class='input-field' id="member_mobile" name="member_mobile" placeholder='手機號碼' autocomplete="off" required>
+                </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
-                <div class="form-title">地址：</div>
-                <input type='text'class='input-field' id="member_address" name="member_address" placeholder='地址' required>
-                <!-- <div class="form-text"></div> -->
+            <div class="form_row">
+                <div class="f-input">
+                    <div class="form-title">地址：</div>
+                    <input type='text'class='input-field' id="member_address" name="member_address" placeholder='地址' autocomplete="off" required>
+                </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
-            <div class="form-row">
-                <div class="form-title">信箱：</div>
-                <input type='email'class='input-field' id="member_mail" name="member_mail" placeholder='信箱' required>
-                <!-- <div class="form-text"></div> -->
+            <div class="form_row">
+                <div class="f-input">
+                    <div class="form-title">信箱：</div>
+                    <input type='email'class='input-field' id="member_mail" name="member_mail" placeholder='信箱' autocomplete="off" required>
+                </div>
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <p class="errorMsg"></p>
             </div>
             <button type='submit'class='re-btn'>確認註冊</button>
         </form>
@@ -283,13 +309,21 @@
         window.location.href='admin-login.html';
     })
 
-    const errorMsg = document.querySelector('.errorMsg');
-    const form_row = document.querySelector('.form_row');
-    const email_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zAZ]{2,}))$/;
+    const errorMsg = document.querySelectorAll('.errorMsg');
+    const form_row = document.querySelectorAll('.form_row');
+
+    const mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zAZ]{2,}))$/;
     const mobile_re = /^09\d{2}-?\d{3}-?\d{3}$/;
+
     const name_f = document.form1.member_name;
-    // const email_f = document.form1.email;
-    // const mobile_f = document.form1.mobile;
+    const nickname_f = document.form1.member_nickname;
+    const account_f = document.form1.member_account;
+    const password_f = document.form1.member_password;
+    const mobile_f = document.form1.member_mobile;
+    const address_f = document.form1.member_address;
+    const mail_f = document.form1.member_mail;
+
+
 
     async function sendData() {
 
@@ -297,10 +331,64 @@
         let isPass = true;
 
         if (name_f.value.length < 2) {
-            errorMsg.style.visibility = 'visible';
-            errorMsg.innerHTML = '姓名至少兩個字';
-            form_row.className = 'form_row error';
+            errorMsg[0].style.visibility = 'visible';
+            errorMsg[0].innerText = '姓名至少兩個字';
+            form_row[0].className = 'form_row error';
             isPass = false;
+        }else{
+            errorMsg[0].innerHTML = '';
+            form_row[0].classList.remove("error");
+        }
+        if (nickname_f.value.length < 1) {
+            errorMsg[1].style.visibility = 'visible';
+            errorMsg[1].innerHTML = '請輸入您的暱稱';
+            form_row[1].className = 'form_row error';
+            isPass = false;
+        }else{
+            errorMsg[1].innerHTML = '';
+            form_row[1].classList.remove("error");
+        }
+        if (nickname_f.value.length < 1) {
+            errorMsg[2].style.visibility = 'visible';
+            errorMsg[2].innerHTML = '請輸入您的帳號';
+            form_row[2].className = 'form_row error';
+            isPass = false;
+        }else{
+            errorMsg[2].innerHTML = '';
+            form_row[2].classList.remove("error");
+        }
+        if (nickname_f.value.length < 1) {
+            errorMsg[3].style.visibility = 'visible';
+            errorMsg[3].innerHTML = '請輸入您的密碼';
+            form_row[3].className = 'form_row error';
+            isPass = false;
+        }else{
+            errorMsg[3].innerHTML = '';
+            form_row[3].classList.remove("error");
+        }
+        if (mobile_f.value && !mobile_re.test(mobile_f.value)) {
+            errorMsg[5].innerHTML = '手機號碼格式錯誤';
+            form_row[5].className = 'form_row error';
+            isPass = false;
+        }else{
+            errorMsg[5].innerHTML = '';
+            form_row[5].classList.remove("error");
+        }
+        if (address_f.value.length < 1) {
+            errorMsg[6].innerHTML = '請輸入您的地址';
+            form_row[6].className = 'form_row error';
+            isPass = false;
+        }else{
+            errorMsg[6].innerHTML = '';
+            form_row[6].classList.remove("error");
+        }
+        if (mail_f.value && !mail_re.test(mail_f.value)) {
+            errorMsg[7].innerHTML = '信箱格式錯誤';
+            form_row[7].className = 'form_row error';
+            isPass = false;
+        }else{
+            errorMsg[7].innerHTML = '';
+            form_row[7].classList.remove("error");
         }
 
         if (!isPass) {
@@ -318,7 +406,7 @@
         
         if(data.success){
         alert("會員註冊成功！");       
-        // window.location.href='首頁';
+        window.location.href='/coffee_project/index_.php';
     }
 
     });
@@ -342,8 +430,9 @@
         window.location.href='welcome.php';
 
     }else{
-        formText.classList.add("fail");
-        formText.innerText = '帳號或密碼錯誤';
+        // formText.classList.add("fail");
+        // formText.innerText = '帳號或密碼錯誤';
+        alert('帳號或密碼錯誤');
     }
 
 

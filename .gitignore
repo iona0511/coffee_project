@@ -2,3 +2,5 @@
 /fontawesome
 .gitignore
 /images
+/connect_db.php
+parts/connect_db.php
