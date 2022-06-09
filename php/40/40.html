@@ -5,12 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-        crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
     <link rel="stylesheet" href="../../css/reset.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
     <title>Document</title>
@@ -18,6 +14,7 @@
         [coffee-op0] {
             opacity: 0;
         }
+
         [v-cloak] {
             display: none !important;
         }
@@ -73,14 +70,17 @@
             transform: translateY(-50%);
             animation: arrow 1.5s ease infinite;
         }
+
         @keyframes arrow {
             0% {
                 left: 12px;
             }
+
             100% {
                 left: calc(50% - 12px);
             }
         }
+
         .orange_bar {
             display: block;
             width: 0px;
@@ -92,14 +92,17 @@
             transform: translateY(-50%);
             animation: bar 1.5s ease infinite;
         }
+
         @keyframes bar {
             0% {
                 width: 0px;
             }
+
             100% {
                 width: calc(50% - 12px);
             }
         }
+
         .cart_wrap {
             display: flex;
             padding: 0px 20px;
@@ -121,6 +124,13 @@
 
         .cart_price {
             width: 30%;
+            position: fixed;
+            top: 20px;
+            right: 0px;
+        }
+
+        .cart_price_paddging h1 {
+            margin: 24px;
         }
 
         .cart_list {
@@ -286,20 +296,10 @@
             color: #fff;
             cursor: pointer;
         }
-
-        .cart_price {
-            position: fixed;
-            top: 20px;
-            right: 0px;
-        }
-
-        .cart_price_paddging h1 {
-            margin: 24px;
-        }
     </style>
 </head>
 
-<body coffee-op0>
+<body coffee-op0 style="height:500vh;">
     <div id="app" v-cloak>
         <div class="progress_bar_wrap">
             <div class="rect">
@@ -333,7 +333,7 @@
                     </transition-group>
                 </ul>
             </div>
-            <div class="cart_price">
+            <div class="cart_price" ref="price_bord">
                 <div class="cart_price_paddging">
                     <button @click="couponShowHandler" class="coupon_select_btn">選擇優惠卷</button>
                     <p>優惠卷: {{couponName}}</p>
@@ -363,14 +363,33 @@
         (function getNav() {
             const el = document.createElement("div");
             const docBody = document.querySelector("body");
-            
+
             fetch("../../parts/navbar.php")
                 .then(data => data.text())
                 .then(data => {
                     el.innerHTML = data;
-                    docBody.insertBefore(el,docBody.childNodes[0]);
+                    docBody.insertBefore(el, docBody.childNodes[0]);
+                })
+                .then(() => {
+                    const rect = document.querySelector(".rect");
+                    const price_bord = document.querySelector(".cart_price");
+                    price_bord.style.top = rect.getBoundingClientRect().bottom + 24 + "px";
+                    scrollTo({ top: 0, behavior: "instant" });
+                    window.addEventListener("scroll", () => {
+                        if (rect.getBoundingClientRect().bottom >= 24) {
+                            price_bord.style.top = rect.getBoundingClientRect().bottom + 24 + "px";
+                        } else {
+                            price_bord.style.top = "24px";
+                        }
+                    })
                 });
         })();
+
+        window.addEventListener("resize", () => {
+            const rect = document.querySelector(".rect");
+            const price_bord = document.querySelector(".cart_price");
+            price_bord.style.top = rect.getBoundingClientRect().bottom + 24 + "px";
+        })
         const vm = Vue.createApp({
             data() {
                 return {
@@ -504,21 +523,17 @@
                 }
             },
             async beforeMount() {
-                console.log("vue");
                 await fetch("./cart_read_coupon_api.php")
                     .then(data => data.json())
                     .then(data => {
-                        console.log(0);
                         if (data === "login") {
-                            console.log(1);
-                            // alert("結帳請先登入會員");
+                            alert("結帳請先登入會員");
                             setTimeout(() => {
                                 window.location = "../09/login.html";
-                            },100);
+                            }, 100);
                         } else {
                             document.querySelector("body").removeAttribute("coffee-op0");
                         }
-                        console.log(data);
                         this.couponArray = data;
                     });
                 fetch("./check_product_session_api.php")
@@ -526,8 +541,15 @@
                     .then(data => {
                         if (data) {
                             this.fakeData = data;
+                        } else {
                         }
                     });
+                fetch("./cart_read_food_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    console.log(data);
+                    // this.fakeData = data;
+                })
                 await fetch("./check_coupon_session_api.php")
                     .then(data => data.json())
                     .then(data => {
@@ -546,7 +568,7 @@
                 //回上一頁不會刷新discount 所以暫時用這個爛方法解決
                 this.couponConfirm();
                 this.couponConfirm();
-            }
+            },
         });
         vm.mount("#app");
     </script>

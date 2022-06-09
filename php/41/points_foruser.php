@@ -1,6 +1,7 @@
 <?php 
-require dirname(__DIR__,2) . '/parts/connect_db.php';
-session_start();
+require __DIR__ . '/parts/connect_db.php';
+// require dirname(__DIR__,2) . '/parts/connect_db.php';
+// session_start();
 
 
 if (!isset($_SESSION['user']['member_account'])){
@@ -68,6 +69,7 @@ $a = $t_points[0];
 ?>
 
 <?php include __DIR__ . '/parts/html-head.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 
 <style>
     .display_justify_content {

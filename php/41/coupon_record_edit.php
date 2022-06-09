@@ -1,6 +1,7 @@
 <?php
-require dirname(__DIR__, 2) . '/parts/connect_db.php';
-session_start();
+require __DIR__ . '/parts/connect_db.php';
+// require dirname(__DIR__, 2) . '/parts/connect_db.php';
+// session_start();
 
 if (!isset($_SESSION['user']['admin_account'])) {
     header('Location:/coffee_project/php/09/admin-login.html');
@@ -79,6 +80,7 @@ $coupon_status  = [
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
 <style>
     .form-control.red {
@@ -165,7 +167,6 @@ $coupon_status  = [
 
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;display:flex; flex-direction: column;width:100%;">
                             <label for="">優惠券發放類別</label>
-
                             <select class="s_padding" name="cst_type">
                                 <option value="" selected disabled>- 請選擇 -</option>
 
@@ -187,6 +188,7 @@ $coupon_status  = [
 
                                 <?php endforeach; ?>
                             </select>
+                            <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3 d_colum " style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
@@ -205,6 +207,7 @@ $coupon_status  = [
                                     <option value="<?= $k ?>"> <?= $v['menu_sid'] ?></option>
                                 <?php endforeach; ?>
                             </select>
+                
                         </div>
 
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
@@ -215,6 +218,7 @@ $coupon_status  = [
                                     <option value="<?= $k ?>"> <?= $v['products_sid'] ?></option>
                                 <?php endforeach; ?>
                             </select>
+                         
                         </div>
 
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
@@ -228,6 +232,7 @@ $coupon_status  = [
 
                                 <?php endforeach; ?>
                             </select>
+                            <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
@@ -241,6 +246,7 @@ $coupon_status  = [
 
                                 <?php endforeach; ?>
                             </select>
+                            <div class="form-text red"></div>
                         </div>
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
                             <label for="">優惠券開放狀態</label>
@@ -253,6 +259,7 @@ $coupon_status  = [
 
                                 <?php endforeach; ?>
                             </select>
+                            <div class="form-text red"></div>
                         </div>
                         <button type="submit" class="css-8cha5q-SubmitButton" >新增</button>
                     </form>
@@ -271,15 +278,21 @@ $coupon_status  = [
 
     const coupon_name_f = document.form1.coupon_name;
     const cst_type_f = document.form1.cst_type;
+    const cstt_type_f = document.form1.cstt_type;
     const number_f = document.form1.number;
 
-    const fields = [coupon_name_f,cst_type_f,number_f];
+    // const m_sid_f = document.form1.m_sid;
+    // const p_sid_f = document.form1.p_sid;
+    const t_type_f = document.form1.t_type;
+    const coupon_validity_period_f = document.form1.coupon_validity_period;
+    const coupon_status_f = document.form1.coupon_status;
+
+    const fields = [coupon_name_f,cst_type_f,cstt_type_f,number_f,t_type_f,coupon_validity_period_f,coupon_status_f];
+
     const fieldTexts = [];
     for (let f of fields) {
         fieldTexts.push(f.nextElementSibling);
     }
-
-
 
     async function sendData() {
         for (let i in fields) {
@@ -299,11 +312,43 @@ $coupon_status  = [
             fieldTexts[1].innerText = '請輸入內容';
             isPass = false;
         }
-        if (number_f.value.length < 1) {
+        if (cstt_type_f.value.length < 1) {
         fields[2].classList.add('red');
         fieldTexts[2].innerText = '請輸入內容';
         isPass = false;
-}
+        }
+        if (number_f.value.length < 1) {
+            fields[3].classList.add('red');
+            fieldTexts[3].innerText = '請輸入內容';
+            isPass = false;
+        }
+        // if (m_sid_f.value.length < 1) {
+        //     fields[4].classList.add('red');
+        //     fieldTexts[4].innerText = '請輸入內容';
+        //     isPass = false;
+        // }
+        // if (p_sid_f.value.length < 1) {
+        // fields[5].classList.add('red');
+        // fieldTexts[5].innerText = '請輸入內容';
+        // isPass = false;
+        // }
+        if (t_type_f.value.length < 1) {
+            fields[4].classList.add('red');
+            fieldTexts[4].innerText = '請輸入內容';
+            isPass = false;
+        }
+        if (coupon_validity_period_f.value.length < 1) {
+            fields[5].classList.add('red');
+            fieldTexts[5].innerText = '請輸入內容';
+            isPass = false;
+        }
+        if (coupon_status_f.value.length < 1) {
+        fields[6].classList.add('red');
+        fieldTexts[6].innerText = '請輸入內容';
+        isPass = false;
+        }
+
+
         if (!isPass) {
             return;
         }
