@@ -81,9 +81,9 @@ if ($totalRows > 0) {
         <div class="row justify-content-around">
             <div class="col-12 d-flex flex-wrap justify-content-around">
                 <?php foreach ($rows as $r) : ?>
-                    <div class="card col-3 py-3 m-3">
+                    <div class="card col-3 py-3 m-3 ">
 
-                        <img class="card-img-top" src="
+                        <img class="card-img-top w-100" style="height: 300px;" src="
                                         <?php if ($r['products_pic_one']) : echo '/../../coffee_project/images/35/' . $r['products_pic_one'];
                                         endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" title="<?= $r['products_pic_one'] ?>" />
 
@@ -164,8 +164,9 @@ if ($totalRows > 0) {
         });
         const productsCart = document.querySelector("#products_cart")
         const result = await r.json();
-        productsCart.innerHTML += result + "</br>";
+        // productsCart.innerHTML += result + "</br>";
         console.log(result);
+        alert('已加入購物車')
         
 
     }
