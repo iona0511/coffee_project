@@ -13,7 +13,6 @@ $pageName = 'points_record_add';
 $title = '新增積分歷史紀錄';
 
 
-// `WHERE`member`.`member_account`=
 ?>
 <?php include __DIR__ . '/parts/html-head.php' ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
