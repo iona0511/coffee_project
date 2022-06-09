@@ -7,7 +7,8 @@ $output = [
     'postData' => $_POST,
     'code' => 0,
     'filenames' => [],
-    'error' => ''
+    'error' => '',
+    'testtext' => []
 ];
 
 
@@ -42,18 +43,21 @@ if (!is_array($_FILES['products_pic_one']['name'])) {
     exit;
 }
 
+$singlepic= [];
 foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
 
     $ext = $extMap[$_FILES['products_pic_one']['type'][$k]]; // 副檔名
     // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
     $filename = $f;
-    $output['filenames'][] = $filename;
-    $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
-    $stmtpic = $pdo->prepare($sqlpic);
-    $stmtpic->execute([$filename]);
+    $output['filenames'][] = $filename;    
+    array_push($singlepic, $filename);
+    // $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
+    // $stmtpic = $pdo->prepare($sqlpic);
+    // $stmtpic->execute([$filename]);
     // 把上傳的檔案搬移到指定的位置
     move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $filename);
 }
+$singleNameStr = implode(",", $singlepic);
 
 // 圖片區結束
 
@@ -85,9 +89,10 @@ foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
     move_uploaded_file($_FILES['products_pic_multi']['tmp_name'][$k], $folder . $filename);
 }
 $multiNameStr = implode(",", $multiName);
-$sqlmulti = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_multi`=? WHERE `products_sid`=$products_sid";
-$stmtmulti = $pdo->prepare($sqlmulti);
-$stmtmulti->execute([$multiNameStr]);
+
+// $sqlmulti = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_multi`=? WHERE `products_sid`=$products_sid";
+// $stmtmulti = $pdo->prepare($sqlmulti);
+// $stmtmulti->execute([$multiNameStr]);
 
 // 複數圖片區結束
 
@@ -100,13 +105,13 @@ $products_forsale = $_POST['products_forsale'] ?? '';
 $products_onsale = $_POST['products_onsale'] ?? '';
 $products_stocks = $_POST['products_stocks'] ?? '';
 $products_with_products_categroies_sid = $_POST['products_with_products_categroies_sid'] ?? '';
-// $products_pic_one = $_POST['products_pic_one'] ?? '';
-// $products_pic_multi = $_POST['products_pic_multi'] ?? '';
 $products_with_products_style_filter_sid = $_POST['products_with_products_style_filter_sid'] ?? '';
 
 // TODO 其他欄位檢查
 
 $sql = "UPDATE `products`
+JOIN `products_pic`
+    ON `products_pic`.`products_pic_sid` = `products`.`products_sid`
 SET
 `products_name`=?, 
 `products_introduction`=?,
@@ -116,12 +121,26 @@ SET
 `products_onsale`=?,
 `products_stocks`=?,
 `products_with_products_categroies_sid`=?,
--- `products_pic_one`=?,
--- `products_pic_multi`=?,
+`products_pic_one`=?,
+`products_pic_multi`=?,
 `products_with_products_style_filter_sid`=?
 WHERE `products_sid`=$products_sid ";
 
 $stmt = $pdo->prepare($sql);
+
+$output['testtext'][0] = $products_name;
+$output['testtext'][1] = $products_introduction;
+$output['testtext'][2] = $products_detail_introduction;
+$output['testtext'][3] = $products_price;
+$output['testtext'][4] = $products_forsale;
+$output['testtext'][5] = $products_onsale;
+$output['testtext'][6] = $products_stocks;
+$output['testtext'][7] = $products_with_products_categroies_sid;
+$output['testtext'][8] = $singleNameStr;
+$output['testtext'][9] = $multiNameStr;
+$output['testtext'][10] = $products_with_products_style_filter_sid;
+
+
 
 $stmt->execute([
     $products_name,
@@ -132,18 +151,14 @@ $stmt->execute([
     $products_onsale,
     $products_stocks,
     $products_with_products_categroies_sid,
-    // $products_pic_one,
-    // $products_pic_multi,
+    $singleNameStr,
+    $multiNameStr,
     $products_with_products_style_filter_sid
 ]);
 
-// echo $stmt->rowCount();
-// echo json_encode($output, JSON_UNESCAPED_UNICODE);
-// exit;
 
 
-
-if ($stmt->rowCount() == 1 || $stmtmulti->rowCount() == 1) {
+if ($stmt->rowCount() == 1) {
     $output['success'] = true;
 } else {
     $output['error'] = '資料沒有修改或圖片沒有修改';
