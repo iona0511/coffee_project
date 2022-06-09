@@ -407,6 +407,8 @@
         if(data.success){
         alert("會員註冊成功！");       
         window.location.href='/coffee_project/index_.php';
+    }else{
+        alert('已有此帳號');
     }
 
     });
@@ -430,8 +432,6 @@
         window.location.href='welcome.php';
 
     }else{
-        // formText.classList.add("fail");
-        // formText.innerText = '帳號或密碼錯誤';
         alert('帳號或密碼錯誤');
     }
 
