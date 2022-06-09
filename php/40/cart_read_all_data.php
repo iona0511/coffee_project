@@ -50,6 +50,7 @@
         $objFood["name"] = $v["menu_name"];
         $objFood["price"] = intval($v["menu_price_m"]);
         $objFood["quantity"] = intval($v["food_choice_count"]);
+        $objFood["stock"] = 999999;
         $sql = sprintf("SELECT `menu_photo` FROM `menu` WHERE `menu_sid` = %s", $v["menu_sid"]);
         $arr = $pdo -> query($sql) -> fetch();
         $objFood["src"] = "../../images/11/" . $arr["menu_photo"];
