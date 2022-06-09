@@ -12,8 +12,7 @@ $output = [
 ];
 // 貫文的！！！！！我不能刪！！！！！！！
 $_SESSION["food_order"] = file_get_contents('php://input');
-
-
+// 貫文的！！！！！我不能刪！！！！！！！
 
 $data = json_decode(file_get_contents('php://input'));
 
