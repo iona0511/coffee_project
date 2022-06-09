@@ -40,7 +40,8 @@ if ($totalRows > 0) {
         }
 
         body {
-        background-color: #CAAD87;
+        /* background-color: #CAAD87; */
+        background-image: url('/coffee_project/images/18/coffee_img1.jpg');
         background-size: cover;
         opacity: 0.8;
         }

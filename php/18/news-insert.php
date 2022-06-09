@@ -99,9 +99,9 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
                         <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
-                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>  
-                            <div id="preview"></div>
+                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple> 
                             <div class="form-text red"></div>
+                            <div id="preview"></div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">新增</button>

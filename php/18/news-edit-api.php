@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 
 
-// $folder = dirname(dirname(__DIR__, 1)) . '/images/18/';
+$folder = dirname(dirname(__DIR__, 1)) . '/images/18/';
 
 
 // $extMap = [
@@ -20,13 +20,6 @@ $output = [
     'filename'=>''
 ];
 
-// TODO: 欄位檢查, 後端的檢查
-// if (empty($_POST['name'])) {
-//     $output['error'] = '沒有姓名資料';
-//     $output['code'] = 400;
-//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//     exit;
-// }
 
 
 // $ext = $extMap[$_FILES['news_img']['type']];
@@ -36,7 +29,7 @@ $news_class_sid = $_POST['news_class_sid'] ?? '';
 $news_start_date = $_POST['news_start_date'] ?? '';
 $news_end_date = $_POST['news_end_date'] ?? '';
 $news_content = $_POST['news_content'] ?? '';
-$news_img = $_POST['news_img']??'';
+$news_img = $_FILES['news_img']['name'];
 
 
 // TODO: 其他欄位檢查
@@ -55,22 +48,17 @@ if(move_uploaded_file($_FILES['news_img']['tmp_name'],$folder.$news_img)){
 $output['filename'] = $news_img;
 
 
-$sql = "INSERT INTO `lastest_news`(`news_img`,
-    `news_title`, `news_class_sid`, `news_start_date`, 
-    `news_end_date`, `news_content`,`news_create_time`	
-    ) VALUES (
-        ?,?,?,?,
-        ?,?,NOW()
-    )";
+$sql = "UPDATE `lastest_news` 
+SET`news_title`=?,`news_class_sid`=?,`news_start_date`=?,`news_end_date`=?,`news_content`=?,`news_img`=? WHERE `news_sid`=$news_sid";
 
 $stmt = $pdo->prepare($sql);
-$stmt->execute([
-    $news_img,
+$stmt->execute([   
     $news_title,
     $news_class_sid,
     $news_start_date,
     $news_end_date,
     $news_content,
+    $news_img,
 ]);
 
 
