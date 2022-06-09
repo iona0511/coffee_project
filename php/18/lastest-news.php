@@ -25,7 +25,7 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid DESC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid ASC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
