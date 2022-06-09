@@ -179,9 +179,22 @@
                         <div>
                             <div id="photo_container"></div>
                             <div id="photo_container2"></div>
-                            <button id="btn" onclick="uploadAvatar()">
+                            <button
+                                id="btn"
+                                onclick="uploadAvatar()"
+                                type="button"
+                            >
                                 課程照片
                             </button>
+                            <img
+                                src=""
+                                id="myimg"
+                                style="
+                                    width: 200px;
+                                    height: 200px;
+                                    display: none;
+                                "
+                            />
                             <input type="hidden" name="course_img_s" value="" />
                         </div>
                         <div>
@@ -266,7 +279,7 @@
                 <form name="form2" style="display: none">
                     <input
                         type="file"
-                        name="avatar[]"
+                        name="avatar"
                         accept="image/*"
                         multiple
                     />
@@ -281,6 +294,7 @@
             const courseContent = document.querySelector(".course_content");
             const courseMaterial = document.querySelector(".course_material");
             const addWindows = document.querySelector(".addWindows");
+            const myimg = document.querySelector("#myimg");
             //防呆函式區(下面)
             function deleteNameValue() {
                 if (courseName.value === "請填入課程名稱") {
@@ -352,8 +366,6 @@
                 }
 
                 if (result.success === true) {
-                    console.log(result.success === true);
-                    console.log(result.success);
                     addWindows.innerHTML = `   <div
                 class="alert alert-success d-flex align-items-center addSuccess"
                 role="alert"
@@ -371,7 +383,7 @@
             </div>`;
                     setTimeout(() => {
                         window.location.href = "delete-data.html";
-                    }, 1500);
+                    }, 1000);
                 }
             }
 
@@ -380,34 +392,27 @@
             const avatar = document.form2.elements[0];
 
             const photoItem = (f) => {
-                return `
-                        <div class="photoItem" style="display: inline-block" data-f="${f}">
-                            <img src="../../images/29/${f}" alt="" />
-                        </div>
-                        `;
+                myimg.setAttribute("data-f", `${f}`);
+                return `../../images/29/${f}`;
             };
 
             avatar.addEventListener("change", async function () {
                 // 上傳表單
                 const fd = new FormData(document.form2);
-                const r = await fetch("./upload-photos-add-api.php", {
+                const r = await fetch("./upload-photos-api.php", {
                     method: "POST",
                     body: fd,
                 });
                 const obj = await r.json();
+                myimg.style.display = "block";
 
-                if (obj.filename && obj.filename.length) {
-                    photoContainer.innerHTML += obj.filename
-                        .map((f) => photoItem(f))
-                        .join("");
+                if (obj.filename) {
+                    myimg.src = photoItem(obj.filename);
                 }
-                const photoAr = [];
-                document.querySelectorAll(".photoItem").forEach((el) => {
-                    photoAr.push(el.getAttribute("data-f"));
-                });
-                document.form1.course_img_s.value = photoAr;
+                imgs = myimg.getAttribute("data-f");
+                console.log(imgs);
+                document.form1.course_img_s.value = imgs;
             });
-
             function uploadAvatar() {
                 avatar.click(); // 模擬點擊
             }
