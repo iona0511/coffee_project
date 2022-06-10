@@ -105,15 +105,23 @@ if ($rows['topic_sid'] == 1) {
                     </div>
                     <!-- 找session sid=文章sid才出現 -->
                     <div class="post-edit mb-2" style="display:none;">
-                        <a class="mr-1" href="post-edit.php?<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
-                        <a href="post-delete-api.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
+                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
+                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
                     </div>
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
                         <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
                             <?= $topic_name ?>
                         </a>
-                        <span class="c-date"><?= $rows['created_at'] ?></span>
+                        <span class="c-date">
+                            <?php
+                            if (empty($rows['updated_at'])) {
+                                echo $rows['created_at'];
+                            } else {
+                                echo '已編輯 ' . $rows['updated_at'];
+                            }
+                            ?>
+                        </span>
                     </div>
                     <p class="post-text">
                         <?= $rows['content'] ?>
