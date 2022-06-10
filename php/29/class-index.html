@@ -134,6 +134,27 @@
     </head>
     <body>
         <script>
+            function checkQuantity() {
+                const cart_quantity = document.querySelector(
+                    "[data-content-before]"
+                );
+                const myHref = window.location.href.replace(
+                    /coffee_project.*/,
+                    "coffee_project/parts/read_quantity_api.php"
+                );
+                fetch(myHref)
+                    .then((data) => data.json())
+                    .then((data) => {
+                        cart_quantity.setAttribute(
+                            "data-content-before",
+                            data.food.length + data.product.length
+                        );
+                    })
+                    .catch(() => {
+                        cart_quantity.setAttribute("data-content-before", 0);
+                    });
+            }
+
             function getNav() {
                 fetch("../../parts/navbar.php")
                     .then(function (response) {
@@ -142,13 +163,14 @@
                     .then(function (navData) {
                         navBar = document.querySelector(".navBar");
                         navBar.innerHTML = navData;
+                        checkQuantity();
                     });
             }
             getNav();
         </script>
         <div class="bgcimg">
             <div class="navBar"></div>
-            <button><a href="delete-data.html">登入</a></button>
+            <!-- <button><a href="delete-data.html">登入</a></button> -->
             <div class="container">
                 <h2 class="titleH2">課程資訊</h2>
                 <input type="text" placeholder="" class="search" /><i

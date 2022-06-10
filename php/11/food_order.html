@@ -20,15 +20,14 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="../../css/reset.css" />
 
     <title>Document</title>
     <style>
-      body {
+      /* body {
         background: url(../../images/11/pexels-dominika-roseclay-894612.jpg)
           no-repeat;
         background-attachment: fixed;
-      }
+      } */
       * {
         margin: 0px;
         color: rgb(47, 46, 46);
@@ -118,13 +117,13 @@
         padding-bottom: 20px;
         text-align: center;
       }
-      .nav {
+      /* .nav {
         text-decoration: none;
         font-size: 1rem;
         margin-left: 35px;
         padding: 5px;
         line-height: 2.5rem;
-      }
+      } */
       a:hover {
         color: rgb(205, 111, 3);
       }
@@ -132,11 +131,11 @@
       section {
         width: 80%;
         float: left;
-        height: 2000px;
+        height: 3500px;
       }
       aside {
         width: 20%;
-        height: 2000px;
+        height: 3500px;
         border-left: 1px solid #ccc;
         float: right;
         
@@ -226,15 +225,30 @@
     </style>
   </head>
   <!-- 重要 不能刪 -->
-  <script>
+  <!-- <script>
     if (!isset($_SESSION)) {
       session_start();
     }
-  </script>
+  </script> -->
   <!-- 重要  不能刪 -->
 
   <body>
     <script>
+          function checkQuantity() {
+        const cart_quantity = document.querySelector("[data-content-before]");
+        const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+        fetch(myHref)
+            .then(data => data.json())
+            .then(data => {
+                cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+            })
+            .catch(() => {
+                cart_quantity.setAttribute("data-content-before", 0);
+            })
+    };
+  
+
+
       function getNav() {
         fetch("../../parts/navbar.php")
           .then(function (response) {
@@ -243,6 +257,7 @@
           .then(function (navData) {
             navBar = document.querySelector(".navBar");
             navBar.innerHTML = navData;
+            checkQuantity();
           });
       }
       getNav();
@@ -262,13 +277,13 @@
         <a href="" class="nav">優惠券</a>
         <a href="" class="nav">購物車</a>
         <a href="" class="nav">會員中心</a>
-        
+        ../../images/35/
 
       </div> -->
       <section style="background-color: rgb(238, 237, 234)">
-        <img src="./menu_images/banner.jpg" style="width: 80vw" />
+        <img src="../../images/11/banner.jpg" style="width: 80vw" />
         <div style="display: flex; align-items: center; margin: 50px">
-          <img src="./menu_images/beans.png" />
+          <img src="../../images/11/beans.png" />
           <h3
             style="
               padding-left: 20px;
@@ -326,7 +341,7 @@
         </div>
 
         <!-- 這裡放點擊後選冰熱 甜度 -->
-
+        <img src="../../images/11/b" alt="">
         <div class="afterclick hide" id="detail">
           <!-- <div class="all_choice">
              <a href="#nav"> <i class="fa-solid fa-circle-xmark" style="font-size: 30px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
@@ -672,7 +687,21 @@
           }元`;
         }
       }
-
+      let result = []
+      async function getData() {
+        const data = await fetch("./check_food_session.php")
+        const myData = await data.json();
+        if (myData) {
+          result = myData;
+        }
+      }
+      getData();
+      // fetch("./check_food_session.php")
+      // .then(data => data.json())
+      // .then(data => {
+      //   console.log(data);
+      //})
+      
       const sendData = () => {
         const menu_sid = document.querySelectorAll(".from_menu_sid");
         const menu_photo = document.querySelectorAll(".from_menu_photo");
@@ -682,7 +711,9 @@
         const sugar = document.querySelectorAll(".sugar");
         const count = document.querySelectorAll(".plus_minus_number1");
         const items = document.querySelectorAll(".item");
-        const result = [];
+        // let result = [];
+        
+        
         for (let i = 0; i < items.length; i++) {
           result.push({
             // food_choice_sid: 555,
@@ -694,9 +725,9 @@
             food_choice_sugar: +sugar[i].getAttribute("data-sugar"),
             food_choice_count: +count[i].innerHTML,
           });
+
           window.location.href = './food_order.html';
 
-      
         }
         console.log("result ", result);
         console.log("result ", JSON.stringify(result));
@@ -731,7 +762,6 @@
         //         console.log(qq);
 
         sessionStorage.setItem("food_order", JSON.stringify(result));
-       
         //
       };
 

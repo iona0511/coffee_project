@@ -51,12 +51,61 @@ if (empty($row)) {
                             <input type="text" class="form-control" id="menu_categories" name="menu_categories" required value="<?=$row['menu_categories']?>">
                             <div class="form-text red"></div>
                         </div>
-
+<!-- 
                         <div class="mb-3">
                             <label for="menu_photo" class="form-label">圖片</label>
                             <input type="text" class="form-control" id="menu_photo" name="menu_photo" value="<?=$row['menu_photo']?>">
                             <div class="form-text red"></div>
                         </div>
+ -->
+
+<!-- 
+                        <div class="mb-3">
+                            <label for="menu_photo" class="form-label ">餐點圖片</label>
+                            <!-- <div><img src="" id="myimg" ></div> -->
+
+                            <!-- <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()" multiple>  
+                            <div class="form-text red"></div>
+                            <div id="preview"></div>
+
+                            <!-- onclick="uploadphoto() -->
+                            <!-- <div class="form-text red"></div>
+                        </div> --> 
+
+
+
+
+                        
+                        <!-- <div class="mb-3">
+                            <label for="menu_photo" class="form-label ">餐點圖片</label>
+
+                            <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()" multiple>  
+                            <div class="form-text red"></div>
+                            <div id="preview"></div>
+
+                            <div class="form-text red"></div>
+                        </div> -->
+
+
+                        
+                        <div class="mb-3">
+                            <label for="menu_photo" class="form-label">餐點圖片</label><br>
+                            <input type="file" name="menu_photo" accept="image/*" onchange="changeOneImg(event)" />
+                            <div class="form-text"></div>
+                            <img style="width:100px" class="single-img" src="
+                            <?php if ($row['menu_photo']) : 
+                            echo '/coffee_project/images/11/' . $row['menu_photo'];
+                            endif; ?>" 
+                            <?php if (!$row['menu_photo']) : 
+                            echo "style" . "=" . "display:none;" ?>
+                            <?php endif; ?> alt="" id="menu_photo" />
+                        </div>
+
+
+
+
+
+
 
                         <div class="mb-3">
                             <label for="menu_name" class="form-label">名稱</label>
@@ -124,7 +173,25 @@ if (empty($row)) {
     for(let f of fields){
         fieldTexts.push(f.nextElementSibling);
         
+    };
+
+
+    function changeOneImg() {
+        const file = event.currentTarget.files[0];
+        console.log(file);
+        const reader = new FileReader();
+
+        // 資料載入後 (讀取完成後)
+        reader.onload = function() {
+            console.log(reader.result);
+            document.querySelector("#menu_photo").style.display = 'block';
+            document.querySelector("#menu_photo").src = reader.result;
+        };
+        reader.readAsDataURL(file);
     }
+
+
+
 
 
     async function sendData() {
@@ -141,7 +208,6 @@ if (empty($row)) {
         // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-       
 
         const fd = new FormData(document.form1);
         const r = await fetch('menu_edit_api.php', {

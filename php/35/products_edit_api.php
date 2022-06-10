@@ -16,10 +16,51 @@ $products_sid = isset($_POST['products_sid']) ? intval($_POST['products_sid']) :
 
 if (empty($products_sid) or empty($_POST['products_name'])) {
     $output['error'] = '沒有商品名稱';
-    $output['code'] = 400;
+    $output['code'] = 101;
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
+
+if (empty($products_sid) or empty($_POST['products_introduction'])) {
+    $output['error'] = '缺少商品簡介';
+    $output['code'] = 102;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+
+if (empty($products_sid) or empty($_POST['products_detail_introduction'])) {
+    $output['error'] = '沒有商品介紹';
+    $output['code'] = 103;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+
+if (empty($products_sid) or empty($_POST['products_price'])) {
+    $output['error'] = '請輸入價錢';
+    $output['code'] = 104;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+
+if (empty($products_sid) or empty($_POST['products_forsale'])) {
+    $output['error'] = '是否販賣中';
+    $output['code'] = 105;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+
+if (empty($products_sid) or empty($_POST['products_stocks'])) {
+    $output['error'] = '請輸入庫存';
+    $output['code'] = 106;
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+
 
 // 圖片區
 
@@ -33,12 +74,14 @@ $extMap = [
 
 if (empty($_FILES['products_pic_one'])) {
     $output['error'] = '沒有上傳檔案';
+    $output['code'] = 102;
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
 if (!is_array($_FILES['products_pic_one']['name'])) {
     $output['error'] = '沒有上傳檔案2';
+    $output['code'] = 103;
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -46,24 +89,12 @@ if (!is_array($_FILES['products_pic_one']['name'])) {
 $singlepic= [];
 foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
 
-    $ext = $extMap[$_FILES['products_pic_one']['type'][$k]]; // 副檔名
-    // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
     $filename = $f;
     $output['filenames'][] = $filename;    
     array_push($singlepic, $filename);
-    // $sqlpic = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_one`=? WHERE `products_sid`=$products_sid";
-    // $stmtpic = $pdo->prepare($sqlpic);
-    // $stmtpic->execute([$filename]);
-    // 把上傳的檔案搬移到指定的位置
     move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $filename);
 }
 $singleNameStr = implode(",", $singlepic);
-
-// 圖片區結束
-
-// 複數圖片區
-
-$folder = dirname(dirname(__DIR__, 1)) . '/images/35/';
 
 if (empty($_FILES['products_pic_multi'])) {
     $output['error'] = '沒有上傳檔案';
@@ -80,8 +111,6 @@ if (!is_array($_FILES['products_pic_multi']['name'])) {
 $multiName = [];
 foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
 
-    // $ext = $extMap[$_FILES['products_pic_multi']['type'][$k]]; // 副檔名
-    // $filename = md5($f . rand()) . $ext; 檔案名稱md5化
     $filename = $f;
     $output['filenames'][] = $filename;
     array_push($multiName, $filename);
@@ -90,11 +119,8 @@ foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
 }
 $multiNameStr = implode(",", $multiName);
 
-// $sqlmulti = "UPDATE `products_pic`JOIN `products`ON `products_pic`.`products_pic_sid` = `products`.`products_sid`SET `products_pic_multi`=? WHERE `products_sid`=$products_sid";
-// $stmtmulti = $pdo->prepare($sqlmulti);
-// $stmtmulti->execute([$multiNameStr]);
+// 圖片區結束
 
-// 複數圖片區結束
 
 $products_sid = $_POST['products_sid'];
 $products_name = $_POST['products_name'];
