@@ -24,7 +24,7 @@ if (empty($mb_sid)) {
 $sql = sprintf("SELECT * FROM `member_likes` WHERE `member_sid` = '%s' AND `post_sid`= '%s'", $mb_sid, $pid);
 $row = $pdo->query($sql)->fetch();
 
-if ($data['getlike'] = 'yes') {
+if (!empty($data['getlike'])) {
     $op_msg['isLike'] = !empty($row);
 } else {
     // 如果會員沒按過讚 讚++

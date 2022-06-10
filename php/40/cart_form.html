@@ -11,6 +11,7 @@
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
         crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../../fontawesome/css/all.min.css">
     <title>Document</title>
     <style>
         [v-cloak] {
@@ -123,17 +124,6 @@
     <script src="../../js/vue.global.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script>
-        (function getNav() {
-            const el = document.createElement("div");
-            const docBody = document.querySelector("body");
-            
-            fetch("../../parts/navbar.php")
-                .then(data => data.text())
-                .then(data => {
-                    el.innerHTML = data;
-                    docBody.insertBefore(el,docBody.childNodes[0]);
-                });
-        })();
         const vm = Vue.createApp({
             data() {
                 return {
@@ -201,6 +191,25 @@
                             alert(data.message);
                         }
                     })
+                },
+                checkQuantity() {
+                    // console.log("chechk");
+                    const cart_quantity = document.querySelector("[data-content-before]");
+                    const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+                    fetch(myHref)
+                    .then(data => data.json())
+                    .then(data => {
+                        cart_quantity.setAttribute("data-content-before", 0);
+                        cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                        if(data.food.length + data.product.length <= 0) {
+                            alert("購物車沒有東西");
+                            setTimeout(() => {
+                                window.location = "../../index_.php"
+                            },100);
+                        } else {
+                            document.querySelector("body").removeAttribute("cart-op");
+                        }
+                    })
                 }
             },
             watch: {
@@ -234,6 +243,18 @@
                 deliverAddress(newStr) {
                     this.deliverAddress = newStr.replace(/ +/g, " ");
                 }
+            },
+            beforeMount() {
+                const el = document.createElement("div");
+                const docBody = document.querySelector("body");
+                fetch("../../parts/navbar.php")
+                .then(data => data.text())
+                .then(data => {
+                    el.innerHTML = data;
+                    docBody.insertBefore(el, docBody.childNodes[0]);
+                    scrollTo({ top: 0, behavior: "instant" });
+                    this.checkQuantity();
+                })
             }
         }).mount("#app");
     </script>

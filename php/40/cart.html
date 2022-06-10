@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'/>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
+    <link rel="stylesheet" href="../../fontawesome/css/all.min.css">
     <title>Document</title>
     <style>
         * {
@@ -15,6 +14,9 @@
         }
         [coffee-op0] {
             opacity: 0;
+        }
+        #app {
+            margin-top: 20px;
         }
         [v-cloak] {
             display: none !important;
@@ -32,9 +34,24 @@
         input[type=number]::-webkit-inner-spin-button {
             appearance: none;
         }
+        .list_bord {
+            width: 80%;
+            margin: 0px auto;
+        }
         .cart_block {
             list-style-type: none;
             padding: 0px;
+            margin-bottom: 10px;
+        }
+        .cart_block li {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+        }
+        .cart_block li:first-child {
+            border-radius: 20px 20px 0px 0px;
+        }
+        .cart_block li:last-child {
+            border-radius: 0px 0px 20px 20px;
         }
         .cart_img_wrap {
             width: 100px;
@@ -118,6 +135,23 @@
     <script src="../../js/vue.global.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script>
+        let PCBtnOpened = false;
+
+        const openMenu = () => {
+            document.querySelector(".navinner_pc").classList.add("is-open");
+        };
+        const closeMenu = () => {
+            document.querySelector(".navinner_pc").classList.remove("is-open");
+        };
+
+        const ShowMyPC = () => {
+            PCBtnOpened = !PCBtnOpened;
+            if (PCBtnOpened) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        };
         const vm = Vue.createApp({
             data() {
                 return {
@@ -172,15 +206,28 @@
                     let deleteLIst = window.confirm("您確定要刪除嗎?");
                     if(deleteLIst) {
                         obj.display = 0;
-                        (async () => {
-                            await setTimeout(() => {
+                        new Promise((resolve,reject) => {
+                            setTimeout(() => {
                                 this.dataArray[index] = this.dataArray[index].filter((data) => {
                                     return obj.key !== data.key;
                                 })
-                            },470)
-                            await this.checkQuantity();
-                            console.log("middle");
-                        })();
+                                const fd = new FormData();
+                                fd.append("product", JSON.stringify(this.dataArray[0]));
+                                fd.append("food", JSON.stringify(this.dataArray[1]));
+                                fetch("./delete_session_api.php", {
+                                    method: "POST",
+                                    body: fd
+                                })
+                                .then(data => data.json())
+                                .then(data => {
+                                    console.log(data);
+                                })
+                                resolve();
+                            },470);
+                        })
+                        .then(() => {
+                            this.checkQuantity();
+                        })
                     }
                 },
                 verify(obj,event) {
@@ -221,14 +268,22 @@
                     })
                 },
                 checkQuantity() {
+                    // console.log("chechk");
                     const cart_quantity = document.querySelector("[data-content-before]");
                     const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
                     fetch(myHref)
                     .then(data => data.json())
                     .then(data => {
-                            console.log("check");
-                            cart_quantity.setAttribute("data-content-before", 0);
-                            cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                        cart_quantity.setAttribute("data-content-before", 0);
+                        cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                        if(data.food.length + data.product.length <= 0) {
+                            alert("購物車沒有東西");
+                            setTimeout(() => {
+                                window.location = "../../index_.php"
+                            },100);
+                        } else {
+                            document.querySelector("body").removeAttribute("cart-op");
+                        }
                     })
                 }
             },
@@ -254,6 +309,28 @@
                         } else if (this.selectedCoupon.type === 2) {
                             if(this.selectedCoupon.money < 1) {
                                 let output = 0;
+                                this.dataArray[0].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        output += data.price * data.quantity * this.selectedCoupon.money;
+                                    }
+                                });
+                                this.discountDisplay = output;
+                            } else {
+                                let total = 0;
+                                this.dataArray[0].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        total += data.price * data.quantity;
+                                    }
+                                });
+                                if(total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = total;
+                                }
+                            }
+                        } else if (this.selectedCoupon.type === 1) {
+                            if(this.selectedCoupon.money < 1) {
+                                let output = 0;
                                 this.dataArray[1].forEach((data) => {
                                     if(data.id === this.selectedCoupon.menu_id) {
                                         output += data.price * data.quantity * this.selectedCoupon.money;
@@ -273,7 +350,22 @@
                                     this.discountDisplay = total;
                                 }
                             }
-                        } else if (this.selectedCoupon.type === 1) {
+                        } else {
+                            this.discountDisplay =  0;
+                        }
+                    }
+                },
+                total(newNum) {
+                    if(this.radio === undefined) {
+                        this.discountDisplay = 0;
+                    } else {
+                        if (this.selectedCoupon.type === 3) {
+                            if(this.selectedCoupon.money < 1) {
+                                this.discountDisplay = this.total * (1 - this.selectedCoupon.money);
+                            } else {
+                                this.discountDisplay = this.selectedCoupon.money;
+                            }
+                        } else if (this.selectedCoupon.type === 2) {
                             if(this.selectedCoupon.money < 1) {
                                 let output = 0;
                                 this.dataArray[0].forEach((data) => {
@@ -295,11 +387,33 @@
                                     this.discountDisplay = total;
                                 }
                             }
+                        } else if (this.selectedCoupon.type === 1) {
+                            if(this.selectedCoupon.money < 1) {
+                                let output = 0;
+                                this.dataArray[1].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        output += data.price * data.quantity * this.selectedCoupon.money;
+                                    }
+                                });
+                                this.discountDisplay = output;
+                            } else {
+                                let total = 0;
+                                this.dataArray[1].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        total += data.price * data.quantity;
+                                    }
+                                });
+                                if(total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = total;
+                                }
+                            }
                         } else {
-                            return 0;
+                            this.discountDisplay =  0;
                         }
                     }
-                },
+                }
             },
             beforeMount() {
                 const el = document.createElement("div");
@@ -310,7 +424,6 @@
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
                     scrollTo({ top: 0, behavior: "instant" });
-                    this.checkQuantity();
                 })
                 fetch("./cart_read_all_data.php")
                 .then(data => data.json())
@@ -323,15 +436,6 @@
                     } else {
                         document.querySelector("body").removeAttribute("coffee-op0");
                     }
-                    // console.log("product: ",data.product);
-                    // console.log("food: ",data.food);
-                    // console.log("coupon: ",data.coupon);
-                    if(data.product.length ===0 && data.food.length === 0) {
-                        alert("購物車沒有東西")
-                        setTimeout(() => {
-                            window.location = "../../index_.php"
-                        },100);
-                    }
                     this.productArray = data.product;
                     this.foodArray = data.food;
                     this.couponArray = data.coupon;
@@ -339,6 +443,14 @@
                     this.dataArray.push(data.food);
                 })
             },
+            mounted() {
+                const myVue = this;
+                window.addEventListener("load", () => {
+                    setTimeout(() => {
+                        myVue.checkQuantity();
+                    },100);
+                })
+            }
         }).mount("#app");
     </script>
 </body>

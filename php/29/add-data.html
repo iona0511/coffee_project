@@ -443,32 +443,32 @@
             };
 
             function handleFiles(files) {
-                for (var i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const imageType = /image.*/;
+                // for (var i = 0; i < files.length; i++) {
+                const file = files[0];
+                const imageType = /image.*/;
 
-                    if (!file.type.match(imageType)) {
-                        continue;
-                    }
-                    myimg.style.display = "block";
+                //     if (!file.type.match(imageType)) {
+                //     continue;
+                // }
+                myimg.style.display = "block";
 
-                    const reader = new FileReader(); // 建立檔案讀取器,將上傳的圖片資料取出
-                    reader.onload = (e) => (
-                        (myimg.src = e.target.result),
-                        (document.form1.course_img_s.value = e.target.result)
-                    );
+                const reader = new FileReader(); // 建立檔案讀取器,將上傳的圖片資料取出
+                reader.onload = (e) => (
+                    (myimg.src = e.target.result),
+                    (document.form1.course_img_s.value = e.target.result)
+                );
 
-                    console.log(document.form1.course_img_s);
-                    // window.atob(document.form1.course_img_s.value);
-                    // 註冊讀取完成後 , 執行的動作
-                    reader.readAsDataURL(file);
+                console.log(document.form1.course_img_s);
+                // window.atob(document.form1.course_img_s.value);
+                // 註冊讀取完成後 , 執行的動作
+                reader.readAsDataURL(file);
 
-                    // 取出 file 中的 base64 格式 data
+                // 取出 file 中的 base64 格式 data
 
-                    console.log(file);
+                console.log(file);
 
-                    // document.form1.course_img_s.value = reader;
-                }
+                // document.form1.course_img_s.value = reader;
+                // }
             }
             // async function handleFiles(files) {
             avatar.addEventListener("change", async function (files) {
@@ -534,7 +534,7 @@
                 e.preventDefault(); //終止預設行為
 
                 const dt = e.dataTransfer;
-                // console.log(dt.files[0]);
+                console.log(dt);
                 const files = dt.files;
                 // console.log(files);
                 handleFiles(files);

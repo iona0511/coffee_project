@@ -295,6 +295,23 @@
 
         })();
 
+        // NAV
+        let PCBtnOpened = false;
+        const openMenu = () => {
+            document.querySelector(".navinner_pc").classList.add("is-open");
+        };
+        const closeMenu = () => {
+            document.querySelector(".navinner_pc").classList.remove("is-open");
+        };
+        const ShowMyPC = () => {
+            PCBtnOpened = !PCBtnOpened;
+            if (PCBtnOpened) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        };
+        // NAV
 
         function cascadeDisplay() {
             const gap = 20;
@@ -352,7 +369,7 @@
                         `;
 
                 // render like過了沒
-                    getLikes(v['sid']);
+                getLikes(v['sid']);
 
             });
 
@@ -360,9 +377,9 @@
 
         async function getLikes(p) {
             const jsonData = JSON.stringify({
-                    pid: p,
-                    getlike: 'yes',
-                });
+                pid: p,
+                getlike: 'yes',
+            });
 
             const data = await fetch("api/like-api.php", {
                 method: "POST",
