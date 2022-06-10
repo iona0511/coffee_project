@@ -138,7 +138,6 @@
         height: 3500px;
         border-left: 1px solid #ccc;
         float: right;
-        
       }
 
       .menu_food {
@@ -234,20 +233,41 @@
 
   <body>
     <script>
-          function checkQuantity() {
-        const cart_quantity = document.querySelector("[data-content-before]");
-        const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
-        fetch(myHref)
-            .then(data => data.json())
-            .then(data => {
-                cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
-            })
-            .catch(() => {
-                cart_quantity.setAttribute("data-content-before", 0);
-            })
-    };
-  
+      let PCBtnOpened = false;
 
+      const openMenu = () => {
+        document.querySelector(".navinner_pc").classList.add("is-open");
+      };
+      const closeMenu = () => {
+        document.querySelector(".navinner_pc").classList.remove("is-open");
+      };
+
+      const ShowMyPC = () => {
+        PCBtnOpened = !PCBtnOpened;
+        if (PCBtnOpened) {
+          openMenu();
+        } else {
+          closeMenu();
+        }
+      };
+      function checkQuantity() {
+        const cart_quantity = document.querySelector("[data-content-before]");
+        const myHref = window.location.href.replace(
+          /coffee_project.*/,
+          "coffee_project/parts/read_quantity_api.php"
+        );
+        fetch(myHref)
+          .then((data) => data.json())
+          .then((data) => {
+            cart_quantity.setAttribute(
+              "data-content-before",
+              data.food.length + data.product.length
+            );
+          })
+          .catch(() => {
+            cart_quantity.setAttribute("data-content-before", 0);
+          });
+      }
 
       function getNav() {
         fetch("../../parts/navbar.php")
@@ -264,22 +284,7 @@
     </script>
     <div class="wrap">
       <div class="navBar"></div>
-      <!-- <div class="select" style="background-color:rgba(222, 193, 148, 0.462);">
-        <img src="../../images/11/picwish.png" style="width: 60px;transform: translateY(25%);margin-right: 80px;" />
-        <a href="#nav" class="nav">首頁</a>
-        <a href="" class="nav">店家資訊</a>
-        <a href="" class="nav">商品</a>
-        <a href="" class="nav">點餐</a>
-        <a href="" class="nav">課程資訊</a>
-        <a href="" class="nav">分享牆</a>
-        <a href="" class="nav">遊戲</a>
-        <a href="" class="nav">客服</a>
-        <a href="" class="nav">優惠券</a>
-        <a href="" class="nav">購物車</a>
-        <a href="" class="nav">會員中心</a>
-        ../../images/35/
 
-      </div> -->
       <section style="background-color: rgb(238, 237, 234)">
         <img src="../../images/11/banner.jpg" style="width: 80vw" />
         <div style="display: flex; align-items: center; margin: 50px">
@@ -341,7 +346,7 @@
         </div>
 
         <!-- 這裡放點擊後選冰熱 甜度 -->
-        <img src="../../images/11/b" alt="">
+
         <div class="afterclick hide" id="detail">
           <!-- <div class="all_choice">
              <a href="#nav"> <i class="fa-solid fa-circle-xmark" style="font-size: 30px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
@@ -353,8 +358,14 @@
             <h4>飲料名稱</h4> -->
         </div>
       </section>
-      <aside style="margin: 0 auto; background-color: rgb(247, 243, 215);">
-        <div class="aside">
+      <aside
+        style="
+          margin: 0 auto;
+          background-color: rgb(247, 243, 215);
+          display: flex;
+        "
+      >
+        <div class="aside" style="width: 100%;">
           <!-- <div style="display:flex;margin: 6px;">
                   <div style="flex-grow:1;">卡布奇諾 (熱)
                   </div>
@@ -376,33 +387,24 @@
               <div style="border-bottom:1px solid #ccc;margin:5px"></div> -->
         </div>
 
-        <div
-          style="
-            position: fixed;
-            bottom: 0;
-            text-align: center;
-            margin-bottom: 40px;
-          "
-        ></div>
-        <div
-          style="
-            width: 220px;
-            height: 30px;
-            background-color: rgb(221, 180, 103);
-            position: fixed;
-            bottom: 0;
-            transform: translateX(18%);
-            text-align: center;
-            padding-top: 5px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 1px 1px rgb(250, 134, 57);
-            font-weight: 700;
-            padding-right: 20px;
-          "
-          onclick="sendData()"
-        >
-          加入購物車
+        <div style="position: fixed; bottom: 0; width: inherit">
+          <div
+            style="
+              width: 220px;
+              height: 30px;
+              background-color: rgb(221, 180, 103);
+              margin: 0 auto;
+              text-align: center;
+              padding-top: 5px;
+              margin-bottom: 20px;
+              border-radius: 10px;
+              box-shadow: 1px 1px rgb(250, 134, 57);
+              font-weight: 700;
+            "
+            onclick="sendData()"
+          >
+            加入購物車
+          </div>
         </div>
       </aside>
     </div>
@@ -687,9 +689,9 @@
           }元`;
         }
       }
-      let result = []
+      let result = [];
       async function getData() {
-        const data = await fetch("./check_food_session.php")
+        const data = await fetch("./check_food_session.php");
         const myData = await data.json();
         if (myData) {
           result = myData;
@@ -701,7 +703,7 @@
       // .then(data => {
       //   console.log(data);
       //})
-      
+
       const sendData = () => {
         const menu_sid = document.querySelectorAll(".from_menu_sid");
         const menu_photo = document.querySelectorAll(".from_menu_photo");
@@ -712,8 +714,7 @@
         const count = document.querySelectorAll(".plus_minus_number1");
         const items = document.querySelectorAll(".item");
         // let result = [];
-        
-        
+
         for (let i = 0; i < items.length; i++) {
           result.push({
             // food_choice_sid: 555,
@@ -726,8 +727,7 @@
             food_choice_count: +count[i].innerHTML,
           });
 
-          window.location.href = './food_order.html';
-
+          window.location.href = "./food_order.html";
         }
         console.log("result ", result);
         console.log("result ", JSON.stringify(result));
