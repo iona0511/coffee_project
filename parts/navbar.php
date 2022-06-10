@@ -146,8 +146,10 @@
         fetch(myHref)
         .then(data => data.json())
         .then(data => {
-            cart_quantity.setAttribute("data-content-before", 0);
             cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+        })
+        .catch(() => {
+            cart_quantity.setAttribute("data-content-before", 0);
         })
     };
     checkQuantity();
