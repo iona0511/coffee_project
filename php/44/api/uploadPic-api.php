@@ -35,7 +35,7 @@ foreach ($_FILES['photos']['name'] as $k => $v) {
     $ext = $extMap[$_FILES['photos']['type'][$k]]; // 副檔名
     $filename = date("Ymd_H_") .  substr(md5($v . rand()), -6) . $ext; //加好附檔名
     $op_msg['filenames'][] = $filename;
-    $op_msg['src'][] = 'uploaded/' . $filename;
+ 
 
     // 把上傳的檔案搬移到指定的位置
     move_uploaded_file($_FILES['photos']['tmp_name'][$k], $folder . $filename);

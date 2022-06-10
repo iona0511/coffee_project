@@ -2,14 +2,24 @@
     if(!session_id()) {
         session_start();
     }
-    $output["rawJSON"] = json_decode($_SESSION["rawJSON"], true);
-    $output["rawCoupon"] = json_decode($_SESSION["rawCoupon"], true);
-    $output["user"] = $_SESSION["user"];
-    if(isset($_SESSION["products_order"])) {
-        $output["product"] = $_SESSION["products_order"];
+    if(isset($_SESSION["productJSON"])) {
+        $output["product"] = json_decode($_SESSION["productJSON"], true);
     }
-    if(isset($_SESSION["food_order"])) {
-        $output["food"] = json_decode($_SESSION["food_order"],true);
+    if(isset($_SESSION["foodJSON"])) {
+        $output["food"] = json_decode($_SESSION["foodJSON"], true);
     }
+    if(isset($_SESSION["couponJSON"])) {
+        $output["couponId"] = json_decode($_SESSION["couponJSON"], true);
+    }
+    if(isset($_SESSION["displayTotal"])) {
+        $output["displayTotal"] = json_decode($_SESSION["displayTotal"], true);
+    }
+    if(isset($_SESSION["newestOrder"])) {
+        $output["newestOrder"] = json_decode($_SESSION["newestOrder"], true);
+    }
+    if(isset($_SESSION["user"])) {
+        $output["user"] = $_SESSION["user"];
+    }
+    
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>

@@ -8,6 +8,8 @@ if($page<1){
     exit;
 }
 
+
+
 $t_sql = "SELECT COUNT(1) FROM menu";
 
 // PHP走的是同步的方式,如果結果沒有回傳,就不會再往下執行
@@ -16,6 +18,7 @@ $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0]; // 總筆數
 $totalPages = ceil($totalRows / $perPage); // 總頁數
 
 $rows = [];
+
 
 // 有資料才執行
 if($totalRows>0){
@@ -48,6 +51,7 @@ if($totalRows>0){
     }
     .bg {
         background-color: #fff;
+        color: rgb(43,33,37);
     }
     table{
         border-collapse: separate;
@@ -111,19 +115,31 @@ if($totalRows>0){
     a{
         text-decoration: none;
     }
-    a:hover{
-        background-color: #B2ADAA;
-        text-decoration: none;
-        color: #fff;
+    .fa-pen-to-square {
+        color: rgb(233,133,70);
+        font-size: 1.4rem;
     }
+    .fa-trash-can {
+        color: rgb(233,133,70);
+        font-size: 1.4rem;
+
+    }
+    .fa-trash-can:hover {
+        color: rgb(77,44,44);
+    }
+    .fa-pen-to-square:hover {
+        color: rgb(77,44,44);
+    }
+
 
 </style>
 
 <div class="display_justify_content" style=" margin:20px auto;font-size:24px;">餐點管理</div>
 <div class="display_justify_content" style="width:100px; margin:5px auto;font-size:12px;">
     
-        <a type="submit" class="css-8cha5q-SubmitButton" href="munu_add.php?sid=<?= $r['sid'] ?>">新增</a>
-    
+        <a type="submit" class="css-8cha5q-SubmitButton" href="menu_add.php">新增</a>
+
+
 </div>
 
 <div class="container">
@@ -182,7 +198,7 @@ if($totalRows>0){
                     <td><?= $r['created_at'] ?></td>
                     <td>
                         <a href="menu_edit.php?menu_sid=<?= $r['menu_sid'] ?>">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <i class="fa-solid fa-pen-to-square" ></i>
                         </a>
                     </td>
                 </tr>

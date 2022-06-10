@@ -1,5 +1,5 @@
 <?php
-require  dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+require  dirname(__DIR__, 2) . '/parts/connect_db.php';
 
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
@@ -65,6 +65,9 @@ if ($totalRows > 0) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -132,7 +135,7 @@ if ($totalRows > 0) {
         <div class="search-result" style="display: none;">
             <h3 style="font-weight:bold;" class="mr-1">搜尋紀錄</h3>
             <span class="mr-1" id="rows_length"></span>
-            <span><a href="?page=1" class="link-danger">清除</a></span>
+            <span><a href="?page=1" class="link-danger" style="position:relative;z-index:1;">清除</a></span>
         </div>
 
         <div class="ml-auto d-flex h-75">
@@ -181,9 +184,8 @@ if ($totalRows > 0) {
                     <th scope="col" style="width: 5%">按讚</th>
                     <th scope="col" style="width: 5%">回覆</th>
                     <th scope="col" style="width: 8%">主題編號</th>
-                    <th scope="col" style="width: 10%">貼文</th>
-                    <th scope="col" style="width: 5%">修改</th>
-                    <th style="width: 5%"><i class="fa-solid fa-pen-to-square"></i></th>
+                    <th scope="col" style="width: 8%">貼文時間</th>
+                    <th scope="col" style="width: 8%">修改時間</th>
                 </tr>
             </thead>
             <tbody id="tbody">
@@ -208,7 +210,6 @@ if ($totalRows > 0) {
                         <td><?= $r['topic_sid'] ?></td>
                         <td><?= $r['created_at'] ?></td>
                         <td><?= $r['updated_at'] ?></td>
-                        <td><i class="fa-solid fa-pen-to-square"></i></td>
                     </tr>
                 <?php endforeach; ?>
 
@@ -320,8 +321,7 @@ if ($totalRows > 0) {
                         <td>${v['comments']}</td>
                         <td>${v['topic_sid']}</td>
                         <td>${v['created_at']}</td>
-                        <td>${v['updated_at']}</td>
-                        <td><i class="fa-solid fa-pen-to-square"></i></td>`;
+                        <td>${v['updated_at']}</td>`;
 
 
                         if (ind < 10) {

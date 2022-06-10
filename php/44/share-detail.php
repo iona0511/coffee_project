@@ -72,10 +72,10 @@ if ($rows['topic_sid'] == 1) {
 </head>
 
 <body>
-    <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
+    <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
     <div class="page">
 
-        <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
+        <a href="share.html" style="color:black"><i class="fa-solid fa-arrow-left"></i></a>
         <div class="post-wrap d-flex">
             <div class="pic-wrap" id="p_wrap">
                 <div class="drag-row">

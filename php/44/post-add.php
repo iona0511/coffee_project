@@ -37,8 +37,9 @@
 
             </div>
             <button type="button" class="btn btn-primary mb-3" id="upload-btn" onclick="uploadPhotos()">
-                上傳多張照片
+                分享你的照片
             </button>
+            <span style="font-size:12px;color:gray;">(最少一張,最多五張)</span>
             <input type="hidden" name="photos" value="[]" />
             <div id="photo_container" style="display:none;">
                 <!-- 上傳照位置 -->
@@ -128,8 +129,9 @@
             photos.click(); // 模擬點擊
         }
 
-        function delete_pic(event) {
+        function removePhotos(event) {
             const f = event.currentTarget.parentNode.dataset.f;
+
 
             if (photoAr.indexOf(f) !== -1) {
                 photoAr.splice(photoAr.indexOf(f), 1);
@@ -138,7 +140,11 @@
             console.log(photoAr);
             event.currentTarget.parentNode.parentNode.remove();
 
-            if (document.main_form.photos.value == "[]") document.querySelector("#photo_container").remove();
+            if (document.main_form.photos.value == "[]") {
+
+                document.querySelector("#photo_container").innerHTML = "";
+                document.querySelector("#photo_container").style.display = "none";
+            }
         }
 
         function photoItem(f) {
@@ -146,7 +152,7 @@
                 <div class="p-card">
                     <div class="photoItem" style="display: inline-block" data-f="${f}">
                         <img class="up-photo" src="./uploaded/${f}" alt="" />
-                        <i class="fa-solid fa-circle-minus" onclick="delete_pic(event);"></i>
+                        <i class="fa-solid fa-circle-minus" onclick="removePhotos(event);"></i>
                     </div>
                 </div>
                 `;
@@ -157,8 +163,17 @@
                 alert('最多隻能新增五張圖片');
                 return;
             }
+            const existPicLength = JSON.parse(document.main_form.photos.value).length;
+            // 如果沒上圖片直接return
+            if(photos.files.length == 0) return;
+
+            if ((photos.files.length + existPicLength > 5)) {
+                alert('最多隻能新增五張圖片');
+                return;
+            }
 
             const pData = new FormData(document.form1);
+
             const r = await fetch("api/uploadPic-api.php", {
                 method: "POST",
                 body: pData
@@ -170,9 +185,13 @@
                     .map((f) => photoItem(f))
                     .join("");
             }
+            photoAr = [];
             document.querySelectorAll(".photoItem").forEach((el) => {
                 photoAr.push(el.getAttribute("data-f"));
             });
+            // 把紀錄的Arr篩回去給hidden input
+
+
             document.querySelector("#photo_container").style.display = "flex";
             document.main_form.photos.value = JSON.stringify(photoAr);
         });

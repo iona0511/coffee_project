@@ -27,6 +27,7 @@
             }
             .bgcimg {
                 background-color: rgba(255, 255, 255, 0.3);
+                min-height: 100vh;
             }
 
             .card {
@@ -121,7 +122,7 @@
             }
             .container {
                 position: relative;
-                margin-top: 30px;
+                margin-top: 50px;
             }
             .titleH2 {
                 position: absolute;
@@ -243,6 +244,7 @@
                 } else if (sort.value === "levelDesc") {
                     dataCopy.sort(levelDesc);
                 }
+
                 tablestr(choose);
                 levelfun(choose);
             });
