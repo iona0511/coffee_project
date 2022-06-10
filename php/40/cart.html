@@ -214,6 +214,16 @@
                             window.location = "./cart_form.html";
                         }
                     })
+                },
+                checkQuantity() {
+                    const cart_quantity = document.querySelector("[data-content-before]");
+                    const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+                    fetch(myHref)
+                    .then(data => data.json())
+                    .then(data => {
+                        cart_quantity.setAttribute("data-content-before", 0);
+                        cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                    })
                 }
             },
             watch: {
@@ -294,6 +304,7 @@
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
                     scrollTo({ top: 0, behavior: "instant" });
+                    this.checkQuantity();
                 })
                 fetch("./cart_read_all_data.php")
                 .then(data => data.json())
