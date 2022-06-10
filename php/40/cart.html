@@ -118,6 +118,23 @@
     <script src="../../js/vue.global.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script>
+        let PCBtnOpened = false;
+
+        const openMenu = () => {
+            document.querySelector(".navinner_pc").classList.add("is-open");
+        };
+        const closeMenu = () => {
+            document.querySelector(".navinner_pc").classList.remove("is-open");
+        };
+
+        const ShowMyPC = () => {
+            PCBtnOpened = !PCBtnOpened;
+            if (PCBtnOpened) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        };
         const vm = Vue.createApp({
             data() {
                 return {
@@ -254,6 +271,28 @@
                         } else if (this.selectedCoupon.type === 2) {
                             if(this.selectedCoupon.money < 1) {
                                 let output = 0;
+                                this.dataArray[0].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        output += data.price * data.quantity * this.selectedCoupon.money;
+                                    }
+                                });
+                                this.discountDisplay = output;
+                            } else {
+                                let total = 0;
+                                this.dataArray[0].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        total += data.price * data.quantity;
+                                    }
+                                });
+                                if(total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = total;
+                                }
+                            }
+                        } else if (this.selectedCoupon.type === 1) {
+                            if(this.selectedCoupon.money < 1) {
+                                let output = 0;
                                 this.dataArray[1].forEach((data) => {
                                     if(data.id === this.selectedCoupon.menu_id) {
                                         output += data.price * data.quantity * this.selectedCoupon.money;
@@ -273,7 +312,22 @@
                                     this.discountDisplay = total;
                                 }
                             }
-                        } else if (this.selectedCoupon.type === 1) {
+                        } else {
+                            this.discountDisplay =  0;
+                        }
+                    }
+                },
+                total(newNum) {
+                    if(this.radio === undefined) {
+                        this.discountDisplay = 0;
+                    } else {
+                        if (this.selectedCoupon.type === 3) {
+                            if(this.selectedCoupon.money < 1) {
+                                this.discountDisplay = this.total * (1 - this.selectedCoupon.money);
+                            } else {
+                                this.discountDisplay = this.selectedCoupon.money;
+                            }
+                        } else if (this.selectedCoupon.type === 2) {
                             if(this.selectedCoupon.money < 1) {
                                 let output = 0;
                                 this.dataArray[0].forEach((data) => {
@@ -295,11 +349,33 @@
                                     this.discountDisplay = total;
                                 }
                             }
+                        } else if (this.selectedCoupon.type === 1) {
+                            if(this.selectedCoupon.money < 1) {
+                                let output = 0;
+                                this.dataArray[1].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        output += data.price * data.quantity * this.selectedCoupon.money;
+                                    }
+                                });
+                                this.discountDisplay = output;
+                            } else {
+                                let total = 0;
+                                this.dataArray[1].forEach((data) => {
+                                    if(data.id === this.selectedCoupon.menu_id) {
+                                        total += data.price * data.quantity;
+                                    }
+                                });
+                                if(total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = total;
+                                }
+                            }
                         } else {
-                            return 0;
+                            this.discountDisplay =  0;
                         }
                     }
-                },
+                }
             },
             beforeMount() {
                 const el = document.createElement("div");
