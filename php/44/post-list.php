@@ -184,9 +184,8 @@ if ($totalRows > 0) {
                     <th scope="col" style="width: 5%">按讚</th>
                     <th scope="col" style="width: 5%">回覆</th>
                     <th scope="col" style="width: 8%">主題編號</th>
-                    <th scope="col" style="width: 10%">貼文</th>
-                    <th scope="col" style="width: 5%">修改</th>
-                    <th style="width: 5%"><i class="fa-solid fa-pen-to-square"></i></th>
+                    <th scope="col" style="width: 8%">貼文時間</th>
+                    <th scope="col" style="width: 8%">修改時間</th>
                 </tr>
             </thead>
             <tbody id="tbody">
@@ -211,7 +210,6 @@ if ($totalRows > 0) {
                         <td><?= $r['topic_sid'] ?></td>
                         <td><?= $r['created_at'] ?></td>
                         <td><?= $r['updated_at'] ?></td>
-                        <td><i class="fa-solid fa-pen-to-square"></i></td>
                     </tr>
                 <?php endforeach; ?>
 
@@ -323,8 +321,7 @@ if ($totalRows > 0) {
                         <td>${v['comments']}</td>
                         <td>${v['topic_sid']}</td>
                         <td>${v['created_at']}</td>
-                        <td>${v['updated_at']}</td>
-                        <td><i class="fa-solid fa-pen-to-square"></i></td>`;
+                        <td>${v['updated_at']}</td>`;
 
 
                         if (ind < 10) {
