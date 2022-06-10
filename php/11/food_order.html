@@ -225,11 +225,11 @@
     </style>
   </head>
   <!-- 重要 不能刪 -->
-  <script>
+  <!-- <script>
     if (!isset($_SESSION)) {
       session_start();
     }
-  </script>
+  </script> -->
   <!-- 重要  不能刪 -->
 
   <body>
@@ -687,7 +687,21 @@
           }元`;
         }
       }
-
+      let result = []
+      async function getData() {
+        const data = await fetch("./check_food_session.php")
+        const myData = await data.json();
+        if (myData) {
+          result = myData;
+        }
+      }
+      getData();
+      // fetch("./check_food_session.php")
+      // .then(data => data.json())
+      // .then(data => {
+      //   console.log(data);
+      //})
+      
       const sendData = () => {
         const menu_sid = document.querySelectorAll(".from_menu_sid");
         const menu_photo = document.querySelectorAll(".from_menu_photo");
@@ -697,7 +711,9 @@
         const sugar = document.querySelectorAll(".sugar");
         const count = document.querySelectorAll(".plus_minus_number1");
         const items = document.querySelectorAll(".item");
-        const result = [];
+        // let result = [];
+        
+        
         for (let i = 0; i < items.length; i++) {
           result.push({
             // food_choice_sid: 555,
