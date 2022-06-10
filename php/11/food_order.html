@@ -216,7 +216,8 @@
       }
 
       .all_choice_photo {
-        width: 40vw;
+        width: 35vw;
+        margin: 0 auto;
       }
       .all_choice_photo_img {
         width: 100%;
@@ -370,7 +371,7 @@
         ></div>
         <div
           style="
-            width: 280px;
+            width: 220px;
             height: 30px;
             background-color: rgb(221, 180, 103);
             position: fixed;
@@ -382,6 +383,7 @@
             border-radius: 10px;
             box-shadow: 1px 1px rgb(250, 134, 57);
             font-weight: 700;
+            padding-right: 20px;
           "
           onclick="sendData()"
         >
@@ -491,7 +493,7 @@
         detail.innerHTML = `
          
          <div class="all_choice"  style="height: 100vh;overflow:scroll;border-top-right-radius:20px">
-          <a href="#nav"> 
+          <a href=""> 
             <i class="fa-solid fa-circle-xmark close" style="font-size: 35px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);padding:10px"></i></a>
 
             
@@ -692,6 +694,9 @@
             food_choice_sugar: +sugar[i].getAttribute("data-sugar"),
             food_choice_count: +count[i].innerHTML,
           });
+          window.location.href = './food_order.html';
+
+      
         }
         console.log("result ", result);
         console.log("result ", JSON.stringify(result));
@@ -726,7 +731,7 @@
         //         console.log(qq);
 
         sessionStorage.setItem("food_order", JSON.stringify(result));
-
+       
         //
       };
 

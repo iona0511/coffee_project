@@ -29,6 +29,14 @@ if (empty($row)) {
     .form-text.red {
         color: red;
     }
+
+    .a{
+        border: 1px solid rgb(156,121,93);
+    }
+    .b{
+        background: rgb(61,52,41);
+        color:bisque;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -75,10 +83,15 @@ if (empty($row)) {
                             <div class="form-text"></div>
                         </div>
                         <!-- htmlentities是為了跳脫字元，strip_tags是為了把內容的tag移除 -->
-                        <button type="button" class="btn btn-danger">
-                            <a href="./menu_edit.php">取消</a>
+
+                        <button type="button" class="btn a">
+                            <a href="./menu_edit.php" style="text-decoration:none;color:rgb(60,40,35)">取消</a>
                         </button>
-                        <button type="submit" class="btn btn-primary">編輯</button>
+                        <button type="submit" class="btn b">送出</button>
+
+                      
+
+
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料編輯成功
@@ -128,43 +141,7 @@ if (empty($row)) {
         // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-        if (menu_categories_f.value.length < 2) {
-            // alert('至少兩個字');
-            // name_f.classList.add('red');
-            // name_f.nextElementSibling.classList.add('red');
-            // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
-            fields[0].classList.add('red');
-            fieldTexts[0].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_photo_f.value.length< 2) {
-            fields[1].classList.add('red');
-            fieldTexts[1].innerText = '至少上傳一張照片';
-            isPass = false;
-        }
-        if (menu_name_f.value.length< 2) {
-            fields[2].classList.add('red');
-            fieldTexts[2].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_kcal_f.value.length< 2) {
-            fields[3].classList.add('red');
-            fieldTexts[3].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_price_m_f.value.length< 2) {
-            fields[4].classList.add('red');
-            fieldTexts[4].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_nutrition_f.value.length< 2) {
-            fields[6].classList.add('red');
-            fieldTexts[6].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (!isPass) {
-            return; // 結束函式
-        }
+       
 
         const fd = new FormData(document.form1);
         const r = await fetch('menu_edit_api.php', {
