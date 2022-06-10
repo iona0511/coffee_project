@@ -130,43 +130,12 @@ if (!empty($tags)) {
 }
 
 
-
-
-
 if ($stmt->rowCount() == 1) {
     $op_msg['success'] = true;
     $op_msg['postId'] = $postSid;
     $op_msg['poster'] = $m_sid;
 
-    // if (!empty($tag)) {
-    //     // Table Tag處理 //
-    //     $search_tag_sql = sprintf("SELECT * FROM `tag` WHERE `name` = '%s'", $tag);
-    //     $tag_in_sql = $pdo->query($search_tag_sql)->fetch();
-    //     // 找tag表內有沒有名稱一樣的tag
-    //     if (!empty($tag_in_sql)) {
-    //         $tagTimes = $tag_in_sql['times'] + 1;
-    //         //紀錄tagSid
-    //         $tagSid = $tag_in_sql['sid'];
 
-    //         // 若有此tag tag使用次數+1
-    //         $sql = sprintf("UPDATE `tag` SET `times` = '%s' WHERE `name` = '%s'", $tagTimes, $tag);
-    //         $pdo->query($sql);
-    //     } else {
-    //         $sql = "INSERT INTO `tag` (`name`) VALUES (?)";
-    //         $stmt = $pdo->prepare($sql);
-
-    //         $stmt->execute([$tag]);
-    //         //紀錄tagSid
-    //         $tagSid = $pdo->lastInsertId();
-    //         $op_msg['tag'] = "新增標籤${tag}";
-    //     }
-
-    //     //Table Post_tag處理
-    //     //新增post_tag關聯
-    //     $sql = "INSERT INTO `post_tag` (`post_sid`, `tag_sid`) VALUES (?, ?)";
-    //     $stmt = $pdo->prepare($sql);
-    //     $stmt->execute([$postSid, $tagSid]);
-    // }
 }
 
 
