@@ -51,6 +51,10 @@ if (!session_id()) {
         font-size: 9px;
         border-radius: 50%;
     }
+
+    .fa-cart-shopping {
+        font-size: 24px;
+    }
 </style>
 <div class="bg-light" style="width:100%">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -109,7 +113,7 @@ if (!session_id()) {
                 <a class="nav-link cart" href="/coffee_project/php/40/cart.html" data-content-before><i class="fa-solid fa-cart-shopping"></i></a>
                 <?php if (isset($_SESSION['user'])) : ?>
                     <li class="mr-3 nav-item px-2" style="margin-top:5px; display: none;">會員:<?= $_SESSION['user']['member_name'] ?></li>
-                    <li class="mr-3 nav-item px-2 " style="">哈囉!<?= $_SESSION['user']['member_nickname'] ?></li>
+                    <li class="mr-3 nav-item px-2 " style="">哈囉! <?= $_SESSION['user']['member_nickname'] ?></li>
                     <li class="mr-3 nav-item px-2" style="margin-top:5px; display:none;">ID:<?= $_SESSION['user']['member_sid'] ?></li>
                     <a class="nav-link" href="/coffee_project/php/09/logout.php" style="text-decoration: none;">
                         登出
