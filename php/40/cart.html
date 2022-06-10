@@ -424,7 +424,6 @@
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
                     scrollTo({ top: 0, behavior: "instant" });
-                    this.checkQuantity();
                 })
                 fetch("./cart_read_all_data.php")
                 .then(data => data.json())
@@ -437,15 +436,6 @@
                     } else {
                         document.querySelector("body").removeAttribute("coffee-op0");
                     }
-                    // console.log("product: ",data.product);
-                    // console.log("food: ",data.food);
-                    // console.log("coupon: ",data.coupon);
-                    // if(data.product.length ===0 && data.food.length === 0) {
-                    //     alert("購物車沒有東西")
-                    //     setTimeout(() => {
-                    //         window.location = "../../index_.php"
-                    //     },100);
-                    // }
                     this.productArray = data.product;
                     this.foodArray = data.food;
                     this.couponArray = data.coupon;
@@ -453,6 +443,14 @@
                     this.dataArray.push(data.food);
                 })
             },
+            mounted() {
+                const myVue = this;
+                window.addEventListener("load", () => {
+                    setTimeout(() => {
+                        myVue.checkQuantity();
+                    },100);
+                })
+            }
         }).mount("#app");
     </script>
 </body>
