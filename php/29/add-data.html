@@ -443,7 +443,6 @@
             };
 
             function handleFiles(files) {
-                // console.log(files);
                 for (var i = 0; i < files.length; i++) {
                     const file = files[i];
                     const imageType = /image.*/;
@@ -452,10 +451,6 @@
                         continue;
                     }
                     myimg.style.display = "block";
-                    // const img = document.createElement("img");
-                    // myimg.classList.add("obj");
-
-                    // preview.appendChild(img);
 
                     const reader = new FileReader(); // 建立檔案讀取器,將上傳的圖片資料取出
                     reader.onload = (e) => (
@@ -463,13 +458,13 @@
                         (document.form1.course_img_s.value = e.target.result)
                     );
 
+                    console.log(document.form1.course_img_s);
+                    // window.atob(document.form1.course_img_s.value);
                     // 註冊讀取完成後 , 執行的動作
                     reader.readAsDataURL(file);
 
                     // 取出 file 中的 base64 格式 data
-                    // reader.onload = (e) =>
-                    //    ;
-                    console.log(reader);
+
                     console.log(file);
 
                     // document.form1.course_img_s.value = reader;
