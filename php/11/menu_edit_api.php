@@ -2,6 +2,17 @@
 header('Content-Type: application/json');
 // 這隻API是用來新增資料的，只有功能 沒有頁面
 
+
+$folder = dirname(dirname(__DIR__, 1)) . '/images/11/';
+// $folder = dirname(__DIR__, 2) . '/images/11/';
+
+$extMap = [
+    'image/jpeg'=>'.jpg',
+    'image/png'=>'.png',
+    'image/gif'=>'.gif',
+];
+
+
 $output=[
     'success' => true,
     'postData' => $_POST,
@@ -11,7 +22,10 @@ $output=[
     ];
 
 
-    
+    $ext = $extMap[$_FILES['menu_photo']['type']];
+
+
+
 $menu_sid = isset($_POST['menu_sid']) ? intval($_POST['menu_sid']) : 0;
 
 // 欄位檢查，後端的檢查
@@ -23,14 +37,22 @@ $menu_sid = isset($_POST['menu_sid']) ? intval($_POST['menu_sid']) : 0;
 //     exit; 
 // };
 $menu_categories = $_POST['menu_categories'];
-$menu_photo = $_POST['menu_photo']??'';
+$menu_photo = md5($_FILES['menu_photo']['name'].rand()). $ext;
 $menu_name = $_POST['menu_name']??'';
 $menu_kcal = $_POST['menu_kcal']??'';
 $menu_price_m = $_POST['menu_price_m'];
 $menu_nutrition = $_POST['menu_nutrition']??'';
 
+
+
+
 // 兩個問號+ '' 代表 沒有給值就給空字串，為的是不要跳出notice
 
+if(move_uploaded_file($_FILES['menu_photo']['tmp_name'],$folder.$menu_photo)){
+    $output['success']=true;
+}
+
+$output['filename'] = $menu_photo;
 
 
 $sql = "UPDATE `menu` SET `menu_categories`=?, `menu_photo`=?, `menu_name`=?, `menu_kcal`=?, `menu_price_m`=?, `menu_nutrition`=? WHERE `menu_sid`=$menu_sid";
