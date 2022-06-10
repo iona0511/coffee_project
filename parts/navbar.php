@@ -31,6 +31,20 @@
         appearance: none;
         outline: none;
     }
+    .cart {
+        position: relative;
+    }
+    .cart::before {
+        content: attr(data-content-before);
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        background-color: red;
+        color: white;
+        padding: 0px 5px;
+        font-size: 9px;
+        border-radius: 50%;
+    }
 </style>
 <div class="bg-light" style="width:100%">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -65,7 +79,7 @@
                             <a class="nav-link" href="#">遊戲</a>
                         </li>
                         <li class="nav-item px-2">
-                            <a class="nav-link" href="/coffee_project/php/40/cart.html">購物車</a>
+                            <a class="nav-link cart" href="/coffee_project/php/40/cart.html" data-content-before>購物車</a>
                         </li>
                         <li class="nav-item" style="position: relative;">
                             <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">
@@ -126,4 +140,15 @@
             closeMenu();
         }
     };
+    function checkQuantity() {
+        const cart_quantity = document.querySelector("[data-content-before]");
+        const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+        fetch(myHref)
+        .then(data => data.json())
+        .then(data => {
+            cart_quantity.setAttribute("data-content-before", 0);
+            cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+        })
+    };
+    checkQuantity();
 </script>
