@@ -116,11 +116,11 @@ if($totalRows>0){
         text-decoration: none;
     }
     .fa-pen-to-square {
-        color: rgb(233,133,70);
+        /* color: rgb(233,133,70); */
         font-size: 1.4rem;
     }
     .fa-trash-can {
-        color: rgb(233,133,70);
+        /* color: rgb(233,133,70); */
         font-size: 1.4rem;
 
     }
@@ -184,7 +184,8 @@ if($totalRows>0){
             <?php foreach ($rows as $r ):?>
                 <tr>
                     <td> 
-                        <a href="javascript: delete_it(<?= $r['menu_sid'] ?>)">
+                        <a href="javascript: delete_it(<?= $r['menu_sid'] ?>)" style="color: rgb(233,133,70);
+">
                             <i class="fa-solid fa-trash-can"></i>
                         </a>
                     </td>
@@ -197,8 +198,9 @@ if($totalRows>0){
                     <td><?= $r['menu_nutrition'] ?></td>
                     <td><?= $r['created_at'] ?></td>
                     <td>
-                        <a href="menu_edit.php?menu_sid=<?= $r['menu_sid'] ?>">
-                            <i class="fa-solid fa-pen-to-square" ></i>
+                        <a href="menu_edit.php?menu_sid=<?= $r['menu_sid'] ?>" style="color: rgb(233,133,70);
+"> 
+                            <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                     </td>
                 </tr>
