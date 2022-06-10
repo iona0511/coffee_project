@@ -62,7 +62,7 @@ if (empty($row)) {
 
                             <!-- onclick="uploadphoto() -->
                             <!-- <div class="form-text red"></div>
-                        </div> --> --> -->
+                        </div> --> 
 
 
 
@@ -82,11 +82,15 @@ if (empty($row)) {
                         
                         <div class="mb-3">
                             <label for="menu_photo" class="form-label">餐點圖片</label><br>
-                            <input type="file" name="menu_photo[]" accept="image/*" onchange="changeOneImg(event)" />
+                            <input type="file" name="menu_photo" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
-                            <img class="single-img" src="
-                            <?php if ($row['menu_photo']) : echo '/coffee_project/images/11/' . $row['menu_photo'];
-                            endif; ?>" <?php if (!$row['menu_photo']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="menu_photo" />
+                            <img style="width:100px" class="single-img" src="
+                            <?php if ($row['menu_photo']) : 
+                            echo '/coffee_project/images/11/' . $row['menu_photo'];
+                            endif; ?>" 
+                            <?php if (!$row['menu_photo']) : 
+                            echo "style" . "=" . "display:none;" ?>
+                            <?php endif; ?> alt="" id="menu_photo" />
                         </div>
 
 

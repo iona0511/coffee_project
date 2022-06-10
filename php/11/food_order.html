@@ -24,11 +24,11 @@
 
     <title>Document</title>
     <style>
-      body {
+      /* body {
         background: url(../../images/11/pexels-dominika-roseclay-894612.jpg)
           no-repeat;
         background-attachment: fixed;
-      }
+      } */
       * {
         margin: 0px;
         color: rgb(47, 46, 46);
@@ -132,11 +132,11 @@
       section {
         width: 80%;
         float: left;
-        height: 2000px;
+        height: 3000px;
       }
       aside {
         width: 20%;
-        height: 2000px;
+        height: 3000px;
         border-left: 1px solid #ccc;
         float: right;
         
@@ -325,7 +325,7 @@
         </div>
 
         <!-- 這裡放點擊後選冰熱 甜度 -->
-
+        <img src="../../images/11/b" alt="">
         <div class="afterclick hide" id="detail">
           <!-- <div class="all_choice">
              <a href="#nav"> <i class="fa-solid fa-circle-xmark" style="font-size: 30px;position: absolute;transform: translate(10px,-10px);right:0;color: rgb(115, 81, 33);"></i></a>
@@ -692,6 +692,9 @@
             food_choice_sugar: +sugar[i].getAttribute("data-sugar"),
             food_choice_count: +count[i].innerHTML,
           });
+
+          window.location.href = './food_order.html';
+
         }
         console.log("result ", result);
         console.log("result ", JSON.stringify(result));
@@ -726,7 +729,6 @@
         //         console.log(qq);
 
         sessionStorage.setItem("food_order", JSON.stringify(result));
-
         //
       };
 
