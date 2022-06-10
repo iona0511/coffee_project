@@ -45,7 +45,7 @@ $title = '新增餐點資料';
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><img src="./menu_images/beans.png" style="width:35px">
+                    <h5 class="card-title"><img src="../../images/11/beans.png" style="width:35px">
 新增餐點資料</h5><br>
                     <form name="form1" onsubmit="sendData();return false;novalidate" enctype="multipart/form-data">
 
@@ -78,9 +78,6 @@ $title = '新增餐點資料';
                             <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()">  
                             <div class="form-text red"></div>
                             <div id="preview"></div>
-                            
-                        
-
 
                             <!-- onclick="uploadphoto() -->
                             <div class="form-text red"></div>
