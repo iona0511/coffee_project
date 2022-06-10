@@ -89,12 +89,13 @@ $stmt->execute([
 $postSid = $pdo->lastInsertId();
 
 // 新增row進Post_pic 
-foreach ($photos as $k => $f_name) {
-    $sql = "INSERT INTO `post_img`(`img_name`, `post_sid`) 
-    VALUES (?, ?)";
+foreach ($photos as $ind => $f_name) {
+    $sort = $ind + 1;
+    $sql = "INSERT INTO `post_img`(`img_name`, `post_sid`, `sort`) 
+    VALUES (?, ?,?)";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$f_name, $postSid]);
+    $stmt->execute([$f_name, $postSid, $sort]);
     $op_msg['pics']++;
 }
 

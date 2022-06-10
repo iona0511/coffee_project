@@ -37,8 +37,9 @@
 
             </div>
             <button type="button" class="btn btn-primary mb-3" id="upload-btn" onclick="uploadPhotos()">
-                上傳多張照片
+                分享你的照片
             </button>
+            <span style="font-size:12px;color:gray;">(最少一張,最多五張)</span>
             <input type="hidden" name="photos" value="[]" />
             <div id="photo_container" style="display:none;">
                 <!-- 上傳照位置 -->
