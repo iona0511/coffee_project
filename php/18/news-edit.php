@@ -53,6 +53,11 @@ if (empty($row)) {
         flex-direction: row;
         height: 30px;
     }
+    .single-img {
+        width: 400px;
+        height: 320px;
+        /* display: none; */
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -99,13 +104,21 @@ if (empty($row)) {
                             <div class="form-text red"></div>
                         </div>
 
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
                             <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>   
                             <div class="form-text red">
                                 <img src="" alt="">
                             </div>                    
                             <div id="preview"></div>
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="news_img" class="form-label">消息圖片</label><br>
+                            <input type="file" name="news_img[]" accept="image/*" onchange="changeOneImg(event)" />
+                            <div class="form-text"></div>
+                            <img class="single-img" src="
+                            <?php if ($row['news_img']) : echo '/coffee_project/images/18/' . $row['news_img'];
+                            endif; ?>" <?php if (!$row['news_img']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="news_img" />
                         </div>
 
                         <button type="submit" class="btn btn-primary">修改</button>
@@ -159,6 +172,19 @@ if (empty($row)) {
     //     }                       
     // }    
 };
+    function changeOneImg() {
+        const file = event.currentTarget.files[0];
+        console.log(file);
+        const reader = new FileReader();
+
+        // 資料載入後 (讀取完成後)
+        reader.onload = function() {
+            console.log(reader.result);
+            document.querySelector("#products_pic_one").style.display = 'block';
+            document.querySelector("#products_pic_one").src = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
