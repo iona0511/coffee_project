@@ -5,7 +5,6 @@ require dirname(__DIR__,2) . '/parts/connect_db.php';
 
 // if (!isset($_SESSION['user']['admin_account'])){
 //     header('Location:/coffee_project/php/18/news-insert.php');
-//     // header('Location: http://www.example.com/');
 //     exit;
 // }
 
@@ -173,12 +172,12 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
             fieldTexts[0].innerText = '標題至少要2個字';
             isPass = false;
         }
-        // if (content_f.value.length < 10) {
-        //     alert('內容至少要10個字');
-        //     fields[4].classList.add('red');
-        //     fieldTexts[4].innerText = '內容至少要10個字';
-        //     isPass = false;
-        // }
+        if (content_f.value.length < 5) {
+            // alert('內容至少要10個字');
+            fields[4].classList.add('red');
+            fieldTexts[4].innerText = '內容至少要5個字';
+            isPass = false;
+        }
 
         if (img_f.value.length< 2) {
             fields[5].classList.add('red');
@@ -209,7 +208,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
             setTimeout(() => {
                 location.href = 'lastest-news.php'; // 跳轉到列表頁
-            }, 2000);
+            }, 1500);
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');

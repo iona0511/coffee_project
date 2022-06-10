@@ -189,7 +189,134 @@ if($type==1){
         color: #fff;
     }
 
-
+/* ====================== */
+    p.photographer:after {
+        content: "View on Upsplash";
+        font-size: 16px;
+        margin-top: 6px;
+        letter-spacing: 0;
+        display: block;
+        color: #000;
+        z-index: 1000;
+    }
+    .card {
+        z-index: 1;
+        margin: 0 12px;
+        position: relative;
+        height: 285px;
+        width: 285px;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        background: url(https://raw.githubusercontent.com/CarsonMckinstry/playground-assets/master/tim-bogdanov.jpg);
+        background-size: 285px;
+        background-repeat: no-repeat;
+        background-color: #fff;
+    }
+    .card p {
+        width: 100%;
+        top: 184px;
+        text-align: center;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 100;
+        letter-spacing: 4px;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    }
+    .card:hover > .social {
+        opacity: 1;
+    }
+    .card .social {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .card .social ul {
+        z-index: 5;
+        padding-left: 0;
+        list-style: none;
+        position: absolute;
+        right: 0;
+        margin-right: 16px;
+    }
+    .card .social ul a {
+        color: #fff;
+        position: relative;
+    }
+    .card .social ul .f, .card .social ul .t, .card .social ul .m, .card .social ul .g, .card .social ul .star {
+        font-size: 12px;
+        height: 20px;
+        width: 20px;
+        position: relative;
+    }
+    .card .social ul .star a {
+        color: #444;
+    }
+    .card .social ul .star {
+        background-color: #ddd;
+        margin-bottom: 8px;
+        color: #444;
+    }
+    .card .social ul .f {
+        background-color: #1565c0;
+    }
+    .card .social ul .t {
+        background-color: #29b6f6;
+    }
+    .card .social ul .m {
+        background-color: #00e676;
+    }
+    .card .social ul .g {
+        background-color: #212121;
+    }
+    .star:hover:after {
+        content: "Favorite";
+        right: -70px;
+    }
+    .f:hover:after {
+        content: "Share on Facebook";
+        right: -132px;
+    }
+    .t:hover:after {
+        content: "Share on Twitter";
+        right: -112px;
+    }
+    .m:hover:after {
+        content: "Share on Medium";
+        right: -122px;
+    }
+    .g:hover:after {
+        content: "Fork on Github";
+        right: -106px;
+    }
+    .star:hover:after, .f:hover:after, .t:hover:after, .m:hover:after, .g:hover:after {
+        display: inline;
+        background-color: #f06292;
+        padding: 4px 8px;
+        transition-delay: 300ms;
+        transition: 300ms;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        font-size: 12px;
+        font-weight: 100;
+    }
+    .star:hover:before, .f:hover:before, .t:hover:before, .m:hover:before, .g:hover:before {
+        display: block;
+        content: "";
+        position: absolute;
+        right: -12px;
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 10px solid #f06292;
+    }
+    .star:after, .f:after, .t:after, .m:after, .g:after {
+        z-index: 100;
+    }
 
 </style>
 
@@ -210,8 +337,7 @@ if($type==1){
     <div class="display_justify_content coupon_style" style="margin:20px auto;width:60%;flex-direction: column;padding-bottom: 20px;">
         <?php foreach ($rows as $r) : ?>
             <a class="display_justify_content" style="width:50%;margin: 5px auto;flex-direction: row;" >
-            <span class="tilt tilt-1"></span><span class="tilt tilt-2"></span><span class="tilt tilt-3"></span><span class="tilt tilt-4"></span><span class="tilt tilt-5"></span><span class="tilt tilt-6"></span><span class="tilt tilt-7"></span><span class="tilt tilt-8"></span><span class="tilt tilt-9"></span><span class="tilt tilt-10"></span><span class="tilt tilt-11"></span><span class="tilt tilt-12"></span><span class="tilt tilt-13"></span><span class="tilt tilt-14"></span><span class="tilt tilt-15"></span>
-                <div style="width: 50%;text-align:right;">
+                <div style="width: 50%;text-align:right;" class="card">
                     <div>
                         <img style="width:250px;<?= $type == 2 ? ' display: none;' : '' ?>" src="../41/copon_img/coupon_icon-removebg-preview.png" alt="">
                     </div>
@@ -225,6 +351,8 @@ if($type==1){
                         <div>
                             <?= $r['coupon_name'] ?>
                         </div>
+                    
+
                         <div style="flex-direction: row;margin-top:25px;">
                             <div style="font-size: 14px;">
                                 <?= $type == 1 ?$r['end_time'] :$r['used_time']; ?>
@@ -234,6 +362,16 @@ if($type==1){
                             </div>
                         </div>
                     </div>    
+                </div>
+
+                <div class="social">
+                    <ul>
+                        <li class="star"><a href="#"><i class="fa fa-star"></i></a></li>
+                        <li class="f"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li class="t"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li class="m"><a href="#"><i class="fa fa-medium"></i></a></li>
+                        <li class="g"><a href="#"><i class="fa fa-github"></i></a></li>
+                    </ul>
                 </div>
         </a>
         <?php endforeach; ?>

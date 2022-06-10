@@ -9,13 +9,13 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
 // 判斷有沒有pid，沒有id導回前一頁
 if (empty($pid)) {
-    header("Location:post-list.php");
+    header("Location:share.html");
 } else {
     //用id進sql判斷有沒有該文章，
     $t_sql = "SELECT COUNT(1) FROM post WHERE `delete_state`='0' AND `sid`='$pid'";
     $havePost = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
     if ($havePost == 0) {
-        header("Location:post-list.php");
+        header("Location:share.html");
     }
 }
 
@@ -72,10 +72,10 @@ if ($rows['topic_sid'] == 1) {
 </head>
 
 <body>
-    <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
+    <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
     <div class="page">
 
-        <i class="fa-solid fa-arrow-left" onclick="history.go(-1);"></i>
+        <a href="share.html" style="color:black"><i class="fa-solid fa-arrow-left"></i></a>
         <div class="post-wrap d-flex">
             <div class="pic-wrap" id="p_wrap">
                 <div class="drag-row">
@@ -104,24 +104,13 @@ if ($rows['topic_sid'] == 1) {
                         </div>
                     </div>
                     <!-- 找session sid=文章sid才出現 -->
-                    <div class="post-edit mb-2" style="display:none;">
-                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
-                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
-                    </div>
+           
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
                         <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
                             <?= $topic_name ?>
                         </a>
-                        <span class="c-date">
-                            <?php
-                            if (empty($rows['updated_at'])) {
-                                echo $rows['created_at'];
-                            } else {
-                                echo '已編輯 ' . $rows['updated_at'];
-                            }
-                            ?>
-                        </span>
+                        
                     </div>
                     <p class="post-text">
                         <?= $rows['content'] ?>
@@ -388,13 +377,7 @@ if ($rows['topic_sid'] == 1) {
                 if (r[0]['isLike'] == true) document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
 
 
-                // render是該篇文章作者給編輯/刪除
-                if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
-                    document.querySelector(".post-edit").style.display = "block";
-
-                } else {
-                    document.querySelector(".post-edit").style.display = "none";
-                }
+      
             }
 
             const data = await fetch("api/detail-getInfo-api.php", {

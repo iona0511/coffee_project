@@ -3,7 +3,7 @@
 $pageName = 'lastest-news';
 $title = '最新消息';
 
-$perPage = 10;
+$perPage = 5;
 
 $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 
@@ -25,14 +25,12 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid ASC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid DESC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-
-<head>
     <style>
         *{
         box-sizing: border-box;
@@ -40,22 +38,41 @@ if ($totalRows > 0) {
         }
 
         body {
-        /* background-color: #CAAD87; */
-        background-image: url('/coffee_project/images/18/coffee_img1.jpg');
-        background-size: cover;
-        opacity: 0.8;
-        }
-        .add_btn {
+                background-color: #caad87;
+                opacity: 0.9;
+            }
+        /* .pic > img {
+                width: 100px;
+                height: 100px;
+            } */
+            .wrap {
+                line-height: 100px;
+            }
+            .trash-yellow {
+                color:#E1B03E;
+            }
+            .trash-yellow:hover {
+                color: rgb(210, 100, 133);
+            }
+            .pen-edit {
+                color:#E1B03E;
+            }
+            .pen-edit:hover {
+                color: rgb(210, 100, 133);
+            }
+            .t {
+                
+            }
+        /* .add_btn {
             display: flex;
             justify-content: flex-end;
-        }
+        } */
     </style>
-</head>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <div class="container">
     <div class="row">
         <div class="col">
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example" style="display:flex; flex-direction:row;">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=1">
@@ -90,32 +107,32 @@ if ($totalRows > 0) {
                         </a>
                     </li>
                 </ul>
-                <a class="add_btn" href="news-insert.php">
-                    <button type="button" class="btn btn-primary">新增</button>
+                <a class="add_btn " href="news-insert.php" style="margin-right:auto;">
+                    <button type="button" class="btn btn-secondary">新增</button>
                 </a>
             </nav>
 
         </div>
     </div>
 
-    <table class="table table-success table-striped">
+    <table  class="table table-success table-striped" >
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">活動編號</th>
                 <th scope="col">活動圖片</th>
                 <th scope="col" class="title-w">活動標題</th>
                 <th scope="col">類別</th>
                 <th scope="col">活動內容</th>
                 <th scope="col">建立日期</th>
                 <th scope="col">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square" style="width:50px heigh:50px"></i>
                 </th>
                 <th scope="col">
                     <i class="fa-solid fa-trash-can"></i>
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="wrap">
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
@@ -125,12 +142,12 @@ if ($totalRows > 0) {
                     <td><?= htmlentities($r['news_content']) ?></td>
                     <td><?= $r['news_create_time'] ?></td>
                     <td><a href="news-edit.php?news_sid=<?= $r['news_sid'] ?>">
-                            <i class="fa-solid fa-pen-to-square"></i>
+                            <i class="fa-solid fa-pen-to-square pen-edit"></i>
                         </a>
                     </td>
                     <td>
                         <a href="javascript: delete_it(<?= $r['news_sid'] ?>)">
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i class="fa-solid fa-trash-can trash-yellow"></i>
                         </a>
                     </td>
                 </tr>
