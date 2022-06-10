@@ -114,9 +114,13 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
                             <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
-                                <option value="1" selected disabled>-- 請選擇 --</option>
+                                <option value="1" disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_cate as $r) : ?>
-                                    <option value="<?= $r['products_categroies_sid'] ?>">
+                                    <option value="<?= $r['products_categroies_sid'] ?>" <?php if ($r['products_categroies_sid'] == $row['products_categroies_sid']) :
+                                                                                                echo "selected";
+                                                                                            else :
+                                                                                                echo " ";
+                                                                                            endif; ?>>
                                         <?= $r['products_categroies_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -125,28 +129,36 @@ if (empty($row)) {
 
                         <div class="mb-3">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label><br>
-                            <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" />
+                            <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" value="<?= '/coffee_project/images/35/' . $row['products_pic_one'] ?>" />
                             <div class="form-text"></div>
                             <img class="single-img" src="
-                            <?php if ($row['products_pic_one']) : echo '/coffee_project/images/35/' . $row['products_pic_one'];
-                            endif; ?>" <?php if (!$row['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
+                            <?php if ($row['products_pic_one']) :
+                                echo '/coffee_project/images/35/' . $row['products_pic_one'];
+                            endif; ?>" <?php if (!$row['products_pic_one']) :
+                                            echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
                         </div>
 
                         <div class="mb-3" id="multiDiv">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
-                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple />
-                            <?php $multiPic =  explode(",", $row['products_pic_multi']) ?>
-                            <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
-                                <img class="multi-img" src="<?= '/coffee_project/images/35/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
-                            <?php endfor; ?>
+                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple value="<?= '/coffee_project/images/35/' . $row['products_pic_multi'] ?>" />
+                            <div class="multiImg">
+                                <?php $multiPic =  explode(",", $row['products_pic_multi']) ?>
+                                <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
+                                    <img class="multi-img" src="<?= '/coffee_project/images/35/' . $multiPic[$i] ?>" alt="" id="<?= "products_pic_multi" . $i ?>" />
+                                <?php endfor; ?>
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
                             <select name="products_with_products_style_filter_sid" id="products_with_products_style_filter_sid">
-                                <option value="1" selected disabled>-- 請選擇 -- </option>
+                                <option value="1" disabled>-- 請選擇 -- </option>
                                 <?php foreach ($row_style as $r) : ?>
-                                    <option value="<?= $r['products_style_filter_sid'] ?>">
+                                    <option value="<?= $r['products_style_filter_sid'] ?>" <?php if ($r['products_style_filter_sid'] == $row['products_style_filter_sid']) :
+                                                                                                echo "selected";
+                                                                                            else :
+                                                                                                echo " ";
+                                                                                            endif; ?>>
                                         <?= $r['products_style_filter_categroies'] ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -155,7 +167,7 @@ if (empty($row)) {
 
                         <button type="submit" class="btn btn-primary">修改</button>
                         <a href="./products.php">
-                        <button type="button" class="btn btn-primary">取消</button>
+                            <button type="button" class="btn btn-primary">取消</button>
                         </a>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
@@ -211,8 +223,14 @@ if (empty($row)) {
                 reader.onload = function() {
                     // console.log(reader.result);
                     // console.log(document.querySelector(idName));
-                    document.querySelector(idName).style.display = 'block';
-                    document.querySelector(idName).src = reader.result;
+                    let clear = document.querySelectorAll(".multiImg")
+                    clear.innerHTML = " ";
+                    const r = reader.result
+                    let newImg = document.createElement("div");
+                    newImg.className = "MultiImg";
+                    newImg.innerHTML = `<img class="multi-img" src="${r}"/>`
+                    document.getElementById("multiDiv").appendChild(newImg);
+
                 };
                 reader.readAsDataURL(file);
             };
@@ -258,7 +276,7 @@ if (empty($row)) {
             info_bar.innerText = '修改成功';
 
             setTimeout(() => {
-                window.location.href='products.php';
+                window.location.href = 'products.php';
             }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
