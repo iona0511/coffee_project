@@ -8,6 +8,7 @@ if (!session_id()) {
     .navinner_pc a {
         color: rgba(0, 0, 0, .55);
         text-decoration: none;
+        z-index: 999;
     }
 
     .nav_pc {
@@ -24,7 +25,7 @@ if (!session_id()) {
     .is-open {
         opacity: 1;
         transform: translateY(52px);
-        z-index: 100;
+        z-index: 999;
     }
 
     .PCBtn {
@@ -55,6 +56,9 @@ if (!session_id()) {
     .fa-cart-shopping {
         font-size: 24px;
     }
+    .z-up {
+        z-index: 999;
+    }
 </style>
 <div class="bg-light" style="width:100%">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,9 +67,6 @@ if (!session_id()) {
             <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0" style="height: 45px;position: relative;">
                 <li class="nav-item px-2">
                     <a class="nav-link" aria-current="page" href="/coffee_project/index_.php">首頁</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link" href="#">店家資訊</a>
                 </li>
                 <li class="nav-item px-2">
                     <a class="nav-link" href="/coffee_project/php/35/products_font.php">商品</a>
@@ -82,18 +83,12 @@ if (!session_id()) {
                 <li class="nav-item px-2">
                     <a class="nav-link" href="/coffee_project/php/44/post-add.php">新增分享</a>
                 </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link" href="#">客服</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link" href="#">遊戲</a>
-                </li>
                 <li class="nav-item" style="position: relative;">
-                    <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">
-                        個人
+                    <button class="PCBtn nav-link" style="position:absolute;width: 70px;" type="button" onclick="ShowMyPC()">
+                        會員頁
                     </button>
                     <ul class="navlist navinner_pc nav_pc ps-0 bg-light" style="background-color: #F3F1EE;color: rgba(0,0,0,.55);position:absolute;width: 100px;">
-                        <div class="nav-item ">
+                        <div class="nav-item z-up">
                             <a href="<?php if (isset($_SESSION['user'])) : ?>
                                     <?= "/coffee_project/php/09/welcome.php" ?>
                                     <?php else : ?>

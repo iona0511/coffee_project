@@ -66,8 +66,90 @@ if ($totalRows > 0) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
+    .bg {
+        background-color: #fff;
+    }
 
-    </style>
+    table {
+        border-collapse: separate;
+    }
+
+    .page-item.active .page-link {
+        z-index: 3;
+        color: #fff;
+        background-color: #B79973;
+        border-color: #B79973;
+    }
+
+    .page-link {
+        color: #B79973;
+    }
+
+    body {
+        background-color: #CAAD87;
+        background-size: cover;
+        opacity: 0.9;
+    }
+
+    .trash_img a .a1 {
+        display: none;
+    }
+
+    .trash_img a .b1 {
+        display: block;
+    }
+
+    .trash_img a:hover .a1 {
+        display: block;
+    }
+
+    .trash_img a:hover .b1 {
+        display: none;
+    }
+
+    .edit_img a .c1 {
+        display: none;
+    }
+
+    .edit_img a .d1 {
+        display: block;
+    }
+
+    .edit_img a:hover .c1 {
+        display: block;
+    }
+
+    .edit_img a:hover .d1 {
+        display: none;
+    }
+
+    .css-8cha5q-SubmitButton {
+        color: rgb(255, 255, 255);
+        background: rgb(51, 51, 51);
+        /* margin: 40px 0px 0px; */
+        /* width: 100%; */
+        font-size: 14px;
+        text-align: center;
+        padding: 10px 16px;
+        letter-spacing: 0.2em;
+        line-height: 1.4;
+        transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
+        transition-property: background, color;
+        transition-duration: 0.4s, 0.3s;
+        transition-timing-function: ease-out, ease-out;
+        transition-delay: 0s, 0s;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        background-color: #B2ADAA;
+        text-decoration: none;
+        color: #fff;
+    }
+</style>
 </head>
 
 <body>
@@ -175,20 +257,20 @@ if ($totalRows > 0) {
         <table class="table table-hover" id="table">
             <thead>
                 <tr>
-                    <th style="width: 5%"><i class="fa-solid fa-trash-can"></i></th>
-                    <th scope="col" style="width: 5%">Post#</th>
-                    <th scope="col" style="width: 10%">分享圖</th>
-                    <th scope="col" style="width: 10%">會員暱稱</th>
-                    <th scope="col" style="width: 10%">會員編號</th>
-                    <th scope="col">文章標題</th>
-                    <th scope="col" style="width: 5%">按讚</th>
-                    <th scope="col" style="width: 5%">回覆</th>
-                    <th scope="col" style="width: 8%">主題編號</th>
-                    <th scope="col" style="width: 8%">貼文時間</th>
-                    <th scope="col" style="width: 8%">修改時間</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius: 20px 0 0 0; width: 5%"><i class="fa-solid fa-trash-can"></i></th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 5%">Post#</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 10%">分享圖</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 10%">會員暱稱</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 10%">會員編號</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">文章標題</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 5%">按讚</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 5%">回覆</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 8%">主題編號</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);width: 8%">貼文時間</th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius:0 20px 0 0 ;width: 8%">修改時間</th>
                 </tr>
             </thead>
-            <tbody id="tbody">
+            <tbody id="tbody" class="bg">
                 <?php foreach ($rows as $r) : ?>
                     <tr id="<?= "tr" . $r['sid'] ?>">
                         <td>

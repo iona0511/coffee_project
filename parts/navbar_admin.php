@@ -53,33 +53,21 @@
                 <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0" style="height: 45px;">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">店家資訊</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/18/lastest-news.php">活動消息</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/18/lastest-news.php">活動消息</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/35/products.php">商品</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/35/products.php">商品</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/11/menu_list.php">點餐</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/11/menu_list.php">點餐</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/29/delete-data.html">課程後台</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/29/delete-data.html">課程後台</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/44/post-list.php">分享牆</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/coffee_project/php/44/post-list.php">分享牆</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">客服</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">遊戲</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">購物車</a>
-                    </li>
-                    <li class="nav-item" style="position: relative;">
+                    <li class="nav-item pe-4" style="position: relative;">
                         <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">
                             會員
                         </button>
