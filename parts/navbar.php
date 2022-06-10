@@ -92,11 +92,11 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="d-flex nav navbar-nav  me-auto mb-2 mb-lg-0 " style="margin-left:auto;">
+                    <ul class="d-flex nav navbar-nav  me-auto mb-0 align-items-center" style="margin-left:auto;">
                         <?php if (isset($_SESSION['user'])) : ?>
-                            <li class="mr-3 nav-item px-2" style="margin-top:5px;">會員:<?= $_SESSION['user']['member_name'] ?></li>
-                            <li class="mr-3 nav-item px-2 " style="margin-top:5px;">暱稱:<?= $_SESSION['user']['member_nickname'] ?></li>
-                            <li class="mr-3 nav-item px-2" style="margin-top:5px;">ID:<?= $_SESSION['user']['member_sid'] ?></li>
+                            <li class="mr-3 nav-item px-2" style="margin-top:5px; display: none;">會員:<?= $_SESSION['user']['member_name'] ?></li>
+                            <li class="mr-3 nav-item px-2 " style="">哈囉!<?= $_SESSION['user']['member_nickname'] ?></li>
+                            <li class="mr-3 nav-item px-2" style="margin-top:5px; display:none;">ID:<?= $_SESSION['user']['member_sid'] ?></li>
                             <a class="nav-link" href="/coffee_project/php/09/logout.php" style="text-decoration: none;">
                                 登出
                             </a>
