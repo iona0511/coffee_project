@@ -216,7 +216,7 @@ if (empty($row)) {
             info_bar.innerText = '修改成功';
 
             setTimeout(() => {
-                // location.href = 'lastest-news.php'; // 跳轉到列表頁
+                location.href = 'lastest-news.php'; // 跳轉到列表頁
             }, 1500);
         } else {
             info_bar.classList.remove('alert-success');

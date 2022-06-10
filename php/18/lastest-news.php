@@ -3,7 +3,7 @@
 $pageName = 'lastest-news';
 $title = '最新消息';
 
-$perPage = 10;
+$perPage = 5;
 
 $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 
@@ -25,14 +25,12 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid ASC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `lastest_news` ORDER BY news_sid DESC LIMIT %s,%s", ($page - 1) *  $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-
-<head>
     <style>
         *{
         box-sizing: border-box;
@@ -40,17 +38,25 @@ if ($totalRows > 0) {
         }
 
         body {
-        /* background-color: #CAAD87; */
-        background-image: url('/coffee_project/images/18/coffee_img1.jpg');
-        background-size: cover;
-        opacity: 0.8;
-        }
-        .add_btn {
+                background-color: #caad87;
+                opacity: 0.9;
+            }
+        /* .pic > img {
+                width: 100px;
+                height: 100px;
+            } */
+            .wrap {
+                line-height: 100px;
+            }
+            .trash-yellow:hover {
+                color: rgb(210, 173, 133);
+            }
+            
+        /* .add_btn {
             display: flex;
             justify-content: flex-end;
-        }
+        } */
     </style>
-</head>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <div class="container">
     <div class="row">
@@ -98,7 +104,7 @@ if ($totalRows > 0) {
         </div>
     </div>
 
-    <table class="table table-success table-striped">
+    <table  class="table table-success table-striped" >
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -111,11 +117,11 @@ if ($totalRows > 0) {
                     <i class="fa-solid fa-pen-to-square"></i>
                 </th>
                 <th scope="col">
-                    <i class="fa-solid fa-trash-can"></i>
+                    <i class="fa-solid fa-trash-can trash-yellow"></i>
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="wrap">
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
@@ -130,7 +136,7 @@ if ($totalRows > 0) {
                     </td>
                     <td>
                         <a href="javascript: delete_it(<?= $r['news_sid'] ?>)">
-                            <i class="fa-solid fa-trash-can"></i>
+                            <i class="fa-solid fa-trash-can trash-yellow"></i>
                         </a>
                     </td>
                 </tr>

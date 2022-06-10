@@ -32,9 +32,6 @@
         outline: none;
     }
 
-    .bac-img{
-        background: url(./images/18/coffee_img1.jpg);
-    }
 </style>
 
 <div style="width: 100%;">
