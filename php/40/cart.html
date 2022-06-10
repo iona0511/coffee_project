@@ -221,21 +221,15 @@
                     })
                 },
                 checkQuantity() {
-                    // const cart_quantity = document.querySelector("[data-content-before]");
-                    // const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
-                    // fetch(myHref)
-                    // .then(data => data.json())
-                    // .then(data => {
-                        //     console.log("check");
-                        //     cart_quantity.setAttribute("data-content-before", 0);
-                        //     cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
-                    // })
-                    let count = 0;
-                    this.dataArray.forEach((data) => {
-                        count += data.length;
+                    const cart_quantity = document.querySelector("[data-content-before]");
+                    const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+                    fetch(myHref)
+                    .then(data => data.json())
+                    .then(data => {
+                            console.log("check");
+                            cart_quantity.setAttribute("data-content-before", 0);
+                            cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
                     })
-                    this.cartLength = count;
-                    console.log("check");
                 }
             },
             watch: {
@@ -316,6 +310,7 @@
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
                     scrollTo({ top: 0, behavior: "instant" });
+                    this.checkQuantity();
                 })
                 fetch("./cart_read_all_data.php")
                 .then(data => data.json())
@@ -344,14 +339,6 @@
                     this.dataArray.push(data.food);
                 })
             },
-            mounted() {
-                let count = 0;
-                console.log(this.dataArray);
-                for(let i of this.dataArray) {
-                    count += i.length;
-                }
-                this.cartLength = count;
-            }
         }).mount("#app");
     </script>
 </body>
