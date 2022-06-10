@@ -82,7 +82,7 @@
                     })
                 },
                 checkQuantity() {
-                    console.log("chechk");
+                    // console.log("chechk");
                     const cart_quantity = document.querySelector("[data-content-before]");
                     const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
                     fetch(myHref)
@@ -108,7 +108,7 @@
                 .then(data => data.json())
                 .then(data => {
                     if(data) {
-                        console.log(data);
+                        // console.log(data);
                         this.orderData = data;
                     } else {
                         alert("請至會員中心確認訂單");
