@@ -220,14 +220,18 @@ if (empty($row)) {
                 // wrap.innerHTML = '';
                 // 資料載入後 (讀取完成後)
                 // console.log(reader.result);
+                
+                while(document.querySelector(".multiImg") != null){document.querySelector(".multiImg").remove()};
+
                 reader.onload = function() {
                     // console.log(reader.result);
                     // console.log(document.querySelector(idName));
-                    let clear = document.querySelectorAll(".multiImg")
-                    clear.innerHTML = " ";
+
+
+
                     const r = reader.result
                     let newImg = document.createElement("div");
-                    newImg.className = "MultiImg";
+                    newImg.className = "multiImg";
                     newImg.innerHTML = `<img class="multi-img" src="${r}"/>`
                     document.getElementById("multiDiv").appendChild(newImg);
 
