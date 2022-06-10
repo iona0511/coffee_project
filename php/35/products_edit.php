@@ -128,8 +128,12 @@ if (empty($row)) {
                             <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
                             <img class="single-img" src="
-                            <?php if ($row['products_pic_one']) : echo '/coffee_project/images/35/' . $row['products_pic_one'];
-                            endif; ?>" <?php if (!$row['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
+                            <?php if ($row['products_pic_one']) : 
+                            echo '/coffee_project/images/35/' . $row['products_pic_one'];
+                            endif; ?>" 
+                            <?php if (!$row['products_pic_one']) : 
+                            echo "style" . "=" . "display:none;" ?> 
+                            <?php endif; ?> alt="" id="products_pic_one" />
                         </div>
 
                         <div class="mb-3" id="multiDiv">

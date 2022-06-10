@@ -46,13 +46,17 @@ if ($totalRows > 0) {
     }
 
     .btnG {
-        position: relative;
-        left: 43%;
+        margin:auto;
+        justify-content:center;
+
+    }
+    .pagination{
+        justify-content:center;
     }
 
     .container {
         padding: 0;
-        border-radius: 20px 20px 0 0;
+        border-radius: 10px 10px 0 0;
     }
 
     a {
@@ -71,27 +75,15 @@ if ($totalRows > 0) {
         background-color: #B79973;
         border-color: #B79973;
     }
-
-    .trash_img a .a1 {
-        display: none;
+    .trash_img>a:hover{
+        color: black;
     }
 
-    .trash_img a .b1 {
-        display: block;
-    }
-
-    .trash_img a:hover .a1 {
-        display: block;
-    }
-
-    .trash_img a:hover .b1 {
-        display: none;
-    }
 </style>
 
 <div class="container tableBox">
 
-    <table class="table table-striped">
+    <table class="table table-responsive-sm table-striped">
         <thead>
             <tr>
                 <th scope="col"><i class="fa-solid fa-trash-can"></i></th>
@@ -112,9 +104,8 @@ if ($totalRows > 0) {
                 <tr>
                     <td>
                         <div class="trash_img">
-                            <a style="width:30px;height:30px;" href="javascript: delete_it(2)">
-                                <img class="a1" style="width:25px ;" src="./copon_img/6154713uV6k8WyP.gif" alt="">
-                                <img class="b1" style="width:24px ;" src="./copon_img/nnihi123-removebg-preview.png" alt="">
+                            <a href="javascript: delete_it(<?= $r['member_sid'] ?>)">
+                                <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </div>
                     </td>
@@ -144,7 +135,7 @@ if ($totalRows > 0) {
                         <i class="fa-solid fa-angles-left"></i>
                     </a>
                 </li>
-                <li class="page-item $page==1 ? 'disable' : '' ?> ">
+                <li class="page-item <?= $page==1 ? 'disable' : '' ?> ">
                     <a class="page-link" href="?page=<?= $page - 1 ?>">
                         <i class="fa-solid fa-angle-left"></i>
                     </a>
