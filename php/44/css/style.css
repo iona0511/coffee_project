@@ -249,7 +249,21 @@ select {
 }
 
 .avatar {
-    padding-right: 0.5rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 0.5rem;
+}
+.avatar-sm {
+    width: 24px;
+    height: 24px;
+
+}
+
+.avatar img{
+    width: 100%;
+    height: 100%;
 }
 
 .comment-wrap {
@@ -412,9 +426,6 @@ li.n-selected {
 
 }
 
-.fa-circle-user {
-    font-size: 38px;
-}
 
 .comment-info .fa-circle-user {
     font-size: 28px;
