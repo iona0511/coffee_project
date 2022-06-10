@@ -208,10 +208,6 @@ if (empty($row)) {
         // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-<<<<<<< HEAD
-=======
-       
->>>>>>> c611578af9ff762505e06da4b4dd38cdd4ce9d21
 
         const fd = new FormData(document.form1);
         const r = await fetch('menu_edit_api.php', {
