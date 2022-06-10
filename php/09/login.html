@@ -42,12 +42,7 @@
         outline:none;
         background: transparent;
     }
-    /* 解決input輸入歷史的問題 */
-    /* input:-webkit-autofill,
-    textarea:-webkit-autofill,
-    select:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0 1000px white inset !important;
-    } */
+
     .form_row{
         position: relative;
     }
@@ -66,10 +61,6 @@
         right: 90px;
         font-size: .7rem;
     }
-    /* .form_row.success i.fa-circle-check {
-	color: #2ecc71;
-	visibility: visible;
-    } */
 
     .form_row.error i.fa-circle-exclamation {
 	color: red;
@@ -112,6 +103,7 @@
 	    transition: .5s;
     }
     .login-form{
+        position: relative;
         text-align: center;
         margin: auto;
         margin-bottom: 50px;
@@ -161,15 +153,7 @@
     .btn-right{
         transform: translateX(100%);
     }
-    /* .fail{
-        width: 250px;
-        height: 50px;
-        margin: auto;
-        margin-top: 80px;
-        color: red;
-        text-align: center;
-        padding: 15px 0;
-    } */
+
     .shuffle{
         position: absolute;
         bottom: -250px;
@@ -188,8 +172,15 @@
     ::placeholder{
         font-size: 0.8rem;
     }
+    #eye{
+        position: absolute;
+        top: 65px;
+        right: 125px;
+    }
+
 
     </style>
+
 </head>
 <body>
     <div class="navBar"></div>
@@ -204,7 +195,8 @@
         <form id='login' class='input-group-login'name="form2" onsubmit="sendLog();return false;" novalidate>
             <div class="login-form">
                 <input type='text' class='input-field' name="member_account" placeholder='帳號' autocomplete="off" required >
-                <input type='password'class='input-field' name="member_password" placeholder='密碼' autocomplete="off" required>
+                <input type='password'class='input-field' id="loginPW" name="member_password" placeholder='密碼' autocomplete="off" required>
+                <span id="eye" class="fa-solid fa-eye-slash"></span>
             </div>
             <div>
                 <button type='submit'class='submit-btn'>登入</button>
@@ -287,6 +279,25 @@
 </div>
 
 <script>
+    // 密碼眼睛開關
+    const loginPW = document.getElementById('loginPW');
+    const eye = document.getElementById('eye');
+    let eyeOpen = 1;
+    
+    eye.onclick = function(){
+        if( eyeOpen == 1){
+            loginPW.type = 'text';
+            eye.className = "fa-solid fa-eye";
+            eyeOpen = 0;       
+    }else{
+        console.log('close');
+        loginPW.type = 'password';
+        eye.className = "fa-solid fa-eye-slash";
+        eyeOpen = 1; 
+    }
+}
+
+    // 登入註冊切換
     const login = document.getElementById('login');
     const register = document.getElementById('register');
     const button = document.querySelector('.btn');
