@@ -8,16 +8,41 @@
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
         rel="stylesheet"
-        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-        crossorigin="anonymous"
     />
     <style>
-        
+        [v-cloak] {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
-    <div id="app">
-        <h1>{{success}}</h1>
+    <div id="app" v-cloak>
+        <button @click="checkSession">check session</button>
+        <h2>{{success}}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>訂單編號</th>
+                    <th>姓名</th>
+                    <th>付款方式</th>
+                    <th>總計價格</th>
+                    <th>下單時間</th>
+                    <th>寄送方式</th>
+                    <th>寄送地址</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="data of orderData">
+                    <td>{{data.orderNumber}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.payWay}}</td>
+                    <td>{{data.price}}</td>
+                    <td>{{data.time}}</td>
+                    <td>{{data.deliverWay}}</td>
+                    <td>{{data.address}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script src="../../js/vue.global.js"></script>
@@ -37,8 +62,33 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    success: "結帳成功"
+                    success: "結帳成功",
+                    orderData: undefined
                 }
+            },
+            methods: {
+                checkSession() {
+                    fetch("./sessionViewer.php")
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                }
+            },
+            beforeMount() {
+                fetch("./read_last_order_id_api.php")
+                .then(data => data.json())
+                .then(data => {
+                    if(data) {
+                        console.log(data);
+                        this.orderData = data;
+                    } else {
+                        alert("請至會員中心確認訂單");
+                        setTimeout(() => {
+                            window.location = "../../index_.php";
+                        },100);
+                    }
+                })
             }
         });
         vm.mount("#app");
