@@ -93,6 +93,8 @@
             margin: 20px auto 0;
             opacity: 0;
             transition: opacity .3;
+
+
         }
 
         #photos__container {
@@ -164,7 +166,7 @@
         }
 
         .fig {
-            background-color: rgb(237, 237, 237);
+            background-color: rgb(220, 220, 220);
             border-radius: 20px;
             padding: 4px 10px 4px 12px;
             max-width: 35%;
@@ -172,16 +174,23 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             font-size: 16px;
+            font-weight: 600;
 
             opacity: 0;
+
         }
 
         .fig-title {
             max-width: 60%;
-     
+
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+
+        }
+
+        .fig-member:hover {
+            background-color: rgb(255, 255, 255);
         }
 
         .photo:hover .fig {
@@ -215,7 +224,7 @@
             background-color: rgb(207, 17, 17);
         }
 
-        .had_like{
+        .had_like {
             background-color: rgb(207, 17, 17);
         }
 
@@ -326,11 +335,11 @@
             const p_c = document.querySelector("#photos__container");
             rows.forEach((v, i) => {
                 p_c.innerHTML += `
-                    <div class="photo" onclick="location.href='share-detail.php?pid=${v['sid']}'">
+                    <div class="photo" onclick="location.href='share-detail.php?pid=${v['sid']}'"  data-mem="${v['member_sid']}">
                         <img src="uploaded/${v['img_name']}" alt="photo">
                         <div class="cover"></div>
                         <div class="fig-box">
-                            <div class="fig">${v['member_nickname']}</div>
+                            <div class="fig fig-member">${v['member_nickname']}</div>
                             <div class="fig fig-title">${v['title']}</div>
                         </div>
 
@@ -360,6 +369,23 @@
                 document.querySelector(".l-wrap").remove();
                 cascadeDisplay();
             }
+
+            document.querySelectorAll(".fig-member").forEach((v) => {
+                v.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    const s_value = event.target.parentNode.parentNode.dataset.mem;
+                    clearAll(s_value);
+                });
+            });
+        }
+
+        function clearAll(s_value) {
+            document.querySelectorAll(".photo").forEach((v) => {
+                if (v.dataset.mem != s_value) {
+                    v.remove();
+                }
+                cascadeDisplay();
+            });
         }
 
 
