@@ -1,5 +1,5 @@
-<?php 
-require dirname(__DIR__,2) . '/parts/connect_db.php';
+<?php
+require dirname(__DIR__, 2) . '/parts/connect_db.php';
 
 // session_start();
 
@@ -20,22 +20,23 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 <?php include dirname(__DIR__, 2) . '/parts/html-head.php'; ?>
 <?php include dirname(__DIR__, 2) . '/parts/navbar_admin.php'; ?>
 <style>
-    *{
+    * {
         box-sizing: border-box;
         margin: 0;
-        }
+    }
 
     body {
-    /* background-color: #CD853F; */
-    background-color:#CAAD87;
-    background-size: cover;
-    opacity: 0.9;
+        /* background-color: #CD853F; */
+        background-color: #CAAD87;
+        background-size: cover;
+        opacity: 0.9;
     }
 
     .color-y {
-        background-color:aliceblue;
+        background-color: aliceblue;
         opacity: 0.8;
     }
+
     .form-control.red {
         border: 1px soid blue;
     }
@@ -43,13 +44,15 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
     .form-text.red {
         color: red;
     }
+
     .act {
         display: flex;
         flex-direction: row;
         height: 30px;
     }
+
     .margin {
-        margin-right: 0,150px;
+        margin-right: 0, 150px;
     }
 </style>
 <div class="container">
@@ -57,7 +60,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
         <div class="col-md-6 margin">
             <div class="card">
                 <div class="card-body color-y"">
-                    <h2 class="card-title mb-4">新增消息</h2>
+                    <h2 class=" card-title mb-4">新增消息</h2>
                     <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <!-- <input type="hidden" name="sid" > -->
                         <div class="mb-3">
@@ -82,7 +85,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
                         </div>
 
                         <label for="news_start_date" class="form-label">活動區間</label>
-                        <div class="mb-3 act">                         
+                        <div class="mb-3 act">
                             <input type="date" class="form-control w-" id="news_start_date" name="news_start_date">
                             <div class="form-text red"></div>
                             <p>~</p>
@@ -98,7 +101,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
                         <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
-                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple> 
+                            <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>
                             <div class="form-text red"></div>
                             <div id="preview"></div>
                         </div>
@@ -128,7 +131,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
     //這裡要確認資料庫欄位是否名稱有對應到
     const fields = [title_f, class_sid_f, start_date_f, end_date_f, content_f, img_f];
 
-    
+
     const fieldTexts = [];
 
     for (let f of fields) {
@@ -138,22 +141,42 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
 
     function showphoto() {
-    let container = document.querySelector('#preview');
-    let files    = document.querySelector('input[type=file]').files;
- 
-    for (i = 0; i < files.length; i++) {
-        const reader  = new FileReader();
-        reader.addEventListener("load", function () {
-            container.innerHTML += `<img height="200" alt="" src="${reader.result}">`;
-        }, false);
+        let container = document.querySelector('#preview');
+        let files = document.querySelector('input[type=file]').files;
 
-        if (files[i]) {
+        for (i = 0; i < files.length; i++) {
+            const reader = new FileReader();
+            reader.addEventListener("load", function() {
+                container.innerHTML += `<img height="200" alt="" src="${reader.result}">`;
+            }, false);
+
+            if (files[i]) {
                 reader.readAsDataURL(files[i]);
-    
-        }                       
-    }    
-};
 
+            }
+        }
+    };
+
+    //獲取起始日期
+    let startDate = document.querySelector("#news_start_date")
+    //轉換為日期格式
+    startDate = startDate.replace(/-/g, "/");
+    console.log(startDate);
+
+
+    //獲取結束日期
+    let endDate = document.querySelector("#news_end_date")
+    endDate = endDate.replace(/-/g, "/");
+    console.log(endDate);
+
+
+    //如果起始日期大於結束日期
+    if (Date.parse(startDate) - Date.parse(endDate) > 0) {
+        console.log(Date.parse(startDate) - Date.parse(endDate) > 0);
+        alert("起始日期要在結束日期之前!");
+        //返回false
+        // return false;
+    }
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
@@ -179,7 +202,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
             isPass = false;
         }
 
-        if (img_f.value.length< 2) {
+        if (img_f.value.length < 2) {
             fields[5].classList.add('red');
             fieldTexts[5].innerText = '請先上傳圖片';
             isPass = false;
@@ -207,7 +230,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
             info_bar.innerText = '新增成功';
 
             setTimeout(() => {
-                location.href = 'lastest-news.php'; // 跳轉到列表頁
+                // location.href = 'lastest-news.php'; // 跳轉到列表頁
             }, 1500);
         } else {
             info_bar.classList.remove('alert-success');
