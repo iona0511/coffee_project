@@ -43,12 +43,57 @@ if (empty($row)) {
                             <input type="text" class="form-control" id="menu_categories" name="menu_categories" required value="<?=$row['menu_categories']?>">
                             <div class="form-text red"></div>
                         </div>
-
+<!-- 
                         <div class="mb-3">
                             <label for="menu_photo" class="form-label">圖片</label>
                             <input type="text" class="form-control" id="menu_photo" name="menu_photo" value="<?=$row['menu_photo']?>">
                             <div class="form-text red"></div>
                         </div>
+ -->
+
+<!-- 
+                        <div class="mb-3">
+                            <label for="menu_photo" class="form-label ">餐點圖片</label>
+                            <!-- <div><img src="" id="myimg" ></div> -->
+
+                            <!-- <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()" multiple>  
+                            <div class="form-text red"></div>
+                            <div id="preview"></div>
+
+                            <!-- onclick="uploadphoto() -->
+                            <!-- <div class="form-text red"></div>
+                        </div> --> --> -->
+
+
+
+
+                        
+                        <!-- <div class="mb-3">
+                            <label for="menu_photo" class="form-label ">餐點圖片</label>
+
+                            <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()" multiple>  
+                            <div class="form-text red"></div>
+                            <div id="preview"></div>
+
+                            <div class="form-text red"></div>
+                        </div> -->
+
+
+                        
+                        <div class="mb-3">
+                            <label for="menu_photo" class="form-label">餐點圖片</label><br>
+                            <input type="file" name="menu_photo[]" accept="image/*" onchange="changeOneImg(event)" />
+                            <div class="form-text"></div>
+                            <img class="single-img" src="
+                            <?php if ($row['menu_photo']) : echo '/coffee_project/images/11/' . $row['menu_photo'];
+                            endif; ?>" <?php if (!$row['menu_photo']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="menu_photo" />
+                        </div>
+
+
+
+
+
+
 
                         <div class="mb-3">
                             <label for="menu_name" class="form-label">名稱</label>
@@ -111,7 +156,25 @@ if (empty($row)) {
     for(let f of fields){
         fieldTexts.push(f.nextElementSibling);
         
+    };
+
+
+    function changeOneImg() {
+        const file = event.currentTarget.files[0];
+        console.log(file);
+        const reader = new FileReader();
+
+        // 資料載入後 (讀取完成後)
+        reader.onload = function() {
+            console.log(reader.result);
+            document.querySelector("#menu_photo").style.display = 'block';
+            document.querySelector("#menu_photo").src = reader.result;
+        };
+        reader.readAsDataURL(file);
     }
+
+
+
 
 
     async function sendData() {
@@ -128,43 +191,6 @@ if (empty($row)) {
         // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-        if (menu_categories_f.value.length < 2) {
-            // alert('至少兩個字');
-            // name_f.classList.add('red');
-            // name_f.nextElementSibling.classList.add('red');
-            // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');
-            fields[0].classList.add('red');
-            fieldTexts[0].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_photo_f.value.length< 2) {
-            fields[1].classList.add('red');
-            fieldTexts[1].innerText = '至少上傳一張照片';
-            isPass = false;
-        }
-        if (menu_name_f.value.length< 2) {
-            fields[2].classList.add('red');
-            fieldTexts[2].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_kcal_f.value.length< 2) {
-            fields[3].classList.add('red');
-            fieldTexts[3].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_price_m_f.value.length< 2) {
-            fields[4].classList.add('red');
-            fieldTexts[4].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (menu_nutrition_f.value.length< 2) {
-            fields[6].classList.add('red');
-            fieldTexts[6].innerText = '姓名至少兩個字';
-            isPass = false;
-        }
-        if (!isPass) {
-            return; // 結束函式
-        }
 
         const fd = new FormData(document.form1);
         const r = await fetch('menu_edit_api.php', {
