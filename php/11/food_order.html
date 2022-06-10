@@ -20,7 +20,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
-    <link rel="stylesheet" href="../../css/reset.css" />
 
     <title>Document</title>
     <style>
@@ -118,13 +117,13 @@
         padding-bottom: 20px;
         text-align: center;
       }
-      .nav {
+      /* .nav {
         text-decoration: none;
         font-size: 1rem;
         margin-left: 35px;
         padding: 5px;
         line-height: 2.5rem;
-      }
+      } */
       a:hover {
         color: rgb(205, 111, 3);
       }
@@ -235,6 +234,21 @@
 
   <body>
     <script>
+          function checkQuantity() {
+        const cart_quantity = document.querySelector("[data-content-before]");
+        const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+        fetch(myHref)
+            .then(data => data.json())
+            .then(data => {
+                cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+            })
+            .catch(() => {
+                cart_quantity.setAttribute("data-content-before", 0);
+            })
+    };
+  
+
+
       function getNav() {
         fetch("../../parts/navbar.php")
           .then(function (response) {
@@ -243,6 +257,7 @@
           .then(function (navData) {
             navBar = document.querySelector(".navBar");
             navBar.innerHTML = navData;
+            checkQuantity();
           });
       }
       getNav();
