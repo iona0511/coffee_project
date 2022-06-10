@@ -67,9 +67,9 @@ function getData() {
                 
                trsCalss =document.querySelectorAll('.trs')
               
-
-            i%2===0?trsCalss[i].style.backgroundColor =  '#ddd':0;
                
+            i%2===0?trsCalss[i].style.backgroundColor =  '#ddd':0;
+              
                 trs.innerHTML = `
                 <td>${data[i].course_sid}</td>
                  <td scope="row" class="pic">

@@ -220,6 +220,10 @@
             opacity: 0;
         }
 
+        .heart_red {
+            color: rgb(251, 146, 123);
+        }
+
         .fa-heart:hover {
             background-color: rgb(207, 17, 17);
         }
@@ -335,7 +339,7 @@
             const p_c = document.querySelector("#photos__container");
             rows.forEach((v, i) => {
                 p_c.innerHTML += `
-                    <div class="photo" onclick="location.href='share-detail.php?pid=${v['sid']}'"  data-mem="${v['member_sid']}">
+                    <div class="photo" onclick="location.href='share-detail.php?pid=${v['sid']}'"  data-mem="${v['member_sid']}" data-post="${v['sid']}">
                         <img src="uploaded/${v['img_name']}" alt="photo">
                         <div class="cover"></div>
                         <div class="fig-box">
@@ -347,8 +351,38 @@
                     </div>
                         `;
 
+                // render like過了沒
+                    getLikes(v['sid']);
+
             });
 
+        }
+
+        async function getLikes(p) {
+            const jsonData = JSON.stringify({
+                    pid: p,
+                    getlike: 'yes',
+                });
+
+            const data = await fetch("api/like-api.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            });
+
+            const response = await data.json();
+            const likesNumber = document.querySelector(`[data-post="${p}"]`).children[3];
+
+            if (response['isLog'] == true) {
+                if (response['isLike'] == true) {
+                    likesNumber.classList.add("heart_red");
+                } else {
+                    likesNumber.classList.remove("heart_red");
+                }
+                likesNumber.innerHTML = `<span class="likes">${response['likes']}</span>`;
+            }
         }
 
 
@@ -377,7 +411,52 @@
                     clearAll(s_value);
                 });
             });
+
+            document.querySelectorAll(".fa-heart").forEach((v) => {
+                v.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    const p_value = event.target.parentNode.parentNode.dataset.post || event.target.parentNode.dataset.post;
+
+                    like(p_value);
+                });
+            });
+
+
         }
+
+        async function like(p) {
+            const jsonData = JSON.stringify({
+                pid: p,
+            });
+
+            const data = await fetch("api/like-api.php", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            });
+
+            const response = await data.json();
+
+            // render
+            const likesNumber = document.querySelector(`[data-post="${p}"]`).children[3];
+            if (response['isLog'] == true) {
+                if (response['isLike'] == true) {
+                    likesNumber.classList.add("heart_red");
+                } else {
+                    likesNumber.classList.remove("heart_red");
+                }
+                likesNumber.innerHTML = `<span class="likes">${response['likes']}</span>`;
+            } else {
+                const cof = confirm('您尚未登入,是否前往登入頁面?');
+
+                if (cof) {
+                    location.href = "part/login/login.html";
+                }
+            }
+        }
+
 
         function clearAll(s_value) {
             document.querySelectorAll(".photo").forEach((v) => {

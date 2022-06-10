@@ -172,7 +172,7 @@ if ($totalRows > 0) {
         const result = await r.json();
         // productsCart.innerHTML += result + "</br>";
         console.log(result);
-        alert('已加入購物車')
+        // alert('已加入購物車')
 
 
         checkQuantity();

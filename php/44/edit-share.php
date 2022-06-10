@@ -9,35 +9,35 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
 // 判斷有沒有pid，沒有id導回前一頁
 if (empty($pid)) {
-    header("Location:share.html");
+    header("Location:share-list.php");
 } else {
     //用id進sql判斷有沒有該文章，
     $t_sql = "SELECT COUNT(1) FROM post WHERE `delete_state`='0' AND `sid`='$pid'";
     $havePost = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
     if ($havePost == 0) {
-        header("Location:share.html");
+        header("Location:share-list.php");
     }
 }
 
 
-$sql = sprintf("SELECT * FROM post WHERE `delete_state`='0' AND `sid`=%s", $pid);
-$tag_sql = sprintf("SELECT * FROM post_tag WHERE `post_sid`=%s", $pid);
+$sql = sprintf("SELECT p.*,m.avatar FROM `post` p
+JOIN `member` m ON p.member_sid = m.member_sid
+WHERE `delete_state`='0' AND p.sid = '%s'", $pid);
+
+
 $tag_sql = sprintf("SELECT pt.*,t.name,t.times FROM `post_tag` pt JOIN `tag` t ON pt.tag_sid = t.sid WHERE pt.post_sid = '%s';", $pid);
-//[{"sid":"1","post_sid":"1","tag_sid":"2","name":"拉花","times":"7"},{"sid":"2","post_sid":"1","tag_sid":"3","name":"好有趣阿","times":"1"},{"sid":"3","post_sid":"1","tag_sid":"4","name":"拉花好好玩","times":"1"}]
 
 $rows = $pdo->query($sql)->fetch();
 $tags = $pdo->query($tag_sql)->fetchAll();
 
 
 if ($rows['comments'] >= 1) {
-    $cm_sql =  sprintf("SELECT c.*,m.member_nickname FROM `comment` c JOIN `member` m ON c.member_sid = m.member_sid WHERE c.post_sid = '%s'", $pid);
+    $cm_sql =  sprintf("SELECT c.*,m.member_nickname,m.avatar FROM `comment` c JOIN `member` m ON c.member_sid = m.member_sid WHERE c.post_sid = '%s'", $pid);
 
     $cm_rows = $pdo->query($cm_sql)->fetchAll();
     $cm_rows_id = isset($cm_rows_id) ? $cm_rows_id : 0;
 
-    // $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
 
-    // $rply_rows = $pdo->query($rply_sql)->fetchAll();
 }
 
 
@@ -50,7 +50,6 @@ if ($rows['topic_sid'] == 1) {
 }
 
 
-// echo json_encode($rows, JSON_UNESCAPED_UNICODE);
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +95,7 @@ if ($rows['topic_sid'] == 1) {
                 <div class="content-top">
                     <div class="member-info">
                         <div class="avatar">
-                            <i class="fa-solid fa-circle-user text-primary"></i>
+                            <img src="../../images/09/<?= $rows['avatar'] ?>" alt="">
                         </div>
                         <div class="info">
                             <h5 class="m-nickname"><?= $rows['member_nickname'] ?></h5>
@@ -104,13 +103,16 @@ if ($rows['topic_sid'] == 1) {
                         </div>
                     </div>
                     <!-- 找session sid=文章sid才出現 -->
-           
+                    <div class="post-edit mb-2" style="display:none;">
+                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
+                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
+                    </div>
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
                         <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
                             <?= $topic_name ?>
                         </a>
-                        
+                      
                     </div>
                     <p class="post-text">
                         <?= $rows['content'] ?>
@@ -141,8 +143,8 @@ if ($rows['topic_sid'] == 1) {
                         <?php if (isset($cm_rows)) : foreach ($cm_rows as $k => $v) : ?>
                                 <div class="d-flex comment-card">
                                     <div class="comment-info">
-                                        <div class="avatar">
-                                            <i class="fa-solid fa-circle-user text-pink"></i>
+                                        <div class="avatar avatar-sm">
+                                            <img src="../../images/09/<?= $v['avatar'] ?>" alt="">
                                         </div>
                                         <div class="info">
                                             <span class="c-nickname"><?= $v['member_nickname'] ?></span>
@@ -168,7 +170,7 @@ if ($rows['topic_sid'] == 1) {
                                 <div class="reply-card" id="rpc<?= $v['sid'] ?>">
                                     <?php
                                     $cm_rows_id = $v['sid'];
-                                    $rply_sql = sprintf("SELECT r.*,m.member_nickname FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
+                                    $rply_sql = sprintf("SELECT r.*,m.member_nickname,m.avatar FROM `reply` r JOIN `member` m ON r.member_sid = m.member_sid WHERE r.comment_sid = '%s'", $cm_rows_id);
                                     $rply_rows = $pdo->query($rply_sql)->fetchAll();
 
                                     if (isset($rply_rows)) :
@@ -176,8 +178,8 @@ if ($rows['topic_sid'] == 1) {
                                     ?>
                                             <div class="d-flex pt-1">
                                                 <div class="comment-info">
-                                                    <div class="avatar">
-                                                        <i class="fa-solid fa-circle-user text-primary"></i>
+                                                    <div class="avatar avatar-sm">
+                                                        <img src="../../images/09/<?= $rv['avatar'] ?>" alt="">
                                                     </div>
                                                     <div class="info">
                                                         <span class="c-nickname"><?= $rv['member_nickname'] ?></span>
@@ -377,7 +379,13 @@ if ($rows['topic_sid'] == 1) {
                 if (r[0]['isLike'] == true) document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
 
 
-      
+                // render是該篇文章作者給編輯/刪除
+                if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
+                    document.querySelector(".post-edit").style.display = "block";
+
+                } else {
+                    document.querySelector(".post-edit").style.display = "none";
+                }
             }
 
             const data = await fetch("api/detail-getInfo-api.php", {

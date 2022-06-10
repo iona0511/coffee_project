@@ -2,7 +2,10 @@
 header('Content-Type: application/json');
 // 這隻API是用來新增資料的，只有功能 沒有頁面
 
-$folder = dirname(__DIR__, 2) . '/images/11/';
+
+
+$folder = dirname(dirname(__DIR__, 1)) . '/images/11/';
+// $folder = dirname(__DIR__, 2) . '/images/11/';
 
 $extMap = [
     'image/jpeg'=>'.jpg',
