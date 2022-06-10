@@ -125,6 +125,7 @@
                     foodArray: [],
                     dataArray: [],
                     couponArray: [],
+                    cartLength: 0,
                     discountDisplay: 0,
                     radio: undefined,
                     tweened: 0,
@@ -158,7 +159,7 @@
                 //真正的最後價格
                 settle() {
                     return this.total - this.discountDisplay;
-                }
+                },
             },
             methods: {
                 change(obj,num) {
@@ -171,11 +172,15 @@
                     let deleteLIst = window.confirm("您確定要刪除嗎?");
                     if(deleteLIst) {
                         obj.display = 0;
-                        setTimeout(() => {
-                            this.dataArray[index] = this.dataArray[index].filter((data) => {
-                                return obj.key !== data.key;
-                            })
-                        },470)
+                        (async () => {
+                            await setTimeout(() => {
+                                this.dataArray[index] = this.dataArray[index].filter((data) => {
+                                    return obj.key !== data.key;
+                                })
+                            },470)
+                            await this.checkQuantity();
+                            console.log("middle");
+                        })();
                     }
                 },
                 verify(obj,event) {
@@ -216,14 +221,21 @@
                     })
                 },
                 checkQuantity() {
-                    const cart_quantity = document.querySelector("[data-content-before]");
-                    const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
-                    fetch(myHref)
-                    .then(data => data.json())
-                    .then(data => {
-                        cart_quantity.setAttribute("data-content-before", 0);
-                        cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                    // const cart_quantity = document.querySelector("[data-content-before]");
+                    // const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
+                    // fetch(myHref)
+                    // .then(data => data.json())
+                    // .then(data => {
+                        //     console.log("check");
+                        //     cart_quantity.setAttribute("data-content-before", 0);
+                        //     cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                    // })
+                    let count = 0;
+                    this.dataArray.forEach((data) => {
+                        count += data.length;
                     })
+                    this.cartLength = count;
+                    console.log("check");
                 }
             },
             watch: {
@@ -293,7 +305,7 @@
                             return 0;
                         }
                     }
-                }
+                },
             },
             beforeMount() {
                 const el = document.createElement("div");
@@ -304,7 +316,6 @@
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
                     scrollTo({ top: 0, behavior: "instant" });
-                    this.checkQuantity();
                 })
                 fetch("./cart_read_all_data.php")
                 .then(data => data.json())
@@ -332,6 +343,14 @@
                     this.dataArray.push(data.product);
                     this.dataArray.push(data.food);
                 })
+            },
+            mounted() {
+                let count = 0;
+                console.log(this.dataArray);
+                for(let i of this.dataArray) {
+                    count += i.length;
+                }
+                this.cartLength = count;
             }
         }).mount("#app");
     </script>
