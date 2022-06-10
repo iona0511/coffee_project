@@ -189,15 +189,28 @@
                     let deleteLIst = window.confirm("您確定要刪除嗎?");
                     if(deleteLIst) {
                         obj.display = 0;
-                        (async () => {
-                            await setTimeout(() => {
+                        new Promise((resolve,reject) => {
+                            setTimeout(() => {
                                 this.dataArray[index] = this.dataArray[index].filter((data) => {
                                     return obj.key !== data.key;
                                 })
-                            },470)
-                            await this.checkQuantity();
-                            console.log("middle");
-                        })();
+                                const fd = new FormData();
+                                fd.append("product", JSON.stringify(this.dataArray[0]));
+                                fd.append("food", JSON.stringify(this.dataArray[1]));
+                                fetch("./delete_session_api.php", {
+                                    method: "POST",
+                                    body: fd
+                                })
+                                .then(data => data.json())
+                                .then(data => {
+                                    console.log(data);
+                                })
+                                resolve();
+                            },470);
+                        })
+                        .then(() => {
+                            this.checkQuantity();
+                        })
                     }
                 },
                 verify(obj,event) {
@@ -238,14 +251,22 @@
                     })
                 },
                 checkQuantity() {
+                    console.log("chechk");
                     const cart_quantity = document.querySelector("[data-content-before]");
                     const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
                     fetch(myHref)
                     .then(data => data.json())
                     .then(data => {
-                            console.log("check");
-                            cart_quantity.setAttribute("data-content-before", 0);
-                            cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                        cart_quantity.setAttribute("data-content-before", 0);
+                        cart_quantity.setAttribute("data-content-before", data.food.length + data.product.length);
+                        if(data.food.length + data.product.length <= 0) {
+                            alert("購物車沒有東西");
+                            setTimeout(() => {
+                                window.location = "../../index_.php"
+                            },100);
+                        } else {
+                            document.querySelector("body").removeAttribute("cart-op");
+                        }
                     })
                 }
             },
@@ -402,12 +423,12 @@
                     // console.log("product: ",data.product);
                     // console.log("food: ",data.food);
                     // console.log("coupon: ",data.coupon);
-                    if(data.product.length ===0 && data.food.length === 0) {
-                        alert("購物車沒有東西")
-                        setTimeout(() => {
-                            window.location = "../../index_.php"
-                        },100);
-                    }
+                    // if(data.product.length ===0 && data.food.length === 0) {
+                    //     alert("購物車沒有東西")
+                    //     setTimeout(() => {
+                    //         window.location = "../../index_.php"
+                    //     },100);
+                    // }
                     this.productArray = data.product;
                     this.foodArray = data.food;
                     this.couponArray = data.coupon;
