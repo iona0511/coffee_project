@@ -75,7 +75,7 @@ $title = '新增餐點資料';
                             <label for="menu_photo" class="form-label ">餐點圖片</label>
                             <!-- <div><img src="" id="myimg" ></div> -->
 
-                            <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()" multiple>  
+                            <input type="file" class="form-control btn btn-outline-secondary" id="menu_photo" name="menu_photo" accept="image/*" onchange="showphoto()">  
                             <div class="form-text red"></div>
                             <div id="preview"></div>
 
@@ -237,7 +237,7 @@ $title = '新增餐點資料';
             info_bar.innerText = '新增成功';
 
             setTimeout(() => {
-                // location.href = 'menu_list.php'; // 跳轉到列表頁
+                location.href = 'menu_list.php'; // 跳轉到列表頁
             }, 2000);
         } else {
             info_bar.classList.remove('alert-success');

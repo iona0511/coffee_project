@@ -29,6 +29,14 @@ if (empty($row)) {
     .form-text.red {
         color: red;
     }
+
+    .a{
+        border: 1px solid rgb(156,121,93);
+    }
+    .b{
+        background: rgb(61,52,41);
+        color:bisque;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -124,10 +132,15 @@ if (empty($row)) {
                             <div class="form-text"></div>
                         </div>
                         <!-- htmlentities是為了跳脫字元，strip_tags是為了把內容的tag移除 -->
-                        <button type="button" class="btn btn-danger">
-                            <a href="./menu_edit.php">取消</a>
+
+                        <button type="button" class="btn a">
+                            <a href="./menu_edit.php" style="text-decoration:none;color:rgb(60,40,35)">取消</a>
                         </button>
-                        <button type="submit" class="btn btn-primary">編輯</button>
+                        <button type="submit" class="btn b">送出</button>
+
+                      
+
+
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料編輯成功
@@ -195,6 +208,10 @@ if (empty($row)) {
         // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
+<<<<<<< HEAD
+=======
+       
+>>>>>>> c611578af9ff762505e06da4b4dd38cdd4ce9d21
 
         const fd = new FormData(document.form1);
         const r = await fetch('menu_edit_api.php', {
