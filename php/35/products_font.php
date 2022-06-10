@@ -47,7 +47,8 @@ if ($totalRows > 0) {
     * {
         box-sizing: border-box;
     }
-    body{
+
+    body {
         background: url(../../images/35/frontbg.jpg) no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -172,8 +173,9 @@ if ($totalRows > 0) {
         // productsCart.innerHTML += result + "</br>";
         console.log(result);
         alert('已加入購物車')
-        
 
+
+        checkQuantity();
     }
 </script>
 
