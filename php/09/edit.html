@@ -49,6 +49,7 @@
     }
     .form-title{
         margin-right: 15px;
+        font-weight: 800;
     }
 
     .input-group-edit{
@@ -99,6 +100,9 @@
         height: 300px;
         opacity:0;
     }
+    ::placeholder{
+        font-size: 0.8rem;
+    }
 
     </style>
 </head>
@@ -121,7 +125,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-title">密碼：</div>
-                    <input type='text'class='input-field' id="member_password" name="member_password" autocomplete="off" >
+                    <input type='password' class='input-field' id="member_password" name="member_password" autocomplete="off" >
                 </div>
                 <div class="form-row">
                     <div class="form-title">生日：</div>
@@ -187,11 +191,11 @@ const renderData = async () => {
         const form1 =document.form1;
     
         inputS= form1.querySelectorAll('.form-row input');
-        // console.log(inputS);
+        console.log(inputS);
         for ( let i = 0; i < inputS.length; i++ ){
             inputS[i].value = obj.postData[i+1];
-            inputS[3].value = "";
         }
+        
     }
     )};
     renderData();
