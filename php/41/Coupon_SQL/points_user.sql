@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-06 07:31:37
+-- 產生時間： 2022-06-11 03:45:35
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 資料庫: `mydb`
+-- 資料庫: `coffee`
 --
 
 -- --------------------------------------------------------
@@ -39,11 +39,16 @@ CREATE TABLE `points_user` (
 --
 
 INSERT INTO `points_user` (`sid`, `member_sid`, `total_points`, `voucher_amount`) VALUES
-(1, 1, 200, 1),
-(2, 2, 340, 2),
+(1, 1, 800, 1),
+(2, 2, 0, 2),
 (3, 3, 700, 5),
-(4, 4, 1200, 3),
-(5, 5, 0, 0);
+(4, 4, 2000, 3),
+(5, 5, 0, 0),
+(6, 6, 500, 10),
+(7, 7, 600, 14),
+(666, 666, 0, 0),
+(1001, 1001, 0, 0),
+(1006, 1005, 0, 11);
 
 --
 -- 已傾印資料表的索引
@@ -63,7 +68,7 @@ ALTER TABLE `points_user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_user`
 --
 ALTER TABLE `points_user`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1007;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

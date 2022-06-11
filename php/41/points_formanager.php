@@ -22,9 +22,6 @@ $title = '會員積分紀錄';
 
 $t_sql = sprintf("SELECT`points_user`.`total_points`,`points_user`.`voucher_amount`,`member`.`member_sid`,`member`.`member_account`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`");
 
-
-
-// =============================
 $perPage = 5;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -1095,6 +1092,9 @@ if ($totalRows > 0) {
             </table>
         </div>
     </div>
+    <!-- ========= -->
+    
+    <!-- ================== -->
     <div class="animation-container" style="width:50%;margin-top:300px;">
         
         <div class="coffee-bag-container">

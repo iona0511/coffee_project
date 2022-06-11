@@ -48,10 +48,12 @@
             border: 1px solid #ccc;
         }
         .cart_block li:first-child {
-            border-radius: 20px 20px 0px 0px;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
         }
         .cart_block li:last-child {
-            border-radius: 0px 0px 20px 20px;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
         }
         .cart_img_wrap {
             width: 100px;
@@ -103,9 +105,9 @@
                                 </p>
                                 <p>{{item.price}} 元</p>
                                 <div class="cart_list_button_group">
-                                    <button @click="change(item,-1)">-</button>
+                                    <button @click="change(index,item,-1)">-</button>
                                     <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
-                                    <button @click="change(item,1)">+</button>
+                                    <button @click="change(index,item,1)">+</button>
                                 </div>
                                 <p>小記 {{item.price * item.quantity}}</p>
                                 <button @click="deleteHandler(index,item)"><i class="fa-solid fa-trash-can"></i></button>
@@ -196,10 +198,13 @@
                 },
             },
             methods: {
-                change(obj,num) {
+                change(index,obj,num) {
                     obj.quantity += num;
                     if (obj.quantity <= 0) {
                         obj.quantity = 0;
+                    }
+                    if(obj.quantity == 0) {
+                        this.deleteHandler(index,obj)
                     }
                 },
                 deleteHandler(index,obj) {
@@ -228,14 +233,19 @@
                         .then(() => {
                             this.checkQuantity();
                         })
+                    } else {
+                        obj.quantity = obj.quantity;
+                        if(obj.quantity < 1) {
+                            obj.quantity = 1;
+                        }
                     }
                 },
                 verify(obj,event) {
                     event.target.value = event.target.value.replace(/^(0+)|[^\d]+/g, "");
                     obj.quantity = event.target.value;
                     if (obj.quantity === "") {
-                        obj.quantity = 0;
-                        event.target.value = 0;
+                        obj.quantity = 1;
+                        event.target.value = 1;
                     }
                     obj.quantity = parseInt(obj.quantity);
                     //最大庫存
