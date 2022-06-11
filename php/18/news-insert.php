@@ -61,7 +61,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
                         <div class="mb-3">
                             <label for="news_title" class="form-label">活動標題</label>
                             <!-- label for跟input id 是對應的-->
-                            <input type="text" class="form-control" id="news_title" name="news_title" required>
+                            <input type="text" class="form-control" id="news_title" name="news_title" placeholder='標題' required>
                             <div class="form-text red"></div>
                         </div>
 
@@ -90,7 +90,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
                         <div class="mb-3">
                             <label for="news_content" class="form-label">活動內容</label>
-                            <textarea type="text" class="form-control" id="news_content" name="news_content"></textarea>
+                            <textarea type="text" class="form-control" id="news_content" name="news_content" placeholder='請輸入內容' ></textarea>
                             <div class="form-text red"></div>
                         </div>
 
