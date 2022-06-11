@@ -1,5 +1,14 @@
 <?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 // MVC是把資料處理 呈現 用戶的互動
+
+// session_start();
+
+if (!isset($_SESSION['user']['admin_account'])) {
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
+
 $perPage = 5; // 每一頁有幾筆
 $page = isset($_GET['page'])? intval($_GET['page']) : 1; // 用戶要看第幾頁
 if($page<1){

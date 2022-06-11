@@ -236,9 +236,9 @@ $title = '新增餐點資料';
             info_bar.classList.add('alert-success');
             info_bar.innerText = '新增成功';
 
-            setTimeout(() => {
-                location.href = 'menu_list.php'; // 跳轉到列表頁
-            }, 2000);
+            // setTimeout(() => {
+            //     location.href = 'menu_list.php'; // 跳轉到列表頁
+            // }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');
