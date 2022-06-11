@@ -147,7 +147,7 @@
                 padding: 3px 0;
                 width: 200px;
                 position: absolute;
-                top: 30.5%;
+                top: 31.5%;
                 background-color: #333;
                 color: #fff;
                 border-radius: 5px;
@@ -173,16 +173,14 @@
                 margin: 20px;
                 padding: 10px;
                 cursor: pointer;
-                /* background-color: aqua; */
                 border: 1px solid #333;
                 position: absolute;
                 top: 112px;
                 left: 645px;
-                /* opacity: 0; */
             }
 
             .upload_zone_enter {
-                border: 10px dashed black;
+                border: 5px dashed black;
                 background-clip: content-box;
             }
 
@@ -382,6 +380,7 @@
                     method: "POST",
                     body: fd,
                 });
+
                 const result = await r.json();
 
                 //課程名稱防呆
@@ -442,37 +441,39 @@
                 return `../../images/29/${f}`;
             };
 
-            function handleFiles(files) {
-                // for (var i = 0; i < files.length; i++) {
-                const file = files[0];
-                const imageType = /image.*/;
+            async function handleFiles(files) {
+                console.log(files);
+                const fd = new FormData(document.form2);
 
-                //     if (!file.type.match(imageType)) {
-                //     continue;
-                // }
+                const r = await fetch("./upload-photos-api.php", {
+                    method: "POST",
+                    body: fd,
+                });
+                const obj = await r.json();
+                console.log(obj);
+                const file = files[0];
+                // const imageType = /image.*/;
+
                 myimg.style.display = "block";
 
                 const reader = new FileReader(); // 建立檔案讀取器,將上傳的圖片資料取出
-                reader.onload = (e) => (
-                    (myimg.src = e.target.result),
-                    (document.form1.course_img_s.value = e.target.result)
-                );
 
-                console.log(document.form1.course_img_s);
-                // window.atob(document.form1.course_img_s.value);
-                // 註冊讀取完成後 , 執行的動作
                 reader.readAsDataURL(file);
 
                 // 取出 file 中的 base64 格式 data
 
                 console.log(file);
+                // console.log(file.name);
 
-                // document.form1.course_img_s.value = reader;
-                // }
+                myimg.src = photoItem(file.name);
+
+                imgs = myimg.getAttribute("data-f");
+
+                document.form1.course_img_s.value = imgs;
             }
-            // async function handleFiles(files) {
+
             avatar.addEventListener("change", async function (files) {
-                console.log(files);
+                // console.log(files);
                 // 上傳表單
                 const fd = new FormData(document.form2);
 
@@ -483,17 +484,15 @@
 
                 const obj = await r.json();
                 myimg.style.display = "block";
-                console.log(obj);
 
                 if (obj.filename) {
                     myimg.src = photoItem(obj.filename);
-                    console.log(obj.filename);
                 }
                 imgs = myimg.getAttribute("data-f");
-                console.log(imgs);
+
                 document.form1.course_img_s.value = imgs;
             });
-            // }
+
             function uploadAvatar() {
                 avatar.click(); // 模擬點擊
             }
@@ -534,9 +533,9 @@
                 e.preventDefault(); //終止預設行為
 
                 const dt = e.dataTransfer;
-                console.log(dt);
+
                 const files = dt.files;
-                // console.log(files);
+
                 handleFiles(files);
                 dropbox.classList.remove("upload_zone_enter");
             }
