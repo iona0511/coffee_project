@@ -2,6 +2,12 @@
 header('Content-Type: application/json');
 // 這隻API是用來新增資料的，只有功能 沒有頁面
 
+// session_start();
+
+if (!isset($_SESSION['user']['admin_account'])) {
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
 
 $folder = dirname(dirname(__DIR__, 1)) . '/images/11/';
 // $folder = dirname(__DIR__, 2) . '/images/11/';

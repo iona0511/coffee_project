@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-11 03:45:35
+-- 產生時間： 2022-06-11 10:30:20
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -48,7 +48,13 @@ INSERT INTO `points_user` (`sid`, `member_sid`, `total_points`, `voucher_amount`
 (7, 7, 600, 14),
 (666, 666, 0, 0),
 (1001, 1001, 0, 0),
-(1006, 1005, 0, 11);
+(1006, 1005, 0, 11),
+(1042, 1042, 0, 2),
+(1408, 1408, 0, 12),
+(1409, 1409, 0, 3),
+(1412, 1412, 0, 2),
+(1413, 1413, 0, 0),
+(1414, 1414, 0, 1);
 
 --
 -- 已傾印資料表的索引
@@ -68,7 +74,7 @@ ALTER TABLE `points_user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_user`
 --
 ALTER TABLE `points_user`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1007;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1415;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
