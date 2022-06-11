@@ -15,6 +15,18 @@
         [coffee-op0] {
             opacity: 0;
         }
+        .mouse_pointer {
+            cursor: pointer;
+        }
+        body {
+            background: url("../../images/40/06-bgimg.jpg") center 0% / cover no-repeat;
+            background-attachment: fixed;
+            overflow-x: hidden;
+            margin-bottom: 80px;
+        }
+        nav {
+            top: 0px;
+        }
         #app {
             margin-top: 20px;
         }
@@ -31,6 +43,11 @@
             padding: 0;
             border: 0;
         }
+        .td {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: #0d6efd;
+        }
         input[type=number]::-webkit-inner-spin-button {
             appearance: none;
         }
@@ -41,17 +58,57 @@
         .cart_block {
             list-style-type: none;
             padding: 0px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .ul0 {
+            position: relative;
+        }
+        .ul0::before {
+            content: "商品";
+            display: inline-block;
+            background: url("../../images/40/bg-icon-new-small.png") center center / cover no-repeat;
+            width: 64px;
+            height: 30px;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            z-index: 1;
+        }
+        .ul1 {
+            position: relative;
+        }
+        .ul1::before {
+            content: "點餐";
+            display: inline-block;
+            background: url("../../images/40/bg-icon-new-small.png") center center / cover no-repeat;
+            width: 64px;
+            height: 30px;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            z-index: 1;
         }
         .cart_block li {
             padding: 10px 20px;
             border: 1px solid #ccc;
+            background-color: #fff9;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
         }
         .cart_block li:first-child {
-            border-radius: 20px 20px 0px 0px;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
         }
         .cart_block li:last-child {
-            border-radius: 0px 0px 20px 20px;
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
         }
         .cart_img_wrap {
             width: 100px;
@@ -64,11 +121,115 @@
             object-position: center center;
         }
         .cart_card {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
+        .cart_card p {
+            margin-bottom: 0px;
+            width: 25%;
+            text-align: center;
+        }
+        .cart_list_button_group {
+            width: 208px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+        }
+        .cart_list_button_group input {
+            width: 50%;
+            height: 100%;
+            font-size: 16px;
+            padding: 0px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            border-right: none;
+            border-left: none;
+            position: relative;
+            z-index: 1;
+        }
+        .cart_list_button_group button {
+            width: 25%;
+            height: 100%;
+            display: inline-block;
+            text-align: center;
+            font-size: 24px;
+            line-height: 24px;
+            padding: 0px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+        .cart_list_button_group button:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        .cart_list_button_group button:last-child {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .coupon_bord {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0006;
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .coupon_bg {
+            background-color: #fff;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            position: relative;
+        }
+        .close_coupon_btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            color: #666;
+        }
+        .quntity_input {
+            text-align: center;
+        }
+        .coupon_bg label {
+            padding: 10px 10px;
+            border-radius: 5px;
+        }
+        .coupon_bg label:hover {
+            outline: 1px solid rgb(140, 203, 255);
+        }
+        .coupon_confirm {
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .under_bar {
+            width: 95%;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 20px;
+            position: fixed;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .coupon_button_group {
+            display: flex;
+            flex-direction: column;
+        }
+        .price_bord {
+            display: flex;
+        }
         .list-leave-active {
             transition: all .5s ease;
         }
@@ -89,7 +250,7 @@
     <div id="app" v-cloak>
         <div class="cart_wrap">
             <div class="list_bord">
-                <ul class="cart_block" v-for="(data,index) of dataArray">
+                <ul class="cart_block" v-for="(data,index) of dataArray" :class="'ul' + index">
                     <transition-group name="list" mode="out-in">
                         <li v-for="item of data" v-show="item.display === 1" key="item">
                             <div class="cart_card">
@@ -101,33 +262,44 @@
                                     <span v-if="item.ice">({{item.ice}})</span>
                                     <span v-if="item.sugar">({{item.sugar}})</span>
                                 </p>
-                                <p>{{item.price}} 元</p>
+                                <p>單價 {{item.price}} 元</p>
                                 <div class="cart_list_button_group">
-                                    <button @click="change(item,-1)">-</button>
-                                    <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
-                                    <button @click="change(item,1)">+</button>
+                                    <button @click="change(index,item,-1)">-</button>
+                                    <input class="quntity_input" type="number" v-model.number="item.quantity" @keyup="verify(item,$event)" @click="editHandler($event)">
+                                    <button @click="change(index,item,1)">+</button>
                                 </div>
-                                <p>小記 {{item.price * item.quantity}}</p>
+                                <p>小記 {{item.price * item.quantity}} 元</p>
                                 <button @click="deleteHandler(index,item)"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </li>
                     </transition-group>
                 </ul>
             </div>
-            <div class="coupon_bord">
-                <label :for="'id' + coupon.id" v-for="coupon of couponArray">
-                    <input type="radio" :id="'id' + coupon.id" :value="coupon.id" v-model="radio">
-                    {{coupon.name}}
-                </label>
+            <div class="coupon_bord" v-show="couponShow === true" @click="showCouponHandler">
+                <div class="coupon_bg" @click.stop>
+                    <button class="close_coupon_btn" @click="showCouponHandler">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <label :for="'id' + coupon.id" v-for="coupon of couponArray" class="mouse_pointer">
+                        <input type="radio" :id="'id' + coupon.id" :value="coupon.id" v-model="radio">
+                        {{coupon.name}}
+                    </label>
+                    <button class="coupon_confirm" @click.stop="showCouponHandler">確定</button>
+                </div>
             </div>
-            <p>優惠卷: {{couponName}}</p>
-            <button @click="couponDeny">不使用優惠卷</button>
-            <div class="price_bord">
-                <p>總計: {{total}}</p>
-                <p>折扣: {{discountDisplay}}</p>
-                <p>結算價: {{parseInt(tweened)}}</p>
+            <div class="under_bar">
+                <div class="coupon_button_group">
+                    <button @click="showCouponHandler" v-if="radio === undefined">選擇優惠卷</button>
+                    <button @click="couponDeny" v-else>不使用優惠卷</button>
+                </div>
+                <button class="mouse_pointer" :class="{td: radio}" @click="showCouponHandler">優惠卷: {{couponName}}</button>
+                <div class="price_bord">
+                    <p>總計: {{total}}</p>
+                    <p>折扣: {{discountDisplay}}</p>
+                    <p>結算價: {{parseInt(tweened)}}</p>
+                </div>
+                <a href="javascript:;" @click="sendData">前往結帳頁</a>
             </div>
-            <a href="javascript:;" @click="sendData">前往結帳頁</a>
         </div>
         <pre class="visaully_hidden">{{discountDisplay}}</pre>
     </div>
@@ -162,6 +334,7 @@
                     cartLength: 0,
                     discountDisplay: 0,
                     radio: undefined,
+                    couponShow: false,
                     tweened: 0,
                 }
             },
@@ -196,10 +369,13 @@
                 },
             },
             methods: {
-                change(obj,num) {
+                change(index,obj,num) {
                     obj.quantity += num;
                     if (obj.quantity <= 0) {
                         obj.quantity = 0;
+                    }
+                    if(obj.quantity == 0) {
+                        this.deleteHandler(index,obj)
                     }
                 },
                 deleteHandler(index,obj) {
@@ -228,14 +404,19 @@
                         .then(() => {
                             this.checkQuantity();
                         })
+                    } else {
+                        obj.quantity = obj.quantity;
+                        if(obj.quantity < 1) {
+                            obj.quantity = 1;
+                        }
                     }
                 },
                 verify(obj,event) {
                     event.target.value = event.target.value.replace(/^(0+)|[^\d]+/g, "");
                     obj.quantity = event.target.value;
                     if (obj.quantity === "") {
-                        obj.quantity = 0;
-                        event.target.value = 0;
+                        obj.quantity = 1;
+                        event.target.value = 1;
                     }
                     obj.quantity = parseInt(obj.quantity);
                     //最大庫存
@@ -285,6 +466,12 @@
                             document.querySelector("body").removeAttribute("cart-op");
                         }
                     })
+                },
+                showCouponHandler() {
+                    this.couponShow = !this.couponShow;
+                },
+                editHandler(event) {
+                    event.target.select();
                 }
             },
             watch: {
@@ -413,10 +600,11 @@
                             this.discountDisplay =  0;
                         }
                     }
-                }
+                },
             },
             beforeMount() {
                 const el = document.createElement("div");
+                el.setAttribute("style", "position:sticky;top:0px;z-index:99")
                 const docBody = document.querySelector("body");
                 fetch("../../parts/navbar.php")
                 .then(data => data.text())

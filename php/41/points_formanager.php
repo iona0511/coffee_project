@@ -22,9 +22,6 @@ $title = '會員積分紀錄';
 
 $t_sql = sprintf("SELECT`points_user`.`total_points`,`points_user`.`voucher_amount`,`member`.`member_sid`,`member`.`member_account`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`");
 
-
-
-// =============================
 $perPage = 5;
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -1047,11 +1044,11 @@ if ($totalRows > 0) {
 
     
 </style>
-<div class="display_justify_content px24" style="font-weight:bold; margin-top: 5px;font-size: 24px;">
+<div class="display_justify_content px24 " style="font-weight:bold; margin-top: 5px;font-size: 24px;">
     總會員積分紀錄
 </div>
 <div>
-    <div style="width:300px;margin-left:auto;margin-right: 5%;margin-top:50px;display:flex;">
+    <div style="width:300px;margin-left:auto;margin-right: 5%;margin-top:15px;display:flex;">
         <svg style="margin-top:10px;" xmlns="HLM/images/common/_l_search.svg" width="17.494" height="17.33" viewBox="0 0 17.494 17.33">
         <g stroke="#111" fill="none">
         <g transform="translate(-341 -23) translate(341 23)">
@@ -1095,6 +1092,9 @@ if ($totalRows > 0) {
             </table>
         </div>
     </div>
+    <!-- ========= -->
+    
+    <!-- ================== -->
     <div class="animation-container" style="width:50%;margin-top:300px;">
         
         <div class="coffee-bag-container">
@@ -1217,4 +1217,6 @@ if ($totalRows > 0) {
 
         console.log(result);
     }
+
+
 </script>

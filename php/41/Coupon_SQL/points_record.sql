@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-04 16:03:12
+-- 產生時間： 2022-06-11 03:45:20
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 資料庫: `mydb`
+-- 資料庫: `coffee`
 --
 
 -- --------------------------------------------------------
@@ -41,7 +41,17 @@ CREATE TABLE `points_record` (
 
 INSERT INTO `points_record` (`sid`, `member_sid`, `type`, `points_get`, `create_at`) VALUES
 (1, 1, 1, 10, '2022-06-02'),
-(2, 2, 2, -300, '2022-06-03');
+(2, 2, 2, -300, '2022-06-03'),
+(3, 3, 1, 10, '2022-06-03'),
+(4, 1, 1, 10, '2022-06-04'),
+(5, 1, 1, 10, '2022-06-05'),
+(6, 3, 2, -300, '2022-06-05'),
+(7, 4, 1, 10, '2022-06-03'),
+(8, 4, 1, 10, '2022-06-04'),
+(9, 4, 1, 10, '2022-06-05'),
+(10, 7, 1, 10, '2022-06-03'),
+(11, 7, 1, 10, '2022-06-04'),
+(12, 7, 1, 10, '2022-06-05');
 
 --
 -- 已傾印資料表的索引
@@ -61,7 +71,7 @@ ALTER TABLE `points_record`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_record`
 --
 ALTER TABLE `points_record`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
