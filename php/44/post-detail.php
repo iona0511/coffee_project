@@ -24,12 +24,19 @@ $sql = sprintf("SELECT p.*,m.avatar FROM `post` p
 JOIN `member` m ON p.member_sid = m.member_sid
 WHERE `delete_state`='0' AND p.sid = '%s'", $pid);
 
-
-// $tag_sql = sprintf("SELECT * FROM post_tag WHERE `post_sid`=%s", $pid);
-$tag_sql = sprintf("SELECT pt.*,t.name,t.times FROM `post_tag` pt JOIN `tag` t ON pt.tag_sid = t.sid WHERE pt.post_sid = '%s';", $pid);
-//[{"sid":"1","post_sid":"1","tag_sid":"2","name":"拉花","times":"7"},{"sid":"2","post_sid":"1","tag_sid":"3","name":"好有趣阿","times":"1"},{"sid":"3","post_sid":"1","tag_sid":"4","name":"拉花好好玩","times":"1"}]
-
 $rows = $pdo->query($sql)->fetch();
+
+// 預防假資料造成的錯誤 直接給預設大頭貼
+if (empty($rows)) {
+    $sql = sprintf("SELECT * FROM `post` WHERE `delete_state`='0' AND `sid` = '%s'", $pid);
+    $rows = $pdo->query($sql)->fetch();
+
+    $rows['avatar'] = "missing-image.jpg";
+}
+
+
+$tag_sql = sprintf("SELECT pt.*,t.name,t.times FROM `post_tag` pt JOIN `tag` t ON pt.tag_sid = t.sid WHERE pt.post_sid = '%s'", $pid);
+
 $tags = $pdo->query($tag_sql)->fetchAll();
 
 
@@ -54,7 +61,6 @@ if ($rows['topic_sid'] == 1) {
 }
 
 
-// echo json_encode($rows, JSON_UNESCAPED_UNICODE);
 ?>
 
 <!DOCTYPE html>
@@ -109,8 +115,8 @@ if ($rows['topic_sid'] == 1) {
                     </div>
                     <!-- 找session sid=文章sid才出現 -->
                     <div class="post-edit mb-2" style="display:none;">
-                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
-                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
+                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯分享</a>
+                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除分享</a>
                     </div>
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
@@ -127,7 +133,7 @@ if ($rows['topic_sid'] == 1) {
                             ?>
                         </span>
                     </div>
-                    <p class="post-text mb-5">
+                    <p class="post-text mb-2r">
                         <?= $rows['content'] ?>
                     </p>
                     <div class="tag-bar d-flex mb-2">
@@ -191,7 +197,7 @@ if ($rows['topic_sid'] == 1) {
                                     ?>
                                             <div class="d-flex pt-1">
                                                 <div class="comment-info">
-                                                <div class="avatar avatar-sm">
+                                                    <div class="avatar avatar-sm">
                                                         <img src="../../images/09/<?= $rv['avatar'] ?>" alt="">
                                                     </div>
                                                     <div class="info">

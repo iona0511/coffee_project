@@ -9,13 +9,13 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
 // 判斷有沒有pid，沒有id導回前一頁
 if (empty($pid)) {
-    header("Location:share.php");
+    header("Location:share.html");
 } else {
     //用id進sql判斷有沒有該文章，
     $t_sql = "SELECT COUNT(1) FROM post WHERE `delete_state`='0' AND `sid`='$pid'";
     $havePost = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
     if ($havePost == 0) {
-        header("Location:share.php");
+        header("Location:share.html");
     }
 }
 
@@ -24,12 +24,19 @@ $sql = sprintf("SELECT p.*,m.avatar FROM `post` p
 JOIN `member` m ON p.member_sid = m.member_sid
 WHERE `delete_state`='0' AND p.sid = '%s'", $pid);
 
-
-// $tag_sql = sprintf("SELECT * FROM post_tag WHERE `post_sid`=%s", $pid);
-$tag_sql = sprintf("SELECT pt.*,t.name,t.times FROM `post_tag` pt JOIN `tag` t ON pt.tag_sid = t.sid WHERE pt.post_sid = '%s'", $pid);
-//[{"sid":"1","post_sid":"1","tag_sid":"2","name":"拉花","times":"7"},{"sid":"2","post_sid":"1","tag_sid":"3","name":"好有趣阿","times":"1"},{"sid":"3","post_sid":"1","tag_sid":"4","name":"拉花好好玩","times":"1"}]
-
 $rows = $pdo->query($sql)->fetch();
+
+// 預防假資料造成的錯誤 直接給預設大頭貼
+if (empty($rows)) {
+    $sql = sprintf("SELECT * FROM `post` WHERE `delete_state`='0' AND `sid` = '%s'", $pid);
+    $rows = $pdo->query($sql)->fetch();
+
+    $rows['avatar'] = "missing-image.jpg";
+}
+
+
+$tag_sql = sprintf("SELECT pt.*,t.name,t.times FROM `post_tag` pt JOIN `tag` t ON pt.tag_sid = t.sid WHERE pt.post_sid = '%s'", $pid);
+
 $tags = $pdo->query($tag_sql)->fetchAll();
 
 
@@ -54,7 +61,6 @@ if ($rows['topic_sid'] == 1) {
 }
 
 
-// echo json_encode($rows, JSON_UNESCAPED_UNICODE);
 ?>
 
 <!DOCTYPE html>
@@ -109,8 +115,8 @@ if ($rows['topic_sid'] == 1) {
                     </div>
                     <!-- 找session sid=文章sid才出現 -->
                     <div class="post-edit mb-2" style="display:none;">
-                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯文章</a>
-                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除文章</a>
+                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯分享</a>
+                        <a href="javascript:delete_share();"><i class="fa-solid fa-trash-can"></i>刪除分享</a>
                     </div>
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
@@ -127,7 +133,7 @@ if ($rows['topic_sid'] == 1) {
                             ?>
                         </span>
                     </div>
-                    <p class="post-text mb-5">
+                    <p class="post-text mb-2r">
                         <?= $rows['content'] ?>
                     </p>
                     <div class="tag-bar d-flex mb-2">
@@ -223,14 +229,50 @@ if ($rows['topic_sid'] == 1) {
                 </div>
             </div>
         </div>
-        <div class="control" style="text-align:center;margin-top: 10px;">
+        <!-- 刪除 -->
+        <button type="button" class="btn" id="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="display: none;">
+            刪除
+        </button>
 
-
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">刪除文章</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        確認刪除?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="cofirm-btn" onclick="">確認</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script>
+        function delete_share() {
+            document.querySelector(".modal-body").innerHTML = `確定要刪除 <b><?= $rows['title'] ?></b>嗎?`;
+            document.querySelector("#cofirm-btn").setAttribute("onclick", `delete_it()`);
+            btn.click();
+        }
+
+        function delete_it() {
+
+            fetch(`delete-post.php?sid=<?= $pid ?>`)
+                .then(data => data.json())
+                .then((data) => {
+                    const d = data;
+
+                });
+            location.href = "share.html";
+        }
+
         let cidNumber = '';
         async function like() {
             const jsonData = JSON.stringify({
@@ -248,13 +290,15 @@ if ($rows['topic_sid'] == 1) {
             const response = await data.json();
             console.log(response);
             // render
+            document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
+            // 先判斷登入了沒
             if (response['isLog'] == true) {
+                //有登入再判斷按過讚了嗎
                 if (response['isLike'] == true) {
                     document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
                 } else {
                     document.querySelector(".fa-heart").classList.remove("heart_red", "animate__heartBeat");
                 }
-                document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
             } else {
                 const cof = confirm('您尚未登入,是否前往登入頁面?');
 
