@@ -15,13 +15,14 @@
         [coffee-op0] {
             opacity: 0;
         }
+        .mouse_pointer {
+            cursor: pointer;
+        }
         body {
-            background: url("../../images/40/06-bgimg.jpg") center center / cover no-repeat;
+            background: url("../../images/40/06-bgimg.jpg") center 0% / cover no-repeat;
             background-attachment: fixed;
             overflow-x: hidden;
-        }
-        body.hidden {
-            overflow-y: hidden;
+            margin-bottom: 80px;
         }
         nav {
             top: 0px;
@@ -41,6 +42,11 @@
             width: 1px;
             padding: 0;
             border: 0;
+        }
+        .td {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: #0d6efd;
         }
         input[type=number]::-webkit-inner-spin-button {
             appearance: none;
@@ -94,7 +100,7 @@
             background-color: #fff9;
             overflow: hidden;
             position: relative;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
         .cart_block li:first-child {
             border-top-right-radius: 20px;
@@ -115,9 +121,52 @@
             object-position: center center;
         }
         .cart_card {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+        .cart_card p {
+            margin-bottom: 0px;
+            width: 25%;
+            text-align: center;
+        }
+        .cart_list_button_group {
+            width: 208px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+        }
+        .cart_list_button_group input {
+            width: 50%;
+            height: 100%;
+            font-size: 16px;
+            padding: 0px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            border-right: none;
+            border-left: none;
+            position: relative;
+            z-index: 1;
+        }
+        .cart_list_button_group button {
+            width: 25%;
+            height: 100%;
+            display: inline-block;
+            text-align: center;
+            font-size: 24px;
+            line-height: 24px;
+            padding: 0px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+        .cart_list_button_group button:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        .cart_list_button_group button:last-child {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
         }
         .coupon_bord {
             position: fixed;
@@ -134,6 +183,31 @@
         .coupon_bg {
             background-color: #fff;
             border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            position: relative;
+        }
+        .close_coupon_btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            color: #666;
+        }
+        .quntity_input {
+            text-align: center;
+        }
+        .coupon_bg label {
+            padding: 10px 10px;
+            border-radius: 5px;
+        }
+        .coupon_bg label:hover {
+            outline: 1px solid rgb(140, 203, 255);
+        }
+        .coupon_confirm {
+            margin-top: 10px;
+            border-radius: 5px;
         }
         .under_bar {
             width: 95%;
@@ -142,11 +216,16 @@
             background-color: rgb(255, 255, 255);
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 0px 20px;
             position: fixed;
             bottom: 0px;
             left: 50%;
             transform: translateX(-50%);
+        }
+        .coupon_button_group {
+            display: flex;
+            flex-direction: column;
         }
         .price_bord {
             display: flex;
@@ -183,13 +262,13 @@
                                     <span v-if="item.ice">({{item.ice}})</span>
                                     <span v-if="item.sugar">({{item.sugar}})</span>
                                 </p>
-                                <p>{{item.price}} 元</p>
+                                <p>單價 {{item.price}} 元</p>
                                 <div class="cart_list_button_group">
                                     <button @click="change(index,item,-1)">-</button>
-                                    <input type="number" v-model.number="item.quantity" @keyup="verify(item,$event)">
+                                    <input class="quntity_input" type="number" v-model.number="item.quantity" @keyup="verify(item,$event)" @click="editHandler($event)">
                                     <button @click="change(index,item,1)">+</button>
                                 </div>
-                                <p>小記 {{item.price * item.quantity}}</p>
+                                <p>小記 {{item.price * item.quantity}} 元</p>
                                 <button @click="deleteHandler(index,item)"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </li>
@@ -198,16 +277,22 @@
             </div>
             <div class="coupon_bord" v-show="couponShow === true" @click="showCouponHandler">
                 <div class="coupon_bg" @click.stop>
-                    <label :for="'id' + coupon.id" v-for="coupon of couponArray">
+                    <button class="close_coupon_btn" @click="showCouponHandler">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <label :for="'id' + coupon.id" v-for="coupon of couponArray" class="mouse_pointer">
                         <input type="radio" :id="'id' + coupon.id" :value="coupon.id" v-model="radio">
                         {{coupon.name}}
                     </label>
+                    <button class="coupon_confirm" @click.stop="showCouponHandler">確定</button>
                 </div>
             </div>
             <div class="under_bar">
-                <button @click="showCouponHandler">選擇優惠卷</button>
-                <p>優惠卷: {{couponName}}</p>
-                <button @click="couponDeny">不使用優惠卷</button>
+                <div class="coupon_button_group">
+                    <button @click="showCouponHandler" v-if="radio === undefined">選擇優惠卷</button>
+                    <button @click="couponDeny" v-else>不使用優惠卷</button>
+                </div>
+                <button class="mouse_pointer" :class="{td: radio}" @click="showCouponHandler">優惠卷: {{couponName}}</button>
                 <div class="price_bord">
                     <p>總計: {{total}}</p>
                     <p>折扣: {{discountDisplay}}</p>
@@ -384,6 +469,9 @@
                 },
                 showCouponHandler() {
                     this.couponShow = !this.couponShow;
+                },
+                editHandler(event) {
+                    event.target.select();
                 }
             },
             watch: {
@@ -512,7 +600,7 @@
                             this.discountDisplay =  0;
                         }
                     }
-                }
+                },
             },
             beforeMount() {
                 const el = document.createElement("div");
