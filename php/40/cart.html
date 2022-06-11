@@ -627,7 +627,11 @@
                             if(this.selectedCoupon.money < 1) {
                                 this.discountDisplay = this.total * (1 - this.selectedCoupon.money);
                             } else {
-                                this.discountDisplay = this.selectedCoupon.money;
+                                if(this.total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = this.total;
+                                }
                             }
                         } else if (this.selectedCoupon.type === 2) {
                             if(this.selectedCoupon.money < 1) {
@@ -686,7 +690,11 @@
                             if(this.selectedCoupon.money < 1) {
                                 this.discountDisplay = this.total * (1 - this.selectedCoupon.money);
                             } else {
-                                this.discountDisplay = this.selectedCoupon.money;
+                                if(this.total >= this.selectedCoupon.money) {
+                                    this.discountDisplay = this.selectedCoupon.money;
+                                } else {
+                                    this.discountDisplay = this.total;
+                                }
                             }
                         } else if (this.selectedCoupon.type === 2) {
                             if(this.selectedCoupon.money < 1) {
