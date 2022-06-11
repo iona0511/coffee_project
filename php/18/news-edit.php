@@ -188,6 +188,28 @@ if (empty($row)) {
         reader.readAsDataURL(file);
     }
 
+        //寫的是活動結束日期無法選擇比開始日期還早
+        const startDate = document.querySelector("#news_start_date");
+        const endDate = document.querySelector("#news_end_date");
+
+
+        function getToday(yourDate) {
+            const offset = yourDate.getTimezoneOffset();
+            yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000));
+            return yourDate.toISOString().split('T')[0];
+        }
+
+        const now = new Date();
+
+        startDate.setAttribute("min", getToday(now));
+
+        startDate.addEventListener("input", () => {
+            endDate.value = "";
+            endDate.setAttribute("min", startDate.value);
+        })
+
+
+
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
         for (let i in fields) {

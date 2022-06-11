@@ -51,21 +51,25 @@ if ($totalRows > 0) {
     }
 
     .trash-yellow {
-        color: #E1B03E;
+        /* color: #E1B03E; */
+        color: #842B00;
         font-size: 1.2rem;
     }
 
     .trash-yellow:hover {
         color: rgb(210, 100, 133);
+        transform:scale(2,2);
     }
 
     .pen-edit {
-        color: #E1B03E;
+        /* color: #E1B03E; */
+        color: #842B00;
         font-size: 1.2rem;
     }
 
     .pen-edit:hover {
         color: rgb(210, 100, 133);
+        transform:scale(2,2);
     }
 
     a {
@@ -147,8 +151,8 @@ if ($totalRows > 0) {
     }
 
     .css-8cha5q-SubmitButton {
-        color: rgb(255, 255, 255);
-        background: rgb(51, 51, 51);
+        color: #FFD306;
+        background: #D26900;
         font-size: 14px;
         text-align: center;
         padding: 10px 16px;
