@@ -273,7 +273,6 @@
 
             // 分頁
             dataCopy = JSON.parse(localStorage.getItem("data"));
-            // console.log(dataCopy);
 
             sort.addEventListener("change", function () {
                 if (sort.value === "priceAsc") {
@@ -303,7 +302,7 @@
 
             function tablestr(num) {
                 //num是指當前哪個頁面
-                // console.log(num);
+
                 let num1 = (num - 1) * len; //確定迴圈開始的集合下標  1的時候=0 ,2的時候=3 ,8的時候=21
 
                 let num2 = num * len; //確定迴圈結束的結束下標  1的時候 = 3 ,2的時候=6 ,8的時候=24
@@ -332,7 +331,6 @@
             tablestr(1); // 初始第一頁
             choose = 1;
             function liminputcolor(choose) {
-                // console.log(choose);
                 // 這裡childNodes把inputs子節點集合起來索引值0開始,所以-1
                 inputs.childNodes[choose - 1].style.backgroundColor = "#a2642e";
             }
@@ -359,7 +357,6 @@
             levelfun(choose);
 
             function limitinput(i) {
-                // console.log(i);
                 //監聽事件的this會把點擊當下的value帶進來,用來改變現在點擊的CSS,跟渲染當頁資料
                 choose = i.value;
                 tablestr(choose); //重新整理table資料
