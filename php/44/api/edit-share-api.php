@@ -11,7 +11,7 @@ $op_msg = [
 ];
 
 
-$m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
+
 $m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
 
 
