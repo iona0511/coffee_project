@@ -408,8 +408,6 @@
             const data = await fetch("api/share-api.php");
             const rows = await data.json();
 
-            console.log(rows);
-
             render(rows);
             if (document.querySelectorAll("img").length > 9) {
                 document.querySelectorAll("img")[10].onload = function () {

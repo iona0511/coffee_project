@@ -15,7 +15,7 @@ $op_msg = [
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
 $m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
 $photos = json_decode($_POST['photos'], true);
-$tags =  json_decode($_POST['tags'], true);
+
 
 
 if (empty($_POST['title'])) {
@@ -54,13 +54,14 @@ if (count($photos) < 1) {
 
 $title = $_POST['title'];
 $topic = $_POST['topic'];
+$tags =  json_decode($_POST['tags'], true);
 
 // 處理textarea儲存換行為\r\n或\r,存進db轉br
 $pattern = '/\r\n|\r|\n/';
 $replace = "<br/>";
 $content = preg_replace($pattern, $replace, $_POST['content']);
 
-$tag = $_POST['tag'] ?? '';
+
 
 
 $sql = "INSERT INTO `post`(
@@ -74,12 +75,6 @@ $sql = "INSERT INTO `post`(
 
 $stmt = $pdo->prepare($sql);
 
-// $stmt->execute([
-//     $title, $topic, $content,
-//     'Tommy', '666'
-// ]);
-
-//用session 的member發文
 $stmt->execute([
     $title, $topic, $content,
     $m_nickname, $m_sid
@@ -112,7 +107,7 @@ if (!empty($tags)) {
         // exit;
         if (!empty($tag_in_sql)) {
             $tagSid = $tag_in_sql['sid'];
-            $sql = sprintf("UPDATE `tag` SET `times` = `times` +1 WHERE `name` = '%s'", $tag);
+            $sql = sprintf("UPDATE `tag` SET `times` = `times` +1 WHERE `name` = '%s'", $tag_name);
             $pdo->query($sql);
         } else {
             $sql = "INSERT INTO `tag` (`name`) VALUES (?)";
