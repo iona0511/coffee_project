@@ -116,7 +116,7 @@ if ($rows['topic_sid'] == 1) {
                     <!-- 找session sid=文章sid才出現 -->
                     <div class="post-edit mb-2" style="display:none;">
                         <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯分享</a>
-                        <a href="delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除分享</a>
+                        <a href="api/delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除分享</a>
                     </div>
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
@@ -209,7 +209,7 @@ if ($rows['topic_sid'] == 1) {
                                                     <p><?= $rv['content'] ?></p>
                                                     <div class="comment-msg">
                                                         <p class="mr-2"><?= $rv['created_at'] ?></p>
-                                                        <a href="rply-delete.php?rid=<?= $rv['sid'] ?>" class="cmt-delete" style="display:<?= $rv['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $rv['member_sid'] ?>">
+                                                        <a href="api/rply-delete.php?rid=<?= $rv['sid'] ?>" class="cmt-delete" style="display:<?= $rv['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $rv['member_sid'] ?>">
                                                             <p>刪除</p>
                                                         </a>
                                                     </div>
@@ -252,7 +252,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-            console.log(response);
+ 
             // render
             document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
             if (response['isLog'] == true) {
@@ -322,7 +322,6 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-            console.log(response);
 
             if (response['success']) {
                 history.go(0);
@@ -353,7 +352,6 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-            console.log(response);
 
             if (response['success']) history.go(0);
         }
@@ -415,7 +413,7 @@ if ($rows['topic_sid'] == 1) {
                 body: pd
             });
             const response = await data.json();
-            console.log(response);
+     
             render(response);
             addPicCtrl();
         }
@@ -452,10 +450,7 @@ if ($rows['topic_sid'] == 1) {
 
         function addPicCtrl() {
             document.querySelectorAll(".drag-ctrl").forEach((v, ind) => {
-                v.addEventListener("click", () => {
-                    slide(ind);
-                    console.log(ind);
-                });
+                v.addEventListener("click", () => {slide(ind);});
             });
 
         }

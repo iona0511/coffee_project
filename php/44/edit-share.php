@@ -255,7 +255,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
                 body: pd
             });
             const response = await data.json();
-            console.log(response);
+   
             render(response);
             addPicCtrl();
         }
@@ -442,7 +442,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         });
 
         async function sendData() {
-            console.log("abc")
+     
             function show_msg(msg) {
                 if (msg['success']) {
                     alert("修改成功");
@@ -460,10 +460,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
                 body: fd,
             });
             const result = await r.json();
-            console.log(result);
-
             show_msg(result);
-
         }
     </script>
 

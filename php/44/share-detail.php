@@ -209,7 +209,7 @@ if ($rows['topic_sid'] == 1) {
                                                     <p><?= $rv['content'] ?></p>
                                                     <div class="comment-msg">
                                                         <p class="mr-2"><?= $rv['created_at'] ?></p>
-                                                        <a href="rply-delete.php?rid=<?= $rv['sid'] ?>" class="cmt-delete" style="display:<?= $rv['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $rv['member_sid'] ?>">
+                                                        <a href="api/rply-delete.php?rid=<?= $rv['sid'] ?>" class="cmt-delete" style="display:<?= $rv['member_sid'] == $user['member_sid'] ? 'block' : 'none' ?>" data-mid="<?= $rv['member_sid'] ?>">
                                                             <p>刪除</p>
                                                         </a>
                                                     </div>
@@ -264,7 +264,7 @@ if ($rows['topic_sid'] == 1) {
 
         function delete_it() {
 
-            fetch(`delete-post.php?sid=<?= $pid ?>`)
+            fetch(`api/delete-post.php?sid=<?= $pid ?>`)
                 .then(data => data.json())
                 .then((data) => {
                     const d = data;
@@ -288,7 +288,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-            console.log(response);
+     
             // render
             document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
             // 先判斷登入了沒
@@ -360,7 +360,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-            console.log(response);
+  
 
             if (response['success']) {
                 history.go(0);
@@ -391,7 +391,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-            console.log(response);
+ 
 
             if (response['success']) history.go(0);
         }
@@ -453,7 +453,7 @@ if ($rows['topic_sid'] == 1) {
                 body: pd
             });
             const response = await data.json();
-            console.log(response);
+        
             render(response);
             addPicCtrl();
         }
@@ -492,7 +492,7 @@ if ($rows['topic_sid'] == 1) {
             document.querySelectorAll(".drag-ctrl").forEach((v, ind) => {
                 v.addEventListener("click", () => {
                     slide(ind);
-                    console.log(ind);
+
                 });
             });
 
