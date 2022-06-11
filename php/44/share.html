@@ -284,6 +284,27 @@
         crossorigin="anonymous"></script>
     <script>
         (function getNav() {
+            function checkQuantity() {
+                const cart_quantity = document.querySelector(
+                    "[data-content-before]"
+                );
+                const myHref = window.location.href.replace(
+                    /coffee_project.*/,
+                    "coffee_project/parts/read_quantity_api.php"
+                );
+                fetch(myHref)
+                    .then((data) => data.json())
+                    .then((data) => {
+                        cart_quantity.setAttribute(
+                            "data-content-before",
+                            data.food.length + data.product.length
+                        );
+                    })
+                    .catch(() => {
+                        cart_quantity.setAttribute("data-content-before", 0);
+                    });
+            }
+
             const el = document.createElement("div");
             const docBody = document.querySelector("body");
 
@@ -292,6 +313,7 @@
                 .then(data => {
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
+                    checkQuantity();
                 })
 
         })();
@@ -409,13 +431,14 @@
             const rows = await data.json();
 
             render(rows);
-            if (document.querySelectorAll("img").length > 9) {
+            if (document.querySelectorAll(".photo>img").length > 9) {
                 document.querySelectorAll("img")[10].onload = function () {
                     cascadeDisplay();
                     document.querySelector(".wrapper").style.opacity = 1;
                     document.querySelector(".l-wrap").remove();
                 }
             } else {
+                document.querySelector(".wrapper").style.opacity = 1;
                 document.querySelector(".l-wrap").remove();
                 cascadeDisplay();
             }
