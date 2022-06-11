@@ -341,7 +341,7 @@
                     body: fd,
                 });
                 const result = await r.json();
-                console.log(result);
+
                 btnOn = document.querySelector(".btn-primary");
 
                 if (result.success === true) {
@@ -379,12 +379,12 @@
                     body: fd,
                 });
                 const obj = await r.json();
-                // console.log(obj);
+
                 if (obj.filename) {
                     myimg.src = photoItem(obj.filename);
                 }
                 imgs = myimg.getAttribute("data-f");
-                console.log(imgs);
+
                 document.form1.course_img_s.value = imgs;
             });
 
