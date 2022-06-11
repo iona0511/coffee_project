@@ -1,12 +1,7 @@
 <?php
 require dirname(__DIR__, 2) . '/parts/connect_db.php';
 
-// session_start();
 
-// if (!isset($_SESSION['user']['admin_account'])){
-//     header('Location:/coffee_project/php/18/news-insert.php');
-//     exit;
-// }
 
 $news_sid = isset($_GET['news_sid']) ? intval($_GET['news_sid']) : 0;
 
@@ -106,7 +101,10 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
                             <div id="preview"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <div class="d-flex justify-content-between">
+                            <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a>
+                            <button type="submit" class="btn btn-primary">新增</button>
+                        </div>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功

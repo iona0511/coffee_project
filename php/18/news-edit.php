@@ -122,7 +122,10 @@ if (empty($row)) {
                             <div class="form-text red"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">修改</button>
+                        <div class="d-flex justify-content-between">
+                            <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a>
+                            <button type="submit" class="btn btn-primary">修改</button>
+                        </div>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料編輯成功
