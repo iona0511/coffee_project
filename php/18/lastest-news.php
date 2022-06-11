@@ -31,41 +31,48 @@ if ($totalRows > 0) {
 }
 ?>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-head.php'; ?>
-    <style>
-        *{
+<style>
+    * {
         box-sizing: border-box;
         margin: 0;
-        }
+    }
 
-        body {
-                background-color: #caad87;
-                opacity: 0.9;
-            }
-        /* .pic > img {
+    body {
+        background-color: #caad87;
+        opacity: 0.9;
+    }
+
+    /* .pic > img {
                 width: 100px;
                 height: 100px;
             } */
-            .wrap {
-                line-height: 100px;
-            }
-            .trash-yellow {
-                color:#E1B03E;
-                font-size: 1.2rem;
-            }
-            .trash-yellow:hover {
-                color: rgb(210, 100, 133);
-            }
-            .pen-edit {
-                color:#E1B03E;
-                font-size: 1.2rem;
-            }
-            .pen-edit:hover {
-                color: rgb(210, 100, 133);
-            }
-            a {
-                 text-decoration: none;
-            }
-        /* .add_btn {
+    .wrap {
+        line-height: 100px;
+    }
+
+    .trash-yellow {
+        color: #E1B03E;
+        font-size: 1.2rem;
+    }
+
+    .trash-yellow:hover {
+        color: rgb(210, 100, 133);
+    }
+
+    .pen-edit {
+        color: #E1B03E;
+        font-size: 1.2rem;
+    }
+
+    .pen-edit:hover {
+        color: rgb(210, 100, 133);
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    /* .add_btn {
             display: flex;
             justify-content: flex-end;
         } */
@@ -75,78 +82,102 @@ if ($totalRows > 0) {
         display: flex;
         justify-content: center;
     }
+
     .bg {
         background-color: #fff;
     }
-    table{
+
+    table {
         border-collapse: separate;
     }
+
     .page-item.active .page-link {
         z-index: 3;
         color: #fff;
         background-color: #B79973;
         border-color: #B79973;
     }
-    .page-link{
+
+    .page-link {
         color: #B79973;
     }
+
     body {
         background-color: #CAAD87;
         background-size: cover;
         opacity: 0.9;
     }
 
-    .trash_img a .a1{
-        display: none;
+    .title01{
+        color: #756134;
     }
-    .trash_img a .b1{
-        display: block;
+    .table {
+        margin-top: 20px;
     }
-    .trash_img a:hover .a1{
-        display: block;
-    }
-    .trash_img a:hover .b1{
+    .trash_img a .a1 {
         display: none;
     }
 
-    .edit_img a .c1{
-        display: none;
-    }
-    .edit_img a .d1{
+    .trash_img a .b1 {
         display: block;
     }
-    .edit_img a:hover .c1{
+
+    .trash_img a:hover .a1 {
         display: block;
     }
-    .edit_img a:hover .d1{
+
+    .trash_img a:hover .b1 {
         display: none;
     }
+
+    .edit_img a .c1 {
+        display: none;
+    }
+
+    .edit_img a .d1 {
+        display: block;
+    }
+
+    .edit_img a:hover .c1 {
+        display: block;
+    }
+
+    .edit_img a:hover .d1 {
+        display: none;
+    }
+
     .css-8cha5q-SubmitButton {
-    color: rgb(255, 255, 255);
-    background: rgb(51, 51, 51);
-    font-size: 14px;
-    text-align: center;
-    padding: 10px 16px;
-    letter-spacing: 0.2em;
-    line-height: 1.4;
-    transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
-    transition-property: background, color;
-    transition-duration: 0.4s, 0.3s;
-    transition-timing-function: ease-out, ease-out;
-    transition-delay: 0s, 0s;
+        color: rgb(255, 255, 255);
+        background: rgb(51, 51, 51);
+        font-size: 14px;
+        text-align: center;
+        padding: 10px 16px;
+        letter-spacing: 0.2em;
+        line-height: 1.4;
+        transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
+        transition-property: background, color;
+        transition-duration: 0.4s, 0.3s;
+        transition-timing-function: ease-out, ease-out;
+        transition-delay: 0s, 0s;
     }
-    a{
+
+    a {
         text-decoration: none;
     }
-    a:hover{
+
+    a:hover {
         background-color: #B2ADAA;
         text-decoration: none;
         color: #fff;
     }
-    </style>
+    .t {
+        font-size: 1.1rem;
+    }
+
+</style>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <div class="container">
-<div class="display_justify_content" style=" margin:20px auto;font-size:24px;">活動消息</div>
+    <div  class="display_justify_content title01" style=" margin:20px auto;font-size:30px;" >活動消息</div>
     <div class="row">
         <div class="col">
             <nav aria-label="Page navigation example" style="display:flex; flex-direction:row;">
@@ -184,27 +215,28 @@ if ($totalRows > 0) {
                         </a>
                     </li>
                 </ul>
-                <a class="add_btn " href="news-insert.php" style="margin-right:auto;">
-                    <button type="button" class="btn btn-secondary">新增</button>
-                </a>
             </nav>
-
+        </div>
+        <div class="display_justify_content" style="width:100px; margin:5px auto;font-size:12px;">
+            <a type="submit" class="css-8cha5q-SubmitButton" href="/coffee_project/php/18/news-insert.php">新增</a>
         </div>
     </div>
 
-    <table  class="table table-success table-striped" >
-        <thead>
+    <table class="table table-light table-striped">
+        <thead class="t">
             <tr>
-                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">活動編號</th>
+                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE); border-radius: 30px 0 0 0;">活動編號</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">活動圖片</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);" class="title-w">活動標題</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">類別</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">活動內容</th>
-                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">建立日期</th>
+                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">活動開始日期</th>
+                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">活動結束日期</th>
+                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">建立時間</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">
-                    <i class="fa-solid fa-pen-to-square" style="width:50px; height:50px"></i>
+                    <i class="fa-solid fa-pen-to-square" ></i>
                 </th>
-                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">
+                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE); border-radius: 0 30px 0 0 ;">
                     <i class="fa-solid fa-trash-can"></i>
                 </th>
             </tr>
@@ -213,17 +245,19 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
-                    <td><img src = "../../images/18/<?= $r['news_img'] ?>" height="100"></td>
+                    <td><img src="../../images/18/<?= $r['news_img'] ?>" height="100"></td>
                     <td><?= htmlentities($r['news_title']) ?></td>
                     <td><?= $r['news_class_sid'] ?></td>
                     <td><?= htmlentities($r['news_content']) ?></td>
+                    <td><?= $r['news_start_date'] ?></td>
+                    <td><?= $r['news_end_date'] ?></td>
                     <td><?= $r['news_create_time'] ?></td>
-                    <td><a style="width:50px;height:50px; href="news-edit.php?news_sid=<?= $r['news_sid'] ?>">
+                    <td><a style="width:50px;height:50px;" href="news-edit.php?news_sid=<?= $r['news_sid'] ?>">
                             <i class="fa-solid fa-pen-to-square pen-edit"></i>
                         </a>
                     </td>
                     <td>
-                        <a style="width:50px;height:50px; href="javascript: delete_it(<?= $r['news_sid'] ?>)">
+                        <a style="width:50px;height:50px;" href=" javascript: delete_it(<?= $r['news_sid'] ?>)">
                             <i class="fa-solid fa-trash-can trash-yellow"></i>
                         </a>
                     </td>

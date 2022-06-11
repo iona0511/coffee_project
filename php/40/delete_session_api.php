@@ -25,12 +25,35 @@
     }
 
     $foodArray = [];
+    $foodIce = [];
+    $foodSugar = [];
     if(isset($_SESSION["food_order"])) {
         $foodJSON = json_decode($_SESSION["food_order"], true);
         foreach($foodJSON as $v) {
             $check = false;
+            if($v["food_choice_ice"] == 1) {
+                $foodIce["ice"] = "正常冰";
+            } else if($v["food_choice_ice"] == 2) {
+                $foodIce["ice"] = "少冰";
+            } else if($v["food_choice_ice"] == 3) {
+                $foodIce["ice"] = "去冰";
+            } else if($v["food_choice_ice"] == 4) {
+                $foodIce["ice"] = "常溫";
+            } else if($v["food_choice_ice"] == 5) {
+                $foodIce["ice"] = "熱";
+            }
+
+            if($v["food_choice_sugar"] == 1) {
+                $foodSugar["sugar"] = "無糖";
+            } else if($v["food_choice_sugar"] == 2) {
+                $foodSugar["sugar"] = "微糖";
+            } else if($v["food_choice_sugar"] == 3) {
+                $foodSugar["sugar"] = "半糖";
+            } else if($v["food_choice_sugar"] == 4) {
+                $foodSugar["sugar"] = "全糖";
+            }
             foreach($food as $f) {
-                if($f["id"] == $v["menu_sid"]) {
+                if($f["id"] == $v["menu_sid"] && $f["ice"] == $foodIce["ice"] && $f["sugar"] == $foodSugar["sugar"]) {
                     $check = true;
                 }
             }
@@ -47,9 +70,9 @@
 
 
     //檢查用
-    $output[] = $productArray;
-    $output[] = $foodArray;
+    // $output[] = $productArray;
+    // $output[] = $foodArray;
 
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
+    // echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    // exit;
 ?>

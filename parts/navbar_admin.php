@@ -65,7 +65,7 @@
                         <a class="nav-link pe-4" href="/coffee_project/php/29/delete-data.html">課程後台</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pe-4" href="/coffee_project/php/44/post-list.php">分享牆</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/44/post-list.php">分享列表</a>
                     </li>
                     <li class="nav-item pe-4" style="position: relative;">
                         <button class="PCBtn nav-link" style="position:absolute;width: 60px;" type="button" onclick="ShowMyPC()">

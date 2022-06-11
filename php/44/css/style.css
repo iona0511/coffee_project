@@ -125,8 +125,8 @@ select {
 
     width: 48px;
     height: 48px;
-    top: 10px;
-    left: 30px;
+    top: 24px;
+    left: 32px;
     cursor: pointer;
     border-radius: 50%;
     transition: .3s;

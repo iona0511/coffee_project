@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'/>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css' />
+    <link rel="stylesheet" href="../../fontawesome/css/all.min.css">
     <title>Document</title>
     <style>
         * {
@@ -15,6 +14,9 @@
         }
         [coffee-op0] {
             opacity: 0;
+        }
+        #app {
+            margin-top: 20px;
         }
         [v-cloak] {
             display: none !important;
@@ -32,9 +34,26 @@
         input[type=number]::-webkit-inner-spin-button {
             appearance: none;
         }
+        .list_bord {
+            width: 80%;
+            margin: 0px auto;
+        }
         .cart_block {
             list-style-type: none;
             padding: 0px;
+            margin-bottom: 10px;
+        }
+        .cart_block li {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+        }
+        .cart_block li:first-child {
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+        }
+        .cart_block li:last-child {
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
         }
         .cart_img_wrap {
             width: 100px;
@@ -251,7 +270,7 @@
                     })
                 },
                 checkQuantity() {
-                    console.log("chechk");
+                    // console.log("chechk");
                     const cart_quantity = document.querySelector("[data-content-before]");
                     const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
                     fetch(myHref)
@@ -407,7 +426,6 @@
                     el.innerHTML = data;
                     docBody.insertBefore(el, docBody.childNodes[0]);
                     scrollTo({ top: 0, behavior: "instant" });
-                    this.checkQuantity();
                 })
                 fetch("./cart_read_all_data.php")
                 .then(data => data.json())
@@ -420,15 +438,6 @@
                     } else {
                         document.querySelector("body").removeAttribute("coffee-op0");
                     }
-                    // console.log("product: ",data.product);
-                    // console.log("food: ",data.food);
-                    // console.log("coupon: ",data.coupon);
-                    // if(data.product.length ===0 && data.food.length === 0) {
-                    //     alert("購物車沒有東西")
-                    //     setTimeout(() => {
-                    //         window.location = "../../index_.php"
-                    //     },100);
-                    // }
                     this.productArray = data.product;
                     this.foodArray = data.food;
                     this.couponArray = data.coupon;
@@ -436,6 +445,14 @@
                     this.dataArray.push(data.food);
                 })
             },
+            mounted() {
+                const myVue = this;
+                window.addEventListener("load", () => {
+                    setTimeout(() => {
+                        myVue.checkQuantity();
+                    },100);
+                })
+            }
         }).mount("#app");
     </script>
 </body>
