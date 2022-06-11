@@ -1,12 +1,7 @@
 <?php
 require dirname(__DIR__, 2) . '/parts/connect_db.php';
 
-// session_start();
 
-// if (!isset($_SESSION['user']['admin_account'])){
-//     header('Location:/coffee_project/php/18/news-insert.php');
-//     exit;
-// }
 
 $news_sid = isset($_GET['news_sid']) ? intval($_GET['news_sid']) : 0;
 
@@ -106,7 +101,10 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
                             <div id="preview"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">新增</button>
+                        <div class="d-flex justify-content-between">
+                            <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a>
+                            <button type="submit" class="btn btn-primary">新增</button>
+                        </div>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功
@@ -157,26 +155,25 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
         }
     };
 
-    //獲取起始日期
-    let startDate = document.querySelector("#news_start_date")
-    //轉換為日期格式
-    startDate = startDate.replace(/-/g, "/");
-    console.log(startDate);
+    //寫的是活動結束日期無法選擇比開始日期還早
+    const startDate = document.querySelector("#news_start_date");
+    const endDate = document.querySelector("#news_end_date");
 
 
-    //獲取結束日期
-    let endDate = document.querySelector("#news_end_date")
-    endDate = endDate.replace(/-/g, "/");
-    console.log(endDate);
-
-
-    //如果起始日期大於結束日期
-    if (Date.parse(startDate) - Date.parse(endDate) > 0) {
-        console.log(Date.parse(startDate) - Date.parse(endDate) > 0);
-        alert("起始日期要在結束日期之前!");
-        //返回false
-        // return false;
+    function getToday(yourDate) {
+        const offset = yourDate.getTimezoneOffset();
+        yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000));
+        return yourDate.toISOString().split('T')[0];
     }
+
+    const now = new Date();
+
+    startDate.setAttribute("min", getToday(now));
+
+    startDate.addEventListener("input", () => {
+        endDate.value = "";
+        endDate.setAttribute("min", startDate.value);
+    })
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
@@ -230,7 +227,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
             info_bar.innerText = '新增成功';
 
             setTimeout(() => {
-                // location.href = 'lastest-news.php'; // 跳轉到列表頁
+                location.href = 'lastest-news.php'; // 跳轉到列表頁
             }, 1500);
         } else {
             info_bar.classList.remove('alert-success');

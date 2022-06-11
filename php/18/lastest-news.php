@@ -1,5 +1,13 @@
 <?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
+
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
+
 $pageName = 'lastest-news';
 $title = '最新消息';
 
@@ -51,21 +59,25 @@ if ($totalRows > 0) {
     }
 
     .trash-yellow {
-        color: #E1B03E;
+        /* color: #E1B03E; */
+        color: #842B00;
         font-size: 1.2rem;
     }
 
     .trash-yellow:hover {
         color: rgb(210, 100, 133);
+        transform:scale(2,2);
     }
 
     .pen-edit {
-        color: #E1B03E;
+        /* color: #E1B03E; */
+        color: #842B00;
         font-size: 1.2rem;
     }
 
     .pen-edit:hover {
         color: rgb(210, 100, 133);
+        transform:scale(2,2);
     }
 
     a {
@@ -110,6 +122,7 @@ if ($totalRows > 0) {
 
     .title01{
         color: #756134;
+        font-weight:700
     }
     .table {
         margin-top: 20px;
@@ -147,9 +160,9 @@ if ($totalRows > 0) {
     }
 
     .css-8cha5q-SubmitButton {
-        color: rgb(255, 255, 255);
-        background: rgb(51, 51, 51);
-        font-size: 14px;
+        color: #FFE153;
+        background: #D26900;
+        font-size: 16px;
         text-align: center;
         padding: 10px 16px;
         letter-spacing: 0.2em;
@@ -222,7 +235,7 @@ if ($totalRows > 0) {
         </div>
     </div>
 
-    <table class="table table-light table-striped">
+    <table class="table table-warning table-striped">
         <thead class="t">
             <tr>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE); border-radius: 30px 0 0 0;">活動編號</th>

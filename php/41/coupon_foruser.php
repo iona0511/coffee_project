@@ -384,7 +384,7 @@ if($type==1){
 </div> -->
 
 <section>
-    <div class=" loading loading07">
+    <div class=" loading loading07 load">
         <span data-text="查"></span>
         <span data-text="看"></span>
         <span data-text="我"></span>
@@ -398,7 +398,7 @@ if($type==1){
 
 
 <!-- 上面的按紐 -->
-<div class="display_justify_content" style="margin-top:45px;">
+<div class="display_justify_content load" style="margin-top:45px;">
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;margin-right:10px;margin-bottom:20px;" class="button <?= $type == 1 ? 'active' : '' ?> " href="?type=1">可使用</a>
     </div>
@@ -408,10 +408,10 @@ if($type==1){
 </div>
 <!-- 中間 -->
 <div style="width: 100%;">
-    <div class="display_justify_content coupon_style" style="margin:20px auto;width:60%;flex-direction: column;padding-bottom: 20px;">
+    <div class="display_justify_content coupon_style load" style="margin:20px auto;width:60%;flex-direction: column;padding-bottom: 20px;">
         <?php foreach ($rows as $r) : ?>
             <a class="display_justify_content card_bg" style="width:50%;margin: 5px auto;flex-direction: row;" >
-                <div style="width: 100%;display:flex;flex-direction: row;" class="card">
+                <div style="width: 100%;display:flex;flex-direction: row;" class="card load">
                     <div>
                         <img style="width:250px;<?= $type == 2 ? ' display: none;' : '' ?>" src="../41/copon_img/coupon_icon-removebg-preview.png" alt="">
                     </div>
@@ -444,7 +444,7 @@ if($type==1){
 </div>
 
 <!-- 下面的按紐 -->
-<div class="row display_justify_content">
+<div class="row display_justify_content load">
     <div class="col-3">
         <nav aria-label="Page navigation example">
             <ul class="pagination display_justify_content">
@@ -463,3 +463,20 @@ if($type==1){
         </nav>
     </div>
 </div>
+
+<?php include __DIR__ . '/parts/scripts.php' ?>
+<script>
+    function load() {
+    var element = $(this);
+    element.fadeOut(0, function() {
+    element.fadeIn(2000);
+    });
+}
+
+    window.addEventListener('load', function() {
+        $('.load').one('appear', load);
+    })
+
+
+</script>
+

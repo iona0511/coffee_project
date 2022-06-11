@@ -452,6 +452,22 @@
     }
 
     // navbar
+    let PCBtnOpened = false;
+        const openMenu = () => {
+            document.querySelector(".navinner_pc").classList.add("is-open");
+        };
+        const closeMenu = () => {
+            document.querySelector(".navinner_pc").classList.remove("is-open");
+        };
+        const ShowMyPC = () => {
+            PCBtnOpened = !PCBtnOpened;
+            if (PCBtnOpened) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        };
+        
     function checkQuantity() {
         const cart_quantity = document.querySelector("[data-content-before]");
         const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");

@@ -77,7 +77,6 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="news_class" class="form-label">活動類別</label>
                             </br>
-                            <!-- 這邊無法顯示出資料庫裡的類別，可以參考老師的01 form -->
                             <select name="news_class_sid" id="news_class_sid" value="">
                                 <option value="0" disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
@@ -103,8 +102,8 @@ if (empty($row)) {
                             <textarea type="text" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
                             <div class="form-text red"></div>
                         </div>
-
-                        <!-- <div class="mb-3">
+<!-- 
+                        <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
                             <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>   
                             <div class="form-text red">
@@ -112,16 +111,21 @@ if (empty($row)) {
                             </div>                    
                             <div id="preview"></div>
                         </div> -->
+
                         <div class="mb-3">
-                            <label for="news_img" class="form-label">消息圖片</label><br>
-                            <input type="file" name="news_img[]" accept="image/*" onchange="changeOneImg(event)" />
+                            <label for="news_img" class="form-label">活動圖片</label><br>
+                            <input type="file" name="news_img" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
                             <img class="single-img" src="
                             <?php if ($row['news_img']) : echo '/coffee_project/images/18/' . $row['news_img'];
                             endif; ?>" <?php if (!$row['news_img']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="news_img" />
+                            <div class="form-text red"></div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">修改</button>
+                        <div class="d-flex justify-content-between">
+                            <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a>
+                            <button type="submit" class="btn btn-primary">修改</button>
+                        </div>
                     </form>
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料編輯成功
@@ -156,7 +160,7 @@ if (empty($row)) {
     // console.log(fieldTexts)
 
     // showphoto照片上傳的功能要再看一下
-    function showphoto() {
+    // function showphoto() {
     // let container = document.querySelector('#preview');
     // let files    = document.querySelector('input[type=file]').files;
  
@@ -171,20 +175,43 @@ if (empty($row)) {
     
     //     }                       
     // }    
-};
+    // };
+
     function changeOneImg() {
         const file = event.currentTarget.files[0];
-        console.log(file);
+        // console.log(file);
         const reader = new FileReader();
 
         // 資料載入後 (讀取完成後)
         reader.onload = function() {
-            console.log(reader.result);
-            document.querySelector("#products_pic_one").style.display = 'block';
-            document.querySelector("#products_pic_one").src = reader.result;
+            // console.log(reader.result);
+            document.querySelector("#news_img").style.display = 'block';
+            document.querySelector("#news_img").src = reader.result;
         };
         reader.readAsDataURL(file);
     }
+
+        //寫的是活動結束日期無法選擇比開始日期還早
+        const startDate = document.querySelector("#news_start_date");
+        const endDate = document.querySelector("#news_end_date");
+
+
+        function getToday(yourDate) {
+            const offset = yourDate.getTimezoneOffset();
+            yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000));
+            return yourDate.toISOString().split('T')[0];
+        }
+
+        const now = new Date();
+
+        startDate.setAttribute("min", getToday(now));
+
+        startDate.addEventListener("input", () => {
+            endDate.value = "";
+            endDate.setAttribute("min", startDate.value);
+        })
+
+
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
@@ -218,7 +245,7 @@ if (empty($row)) {
             isPass = false;
         }
 
-        if (img_f.value.length< 1) {
+        if (img_f.value.length < 1) {
             fields[3].classList.add('red');
             fieldTexts[3].innerText = '請先上傳圖片';
             isPass = false;
