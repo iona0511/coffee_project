@@ -1,6 +1,15 @@
 <?php
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
+// if (!session_id()) {
+//     session_start();
+// }
+
+// if (!isset($_SESSION['user']['admin_account'])){
+//     header('Location:/coffee_project/php/09/login.html');
+//     exit;
+// }
+
 $pageName = 'lastest-news';
 $title = '活動消息前台';
 
