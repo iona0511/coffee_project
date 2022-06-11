@@ -49,13 +49,19 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
     .margin {
         margin-right: 0, 150px;
     }
+    .exit-size {
+        font-size: 1.7rem;
+    }
 </style>
 <div class="container">
     <div class="row">
         <div class="col-md-6 margin">
             <div class="card">
                 <div class="card-body color-y"">
-                    <h2 class=" card-title mb-4">新增消息</h2>
+                    <div class="d-flex justify-content-between">
+                        <h2 class="card-title mb-4">新增消息</h2>
+                        <a  href="././lastest-news.php"><i class="fa-solid fa-arrow-right-from-bracket exit-size"></i></a>
+                    </div>
                     <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <!-- <input type="hidden" name="sid" > -->
                         <div class="mb-3">
@@ -101,8 +107,8 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
                             <div id="preview"></div>
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a>
+                        <div class="d-flex justify-content-end">
+                            <!-- <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a> -->
                             <button type="submit" class="btn btn-primary">新增</button>
                         </div>
                     </form>

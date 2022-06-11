@@ -9,7 +9,7 @@ if (!isset($_SESSION['user']['admin_account'])){
 
 
 $pageName = 'lastest-news';
-$title = '最新消息';
+$title = '活動消息後台';
 
 $perPage = 5;
 
