@@ -193,12 +193,13 @@
       .afterclick {
         width: 100vw;
         height: auto;
-        background-color: rgba(35, 34, 34, 0.668);
+        background-color: rgba(0, 0, 0, 0.794);
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        z-index: 100;
       }
 
       .afterclick.hide {
@@ -220,6 +221,10 @@
       .all_choice_photo_img {
         width: 100%;
         object-fit: contain;
+      }
+
+      .aaaaa:hover{
+        transform: translateY(2px);
       }
     </style>
   </head>
@@ -388,7 +393,7 @@
         </div>
 
         <div style="position: fixed; bottom: 0; width: inherit">
-          <div
+          <div class="aaaaa"
             style="
               width: 220px;
               height: 30px;
@@ -400,6 +405,7 @@
               border-radius: 10px;
               box-shadow: 1px 1px rgb(250, 134, 57);
               font-weight: 700;
+              z-index: -1;
             "
             onclick="sendData()"
           >
@@ -531,7 +537,7 @@
 
              <h4 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">冰熱選擇<h4>
 
-             <div style="display:flex; align-items:center"><input type="radio" id="a1" name="food_choice_ice" value="1">
+             <div style="display:flex; align-items:center;"><input type="radio" id="a1" name="food_choice_ice" value="1">
              <label for="a1">正常冰</label> </div>
 
              <div style="display:flex; align-items:center"><input type="radio" id="a2" name="food_choice_ice" value="2">
