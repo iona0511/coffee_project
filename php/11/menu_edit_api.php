@@ -4,10 +4,27 @@ header('Content-Type: application/json');
 
 // session_start();
 
-if (!isset($_SESSION['user']['admin_account'])) {
-    header('Location:/coffee_project/php/09/admin-login.html');
-    exit;
-}
+// if (!isset($_SESSION['user']['admin_account'])) {
+//     header('Location:/coffee_project/php/09/admin-login.html');
+//     exit;
+// }
+
+
+$output=[
+    'success' => true,
+    'postData' => $_POST,
+    'code'=> 0,
+    'error'=>'',
+    'filenames' => [],
+    'testtext' => []
+    ];
+
+$menu_sid = isset($_POST['menu_sid']) ? intval($_POST['menu_sid']) : 0;
+
+
+
+// 圖片區
+
 
 $folder = dirname(dirname(__DIR__, 1)) . '/images/11/';
 // $folder = dirname(__DIR__, 2) . '/images/11/';
@@ -17,22 +34,24 @@ $extMap = [
     'image/png'=>'.png',
     'image/gif'=>'.gif',
 ];
+    // $ext = $extMap[$_FILES['menu_photo']['type']];
 
+    $singlepic= [];
+    foreach ($_FILES['menu_photo']['name'] as $k => $f) {
+    
+        $filename = $f;
+        $output['filenames'][] = $filename;    
+        array_push($singlepic, $filename);
+        move_uploaded_file($_FILES['menu_photo']['tmp_name'][$k], $folder . $filename);
+    }
+    $menu_photo = implode(",", $singlepic);
 
-$output=[
-    'success' => true,
-    'postData' => $_POST,
-    'code'=> 0,
-    'error'=>'',
-    'filename'=>'',
-    ];
+    // if(move_uploaded_file($_FILES['menu_photo']['tmp_name'],$folder.$menu_photo)){
+    //     $output['success']=true;
+    // }
+    
+    // $output['filename'] = $menu_photo;
 
-
-    $ext = $extMap[$_FILES['menu_photo']['type']];
-
-
-
-$menu_sid = isset($_POST['menu_sid']) ? intval($_POST['menu_sid']) : 0;
 
 // 欄位檢查，後端的檢查
 
@@ -43,7 +62,7 @@ $menu_sid = isset($_POST['menu_sid']) ? intval($_POST['menu_sid']) : 0;
 //     exit; 
 // };
 $menu_categories = $_POST['menu_categories'];
-$menu_photo = md5($_FILES['menu_photo']['name'].rand()). $ext;
+// $menu_photo = md5($_FILES['menu_photo']['name'].rand()). $ext;
 $menu_name = $_POST['menu_name']??'';
 $menu_kcal = $_POST['menu_kcal']??'';
 $menu_price_m = $_POST['menu_price_m'];
@@ -54,16 +73,21 @@ $menu_nutrition = $_POST['menu_nutrition']??'';
 
 // 兩個問號+ '' 代表 沒有給值就給空字串，為的是不要跳出notice
 
-if(move_uploaded_file($_FILES['menu_photo']['tmp_name'],$folder.$menu_photo)){
-    $output['success']=true;
-}
 
-$output['filename'] = $menu_photo;
 
 
 $sql = "UPDATE `menu` SET `menu_categories`=?, `menu_photo`=?, `menu_name`=?, `menu_kcal`=?, `menu_price_m`=?, `menu_nutrition`=? WHERE `menu_sid`=$menu_sid";
 
 $stmt = $pdo->prepare($sql);
+
+$output['testtext'][0] = $menu_categories;
+$output['testtext'][1] = $menu_photo;
+$output['testtext'][2] = $menu_name;
+$output['testtext'][3] = $menu_kcal;
+$output['testtext'][4] = $menu_price_m;
+$output['testtext'][5] = $menu_nutrition;
+
+
 $stmt ->execute([
     $menu_categories,
     $menu_photo,
@@ -77,7 +101,7 @@ $stmt ->execute([
 if($stmt->rowCount()==1){
     $output['success'] = true;
     // 最近新增資料的primary key
-    $output['lastInsertId'] = $pdo->lastInsertId();
+    // $output['lastInsertId'] = $pdo->lastInsertId();
     }else{
         $output['error'] = '資料無法新增';
     };
