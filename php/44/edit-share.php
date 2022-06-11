@@ -39,7 +39,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章-<?= $rows['title'] ?></title>
+    <title>編輯-<?= $rows['title'] ?></title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -61,9 +61,9 @@ $tags = $pdo->query($tag_sql)->fetchAll();
 
         .search_col {
             position: absolute;
-            width: 40%;
+            width: 33.3%;
             margin-left: .25rem;
-
+            border-radius: 4px;
             background-color: #fff;
             overflow: hidden;
             box-shadow: 2px 2px 6px 3px #d5d5d571;
@@ -96,13 +96,40 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         .form-control:focus {
             box-shadow: none !important;
         }
+
+        .h_tag {
+            display: inline-block;
+            height: 32px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.75);
+
+            font-size: 14px;
+            border-radius: 16px;
+            background: #e7e7e7da;
+            padding: 0 16px;
+            white-space: nowrap;
+            position: relative;
+            margin-right: .5rem;
+            margin-bottom: .5rem;
+            line-height: 32px;
+        }
+
+        .h_tag:hover {
+            background-color: #c1c1c1c5;
+        }
+
+        .tag-rect {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: .25rem;
+            margin-left: .25rem;
+        }
     </style>
 </head>
 
 <body>
     <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
     <div class="page pt-3">
-        <a href="share.html" style="color:black"><i class="fa-solid fa-arrow-left"></i></a>
         <div class="post-wrap d-flex">
             <div class="pic-wrap" id="p_wrap">
                 <div class="drag-row">
@@ -138,7 +165,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
                             <option value="2" <?= $rows['topic_sid'] == 2 ? 'selected' : '' ?>>商品</option>
                             <option value="3" <?= $rows['topic_sid'] == 3 ? 'selected' : '' ?>>其他</option>
                         </select>
-                        <input type="text" class="mb-1 form-control mx-2" style="width: 70%;height:40px" value="<?= $rows['title'] ?>"></input>
+                        <input type="text" name="title" class="mb-1 form-control mx-2" style="width: 70%;height:40px" value="<?= $rows['title'] ?>"></input>
 
                     </div>
 
@@ -157,23 +184,18 @@ $tags = $pdo->query($tag_sql)->fetchAll();
 
                     <div class="tag-rect">
                         <!-- 標籤列 -->
-                    </div>
-
-                    <div class="tag-bar d-flex">
                         <?php foreach ($tags as $k => $v) : ?>
-                            <a href="?">
-                                <div class="tag mr-1"><?= $v['name'] ?></div>
-                            </a>
+                            <div class="h_tag mr-1" onclick="removeTag(event)"><?= $v['name'] ?></div>
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- 一次回覆 -->
-                    <!-- Comment -->
+
+
 
                 </div>
-                <div class="content-bot cmt-bar">
-                    <button type="button" class="btn btn-primary" onclick="location.href=`share-detail.php?pid=<?= $rows['sid'] ?>` ">取消</ㄖ>
-                        <button type="submit" class="btn btn-primary ml-auto">修改分享</ㄖ>
+                <div class="content-bot cmt-bar  ml-auto">
+                    <button type="button" class="btn btn-secondary mr-2" onclick="location.href=`share-detail.php?pid=<?= $rows['sid'] ?>`">取消</button>
+                    <button type="submit" class="btn btn-primary">修改分享</button>
                 </div>
             </form>
         </div>
@@ -291,6 +313,158 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         const next_pic = () => {
             slide("next");
         };
+
+
+
+        //TAG動態預覽
+        let tagAr = [];
+        tagAr = [<?php foreach ($tags as $k => $v) {
+                        echo '"' . $v['name'] . '",';
+                    };
+                    ?>];
+        document.main_form.tags.value = JSON.stringify(tagAr);
+
+
+        async function preview_tag() {
+
+            const v = document.main_form.tag.value;
+            if (v < 1) {
+                document.querySelector(".s_result").innerHTML = "";
+                return;
+            }
+
+            const pData = new FormData(document.main_form);
+            const r = await fetch("api/preview-tag-api.php", {
+                method: "POST",
+                body: pData
+            });
+            const obj = await r.json();
+
+            if (obj.length > 0) {
+                const el = document.createElement("div");
+                obj.forEach((v, ind) => {
+                    el.innerHTML += `
+        <div class="s_col" onclick="render_h_tag(event);">${v['name']}</div>`;
+                });
+                document.querySelector(".s_result").innerHTML = el.innerHTML;
+            }
+        }
+
+        document.main_form.tag.addEventListener("input", preview_tag);
+
+
+
+        const removeTag = (event) => {
+            const f = event.target.innerText;
+            event.target.remove();
+
+            if (tagAr.indexOf(f) !== -1) {
+                tagAr.splice(tagAr.indexOf(f), 1);
+            }
+            document.main_form.tags.value = JSON.stringify(tagAr);
+        };
+
+        window.addEventListener("click", () => {
+
+            document.querySelector(".search_col").style.width = "33.3%";
+
+            if (event.target == document.main_form.tag) return;
+            if (document.querySelector(".s_result")) {
+                document.querySelector(".s_result").innerHTML = "";
+            }
+        });
+
+        document.main_form.tag.addEventListener("click", async () => {
+            event.cancelBubble = true;
+
+            document.querySelector(".search_col").style.width = "40%";
+
+            const v = document.main_form.tag.value;
+            if (v < 1) {
+                document.querySelector(".s_result").innerHTML = "";
+                return;
+            }
+
+            const pData = new FormData(document.main_form);
+            const r = await fetch("api/preview-tag-api.php", {
+                method: "POST",
+                body: pData
+            });
+            const obj = await r.json();
+
+            if (obj.length > 0) {
+                const el = document.createElement("div");
+                obj.forEach((v, ind) => {
+                    el.innerHTML += `<div class="s_col" onclick="render_h_tag(event)">${v['name']}</div>`;
+                });
+                document.querySelector(".s_result").innerHTML = el.innerHTML;
+            }
+        });
+
+
+        function render_h_tag(event) {
+            // 判斷是用click來的還是keydown(按enter)來的
+            let v = event.target.innerText || document.main_form.tag.value;
+
+            let exist = false;
+
+            // 如果已經有現有標籤
+            if (document.querySelector(".h_tag")) {
+                document.querySelectorAll(".h_tag").forEach((now_tag) => {
+                    if (v == now_tag.innerText) {
+                        exist = (v == now_tag.innerText);
+                        return
+                    }
+                });
+            }
+
+            // 不存在才render並清空input value
+            if (!exist) {
+                document.querySelector(".tag-rect").innerHTML += `
+                    <span class="h_tag" onclick="removeTag(event)">${v}</span>`;
+                // push資料進arr
+                tagAr.push(v);
+                document.main_form.tags.value = JSON.stringify(tagAr);
+
+                document.main_form.tag.value = "";
+            }
+
+        }
+
+        document.main_form.tag.addEventListener("keydown", (event) => {
+
+            if (event.key == "Enter") {
+                // render h_tag
+                render_h_tag(event);
+                event.preventDefault();
+            }
+            document.querySelector("#main_form").setAttribute("onsubmit", "event.preventDefault();sendData();return false;");
+        });
+
+        async function sendData() {
+            console.log("abc")
+            function show_msg(msg) {
+                if (msg['success']) {
+                    alert("修改成功");
+                } else {
+                    alert(`修改失敗 : ${msg.error}`)
+
+                }
+            }
+
+            const fd = new FormData(document.main_form);
+            fd.append("pid", <?= $pid ?>);
+
+            const r = await fetch('api/edit-share-api.php', {
+                method: 'POST',
+                body: fd,
+            });
+            const result = await r.json();
+            console.log(result);
+
+            show_msg(result);
+
+        }
     </script>
 
 </body>

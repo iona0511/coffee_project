@@ -233,7 +233,7 @@
             event.target.remove();
 
             if (tagAr.indexOf(f) !== -1) {
-                tagAr.splice(photoAr.indexOf(f), 1);
+                tagAr.splice(tagAr.indexOf(f), 1);
             }
             document.main_form.tags.value = JSON.stringify(tagAr);
         };

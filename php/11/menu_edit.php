@@ -1,10 +1,10 @@
 <?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
 // session_start();
 
-if (!isset($_SESSION['user']['admin_account'])) {
-    header('Location:/coffee_project/php/09/admin-login.html');
-    exit;
-}
+// if (!isset($_SESSION['user']['admin_account'])) {
+//     header('Location:/coffee_project/php/09/admin-login.html');
+//     exit;
+// }
 
 $pageName = 'menu_edit';
 $title = '修改餐點資料';
@@ -93,9 +93,23 @@ if (empty($row)) {
                             <div class="form-text red"></div>
                         </div> -->
 
+                        <div class="mb-3">
+                            <label for="menu_photo" class="form-label">餐點圖片</label><br>
+                            <input type="file" name="menu_photo[]" accept="image/*" onchange="changeOneImg(event)" value="<?= '../../images/11/' . $row['menu_photo'] ?>" />
+                            <div class="form-text"></div>
+                            <img style="width:100px" class="single-img" src="
+                            <?php if ($row['menu_photo']) : 
+                            echo '../../images/11/' . $row['menu_photo'];
+                            endif; ?>" 
+                            <?php if (!$row['menu_photo']) : 
+                            echo "style" . "=" . "display:none;" ?>
+                            <?php endif; ?> alt="" id="menu_photo" />
+                        </div> 
+
+
 
                         
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="menu_photo" class="form-label">餐點圖片</label><br>
                             <input type="file" name="menu_photo" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
@@ -106,7 +120,7 @@ if (empty($row)) {
                             <?php if (!$row['menu_photo']) : 
                             echo "style" . "=" . "display:none;" ?>
                             <?php endif; ?> alt="" id="menu_photo" />
-                        </div>
+                        </div> -->
 
 
 
@@ -203,13 +217,13 @@ if (empty($row)) {
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
-        for (let i in fields) {
-            fields[i].classList.remove('red');
-            console.log('fieldTexts ', fieldTexts)
-            // console.log('i  ', i)
-            fieldTexts[i].innerText = '';
+        // for (let i in fields) {
+        //     fields[i].classList.remove('red');
+        //     console.log('fieldTexts ', fieldTexts)
+        //     // console.log('i  ', i)
+        //     fieldTexts[i].innerText = '';
 
-        }
+        // }
         info_bar.style.display = 'none'; // 隱藏訊息列
 
         // TODO: 欄位檢查, 前端的檢查
@@ -232,7 +246,7 @@ if (empty($row)) {
 
             setTimeout(() => {
                 location.href = 'menu_list.php'; // 跳轉到列表頁
-            }, 2000);
+            }, 1000);
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');
