@@ -48,7 +48,54 @@ $tags = $pdo->query($tag_sql)->fetchAll();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="css/style.css">
     <style>
+        .wrap {
+            position: relative;
+            z-index: 100;
 
+            height: 40px;
+        }
+
+        .form-control {
+            box-shadow: 2px 2px 6px 3px #d5d5d571;
+        }
+
+        .search_col {
+            position: absolute;
+            width: 40%;
+            margin-left: .25rem;
+
+            background-color: #fff;
+            overflow: hidden;
+            box-shadow: 2px 2px 6px 3px #d5d5d571;
+
+        }
+
+
+
+        .s_col {
+            background-color: #fff;
+            padding: 6px 12px 6px 18px;
+            position: relative;
+        }
+
+        .s_col::before {
+            display: block;
+            content: '#';
+            position: absolute;
+            left: 6px;
+            font-weight: 900;
+            color: rgb(6, 95, 212)
+        }
+
+        .s_col:hover {
+            background-color: #bfbfbf;
+
+        }
+
+
+        .form-control:focus {
+            box-shadow: none !important;
+        }
     </style>
 </head>
 
@@ -86,7 +133,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
                     <!-- 找session sid=文章sid才出現 -->
 
                     <div class="d-flex mb-3">
-                        <select name="topic" style="width: 25%;height:40px;" class="form-select mx-1" aria-label="Default select example">
+                        <select name="topic" style="width: 25%;height:40px;" class="form-select mx-1 form-control" aria-label="Default select example">
                             <option value="1" <?= $rows['topic_sid'] == 1 ? 'selected' : '' ?>>課程</option>
                             <option value="2" <?= $rows['topic_sid'] == 2 ? 'selected' : '' ?>>商品</option>
                             <option value="3" <?= $rows['topic_sid'] == 3 ? 'selected' : '' ?>>其他</option>
@@ -95,8 +142,22 @@ $tags = $pdo->query($tag_sql)->fetchAll();
 
                     </div>
 
-                    <textarea type="text" class="form-control mb-3 mx-1" style="width: 97%;" id="content" name="content" col="20" rows="15"><?= $rows['content'] ?></textarea>
+                    <textarea type="text" class="form-control mb-3 mx-1" style="width: 97%;" id="content" name="content" col="20" rows="14"><?= $rows['content'] ?></textarea>
 
+                    <div class="wrap mb-3">
+                        <div class="search_col">
+                            <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="標籤名稱" autocomplete="off">
+                            <!-- 搜尋列 -->
+                            <div class="s_result">
+                                <!-- 預覽搜尋 -->
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="tags" value="[]" />
+
+                    <div class="tag-rect">
+                        <!-- 標籤列 -->
+                    </div>
 
                     <div class="tag-bar d-flex">
                         <?php foreach ($tags as $k => $v) : ?>
