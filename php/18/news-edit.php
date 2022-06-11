@@ -176,12 +176,12 @@ if (empty($row)) {
 
     function changeOneImg() {
         const file = event.currentTarget.files[0];
-        console.log(file);
+        // console.log(file);
         const reader = new FileReader();
 
         // 資料載入後 (讀取完成後)
         reader.onload = function() {
-            console.log(reader.result);
+            // console.log(reader.result);
             document.querySelector("#news_img").style.display = 'block';
             document.querySelector("#news_img").src = reader.result;
         };
@@ -192,7 +192,7 @@ if (empty($row)) {
         // 讓欄位的外觀回復原來的狀態
         for (let i in fields) {
             fields[i].classList.remove('red');
-            console.log('fieldTexts ', fieldTexts)
+            // console.log('fieldTexts ', fieldTexts)
             fieldTexts[i].innerText = '';
         }
         info_bar.style.display = 'none'; // 隱藏訊息列
