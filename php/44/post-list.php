@@ -336,11 +336,10 @@ if ($totalRows > 0) {
 
         function delete_it(sid) {
 
-            fetch(`delete-post.php?sid=${sid}`)
+            fetch(`api/delete-post.php?sid=${sid}`)
                 .then(data => data.json())
                 .then((data) => {
                     const d = data;
-                    console.log(d);
                 });
 
             document.querySelector("#tr" + sid).remove();
@@ -433,7 +432,6 @@ if ($totalRows > 0) {
             });
             const rows = await data.json();
 
-            console.log(rows);
             clear_tbody();
             render();
         });

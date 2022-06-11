@@ -17,19 +17,142 @@
         [v-cloak] {
             display: none !important;
         }
+        .mouse_pointer {
+            cursor: pointer;
+        }
         form[name=payForm] {
             display: flex;
             flex-direction: column;
+        }
+        input,
+        input:focus-visible {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #333;
+            background: transparent;
+            height: 36px;
+            outline: none;
+            letter-spacing: 1px;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input::placeholder {
+            font-size: 16px;
+            color: #999;
+        }
+        select,
+        select:focus-visible {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #333;
+            background: transparent;
+            height: 36px;
+            outline: none;
+            letter-spacing: 1px;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+        }
+        input:-internal-autofill-selected {
+            background-color: transparent;
         }
         .wrong_msg {
             color: red;
             font-size: 12px;
         }
+        body {
+            width: 100%;
+            height: 100vh;
+            background: url("../../images/40/10-bgimg.jpg") center center / cover no-repeat;
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+        nav {
+            top: 0px;
+        }
+        #app {
+            width: 100%;
+            height: calc(100% - 66px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .bank-slide-enter-from {
             transform: translateX(-20px);
             opacity: 0;
         }
-        
+        .form_wrap {
+            width: 50%;
+            min-width: 550px;
+            padding: 40px 100px;
+            background-color: #fff9;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+        }
+        #bankNumber {
+            width: 70px;
+            text-align: center;
+        }
+        #bankAccount {
+            width: 100%;
+        }
+        .bank_wrap {
+            display: flex;
+        }
+        .bank_wrap span{
+            font-size: 24px;
+            margin: 0px 10px;
+        }
+        .form_confirm {
+            padding: 5px 10px;
+            margin: 0px 0px 0px auto;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: #9c693d;
+            transition: all .5s ease;
+        }
+        .form_confirm:hover {
+            color: rgb(255, 255, 255);
+            text-shadow: 0px 0px 4px#b75500, 0px 0px 8px #632e00;
+            line-height: 16px;
+        }
+        .form_confirm:hover svg {
+            color: #9c693d;
+        }
+        .svg_wrap {
+            width: 50px;
+            height: 50px;
+            animation: arrow 2s linear infinite;
+        }
+        .svg_wrap svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+        @keyframes arrow {
+            0%,50% {
+                transform: translateX(0px) scaleX(100%) scaleY(100%);
+            }
+            75% {
+                transform: translateX(10px) scaleX(100%) scaleY(100%);
+            }
+            87.5% {
+                transform: translateX(10px) scaleX(60%) scaleY(140%);
+            }
+            100% {
+                transform: translateX(0px) scaleX(100%) scaleY(100%);
+            }
+        }
         .bank-slide-enter-active,
         .bank-slide-leave-active {
             transition:transform .5s ease, opacity .5s ease;
@@ -58,8 +181,31 @@
         }
         .confirmBord {
             background-color: #fff;
-            padding: 20px;
+            padding: 40px 80px;
             border-radius: 10px;
+        }
+        .confirmBord h5 {
+            font-size: 36px;
+        }
+        .button_group {
+            margin-top: 20px !important;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .confirm_btn {
+            display: inline-block;
+            width: 72px;
+            height: 25px;
+            background: url("../../images/40/bg-category-brown-small.png") center center / cover no-repeat;
+            color: white;
+            margin-right: 10px;
+        }
+        .deny_btn {
+            display: inline-block;
+            width: 72px;
+            height: 25px;
+            background: url("../../images/40/bg-category-movie-small.png") center center / cover no-repeat;
+            color: white;
         }
         .confirm-slide-enter-from {
             transform:translateY(-30px);
@@ -79,42 +225,48 @@
 
 <body>
     <div id="app" v-cloak>
-        <button @click="sessionViewer">{{click}}</button>
-        <form name="payForm" @submit.prevent="confirmSending()">
-            <label for="order_pay">付款方式</label>
-            <select name="order_pay" id="order_pay" v-model="payWay">
-                <option value="" selected disabled>-- 請選擇一項 --</option>
-                <option value="ATM轉帳">ATM轉帳</option>
-                <option value="郵寄貨到付款">郵寄貨到付款</option>
-                <option value="店內取貨付款">店內取貨付款</option>
-            </select>
-            <transition-group name="bank-slide">
-                <label for="bankAccount" key="bankLabel" v-show="payWay === 'ATM轉帳'">*匯款帳號<span class="wrong_msg" v-show="bankWrongMsg === true"> *匯款帳號格式錯誤</span></label>
-                <div key="bankInput"  v-show="payWay === 'ATM轉帳'">
-                    <input type="text" placeholder="銀行代碼" name="bankNumber" id="bankNumber" v-model.trim="bankNumber"><span>-</span><input type="text" placeholder="銀行帳戶" name="bankAccount" id="bankAccount" v-model.trim="bankAccount">
+        <div class="form_wrap">
+            <form name="payForm" @submit.prevent="confirmSending()">
+                <label for="order_pay">付款方式<span class="wrong_msg" v-show="payWrongMsg === true"> *請選擇付款方式</span></label>
+                <select class="mouse_pointer" name="order_pay" id="order_pay" v-model="payWay">
+                    <option value="" selected disabled>-- 請選擇一項 --</option>
+                    <option value="ATM轉帳">ATM轉帳</option>
+                    <option value="郵寄貨到付款">郵寄貨到付款</option>
+                    <option value="店內取貨付款">店內取貨付款</option>
+                </select>
+                <transition-group name="bank-slide">
+                    <label for="bankAccount" key="bankLabel" v-show="payWay === 'ATM轉帳'">*匯款帳號<span class="wrong_msg" v-show="bankWrongMsg === true"> *匯款帳號格式錯誤</span></label>
+                    <div class="bank_wrap" key="bankInput"  v-show="payWay === 'ATM轉帳'">
+                        <input type="text" placeholder="銀行代碼" name="bankNumber" id="bankNumber" v-model.trim="bankNumber" autocomplete="off" @keyup="bankNum($event)"><span>-</span><input type="text" placeholder="銀行帳戶" name="bankAccount" id="bankAccount" v-model.trim="bankAccount" autocomplete="off" ref="bankAccount">
+                    </div>
+                </transition-group>
+                <label for="order_deliver">收貨方式<span class="wrong_msg" v-show="deliverWrongMsg === true"> *請選擇收貨方式</span></label>
+                <select class="mouse_pointer" name="order_deliver" id="order_deliver" v-model="deliverWay">
+                    <option value="" selected disabled>-- 請選擇一項 --</option>
+                    <option value="郵寄" v-show="payWay !== '店內取貨付款'">郵寄</option>
+                    <option value="店內取貨" v-show="payWay !== '郵寄貨到付款'">店內取貨</option>
+                </select>
+                <transition-group name="bank-slide">
+                    <label for="order_address" v-show="deliverWay === '郵寄'" key="deliverLabel">*寄送地址<span class="wrong_msg" v-show="addressWrongMsg === true"> *地址格式錯誤</span></label>
+                    <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress" key="deliverInput" autocomplete="off" placeholder="地址">
+                </transition-group>
+                <div>
+                    <button class="form_confirm" type="submit">
+                        <div class="svg_wrap">
+                            <svg viewBox="0 0 100 100"><polygon points="70 49 32 37 41 49 70 49" fill="currentcolor"/><polygon points="70 51 32 63 41 51 70 51" fill="currentcolor"/></svg>
+                        </div>
+                        確認送出
+                    </button>
                 </div>
-            </transition-group>
-            <label for="order_deliver">收貨方式</label>
-            <select name="order_deliver" id="order_deliver" v-model="deliverWay">
-                <option value="" selected disabled>-- 請選擇一項 --</option>
-                <option value="郵寄" v-show="payWay !== '店內取貨付款'">郵寄</option>
-                <option value="店內取貨" v-show="payWay !== '郵寄貨到付款'">店內取貨</option>
-            </select>
-            <transition-group name="bank-slide">
-                <label for="order_address" v-show="deliverWay === '郵寄'" key="deliverLabel">*寄送地址<span class="wrong_msg" v-show="addressWrongMsg === true"> *地址格式錯誤</span></label>
-                <input type="text" name="order_address" id="order_address" v-show="deliverWay === '郵寄'" v-model.trim="deliverAddress" key="deliverInput">
-            </transition-group>
-            <div>
-                <button type="submit">確定送出</button>
-            </div>
-        </form>
+            </form>
+        </div>
         <div class="confirmBg" v-show="confirmShow === true" @click="denySending">
             <transition-group name="confirm-slide">
                 <div class="confirmBord"  v-show="confirmShow === true" key="confirmBord" @click.stop>
                     <h5>您確定要送出嗎?</h5>
                     <div class="button_group">
-                        <button @click="sendData">確定</button>
-                        <button @click="denySending">取消</button>
+                        <button @click="sendData" class="confirm_btn">確定</button>
+                        <button @click="denySending" class="deny_btn">取消</button>
                     </div>
                 </div>
             </transition-group>
@@ -124,6 +276,23 @@
     <script src="../../js/vue.global.js"></script>
     <script src="../../js/gsap.min.js"></script>
     <script>
+        let PCBtnOpened = false;
+
+        const openMenu = () => {
+            document.querySelector(".navinner_pc").classList.add("is-open");
+        };
+        const closeMenu = () => {
+            document.querySelector(".navinner_pc").classList.remove("is-open");
+        };
+
+        const ShowMyPC = () => {
+            PCBtnOpened = !PCBtnOpened;
+            if (PCBtnOpened) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+        };
         const vm = Vue.createApp({
             data() {
                 return {
@@ -135,6 +304,8 @@
                     bankAccount: "",
                     bankWrongMsg: false,
                     addressWrongMsg: false,
+                    payWrongMsg: false,
+                    deliverWrongMsg: false,
                     confirmShow: false,
                 }
             },
@@ -142,13 +313,6 @@
 
             },
             methods: {
-                sessionViewer() {
-                    fetch("./sessionViewer.php")
-                    .then(data => data.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                },
                 confirmSending() {
                     let passed = true;
                     //如果是ATM就要驗證銀行帳號
@@ -162,11 +326,23 @@
                         }
                     }
                     //驗證地址
-                    if(/.+(市|縣).+(路|街).+\d+號/.test(this.deliverAddress) || this.deliverAddress === "本店") {
+                    if(/.+(市|縣).+(路|街).\d{0,}號/.test(this.deliverAddress) || this.deliverAddress === "本店") {
                         this.addressWrongMsg = false;
                     } else {
                         this.addressWrongMsg = true;
                         passed = false;
+                    }
+                    if(this.payWay === "") {
+                        this.payWrongMsg = true;
+                        passed = false;
+                    } else {
+                        this.payWrongMsg = false;
+                    }
+                    if(this.deliverWay === "") {
+                        this.deliverWrongMsg = true;
+                        passed = false;
+                    } else {
+                        this.deliverWrongMsg = false;
                     }
                     //都通過才顯示bord
                     if(passed) {
@@ -210,6 +386,14 @@
                             document.querySelector("body").removeAttribute("cart-op");
                         }
                     })
+                },
+                bankNum(event) {
+                    if(event.target.value.length >= 3) {
+                        this.$refs.bankAccount.focus();
+                    }
+                },
+                selectInput(event) {
+                    event.target.select();
                 }
             },
             watch: {
@@ -219,19 +403,25 @@
                         this.bankNumber = "";
                         this.bankAccount = "";
                         this.bankWrongMsg = false;
+                        this.payWrongMsg = false;
                     } else if (newdata === "郵寄貨到付款") {
                         this.deliverWay = "郵寄";
                         this.bankNumber = "";
                         this.bankAccount = "";
                         this.bankWrongMsg = false;
+                        this.payWrongMsg = false;
+                    } else if(newdata === "ATM轉帳") {
+                        this.payWrongMsg = false;
                     }
                 },
                 deliverWay(newdata) {
                     if (newdata === "店內取貨") {
                         this.deliverAddress = "本店";
+                        this.deliverWrongMsg = false;
                     } else if (newdata === "郵寄") {
                         this.deliverAddress = "";
                         this.addressWrongMsg = false;
+                        this.deliverWrongMsg = false;
                     }
                 },
                 bankAccount(newNum) {
@@ -246,6 +436,7 @@
             },
             beforeMount() {
                 const el = document.createElement("div");
+                el.setAttribute("style", "position:sticky;top:0px;z-index:99")
                 const docBody = document.querySelector("body");
                 fetch("../../parts/navbar.php")
                 .then(data => data.text())
@@ -255,7 +446,7 @@
                     scrollTo({ top: 0, behavior: "instant" });
                     this.checkQuantity();
                 })
-            }
+            },
         }).mount("#app");
     </script>
 </body>

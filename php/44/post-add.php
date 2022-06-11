@@ -119,10 +119,8 @@
                 body: fd,
             });
             const result = await r.json();
-            console.log(result);
 
             show_msg(result);
-
         }
 
         function uploadPhotos() {
@@ -137,7 +135,7 @@
                 photoAr.splice(photoAr.indexOf(f), 1);
             }
             document.main_form.photos.value = JSON.stringify(photoAr);
-            console.log(photoAr);
+
             event.currentTarget.parentNode.parentNode.remove();
 
             if (document.main_form.photos.value == "[]") {
@@ -233,7 +231,7 @@
             event.target.remove();
 
             if (tagAr.indexOf(f) !== -1) {
-                tagAr.splice(photoAr.indexOf(f), 1);
+                tagAr.splice(tagAr.indexOf(f), 1);
             }
             document.main_form.tags.value = JSON.stringify(tagAr);
         };

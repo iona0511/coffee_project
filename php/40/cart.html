@@ -379,7 +379,7 @@
     <div id="app" v-cloak>
         <div class="cart_wrap">
             <div class="list_bord">
-                <ul class="cart_block" v-for="(data,index) of dataArray" :class="'ul' + index">
+                <ul class="cart_block" v-for="(data,index) of dataArray" :class="'ul' + index" v-show="data.length !== 0">
                     <transition-group name="list" mode="out-in">
                         <li v-for="item of data" v-show="item.display === 1" key="item">
                             <div class="cart_card">

@@ -11,39 +11,102 @@
     />
     <link rel="stylesheet" href="../../fontawesome/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         [v-cloak] {
             display: none !important;
+        }
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: url("../../images/40/coffee-beans-5928036_1920.jpg") center center / cover no-repeat;
+            background-attachment: fixed;
+        }
+        #app {
+            width: 100%;
+            height: calc(100% - 66px);
+            position: relative;
+        }
+        .success {
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+        .success h1{
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .table_wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        table, td, th {
+            border: 1px solid #ccc;
+            border-top: none;
+            border-bottom: none;
+            text-align: center;
+        }
+        td, th {
+            padding: 20px 10px;
+        }
+        th {
+            background-color: rgb(144, 82, 53);
+            color: white;
+        }
+        td {
+            background-color: #fff;
+            color: #333;
+        }
+        table {
+            border-collapse: collapse !important;
+            border-spacing: 0px;
+            width: 80%;
+            margin: 0px auto;
+            border-radius: 20px;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
     <div id="app" v-cloak>
-        <button @click="checkSession">check session</button>
-        <h2>{{success}}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>訂單編號</th>
-                    <th>姓名</th>
-                    <th>付款方式</th>
-                    <th>總計價格</th>
-                    <th>下單時間</th>
-                    <th>寄送方式</th>
-                    <th>寄送地址</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="data of orderData">
-                    <td>{{data.orderNumber}}</td>
-                    <td>{{data.name}}</td>
-                    <td>{{data.payWay}}</td>
-                    <td>{{data.price}}</td>
-                    <td>{{data.time}}</td>
-                    <td>{{data.deliverWay}}</td>
-                    <td>{{data.address}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- <button @click="checkSession">check session</button> -->
+        <div class="success">
+            <h1>{{success}}</h1>
+            <h4>0+B 感謝您的支持</h4>
+        </div>
+        <div class="table_wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>訂單編號</th>
+                        <th>姓名</th>
+                        <th>付款方式</th>
+                        <th>總計價格</th>
+                        <th>下單時間</th>
+                        <th>寄送方式</th>
+                        <th>寄送地址</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="data of orderData">
+                        <td>{{data.orderNumber}}</td>
+                        <td>{{data.name}}</td>
+                        <td>{{data.payWay}}</td>
+                        <td>{{data.price}}</td>
+                        <td>{{data.time}}</td>
+                        <td>{{data.deliverWay}}</td>
+                        <td>{{data.address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="../../js/vue.global.js"></script>
@@ -74,13 +137,13 @@
                 }
             },
             methods: {
-                checkSession() {
-                    fetch("./sessionViewer.php")
-                    .then(data => data.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                },
+                // checkSession() {
+                //     fetch("./sessionViewer.php")
+                //     .then(data => data.json())
+                //     .then(data => {
+                //         console.log(data);
+                //     })
+                // },
                 checkQuantity() {
                     // console.log("chechk");
                     const cart_quantity = document.querySelector("[data-content-before]");
@@ -95,6 +158,7 @@
             },
             beforeMount() {
                 const el = document.createElement("div");
+                el.setAttribute("style", "position:sticky;top:0px;z-index:99")
                 const docBody = document.querySelector("body");
                 fetch("../../parts/navbar.php")
                 .then(data => data.text())

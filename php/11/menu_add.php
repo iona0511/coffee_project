@@ -147,7 +147,7 @@ $title = '新增餐點資料';
     for (i = 0; i < files.length; i++) {
         const reader  = new FileReader();
         reader.addEventListener("load", function () {
-            container.innerHTML += `<img height="200" alt="" src="${reader.result}">`;
+            container.innerHTML += `<img height="250" alt="" src="${reader.result}">`;
         }, false);
 
         if (files[i]) {

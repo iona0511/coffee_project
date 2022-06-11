@@ -35,6 +35,10 @@ a {
     margin-bottom: 4.5rem;
 }
 
+.mb-2r{
+    margin-bottom: 2rem;
+}
+
 
 .mr-1 {
     margin-right: .5rem;
@@ -437,11 +441,7 @@ li.n-selected {
     margin-top: -1px;
 }
 
-.tag-bar {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
+
 
 .social {
     font-size: 16px;
