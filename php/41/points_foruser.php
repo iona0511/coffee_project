@@ -180,15 +180,15 @@ $a = $t_points[0];
     }
 </style>
 <!-- Button_up -->
-<div class="display_justify_content px24" style="font-weight:bold; margin-top: 20px;">
+<div class="display_justify_content px24 load" style="font-weight:bold; margin-top: 20px;">
     <p>積分紀錄</p>
 </div>
-<div class="display_justify_content">
+<div class="display_justify_content load">
     <p style="color: #893429;font-weight: bold;"> <?= $a['total_points'] ?></p>
     <p>可用積分</p>
 </div>
 <!-- middle -->
-<div class="display_justify_content" style="margin-top:25px;">
+<div class="display_justify_content load" style="margin-top:25px;">
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;margin-right:10px;margin-bottom:20px;" class="button <?= $type == 1 ? 'active' : '' ?> " href="?type=1">獲取紀錄</a>
     </div>
@@ -199,8 +199,8 @@ $a = $t_points[0];
 <div id="points_record" class="display_justify_content">
     <div id="points_record_table_a" class="display_justify_content" style="height: 500px; width:1200px;">
         <table class="table table-striped">
-            <thead>
-                <tr>
+            <thead >
+                <tr >
                     <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius: 20px 0 0 0;">日期</th>
                     <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">類別</th>
                     <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius:0 20px 0 0 ;"><?= $type == 1 ? '已獲得' : '已兌換'; ?></th>
@@ -208,7 +208,7 @@ $a = $t_points[0];
             </thead>
             <tbody class="bg">
                 <?php foreach ($rows as $r) : ?>
-                    <tr>
+                    <tr class=" load">
                         <td><?= $r['create_at'] ?></td>
                         <td><?= $type == 1 ? '每日簽到獎勵' : '咖啡拿鐵兌換券'; ?></td>
                         <td><?= $r['points_get'] ?></td>
@@ -219,7 +219,7 @@ $a = $t_points[0];
     </div>
 </div>
 <!-- button_bottom -->
-<div class="row display_justify_content">
+<div class="row display_justify_content  load">
     <div class="col-3">
         <nav aria-label="Page navigation example">
             <ul class="pagination display_justify_content">
@@ -238,3 +238,19 @@ $a = $t_points[0];
         </nav>
     </div>
 </div>
+
+<?php include __DIR__ . '/parts/scripts.php' ?>
+<script>
+    function load() {
+    var element = $(this);
+    element.fadeOut(0, function() {
+    element.fadeIn(2000);
+    });
+}
+
+    window.addEventListener('load', function() {
+        $('.load').one('appear', load);
+    })
+
+
+</script>
