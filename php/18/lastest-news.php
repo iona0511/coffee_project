@@ -222,7 +222,7 @@ if ($totalRows > 0) {
         </div>
     </div>
 
-    <table class="table table-light table-striped">
+    <table class="table table-warning table-striped">
         <thead class="t">
             <tr>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE); border-radius: 30px 0 0 0;">活動編號</th>

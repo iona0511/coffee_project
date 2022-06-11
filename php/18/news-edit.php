@@ -77,7 +77,6 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="news_class" class="form-label">活動類別</label>
                             </br>
-                            <!-- 這邊無法顯示出資料庫裡的類別，可以參考老師的01 form -->
                             <select name="news_class_sid" id="news_class_sid" value="">
                                 <option value="0" disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_class as $r) : ?>
@@ -103,8 +102,8 @@ if (empty($row)) {
                             <textarea type="text" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
                             <div class="form-text red"></div>
                         </div>
-
-                        <!-- <div class="mb-3">
+<!-- 
+                        <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label>
                             <input type="file" class="form-control btn btn-outline-secondary" id="news_img" name="news_img" accept="image/*" onchange="showphoto()" multiple>   
                             <div class="form-text red">
@@ -112,13 +111,15 @@ if (empty($row)) {
                             </div>                    
                             <div id="preview"></div>
                         </div> -->
+
                         <div class="mb-3">
-                            <label for="news_img" class="form-label">消息圖片</label><br>
-                            <input type="file" name="news_img[]" accept="image/*" onchange="changeOneImg(event)" />
+                            <label for="news_img" class="form-label">活動圖片</label><br>
+                            <input type="file" name="news_img" accept="image/*" onchange="changeOneImg(event)" />
                             <div class="form-text"></div>
                             <img class="single-img" src="
                             <?php if ($row['news_img']) : echo '/coffee_project/images/18/' . $row['news_img'];
                             endif; ?>" <?php if (!$row['news_img']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="news_img" />
+                            <div class="form-text red"></div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">修改</button>
@@ -156,7 +157,7 @@ if (empty($row)) {
     // console.log(fieldTexts)
 
     // showphoto照片上傳的功能要再看一下
-    function showphoto() {
+    // function showphoto() {
     // let container = document.querySelector('#preview');
     // let files    = document.querySelector('input[type=file]').files;
  
@@ -171,7 +172,8 @@ if (empty($row)) {
     
     //     }                       
     // }    
-};
+    // };
+
     function changeOneImg() {
         const file = event.currentTarget.files[0];
         console.log(file);
@@ -180,8 +182,8 @@ if (empty($row)) {
         // 資料載入後 (讀取完成後)
         reader.onload = function() {
             console.log(reader.result);
-            document.querySelector("#products_pic_one").style.display = 'block';
-            document.querySelector("#products_pic_one").src = reader.result;
+            document.querySelector("#news_img").style.display = 'block';
+            document.querySelector("#news_img").src = reader.result;
         };
         reader.readAsDataURL(file);
     }
@@ -190,7 +192,7 @@ if (empty($row)) {
         // 讓欄位的外觀回復原來的狀態
         for (let i in fields) {
             fields[i].classList.remove('red');
-            // console.log('fieldTexts ', fieldTexts)
+            console.log('fieldTexts ', fieldTexts)
             fieldTexts[i].innerText = '';
         }
         info_bar.style.display = 'none'; // 隱藏訊息列
@@ -218,7 +220,7 @@ if (empty($row)) {
             isPass = false;
         }
 
-        if (img_f.value.length< 1) {
+        if (img_f.value.length < 1) {
             fields[3].classList.add('red');
             fieldTexts[3].innerText = '請先上傳圖片';
             isPass = false;
