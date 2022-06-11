@@ -463,3 +463,9 @@ if($type==1){
         </nav>
     </div>
 </div>
+
+<?php include __DIR__ . '/parts/scripts.php' ?>
+<script>
+    
+</script>
+
