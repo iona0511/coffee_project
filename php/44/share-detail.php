@@ -64,7 +64,7 @@ if ($rows['topic_sid'] == 1) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章-<?= $rows['title'] ?></title>
+    <title>分享-<?= $rows['title'] ?></title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -127,10 +127,10 @@ if ($rows['topic_sid'] == 1) {
                             ?>
                         </span>
                     </div>
-                    <p class="post-text">
+                    <p class="post-text mb-5">
                         <?= $rows['content'] ?>
                     </p>
-                    <div class="tag-bar d-flex">
+                    <div class="tag-bar d-flex mb-2">
                         <?php foreach ($tags as $k => $v) : ?>
                             <a href="?">
                                 <div class="tag mr-1"><?= $v['name'] ?></div>

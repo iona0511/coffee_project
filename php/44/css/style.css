@@ -437,11 +437,7 @@ li.n-selected {
     margin-top: -1px;
 }
 
-.tag-bar {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
+
 
 .social {
     font-size: 16px;
