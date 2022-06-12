@@ -49,7 +49,7 @@ if($type==1){
             exit;
         }
     
-        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`status`=0 AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a,($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`status`=0 AND`coupon_receive`.`member_sid`=%s ORDER BY end_time DESC LIMIT %s, %s",$a,($page - 1) * $perPage, $perPage);
     
         $rows = $pdo->query($sql)->fetchAll();
     }
