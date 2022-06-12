@@ -51,7 +51,7 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s AND `points_record`.`member_sid`=%s LIMIT %s, %s", $type, $a , ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s AND `points_record`.`member_sid`=%s  LIMIT %s, %s", $type, $a , ($page - 1) * $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
@@ -197,14 +197,25 @@ $a = $t_points[0];
     <source src="./copon_img/Writing in a notebook at a coffee shop.mp4" type="video/mp4">
 </video>
 
-
+<section>
+    <div class=" loading loading07 load">
+        <span data-text="查"></span>
+        <span data-text="看"></span>
+        <span data-text="我"></span>
+        <span data-text="的"></span>
+        <span data-text="積"></span>
+        <span data-text="分"></span>
+        <span data-text="ㄅㄧㄠ"></span> 
+        
+    </div>
+</section>
 
 
 
 <!-- Button_up -->
-<div class="display_justify_content px24 load" style="font-weight:bold;color:#fff; margin-top: 20px;">
+<!-- <div class="display_justify_content px24 load" style="font-weight:bold;color:#fff; margin-top: 20px;">
     <p>積分紀錄</p>
-</div>
+</div> -->
 <div class="display_justify_content load">
     <p style="color: #893429;font-weight: bold;"> <?= $a['total_points'] ?></p>
     <p>可用積分</p>
