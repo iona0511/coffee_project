@@ -60,7 +60,7 @@ if (!session_id()) {
         z-index: 999;
     }
 </style>
-<div class="bg-light" style="width:100%">
+<div class="bg-light" style="width:100%; ">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent" style="width: 100%;">
             <img style="width: 50px; aspect-ratio:1;" src="/coffee_project/images/09/picwish.png" alt="">

@@ -118,7 +118,7 @@ if($type==1){
         padding: 0.5em 1.8em;
         text-align: center;
         text-decoration: none;
-        color: #B79973;
+        color: #fff;
         border: 2px solid #B79973;
         font-size: 24px;
         display: inline-block;
@@ -157,7 +157,7 @@ if($type==1){
         color: #fff;
     }
     .coupon_style{
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.2);
         border: 1px solid rgba(255, 255, 255, 0.6);
     }
     .page-item.active .page-link {
@@ -398,6 +398,7 @@ if($type==1){
 
     .loading {
         font-size: 24px;
+        
         font-weight: 300;
         text-align: center;
     }
@@ -408,14 +409,14 @@ if($type==1){
 
     .loading07 span {
         position: relative;
-        color: rgba(0, 0, 0, .2);
+        color:#fff;
     }
     .loading07 span::after {
         position: absolute;
         /* top: 0;
         left: 0; */
         content: attr(data-text);
-        color: #000;
+        color: #fff;
         opacity: 0;
         transform: scale(1.5);
         animation: loading07 10s infinite;
@@ -450,12 +451,23 @@ if($type==1){
     }
     
     
+    #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
 
 </style>
 
-<!-- <div class="display_justify_content px24" style="font-weight:bold; margin-top: 30px;font-size: 24px;">
-    <p>我的優惠券</p>
-</div> -->
+
+<video autoplay muted loop id="myVideo">
+    <source src="./copon_img/Grinding up coffee beans.mp4" type="video/mp4">
+</video>
+
+
 
 <section>
     <div class=" loading loading07 load">

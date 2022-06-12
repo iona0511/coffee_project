@@ -114,7 +114,7 @@ $a = $t_points[0];
         padding: 0.5em 1.8em;
         text-align: center;
         text-decoration: none;
-        color: #B79973;
+        color: #fff;
         border: 2px solid #B79973;
         font-size: 24px;
         display: inline-block;
@@ -154,13 +154,14 @@ $a = $t_points[0];
     }
 
     body {
-        background: url(./copon_img/img1.jpg);
+        /* background: url(./copon_img/img1.jpg); */
         background-position: 50% 80%;
         opacity: 0.9;
     }
 
     .bg {
         background-color: #fff;
+        opacity: 0.9;
     }
     table{
         border-collapse: separate;
@@ -178,9 +179,28 @@ $a = $t_points[0];
     .page-link{
         color: #B79973;
     }
+    #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
+
 </style>
+
+
+<video autoplay muted loop id="myVideo">
+    <source src="./copon_img/Writing in a notebook at a coffee shop.mp4" type="video/mp4">
+</video>
+
+
+
+
+
 <!-- Button_up -->
-<div class="display_justify_content px24 load" style="font-weight:bold; margin-top: 20px;">
+<div class="display_justify_content px24 load" style="font-weight:bold;color:#fff; margin-top: 20px;">
     <p>積分紀錄</p>
 </div>
 <div class="display_justify_content load">
@@ -188,7 +208,7 @@ $a = $t_points[0];
     <p>可用積分</p>
 </div>
 <!-- middle -->
-<div class="display_justify_content load" style="margin-top:25px;">
+<div class="display_justify_content load" style="margin-top:5px;">
     <div class=" display_justify_content wrapper">
         <a style="text-decoration:none;margin-top:0px;margin-right:10px;margin-bottom:20px;" class="button <?= $type == 1 ? 'active' : '' ?> " href="?type=1">獲取紀錄</a>
     </div>
