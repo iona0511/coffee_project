@@ -193,12 +193,13 @@
       .afterclick {
         width: 100vw;
         height: auto;
-        background-color: rgba(52, 49, 49, 0.529);
+        background-color: rgba(0, 0, 0, 0.794);
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        z-index: 100;
       }
 
       .afterclick.hide {
@@ -220,6 +221,10 @@
       .all_choice_photo_img {
         width: 100%;
         object-fit: contain;
+      }
+
+      .aaaaa:hover{
+        transform: translateY(2px);
       }
     </style>
   </head>
@@ -388,7 +393,7 @@
         </div>
 
         <div style="position: fixed; bottom: 0; width: inherit">
-          <div
+          <div class="aaaaa"
             style="
               width: 220px;
               height: 30px;
@@ -400,12 +405,14 @@
               border-radius: 10px;
               box-shadow: 1px 1px rgb(250, 134, 57);
               font-weight: 700;
+              z-index: -1;
             "
             onclick="sendData()"
           >
             加入購物車
           </div>
         </div>
+
       </aside>
     </div>
 
@@ -489,7 +496,9 @@
                 </div>`;
         }
       };
+      //         <img src = "../../images/11/001.jpg">
 
+      // /../../coffee_project/images/35/
       const foodorder = (e) => {
         const { data } = this;
         if (!data || !data.length) return false;
@@ -519,16 +528,16 @@
          </div>
 
          <div class ="choice_textarea" style="padding:30px">
-             <div style="display:flex;margin-bottom:20px;"><h2 class="menu_name" style="flex-grow:1;color:rgb(130,43,13);font-size:25px;font-weight:700">${item.menu_name}</h2>   <h3 style="font-size:25px;font-weight:600" class="onesize">$ ${item.menu_price_m}元<h3></div>
+             <div style="display:flex;margin-bottom:20px;"><h2 class="menu_name" style="flex-grow:1;color:rgb(130,43,13);font-size:25px;font-weight:700">${item.menu_name}</h2>   <h3 style="font-size:25px;font-weight:500" class="onesize">$ ${item.menu_price_m}<h3></div>
              <p class="menu_nutrition1" name="menu_nutrition" style="padding-top:20px;padding-bottom:20px">${item.menu_nutrition}</p>
           
         
              
 
 
-             <h3 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">冰熱選擇<h3>
+             <h4 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">冰熱選擇<h4>
 
-             <div style="display:flex; align-items:center"><input type="radio" id="a1" name="food_choice_ice" value="1">
+             <div style="display:flex; align-items:center;"><input type="radio" id="a1" name="food_choice_ice" value="1">
              <label for="a1">正常冰</label> </div>
 
              <div style="display:flex; align-items:center"><input type="radio" id="a2" name="food_choice_ice" value="2">
@@ -540,7 +549,7 @@
              <div style="display:flex; align-items:center"><input type="radio" id="a5" name="food_choice_ice" value="5">
              <label for="a5">熱</label> </div>
 
-             <h3 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">甜度選擇<h3>
+             <h4 style="border-top:1px solid #ccc;padding-top:20px;padding-bottom:20px">甜度選擇<h4>
 
              <div style="display:flex; align-items:center"><input type="radio" id="b1" name="food_choice_sugar" value="1">
              <label for="b1">無糖</label> </div>
@@ -609,11 +618,11 @@
                 <div style="display:none;" class="from_menu_photo" data-frommenuphoto="${item.menu_photo}">${item.menu_photo}</div>
 
                   <div style="display:none;" class="menu_price" data-price="${item.menu_price_m}">${item.menu_price_m}</div>
-                  <div style="flex-grow:1;" class="menu_name1">${item.menu_name}</div>
-                  <div class="subtotal">${subTotal}元</div>
+                  <div style="flex-grow:1;font-weight:500;" class="menu_name1">${item.menu_name}</div>
+                  <div class="subtotal" style="font-weight:500;">${subTotal}元</div>
               </div>
               <div style="display:flex;margin: 6px;">
-                  <div style="flex-grow:1">數量</div>
+                  <div style="flex-grow:1;font-weight:500;">數量</div>
 
                   <div style="display:flex;">
 
@@ -625,8 +634,8 @@
               
             </div>
 
-              <div style="margin:6px;" class="ice" data-ice="${ice}">${food_choice_ice[ice]}</div>
-              <div style="margin: 6px;" class="sugar" data-sugar="${sugar}">${food_choice_sugar[sugar]}</div>
+              <div style="margin:6px;font-weight:500;" class="ice" data-ice="${ice}">${food_choice_ice[ice]}</div>
+              <div style="margin: 6px;font-weight:500;" class="sugar" data-sugar="${sugar}">${food_choice_sugar[sugar]}</div>
             
               <div style="border-bottom:1px solid #ccc;margin:5px"></div>
          </div>

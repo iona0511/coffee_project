@@ -58,13 +58,19 @@ if (empty($row)) {
         height: 320px;
         /* display: none; */
     }
+    .exit-size {
+        font-size: 1.7rem;
+    }
 </style>
 <div class="container">
     <div class="row">
         <div class="col-md-6">
             <div class="card color-y">
                 <div class="card-body">
-                    <h2 class="card-title mb-4">編輯消息</h2>
+                    <div class="d-flex justify-content-between">
+                        <h2 class="card-title mb-4">編輯消息</h2>
+                        <a  href="././lastest-news.php"><i class="fa-solid fa-arrow-right-from-bracket exit-size"></i></a>
+                    </div>
                     <form name="form1" onsubmit="sendData();return false;" novalidate enctype="multipart/form-data">
                         <input type="hidden" name="news_sid" value="<?= $row['news_sid'] ?>">
                         <div class="mb-3">
@@ -122,8 +128,7 @@ if (empty($row)) {
                             <div class="form-text red"></div>
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <a type="submit" class="btn btn-warning" href="././lastest-news.php">離開</a>
+                        <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">修改</button>
                         </div>
                     </form>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新增文章</title>
+    <title>發佈分享</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -14,8 +14,8 @@
 
 <body>
     <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
-    <div class="container" style="max-width: 960px;">
-        <h3 class="card-title text-primary" style="font-weight: bold;">新增文章</h3>
+    <div class="container pt-3" style="max-width: 960px;">
+        <h3 class="card-title" style="font-weight: bold;">新增文章</h3>
         <form name="main_form" onsubmit="sendData();return false;" novalidate id="main_form">
             <div class="d-flex mb-3">
                 <div class="col-2 pr-3">
@@ -49,9 +49,9 @@
                 <textarea type="text" class="form-control" id="content" name="content" col="30" rows="4"></textarea>
                 <div class="form-text red"></div>
             </div>
-            <div class="mb-5">
+            <div class="mb-3">
                 <label for="tag" class="form-label">標籤</label>
-                <div class="wrap mb-5">
+                <div class="wrap mb-3">
                     <div class="search_col">
                         <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="標籤名稱" autocomplete="off">
                         <!-- 搜尋列 -->
@@ -62,15 +62,15 @@
                 </div>
                 <input type="hidden" name="tags" value="[]" />
 
-                <div class="tag-rect">
+                <div class="tag-rect pt-1">
                     <!-- 標籤列 -->
                 </div>
             </div>
 
 
-            <button type="submit" class="btn btn-primary mt-2   ">發文</button>
+            <button type="submit" class="btn btn-primary mt-2 ">發佈分享</button>
             <div id="info_bar" class="alert alert-success" role="alert" style="display: none;">
-                發文成功
+                發佈成功
             </div>
         </form>
 
@@ -119,10 +119,8 @@
                 body: fd,
             });
             const result = await r.json();
-            console.log(result);
 
             show_msg(result);
-
         }
 
         function uploadPhotos() {
@@ -137,7 +135,7 @@
                 photoAr.splice(photoAr.indexOf(f), 1);
             }
             document.main_form.photos.value = JSON.stringify(photoAr);
-            console.log(photoAr);
+
             event.currentTarget.parentNode.parentNode.remove();
 
             if (document.main_form.photos.value == "[]") {
@@ -233,7 +231,7 @@
             event.target.remove();
 
             if (tagAr.indexOf(f) !== -1) {
-                tagAr.splice(photoAr.indexOf(f), 1);
+                tagAr.splice(tagAr.indexOf(f), 1);
             }
             document.main_form.tags.value = JSON.stringify(tagAr);
         };

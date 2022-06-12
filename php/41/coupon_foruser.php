@@ -118,7 +118,7 @@ if($type==1){
         padding: 0.5em 1.8em;
         text-align: center;
         text-decoration: none;
-        color: #B79973;
+        color: #fff;
         border: 2px solid #B79973;
         font-size: 24px;
         display: inline-block;
@@ -157,7 +157,7 @@ if($type==1){
         color: #fff;
     }
     .coupon_style{
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.2);
         border: 1px solid rgba(255, 255, 255, 0.6);
     }
     .page-item.active .page-link {
@@ -202,18 +202,17 @@ if($type==1){
         color: #000;
         z-index: 1000;
     }
+    /* ============== */
     .card {
         z-index: 1;
         margin: 12px 12px;
         position: relative;
         height: 185px;
         width: 285px;
-        background-color: #fff;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        background: url(../41/copon_img/kv_right_01.jpg);
+        background:url(../41/copon_img/41_Card_01.JPG);
         background-size: 100%;
         background-repeat: no-repeat;
-        background-color: #fff;
     }
     .card p {
         width: 100%;
@@ -274,6 +273,81 @@ if($type==1){
     .card .social ul .g {
         background-color: #212121;
     }
+
+    /* ============= */
+
+    .card2 {
+        z-index: 1;
+        margin: 12px 12px;
+        position: relative;
+        height: 185px;
+        width: 285px;
+        background-color: #BFBFB5;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+    .card2 p {
+        width: 100%;
+        top: 184px;
+        text-align: center;
+        position: absolute;
+        font-size: 30px;
+        font-weight: 100;
+        letter-spacing: 4px;
+    }
+    .card2:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    }
+    .card2:hover > .social {
+        opacity: 1;
+    }
+    .card2 .social {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .card2 .social ul {
+        z-index: 5;
+        padding-left: 0;
+        list-style: none;
+        position: absolute;
+        right: 0;
+        margin-right: 16px;
+    }
+    .card2 .social ul a {
+        color: #fff;
+        position: relative;
+    }
+    .card2 .social ul .f, .card2 .social ul .t, .card2 .social ul .m, .card2 .social ul .g, .card2 .social ul .star {
+        font-size: 12px;
+        height: 20px;
+        width: 20px;
+        position: relative;
+    }
+    .card2 .social ul .star a {
+        color: #444;
+    }
+    .card2 .social ul .star {
+        background-color: #ddd;
+        margin-bottom: 8px;
+        color: #444;
+    }
+    .card2 .social ul .f {
+        background-color: #1565c0;
+    }
+    .card2 .social ul .t {
+        background-color: #29b6f6;
+    }
+    .card2 .social ul .m {
+        background-color: #00e676;
+    }
+    .card2 .social ul .g {
+        background-color: #212121;
+    }
+
+    /* ============= */
     .star:hover:after {
         content: "Favorite";
         right: -70px;
@@ -324,6 +398,7 @@ if($type==1){
 
     .loading {
         font-size: 24px;
+        
         font-weight: 300;
         text-align: center;
     }
@@ -334,14 +409,14 @@ if($type==1){
 
     .loading07 span {
         position: relative;
-        color: rgba(0, 0, 0, .2);
+        color:#fff;
     }
     .loading07 span::after {
         position: absolute;
         /* top: 0;
         left: 0; */
         content: attr(data-text);
-        color: #000;
+        color: #fff;
         opacity: 0;
         transform: scale(1.5);
         animation: loading07 10s infinite;
@@ -376,12 +451,23 @@ if($type==1){
     }
     
     
+    #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
 
 </style>
 
-<!-- <div class="display_justify_content px24" style="font-weight:bold; margin-top: 30px;font-size: 24px;">
-    <p>我的優惠券</p>
-</div> -->
+
+<video autoplay muted loop id="myVideo">
+    <source src="./copon_img/Grinding up coffee beans.mp4" type="video/mp4">
+</video>
+
+
 
 <section>
     <div class=" loading loading07 load">
@@ -410,8 +496,9 @@ if($type==1){
 <div style="width: 100%;">
     <div class="display_justify_content coupon_style load" style="margin:20px auto;width:60%;flex-direction: column;padding-bottom: 20px;">
         <?php foreach ($rows as $r) : ?>
-            <a class="display_justify_content card_bg" style="width:50%;margin: 5px auto;flex-direction: row;" >
-                <div style="width: 100%;display:flex;flex-direction: row;" class="card load">
+            <a class="display_justify_content" style="width:50%;margin: 5px auto;flex-direction: row;" >
+                <!-- <div style="width: 100%;display:flex;flex-direction: row;" class="card load"> -->
+                <div style="width: 100%;display:flex;flex-direction: row;" class="<?= $type ==1 ? 'card':'card2' ?> load">
                     <div>
                         <img style="width:250px;<?= $type == 2 ? ' display: none;' : '' ?>" src="../41/copon_img/coupon_icon-removebg-preview.png" alt="">
                     </div>
@@ -420,6 +507,7 @@ if($type==1){
                     </div>
                 
                     <div style="width: 4%;"></div>
+
                     <div style="width: 46%;margin-top:25px;text-align:left;">
                         <div>
                             <div>
@@ -438,13 +526,13 @@ if($type==1){
                         </div>    
                     </div>
                 </div>
-        </a>
+            </a>
         <?php endforeach; ?>
     </div>
 </div>
 
 <!-- 下面的按紐 -->
-<div class="row display_justify_content load">
+<div class=" display_justify_content load">
     <div class="col-3">
         <nav aria-label="Page navigation example">
             <ul class="pagination display_justify_content">
@@ -466,17 +554,16 @@ if($type==1){
 
 <?php include __DIR__ . '/parts/scripts.php' ?>
 <script>
+
     function load() {
     var element = $(this);
     element.fadeOut(0, function() {
     element.fadeIn(2000);
     });
-}
+    }
 
     window.addEventListener('load', function() {
         $('.load').one('appear', load);
     })
-
-
 </script>
 

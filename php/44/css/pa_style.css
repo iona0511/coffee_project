@@ -19,22 +19,39 @@
     display: none;
 }
 
+.card-title {
+    color: rgb(136, 88, 36);
+}
+
 .p-card {
     width: 20%;
-    padding-right: 1rem;
+    margin-right: 1rem;
+    position: relative;
 }
 
 .p-card:last-child {
-    padding-right: 0px;
+    margin-right: 0px;
 }
+
 
 .photoItem {
     width: 100%;
     height: 100%;
     position: relative;
-
+    
 }
 
+.p-card:first-of-type::after {
+    display: block;
+    content: '封面';
+    position: absolute;
+    bottom: 4px;
+    left: 8px;
+    padding: 4px 8px;
+    color: white;
+    border-radius: 16px;
+    background-color: rgba(120, 120, 120, 0.5);
+}
 
 .up-photo {
     max-width: 100%;
@@ -72,7 +89,7 @@
     font-style: italic;
 }
 
-.tag_rect {
+.tag-rect {
     display: flex;
     flex-wrap: wrap;
 }
@@ -81,11 +98,12 @@
     display: inline-block;
     height: 32px;
     font-weight: 500;
-    color: rgb(6, 95, 212);
+    color: rgba(0, 0, 0, 0.75);
+
     font-size: 14px;
     border-radius: 16px;
-    background: rgb(224, 224, 224);
-    padding: 0 20px;
+    background: #e7e7e7da;
+    padding: 0 20px 0 26px;
     white-space: nowrap;
     position: relative;
     margin-right: .5rem;
@@ -98,8 +116,9 @@
     display: block;
     position: absolute;
     top: 50%;
-    left: 8px;
+    left: 12px;
     transform: translateY(-50%);
+    color: rgba(66, 140, 237, 0.9);
 }
 
 .h_tag::after {
@@ -116,7 +135,7 @@
 }
 
 .h_tag:hover {
-    background-color: #7c7c7ccb;
+    background-color: #c1c1c1c5;
 }
 
 .h_tag:hover.h_tag::after {
@@ -139,16 +158,17 @@
 .wrap {
     position: relative;
     z-index: 100;
+    height: 40px;
 }
 
 .search_col {
     position: absolute;
     width: 20%;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1.1px solid #ccc;
     background-color: #fff;
     overflow: hidden;
-    box-shadow: 2px 2px 6px 3px #d5d5d571;
+    box-shadow: 1px 1px 6px 2px #d5d5d571;
 
 }
 
