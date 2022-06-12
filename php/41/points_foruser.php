@@ -304,7 +304,7 @@ $a = $t_points[0];
     </div>
 </div>
 <!-- button_bottom -->
-<div class="row display_justify_content  load">
+<div class=" display_justify_content  load">
     <div class="col-3">
         <nav aria-label="Page navigation example">
             <ul class="pagination display_justify_content">
