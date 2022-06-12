@@ -103,8 +103,8 @@ if ($totalRows > 0) {
         width: 100%;
         /* position: absolute;
     top: 50%;
-    /* left: 50%; */
-        */ transform: translateX(-50%) translateY(-50%);
+    /* left: 50%; */*/
+    transform: translateX(-50%) translateY(-50%);
     }
 
     h1 {
@@ -208,7 +208,7 @@ if ($totalRows > 0) {
                                                         display: -webkit-box;
                                                         -webkit-line-clamp: 7;
                                                         -webkit-box-orient: vertical;
-                                                        white-space:normal"><?= $r['news_content'] ?></p>
+                                                        white-space:normal;"><?= $r['news_content'] ?></p>
 
                         </div>
                     </div>
