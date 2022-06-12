@@ -8,7 +8,11 @@ $output = [
     'code' => 0,
     'filenames' => [],
     'error' => '',
-    'testtext' => []
+    'testtext1' => [],
+    'testtext2' => [],
+    'testtext3' => [],
+    'testtext4' => [],
+    'testtext5' => '',
 ];
 
 
@@ -64,6 +68,8 @@ if (empty($products_sid) or empty($_POST['products_stocks'])) {
 
 // 圖片區
 
+$row_pic = $pdo->query("SELECT * FROM`products_pic`")->fetchAll();
+
 $folder = dirname(dirname(__DIR__, 1)) . '/images/35/';
 
 $extMap = [
@@ -86,15 +92,15 @@ if (!is_array($_FILES['products_pic_one']['name'])) {
     exit;
 }
 
-$singlepic= [];
+$singlepic = [];
 foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
 
     $filename = $f;
-    $output['filenames'][] = $filename;    
+    $output['filenames'][] = $filename;
     array_push($singlepic, $filename);
     move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $filename);
+    // $output['testtext1'] = $_FILES['products_pic_one'];
 }
-$singleNameStr = implode(",", $singlepic);
 
 if (empty($_FILES['products_pic_multi'])) {
     $output['error'] = '沒有上傳檔案';
@@ -116,8 +122,29 @@ foreach ($_FILES['products_pic_multi']['name'] as $k => $f) {
     array_push($multiName, $filename);
     // 把上傳的檔案搬移到指定的位置
     move_uploaded_file($_FILES['products_pic_multi']['tmp_name'][$k], $folder . $filename);
+    // $output['testtext2'] = $_FILES['products_pic_one'];
 }
+$testsingle = $_FILES['products_pic_one']['name'];
+$output['testtext5'] = $_FILES['products_pic_one']['name'];
+$testmulti = $_FILES['products_pic_multi']['name'];
+
+if (empty($testsingle)) {
+    $output['code'] = 997;
+    $output['testtext1'] = $testsingle;
+    $singlepic = $row_pic[$_POST['products_sid']]['products_pic_one'];
+}
+if (empty($testmulti)) {
+    $output['code'] = 996;
+    $output['testtext2'] = $testmulti;
+    $multiName = $row_pic[$_POST['products_sid']]['products_pic_multi'];
+}
+
+
+$singleNameStr = implode(",", $singlepic);
 $multiNameStr = implode(",", $multiName);
+
+$output['testtext3'] = $singlepic;
+$output['testtext4'] = $multiName;
 
 // 圖片區結束
 
@@ -132,6 +159,8 @@ $products_onsale = $_POST['products_onsale'] ?? '';
 $products_stocks = $_POST['products_stocks'] ?? '';
 $products_with_products_categroies_sid = $_POST['products_with_products_categroies_sid'] ?? '';
 $products_with_products_style_filter_sid = $_POST['products_with_products_style_filter_sid'] ?? '';
+
+
 
 // TODO 其他欄位檢查
 

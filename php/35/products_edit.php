@@ -297,6 +297,7 @@ if (empty($row)) {
             };
         } else {
             alert('圖片上限3張');
+            document.getElementById("pic_multi_input").value = '';
         }
     }
 

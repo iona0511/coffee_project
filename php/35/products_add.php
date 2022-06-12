@@ -120,7 +120,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                             <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 ">
                             <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
                             <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
                                 <option value="1" disabled selected>-- 請選擇 --</option>
@@ -132,16 +132,24 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label><br>
-                            <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" />
-                            <div class="form-text"></div>
+                            <input id="pic_one_input" type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" /><br>
+                                                                                    
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
+
                             <img class="single-img" src="" alt="" id="products_pic_one" />
+
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
-                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple />
+                            <input id="pic_multi_input" type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple /><br>
+                            
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
+
                             <div id="multiDiv" class="multiDiv"></div>
                         </div>
 
@@ -284,6 +292,25 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
             errorMsg[4].innerHTML = '';
             form_row[4].classList.remove("error");
         }
+        if(products_pic_one_f.files.length== 0){
+            errorMsg[5].style.visibility = 'visible';
+            errorMsg[5].innerHTML = '未上傳圖片';
+            form_row[5].className = 'form_row error';
+            isPass = false;
+        } else {
+            errorMsg[5].innerHTML = '';
+            form_row[5].classList.remove("error");
+        }
+        
+        if(products_pic_multi_f.files.length== 0){
+            errorMsg[6].style.visibility = 'visible';
+            errorMsg[6].innerHTML = '未上傳圖片';
+            form_row[6].className = 'form_row error';
+            isPass = false;
+        } else {
+            errorMsg[6].innerHTML = '';
+            form_row[6].classList.remove("error");
+        }
 
         if (!isPass) {
             return;
@@ -304,9 +331,9 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
             info_bar.classList.add('alert-success');
             info_bar.innerText = '新增成功';
 
-            // setTimeout(() => {
-            // location.href = 'products.php'; // 跳轉到列表頁
-            // }, 2000);
+            setTimeout(() => {
+            location.href = 'products.php'; // 跳轉到列表頁
+            }, 2000);
         } else {
             info_bar.classList.remove('alert-success');
             info_bar.classList.add('alert-danger');
