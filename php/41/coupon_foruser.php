@@ -21,10 +21,11 @@ if ($type == 2) {
     $type = 1;
 }
 // ================
+$a=$_SESSION['user']['member_sid'];
 
 if($type==1){
     
-    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW();");
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`member_sid`=%s",$a );
 
     $perPage = 5;
 
@@ -47,20 +48,22 @@ if($type==1){
             exit;
         }
     
-        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW()  AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a,($page - 1) * $perPage, $perPage);
     
         $rows = $pdo->query($sql)->fetchAll();
     }
     
-    $a=$_SESSION['user']['member_sid'];
+
     
     $sql_points = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE`coupon_receive`.`member_sid`=%s",$a );
+
+
     
     $t_points = $pdo->query($sql_points)->fetchAll();
     $a = $t_points[0];
 
 }else{
-    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0;");
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0  AND`coupon_receive`.`member_sid`=%s",$a );
 
     $perPage = 5;
 
@@ -82,7 +85,7 @@ if($type==1){
             // header("Location: ?page=$totalPages");
             exit;
         }
-        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0 LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0 AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a, ($page - 1) * $perPage, $perPage);
     
         $rows = $pdo->query($sql)->fetchAll();
     }
