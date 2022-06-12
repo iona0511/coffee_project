@@ -3,10 +3,10 @@
 
 // session_start();
 
-// if (!isset($_SESSION['user']['admin_account'])) {
-//     header('Location:/coffee_project/php/09/admin-login.html');
-//     exit;
-// }
+if (!isset($_SESSION['user']['admin_account'])) {
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
 
 
 $perPage = 5; // 每一頁有幾筆
