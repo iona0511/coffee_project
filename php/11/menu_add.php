@@ -116,6 +116,7 @@ $title = '新增餐點資料';
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功
                     </div>
+                    <br>
                 </div>
             </div>
         </div>

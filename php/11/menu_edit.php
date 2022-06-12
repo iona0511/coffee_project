@@ -53,6 +53,8 @@ if (empty($row)) {
                     <h5 class="card-title">編輯餐點資料</h5>
                     <form name="form1" onsubmit="sendData();return false;novalidate">
                     <input type ="hidden" name="menu_sid" value="<?=$row['menu_sid']?>">
+
+
                         <div class="mb-3">
                             <label for="menu_categories" class="form-label">種類</label>
                             <input type="text" class="form-control" id="menu_categories" name="menu_categories" required value="<?=$row['menu_categories']?>">
