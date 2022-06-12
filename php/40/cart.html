@@ -467,8 +467,6 @@
         const vm = Vue.createApp({
             data() {
                 return {
-                    productArray: [],
-                    foodArray: [],
                     dataArray: [],
                     couponArray: [],
                     cartLength: 0,
@@ -767,8 +765,6 @@
                     } else {
                         document.querySelector("body").removeAttribute("coffee-op0");
                     }
-                    this.productArray = data.product;
-                    this.foodArray = data.food;
                     this.couponArray = data.coupon;
                     this.dataArray.push(data.product);
                     this.dataArray.push(data.food);
