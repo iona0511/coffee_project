@@ -10,7 +10,7 @@
     <!-- <link rel="stylesheet" href="../../../fontawesome/css/all.css"/> -->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css' />
 
-    <title><?= $title ?? '拎+B' ?></title>
+    <title><?= $title ?? '來拎+B' ?></title>
 </head>
 
 <body>

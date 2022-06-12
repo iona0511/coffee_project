@@ -1,14 +1,14 @@
 <?php
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
-// if (!session_id()) {
-//     session_start();
-// }
+if (!session_id()) {
+    session_start();
+}
 
-// if (!isset($_SESSION['user']['admin_account'])){
-//     header('Location:/coffee_project/php/09/login.html');
-//     exit;
-// }
+if (!isset($_SESSION['user']['member_account'])){
+    header('Location:/coffee_project/php/09/login.html');
+    exit;
+}
 
 $pageName = 'lastest-news';
 $title = '活動消息前台';
@@ -83,8 +83,13 @@ if ($totalRows > 0) {
         border-top: 5px solid rgba(255, 255, 255, 0.528);
         text-align: center;
     }
+    .box-shadow {
+           /* box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 10px 10px 20px -5px #bb69ff; */
+        box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 10px 10px 20px -5px #4c95f4;
+    }
 
     /* 標題動畫開始 */
+
     .title01 {
         width: 100%;
         /* position: absolute;
@@ -126,7 +131,6 @@ if ($totalRows > 0) {
             animation-timing-function: ease-in-out
         }
     }
-
     /* 標題動畫結束 */
 
 </style>
@@ -176,7 +180,7 @@ if ($totalRows > 0) {
 
             <div class="col-12 d-flex flex-wrap justify-content-around">
                 <?php foreach ($rows as $r) : ?>
-                    <div class="card col-3 m-3" style="background-color:rgb(243, 174, 54);border-radius:20px;">
+                    <div class="card col-3 m-3 box-shadow" style="background-color:rgb(243, 174, 54);border-radius:20px;">
 
                         <img class="card-img-top w-100" style="height: 200px; border-radius:20px;" src="
                                         <?php if ($r['news_img']) : echo '/../../coffee_project/images/18/' . $r['news_img'];

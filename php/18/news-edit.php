@@ -121,11 +121,11 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="news_img" class="form-label">活動圖片</label><br>
                             <input type="file" name="news_img" accept="image/*" onchange="changeOneImg(event)" />
-                            <div class="form-text"></div>
+                            <div class="form-text red"></div>
                             <img class="single-img" src="
                             <?php if ($row['news_img']) : echo '/coffee_project/images/18/' . $row['news_img'];
                             endif; ?>" <?php if (!$row['news_img']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="news_img" />
-                            <div class="form-text red"></div>
+
                         </div>
 
                         <div class="d-flex justify-content-end">

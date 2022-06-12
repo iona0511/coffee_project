@@ -53,7 +53,7 @@
                 <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0" style="height: 45px;">
 
                     <li class="nav-item">
-                        <a class="nav-link pe-4" href="/coffee_project/php/18/lastest-news.php">活動消息</a>
+                        <a class="nav-link pe-4" href="/coffee_project/php/18/lastest-news.php">消息管理</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link pe-4" href="/coffee_project/php/35/products.php">商品</a>

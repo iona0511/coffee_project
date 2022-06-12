@@ -45,14 +45,6 @@ if (empty($products_sid) or empty($_POST['products_price'])) {
 }
 
 
-if (empty($products_sid) or empty($_POST['products_forsale'])) {
-    $output['error'] = '是否販賣中';
-    $output['code'] = 105;
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-
 if (empty($products_sid) or empty($_POST['products_stocks'])) {
     $output['error'] = '請輸入庫存';
     $output['code'] = 106;

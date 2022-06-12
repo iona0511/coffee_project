@@ -53,6 +53,10 @@ if ($totalRows > 0) {
         background-size: cover;
         background-attachment: fixed;
     }
+    .products-card-img-top{
+        cursor: pointer;
+
+    }
 </style>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php' ?>
 <section>
@@ -89,9 +93,9 @@ if ($totalRows > 0) {
                 <?php foreach ($rows as $r) : ?>
                     <div class="card col-3 py-3 m-3 ">
 
-                        <img class="card-img-top w-100" style="height: 300px;" src="
+                        <img class="products-card-img-top card-img-top w-100" style="height: 300px;" src="
                                         <?php if ($r['products_pic_one']) : echo '/../../coffee_project/images/35/' . $r['products_pic_one'];
-                                        endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" title="<?= $r['products_pic_one'] ?>" />
+                                        endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
 
                         <div class="card-body">
 

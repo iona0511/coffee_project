@@ -60,13 +60,16 @@ if (!session_id()) {
         z-index: 999;
     }
 </style>
-<div class="bg-light" style="width:100%">
+<div class="bg-light" style="width:100%; ">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent" style="width: 100%;">
             <img style="width: 50px; aspect-ratio:1;" src="/coffee_project/images/09/picwish.png" alt="">
             <ul class="nav navbar-nav  me-auto mb-2 mb-lg-0" style="height: 45px;position: relative;">
                 <li class="nav-item px-2">
                     <a class="nav-link" aria-current="page" href="/coffee_project/index_.php">首頁</a>
+                </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link" href="/coffee_project/php/18/news_index_font.php">活動消息</a>
                 </li>
                 <li class="nav-item px-2">
                     <a class="nav-link" href="/coffee_project/php/35/products_font.php">商品</a>

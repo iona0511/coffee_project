@@ -169,10 +169,10 @@ $coupon_status  = [
                         <div class="mb-3 d_colum" style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;display:flex; flex-direction: column;width:100%;">
                             <label for="">優惠券發放類別</label>
                             <select class="s_padding" name="cst_type">
-                                <option value="" selected disabled>- 請選擇 -</option>
+                                <!-- <option value="" selected disabled>- 請選擇 -</option> -->
 
                                 <?php foreach ($coupon_send_type as $k => $v) : ?>
-                                    <option value="<?= $v ?>"> <?= $v ?></option>
+                                    <option value="<?= $v ?>" <?= $row_s['coupon_send_type']== $v ? 'selected' : '' ?> > <?= $v ?></option>
                                 <?php endforeach; ?>
                             </select>
                             <div class="form-text red"></div>
@@ -182,10 +182,10 @@ $coupon_status  = [
                             <label for="">優惠券折扣類別</label>
 
                             <select class="s_padding" name="cstt_type">
-                                <option value="" selected disabled>- 請選擇 -</option>
+                                <!-- <option value="" selected disabled>- 請選擇 -</option> -->
 
                                 <?php foreach ($coupon_setting_type as $k => $v) : ?>
-                                    <option value="<?= $v ?>"> <?= $v ?></option>
+                                    <option value="<?= $v ?>" <?= $row_s['coupon_setting_type']== $v ? 'selected' : '' ?>> <?= $v ?></option>
 
                                 <?php endforeach; ?>
                             </select>
@@ -195,7 +195,7 @@ $coupon_status  = [
                         <div class="mb-3 d_colum " style="border-top: 1px solid #D0D0D0;margin-top: 25px;padding: 15px 0;">
                             <label for="number">* 優惠券金額/折數</label>
 
-                            <input type="number" id="number" class="css-qkktdp-TextField" name="number" required>
+                            <input type="number" id="number" class="css-qkktdp-TextField" name="number"  required value="<?= htmlentities($row_s['coupon_money']) ?>">
 
                             <div class="form-text red"></div>
                         </div>
@@ -205,7 +205,7 @@ $coupon_status  = [
                             <select class="s_padding" name="m_sid">
                                 <option value="" selected disabled>- 請選擇 -</option>
                                 <?php foreach ($rows as $k => $v) : ?>
-                                    <option value="<?= $v['menu_sid'] ?>"> <?= $v['menu_sid'] ?></option>
+                                    <option value="<?= $v['menu_sid'] ?>" <?= $row_s['menu_sid']== $v ? 'selected' : '' ?>> <?= $v['menu_sid'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                 
@@ -226,10 +226,10 @@ $coupon_status  = [
                             <label for="">類別</label>
 
                             <select class="s_padding" name="t_type">
-                                <option value="" selected disabled>- 請選擇 -</option>
+                                <!-- <option value="" selected disabled>- 請選擇 -</option> -->
 
                                 <?php foreach ($t_type as $k => $v) : ?>
-                                    <option value="<?= $v ?>"> <?= $v ?></option>
+                                    <option value="<?= $v ?>" <?= $row_s['type']== $v ? 'selected' : '' ?>> <?= $v ?></option>
 
                                 <?php endforeach; ?>
                             </select>
@@ -240,10 +240,10 @@ $coupon_status  = [
                             <label for="">優惠券有效期限</label>
 
                             <select class="s_padding" name="coupon_validity_period">
-                                <option value="" selected disabled>- 請選擇 -</option>
+                                <!-- <option value="" selected disabled>- 請選擇 -</option> -->
 
                                 <?php foreach ($coupon_validity_period as $k => $v) : ?>
-                                    <option value="<?= $v ?>"> <?= $v ?></option>
+                                    <option value="<?= $v ?>" <?= $row_s['coupon_validity_period']== $v ? 'selected' : '' ?>> <?= $v ?></option>
 
                                 <?php endforeach; ?>
                             </select>
@@ -253,10 +253,10 @@ $coupon_status  = [
                             <label for="">優惠券開放狀態</label>
 
                             <select class="s_padding" name="coupon_status">
-                                <option value="" selected disabled>- 請選擇 -</option>
+                                <!-- <option value="" selected disabled>- 請選擇 -</option> -->
 
                                 <?php foreach ($coupon_status as $k => $v) : ?>
-                                    <option value="<?= $v ?>"> <?= $v ?></option>
+                                    <option value="<?= $v ?>" <?= $row_s['coupon_status']== $v ? 'selected' : '' ?>> <?= $v ?></option>
 
                                 <?php endforeach; ?>
                             </select>
