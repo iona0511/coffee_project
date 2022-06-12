@@ -15,6 +15,7 @@ $title = '我的優惠券';
 $type = isset($_GET['type']) ? intval($_GET['type']) : 1;
 
 
+
 if ($type == 2) {
     $type = 2;
 } else {
@@ -25,7 +26,7 @@ $a=$_SESSION['user']['member_sid'];
 
 if($type==1){
     
-    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`member_sid`=%s",$a );
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`status`=0 AND`coupon_receive`.`member_sid`=%s",$a );
 
     $perPage = 5;
 
@@ -48,7 +49,7 @@ if($type==1){
             exit;
         }
     
-        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW()  AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a,($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`status`=0 AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a,($page - 1) * $perPage, $perPage);
     
         $rows = $pdo->query($sql)->fetchAll();
     }
@@ -518,14 +519,24 @@ if($type==1){
                             </div>
                         
 
-                            <div style="flex-direction: row;margin-top:25px;">
+                            <!-- <div style="flex-direction: row;margin-top:25px;">
                                 <div style="font-size: 14px;">
                                     <?= $type == 1 ?$r['end_time'] :$r['used_time']; ?>
                                 </div>
                                 <div style="width: 50px;font-size: 14px;">
                                     <?= $type == 1 ? '到期' : '已過期'; ?>
                                 </div>
+                            </div> -->
+
+                            <div style="flex-direction: row;margin-top:25px;">
+                                <div style="font-size: 14px;">
+                                    <?= $type == 1 ? $r['end_time'] : $type == 2 && $r['status'] ==0 ? $r['end_time'] :$r['used_time']; ?>
+                                </div>
+                                <div style="width: 50px;font-size: 14px;">  
+                                    <?= $type == 1 ? '到期' : $type == 2  && $r['status'] ==0 ?'已過期': '已使用'; ?>
+                                </div>
                             </div>
+
                         </div>    
                     </div>
                 </div>
