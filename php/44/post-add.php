@@ -16,7 +16,7 @@
     <?php include (dirname(__DIR__, 2)) . "/parts/navbar.php"; ?>
     <div class="container pt-3" style="max-width: 960px;">
         <h3 class="card-title" style="font-weight: bold;">新增文章</h3>
-        <form name="main_form" onsubmit="sendData();return false;" novalidate id="main_form">
+        <form name="main_form" onsubmit="sendData();return false;" novalidate id="main_form" style="padding-bottom:2rem;">
             <div class="d-flex mb-3">
                 <div class="col-2 pr-3">
                     <label for="topic" class="form-label">文章分類</label>
@@ -68,7 +68,7 @@
             </div>
 
 
-            <button type="submit" class="btn btn-primary mt-2 ">發佈分享</button>
+            <button type="submit" class="btn btn-primary mt-2 mb-3">發佈分享</button>
             <div id="info_bar" class="alert alert-success" role="alert" style="display: none;">
                 發佈成功
             </div>
@@ -101,6 +101,9 @@
                     info_bar.classList.add('alert-success');
                     info_bar.style.display = "block";
                     info_bar.innerText = `分享成功`;
+
+                    location.href = "share.html";
+
                 } else {
                     info_bar.style.opacity = "1";
                     info_bar.classList.remove('alert-success');
@@ -163,7 +166,7 @@
             }
             const existPicLength = JSON.parse(document.main_form.photos.value).length;
             // 如果沒上圖片直接return
-            if(photos.files.length == 0) return;
+            if (photos.files.length == 0) return;
 
             if ((photos.files.length + existPicLength > 5)) {
                 alert('最多隻能新增五張圖片');

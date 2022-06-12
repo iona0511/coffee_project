@@ -255,7 +255,7 @@ $tags = $pdo->query($tag_sql)->fetchAll();
                 body: pd
             });
             const response = await data.json();
-   
+
             render(response);
             addPicCtrl();
         }
@@ -328,8 +328,8 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         async function preview_tag() {
 
             const v = document.main_form.tag.value;
-        
-            if (v.length < 1) {  
+
+            if (v.length < 1) {
                 document.querySelector(".s_result").innerHTML = "";
                 return;
             }
@@ -443,10 +443,10 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         });
 
         async function sendData() {
-     
+
             function show_msg(msg) {
                 if (msg['success']) {
-                    alert("修改成功");
+                    history.go(-1);
                 } else {
                     alert(`修改失敗 : ${msg.error}`)
 
