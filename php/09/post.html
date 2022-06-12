@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+            crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+        }
+        .container{
+            width: 1200px;
+            height: 200px;
+            background-color: bisque;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .post-title{
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            margin-right: 10px;
+            outline:none;
+            border: 0;
+            background: transparent;
+        }
+        .post-content{
+            width: 800px;
+            height: 150px;
+            background-color: white;
+            margin-right: 10px;
+            padding: 20px;
+            outline:none;
+            border: 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            /* -webkit-line-clamp: 2; */
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+        .link{
+            width: 50px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navBar"></div>
+    <form action="" name="form1">
+        <div class="container">
+            <div class="form-title">標題：</div>
+            <input type="text" class="post-title" id="title" name="title" readonly="true">
+            <div class="form-content">內容：</div>
+            <input type="text" class="post-content" id="content" name="content" readonly="true" disabled="true">
+            <button class="link" type="button">連結</button>
+        </div>
+        <div class="container">
+            <div class="form-title">標題：</div>
+            <input type="text" class="post-title" id="title" name="title" readonly="true">
+            <div class="form-content">內容：</div>
+            <input type="text" class="post-content" id="content" name="content" readonly="true" disabled="true">
+            <button class="link" type="button">連結</button>
+        </div>
+        <div class="container">
+            <div class="form-title">標題：</div>
+            <input type="text" class="post-title" id="title" name="title" readonly="true">
+            <div class="form-content">內容：</div>
+            <input type="text" class="post-content" id="content" name="content" readonly="true" disabled="true">
+            <button class="link" type="button">連結</button>
+        </div>
+    </form>
+
+</body>
+    
+<script>
+    const form1 = document.form1;
+    const link = document.querySelectorAll('.link');
+    const inputT = form1.querySelectorAll('input[name="title"]');
+    const inputC = form1.querySelectorAll('input[name="content"]');
+
+    const renderData = async()=>{
+        await fetch("post-api.php")
+        .then(r=>r.json())
+        .then((obj)=> {
+
+            for( let i = 0 ; i<inputT.length; i++ ){
+                inputT[i].value = obj.postData[i][0];
+            }
+            for( let i = 0 ; i<inputC.length; i++ ){
+                inputC[i].value = obj.postData[i][1];
+            }
+
+            for( let i = 0 ; i<link.length; i++ ){
+                link[i].addEventListener('click',()=>{
+                    window.location.href='/coffee_project/php/44/share-detail.php?pid=(obj.postData[i][2])';
+                })
+            }
+
+            // link[0].addEventListener('click',()=>{
+            //         // window.location.href='/coffee_project/php/09/welcome.php';
+            //         window.location.href='/coffee_project/php/44/share-detail.php?pid=1';
+            //     })
+    }
+    )};
+    renderData();
+            
+
+    function getNav() {
+                fetch("../../parts/navbar.php")
+                    .then(function (r) {
+                        return r.text();
+                    })
+                    .then(function (navData) {
+                        console.log(navData);
+                        navBar = document.querySelector(".navBar");
+                        navBar.innerHTML = navData;
+                    });
+            }
+            getNav();
+</script>
+</html>
