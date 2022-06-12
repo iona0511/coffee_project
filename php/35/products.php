@@ -2,6 +2,11 @@
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
 $pageName = 'product';
 $title = '商品列表';
 
@@ -61,6 +66,9 @@ if ($totalRows > 0) {
 
 
 </style>
+
+<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
+
 <style>
     .bg {
         background-color: #fff;
@@ -136,19 +144,19 @@ if ($totalRows > 0) {
         transition-delay: 0s, 0s;
     }
 
-    a {
+    .products_page a {
         text-decoration: none;
     }
 
-    a:hover {
+    .products_page a:hover {
         background-color: #B2ADAA;
         text-decoration: none;
         color: #fff;
     }
 </style>
-<?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php' ?>
 
 <!-- server side render -->
+<section class="products_page">
 <div class="container">
     <div class="row">
         <div class="col">
@@ -177,7 +185,7 @@ if ($totalRows > 0) {
                     <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">商品圖片(商品頁)</th>
                     <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">商品圖片(詳細頁)</th>
                     <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">商品風格</th>
-                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius:0 20px 0 0 ;"></th>
+                    <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);border-radius:0 20px 0 0 ;">修改</th>
                 </tr>
             </thead>
             <tbody class="bg">
@@ -235,6 +243,7 @@ if ($totalRows > 0) {
             </nav>
         </div>
     </div>
+</section>
     <?php include dirname(dirname(__DIR__, 1)) . '/parts/scripts.php' ?>
     <script>
         function delete_it(sid) {

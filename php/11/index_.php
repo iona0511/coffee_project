@@ -1,6 +1,6 @@
 <?php require dirname(__DIR__, 2) . '/parts/connect_db.php'; 
 $pageName = 'index';
-$title = '喝咖啡-首頁';
+$title = '來拎+B';
 
 ?>
 
