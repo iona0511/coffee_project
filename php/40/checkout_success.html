@@ -76,7 +76,6 @@
 </head>
 <body>
     <div id="app" v-cloak>
-        <!-- <button @click="checkSession">check session</button> -->
         <div class="success">
             <h1>{{success}}</h1>
             <h4>0+B 感謝您的支持</h4>
@@ -137,15 +136,7 @@
                 }
             },
             methods: {
-                // checkSession() {
-                //     fetch("./sessionViewer.php")
-                //     .then(data => data.json())
-                //     .then(data => {
-                //         console.log(data);
-                //     })
-                // },
                 checkQuantity() {
-                    // console.log("chechk");
                     const cart_quantity = document.querySelector("[data-content-before]");
                     const myHref = window.location.href.replace(/coffee_project.*/, "coffee_project/parts/read_quantity_api.php");
                     fetch(myHref)
@@ -172,7 +163,6 @@
                 .then(data => data.json())
                 .then(data => {
                     if(data) {
-                        // console.log(data);
                         this.orderData = data;
                     } else {
                         alert("請至會員中心確認訂單");

@@ -441,7 +441,9 @@
             };
 
             async function handleFiles(files) {
+                // console.log(1);
                 const fd = new FormData(document.form2);
+                // console.log(files);
 
                 const r = await fetch("./upload-photos-api.php", {
                     method: "POST",
@@ -449,25 +451,21 @@
                 });
 
                 const obj = await r.json();
+                // console.log(obj);
+                // console.log(obj.success);
+                // console.log(obj.filename);
 
-                const file = files[0];
                 // const imageType = /image.*/;
 
                 myimg.style.display = "block";
 
                 const reader = new FileReader(); // 建立檔案讀取器,將上傳的圖片資料取出
-
+                const file = files[0];
                 reader.readAsDataURL(file);
-
+                // console.log(file);
                 // 取出 file 中的 base64 格式 data
-
-                if (obj.success === true) {
-                    myimg.src = photoItem(obj.filename);
-
-                    imgs = myimg.getAttribute("data-f");
-
-                    document.form1.course_img_s.value = imgs;
-                } else {
+                // console.log(obj.success === false);
+                if (obj.success === false) {
                     myimg.src = photoItem(file.name);
 
                     imgs = myimg.getAttribute("data-f");
@@ -476,26 +474,26 @@
                 }
             }
 
-            // avatar.addEventListener("change", async function (files) {
-            //
-            //     // 上傳表單
-            //     const fd = new FormData(document.form2);
+            avatar.addEventListener("change", async function (files) {
+                // console.log(2);
+                // 上傳表單
+                const fd = new FormData(document.form2);
 
-            //     const r = await fetch("./upload-photos-api.php", {
-            //         method: "POST",
-            //         body: fd,
-            //     });
+                const r = await fetch("./upload-photos-api.php", {
+                    method: "POST",
+                    body: fd,
+                });
 
-            //     const obj = await r.json();
-            //     myimg.style.display = "block";
+                const obj = await r.json();
+                myimg.style.display = "block";
 
-            //     if (obj.filename) {
-            //         myimg.src = photoItem(obj.filename);
-            //     }
-            //     imgs = myimg.getAttribute("data-f");
+                if (obj.filename) {
+                    myimg.src = photoItem(obj.filename);
+                }
+                imgs = myimg.getAttribute("data-f");
 
-            //     document.form1.course_img_s.value = imgs;
-            // });
+                document.form1.course_img_s.value = imgs;
+            });
 
             function uploadAvatar() {
                 avatar.click(); // 模擬點擊
@@ -537,8 +535,9 @@
                 e.preventDefault(); //終止預設行為
 
                 const dt = e.dataTransfer;
-
+                // console.log(dt);
                 const files = dt.files;
+
                 handleFiles(files);
 
                 dropbox.classList.remove("upload_zone_enter");

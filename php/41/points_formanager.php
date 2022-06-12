@@ -1044,6 +1044,7 @@ if ($totalRows > 0) {
 
     
 </style>
+
 <div class="display_justify_content px24 " style="font-weight:bold; margin-top: 5px;font-size: 24px;">
     總會員積分紀錄
 </div>

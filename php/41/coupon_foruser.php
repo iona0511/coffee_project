@@ -21,10 +21,11 @@ if ($type == 2) {
     $type = 1;
 }
 // ================
+$a=$_SESSION['user']['member_sid'];
 
 if($type==1){
     
-    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW();");
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() AND`coupon_receive`.`member_sid`=%s",$a );
 
     $perPage = 5;
 
@@ -47,20 +48,22 @@ if($type==1){
             exit;
         }
     
-        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW() LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`WHERE `coupon_receive`.`end_time`>NOW()  AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a,($page - 1) * $perPage, $perPage);
     
         $rows = $pdo->query($sql)->fetchAll();
     }
     
-    $a=$_SESSION['user']['member_sid'];
+
     
     $sql_points = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE`coupon_receive`.`member_sid`=%s",$a );
+
+
     
     $t_points = $pdo->query($sql_points)->fetchAll();
     $a = $t_points[0];
 
 }else{
-    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0;");
+    $t_sql = sprintf("SELECT COUNT(1)FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0  AND`coupon_receive`.`member_sid`=%s",$a );
 
     $perPage = 5;
 
@@ -82,7 +85,7 @@ if($type==1){
             // header("Location: ?page=$totalPages");
             exit;
         }
-        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0 LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+        $sql = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE `coupon_receive`.`end_time`<NOW()||`coupon_logs`.`used_time`>0 AND`coupon_receive`.`member_sid`=%s LIMIT %s, %s",$a, ($page - 1) * $perPage, $perPage);
     
         $rows = $pdo->query($sql)->fetchAll();
     }
@@ -118,7 +121,7 @@ if($type==1){
         padding: 0.5em 1.8em;
         text-align: center;
         text-decoration: none;
-        color: #B79973;
+        color: #fff;
         border: 2px solid #B79973;
         font-size: 24px;
         display: inline-block;
@@ -157,7 +160,7 @@ if($type==1){
         color: #fff;
     }
     .coupon_style{
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.2);
         border: 1px solid rgba(255, 255, 255, 0.6);
     }
     .page-item.active .page-link {
@@ -398,6 +401,7 @@ if($type==1){
 
     .loading {
         font-size: 24px;
+        
         font-weight: 300;
         text-align: center;
     }
@@ -408,14 +412,14 @@ if($type==1){
 
     .loading07 span {
         position: relative;
-        color: rgba(0, 0, 0, .2);
+        color:#fff;
     }
     .loading07 span::after {
         position: absolute;
         /* top: 0;
         left: 0; */
         content: attr(data-text);
-        color: #000;
+        color: #fff;
         opacity: 0;
         transform: scale(1.5);
         animation: loading07 10s infinite;
@@ -450,12 +454,23 @@ if($type==1){
     }
     
     
+    #myVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
 
 </style>
 
-<!-- <div class="display_justify_content px24" style="font-weight:bold; margin-top: 30px;font-size: 24px;">
-    <p>我的優惠券</p>
-</div> -->
+
+<video autoplay muted loop id="myVideo">
+    <source src="./copon_img/Grinding up coffee beans.mp4" type="video/mp4">
+</video>
+
+
 
 <section>
     <div class=" loading loading07 load">
