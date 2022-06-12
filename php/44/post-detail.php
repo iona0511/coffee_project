@@ -114,10 +114,6 @@ if ($rows['topic_sid'] == 1) {
                         </div>
                     </div>
                     <!-- 找session sid=文章sid才出現 -->
-                    <div class="post-edit mb-2" style="display:none;">
-                        <a class="mr-1" href="edit-share.php?pid=<?= $pid ?>"><i class="fa-solid fa-user-pen"></i>編輯分享</a>
-                        <a href="api/delete-post.php?<?= $pid ?>"><i class="fa-solid fa-trash-can"></i>刪除分享</a>
-                    </div>
                     <h3 class="mb-3"><?= $rows['title'] ?></h3>
                     <div class="d-flex mb-3">
                         <a class="mr-3" href="post-list.php?topic=<?= $rows['topic_sid'] ?>">
@@ -394,15 +390,6 @@ if ($rows['topic_sid'] == 1) {
 
                 // 如果登入者有按過讚render紅色愛心
                 if (r[0]['isLike'] == true) document.querySelector(".fa-heart").classList.add("heart_red", "animate__heartBeat");
-
-
-                // render是該篇文章作者給編輯/刪除
-                if (r[0].m_sid == <?= $rows['member_sid'] ?>) {
-                    document.querySelector(".post-edit").style.display = "block";
-
-                } else {
-                    document.querySelector(".post-edit").style.display = "none";
-                }
             }
 
             const data = await fetch("api/detail-getInfo-api.php", {

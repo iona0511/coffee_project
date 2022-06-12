@@ -149,6 +149,7 @@ if ($totalRows > 0) {
         text-decoration: none;
         color: #fff;
     }
+
 </style>
 </head>
 
