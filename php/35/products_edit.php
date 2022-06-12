@@ -1,4 +1,11 @@
 <?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
 $pageName = 'products_edit';
 $title = '編輯商品資料';
 
@@ -22,7 +29,7 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 
 if (empty($row)) {
     header('Location: products.php');
-    echo "console.log('a')";
+    // echo "console.log('a')";
     exit;
 }
 
@@ -82,7 +89,7 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_price" class="form-label">價錢</label>
                             <input type="number" class="form-control" id="products_price" name="products_price" value="<?= $row['products_price'] ?>">
-                            <div class="form-text"></div>
+                            <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3">
@@ -108,7 +115,7 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_stocks" class="form-label">商品庫存</label>
                             <input type="number" class="form-control" id="products_stocks" name="products_stocks" value="<?= $row['products_stocks'] ?>">
-                            <div class="form-text"></div>
+                            <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3">
@@ -123,14 +130,15 @@ if (empty($row)) {
                                                                                             endif; ?>>
                                         <?= $r['products_categroies_name'] ?>
                                     </option>
-                                <?php endforeach; ?>
+                                <?php endforeach; ?>                                
                             </select>
+                            <div class="form-text red"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label><br>
-                            <input type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" value="<?= '/coffee_project/images/35/' . $row['products_pic_one'] ?>" />
-                            <div class="form-text"></div>
+                            <input id="pic_one_input" type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" value="<?= '/coffee_project/images/35/' . $row['products_pic_one'] ?>" />
+                            <div class="form-text red"></div>
                             <img class="single-img" src="
                             <?php if ($row['products_pic_one']) :
                                 echo '/coffee_project/images/35/' . $row['products_pic_one'];
@@ -140,7 +148,8 @@ if (empty($row)) {
 
                         <div class="mb-3" id="multiDiv">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
-                            <input type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple value="<?= '/coffee_project/images/35/' . $row['products_pic_multi'] ?>" />
+                            <input id="pic_multi_input" type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple value="<?= '/coffee_project/images/35/' . $row['products_pic_multi'] ?>" />
+                            <div class="form-text red"></div>
                             <div class="multiImg">
                                 <?php $multiPic =  explode(",", $row['products_pic_multi']) ?>
                                 <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
@@ -152,6 +161,7 @@ if (empty($row)) {
                         <div class="mb-3">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
                             <select name="products_with_products_style_filter_sid" id="products_with_products_style_filter_sid">
+                            <div class="form-text red"></div>
                                 <option value="1" disabled>-- 請選擇 -- </option>
                                 <?php foreach ($row_style as $r) : ?>
                                     <option value="<?= $r['products_style_filter_sid'] ?>" <?php if ($r['products_style_filter_sid'] == $row['products_style_filter_sid']) :
@@ -187,9 +197,20 @@ if (empty($row)) {
     const info_bar = document.querySelector('#info-bar');
     const name_f = document.form1.products_name;
     const price_f = document.form1.products_price;
+    const products_introductione_f = document.form1.products_introduction;
+    const products_detail_introduction_f = document.form1.products_detail_introduction;
     const forsale_f = document.form1.products_forsale;
+    const products_onsale_f = document.form1.products_onsale;
+    const products_stocks_f = document.form1.products_stocks;
+    const products_with_products_categroies_sid_f = document.form1.products_with_products_categroies_sid;
+    
+    const products_pic_one_f = document.getElementById("pic_one_input");
+    const products_pic_multi_f = document.getElementById("pic_multi_input");
+    // const products_pic_one_f = document.form1.products_products_pic_one;
+    // const products_pic_multi_f = document.form1.products_pic_multi;
+    const products_with_products_style_filter_sid_f = document.form1.products_with_products_style_filter_sid;
 
-    const fields = [name_f, price_f, forsale_f];
+    const fields = [name_f];
     const fieldTexts = [];
     for (let f of fields) {
         fieldTexts.push(f.nextElementSibling);
@@ -198,12 +219,12 @@ if (empty($row)) {
 
     function changeOneImg() {
         const file = event.currentTarget.files[0];
-        console.log(file);
+        // console.log(file);
         const reader = new FileReader();
 
         // 資料載入後 (讀取完成後)
         reader.onload = function() {
-            console.log(reader.result);
+            // console.log(reader.result);
             document.querySelector("#products_pic_one").style.display = 'block';
             document.querySelector("#products_pic_one").src = reader.result;
         };
@@ -214,7 +235,7 @@ if (empty($row)) {
         if (event.currentTarget.files.length <= 3) {
             for (i = 0; i < event.currentTarget.files.length; i++) {
                 let file = event.currentTarget.files[i];
-                console.log(file);
+                // console.log(file);
                 let reader = new FileReader();
                 let idName = `#products_pic_multi${i}`;
                 // wrap.innerHTML = '';
@@ -246,20 +267,20 @@ if (empty($row)) {
 
     async function sendData() {
         // 讓欄位的外觀回復原來的狀態
-        // for (let i in fields) {
-        //     fields[i].classList.remove('red');
-        //     fieldTexts[i].innerText = '';
-        // }
+        for (let i in fields) {
+            fields[i].classList.remove('red');
+            fieldTexts[i].innerText = '';
+        }
         info_bar.style.display = 'none'; // 隱藏訊息列
 
         // // TODO: 欄位檢查, 前端的檢查
         let isPass = true; // 預設是通過檢查的
 
-        // if (name_f.value.length < 2) {
-        //     fields[0].classList.add('red');
-        //     fieldTexts[0].innerText = '商品名稱至少兩個字';
-        //     isPass = false;
-        // }
+        if (name_f.value.length < 1) {
+            fields[0].classList.add('red');
+            fieldTexts[0].innerText = '請輸入商品名稱';
+            isPass = false;
+        }
 
         if (!isPass) {
             return; // 結束函式
@@ -272,7 +293,7 @@ if (empty($row)) {
         });
 
         const result = await r.json();
-        console.log(result);
+        // console.log(result);
         info_bar.style.display = 'block';
         if (result.success) {
             info_bar.classList.remove('alert-danger');

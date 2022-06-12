@@ -1,4 +1,12 @@
 <?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
+
 $pageName = 'products-add';
 $title = '新增商品';
 
