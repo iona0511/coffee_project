@@ -1,14 +1,14 @@
 <?php
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
-if (!session_id()) {
-    session_start();
-}
+// if (!session_id()) {
+//     session_start();
+// }
 
-if (!isset($_SESSION['user']['member_account'])) {
-    header('Location:/coffee_project/php/09/login.html');
-    exit;
-}
+// if (!isset($_SESSION['user']['member_account'])) {
+//     header('Location:/coffee_project/php/09/login.html');
+//     exit;
+// }
 
 
 $pageName = 'lastest-news';
