@@ -5,7 +5,7 @@ if (!session_id()) {
     session_start();
 }
 
-if (!isset($_SESSION['user']['member_account'])){
+if (!isset($_SESSION['user']['member_account'])) {
     header('Location:/coffee_project/php/09/login.html');
     exit;
 }
@@ -83,9 +83,10 @@ if ($totalRows > 0) {
         border-top: 5px solid rgba(255, 255, 255, 0.528);
         text-align: center;
     }
+
     .box-shadow {
-           /* box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 10px 10px 20px -5px #bb69ff; */
-        box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 10px 10px 20px -5px #4c95f4;
+        /* box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 10px 10px 20px -5px #bb69ff; */
+        box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 10px 10px 20px -5px #4c95f4;
     }
 
     /* 標題動畫開始 */
@@ -94,8 +95,8 @@ if ($totalRows > 0) {
         width: 100%;
         /* position: absolute;
     top: 50%;
-    /* left: 50%; */*/
-    transform: translateX(-50%) translateY(-50%);
+    /* left: 50%; */
+        */ transform: translateX(-50%) translateY(-50%);
     }
 
     h1 {
@@ -131,8 +132,8 @@ if ($totalRows > 0) {
             animation-timing-function: ease-in-out
         }
     }
-    /* 標題動畫結束 */
 
+    /* 標題動畫結束 */
 </style>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar.php'; ?>
 <section>
@@ -145,12 +146,12 @@ if ($totalRows > 0) {
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=1">
-                            <i class="fa-solid fa-angles-left"></i>
+                            start
                         </a>
                     </li>
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page - 1 ?>">
-                            <i class="fa-solid fa-angle-left"></i>
+                            <i class="fa-solid fa-angles-left"></i>
                         </a>
                     </li>
 
@@ -165,14 +166,14 @@ if ($totalRows > 0) {
                     <?php endif;
                     endfor; ?>
 
-                    <li class="page-item">
+                    <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page + 1 ?>">
-                            <i class="fa-solid fa-angle-right"></i>
+                            <i class="fa-solid fa-angles-right"></i>
                         </a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link <?= $page == $totalPages ? 'disabled' : '' ?>" href="?page=<?= $totalPages ?>">
-                            <i class="fa-solid fa-angles-right"></i>
+                    <li class="page-item <?= $page == $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link " href="?page=<?= $totalPages ?>">
+                            end
                         </a>
                     </li>
                 </ul>
@@ -202,29 +203,7 @@ if ($totalRows > 0) {
             </div>
 
 
-
-
-
-
-            <!-- 這裡是預想呈現的card樣式 -->
-
-            <!-- <div class="col-12 col-sm-6 col-lg-4 mb-4">
-                <div class="card d-flex flex-column" style="width: 20rem;background-color:rgb(243, 174, 54);border-radius:20px;">
-                    <div class="img-wrap">
-                        <img style="border-radius:20px;" src="/coffee_project/images/18/coffee_brg.jpg" class="card-img-top w-100 h-100" alt="...">
-                    </div>
-                    <div class="card-body">
-                        <h3>凡購買曼巴咖啡豆，即可獲得精美好禮~</h3>
-                        <div class="d-flex align-items-center justify-content-between time-border-top-bottom test">
-                            <small>剩下 4 天</small>
-                            <span>NT$608,866</span>
-                        </div>
-                        <p class="card-text">即日起凡購買曼巴咖啡豆系列任兩件，第二件即可打七折呦，分享優惠再送濾掛式咖啡一包! 贈品數量有限，要買要快喔~</p>
-                    </div>
-                </div>
-            </div> -->
-
-
+            <!-- <section class="mt-5"></section> -->
 
         </div>
     </div>
@@ -292,7 +271,5 @@ if ($totalRows > 0) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
     // 標題動畫js結束
-
-
 </script>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/html-foot.php'; ?>
