@@ -334,7 +334,7 @@
                         }
                     }
                     //驗證地址
-                    if(/.+(市|縣).+(路|街).\d{0,}號/.test(this.deliverAddress) || this.deliverAddress === "本店") {
+                    if(/.+(市|縣).+(路|街).*.\d{0,}號/.test(this.deliverAddress) || this.deliverAddress === "本店") {
                         this.addressWrongMsg = false;
                     } else {
                         this.addressWrongMsg = true;
