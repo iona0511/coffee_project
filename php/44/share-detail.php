@@ -262,15 +262,17 @@ if ($rows['topic_sid'] == 1) {
             btn.click();
         }
 
-        function delete_it() {
+        async function delete_it() {
 
-            fetch(`api/delete-post.php?sid=<?= $pid ?>`)
-                .then(data => data.json())
-                .then((data) => {
-                    const d = data;
+            await fetch(`api/delete-post.php?sid=<?= $pid ?>`);
 
-                });
-            location.href = "share.html";
+
+            setTimeout(() => {
+                location.href = "share.html";
+
+            }, 500);
+
+
         }
 
         let cidNumber = '';
@@ -288,7 +290,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-     
+
             // render
             document.querySelector(".like").innerHTML = `<i class="fa-solid fa-heart animate__animated"></i> ` + response['likes'];
             // 先判斷登入了沒
@@ -360,7 +362,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
-  
+
 
             if (response['success']) {
                 history.go(0);
@@ -391,7 +393,7 @@ if ($rows['topic_sid'] == 1) {
             });
 
             const response = await data.json();
- 
+
 
             if (response['success']) history.go(0);
         }
@@ -453,7 +455,7 @@ if ($rows['topic_sid'] == 1) {
                 body: pd
             });
             const response = await data.json();
-        
+
             render(response);
             addPicCtrl();
         }

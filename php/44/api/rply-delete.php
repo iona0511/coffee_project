@@ -1,5 +1,5 @@
 <?php 
-require  dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
+require  dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 
 $sid = isset($_GET['rid']) ? intval($_GET['rid']) : '0';
 if (!empty($sid)) {

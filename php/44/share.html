@@ -347,7 +347,9 @@
                     <span style="color: rgba(79, 79, 79, 0.874);">熱門標籤:&nbsp</span>
 
                 </div>
-
+            </div>
+            <div class="myshare ml-auto mr-3">
+                <h5><a href="javascript:myShare();">我的分享</a></h5>
             </div>
         </div>
         <div id="photos__container">
@@ -362,6 +364,18 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script>
+        async function myShare() {
+            const r = await fetch("api/getMember_id.php");
+            const res = await r.json();
+
+            console.log(res['mid']);
+            if(res['mid']==false){
+                alert('尚未登入');
+            }else{
+                clearAll(res['mid']);
+            }
+        }
+
         async function preview_tag() {
             event.cancelBubble = true;
 
@@ -424,7 +438,8 @@
 
         async function searchTag(tagName) {
             //讓search-wrap變搜尋結果
-            document.querySelector(".search-wrap").innerHTML = `<span style="font-style:italic">#${tagName}<span>`;
+            document.querySelector(".search-wrap").innerHTML = `<span style="font-style:italic">#${tagName}<span>
+                <a style="color:black;" href="share.html">清除搜尋</a>`;
 
             const jsonData = JSON.stringify({
                 'tagName': tagName,
@@ -600,13 +615,13 @@
 
             render(rows);
 
-            document.querySelectorAll("img")[document.querySelectorAll(".photo>img").length - 1].onload = function () {
-                cascadeDisplay();
+            document.querySelectorAll(".photo>img")[document.querySelectorAll(".photo>img").length - 1].onload = async function () {
+                await setTimeout(cascadeDisplay,20);
                 document.querySelector(".wrapper").style.opacity = 1;
                 document.querySelector(".l-wrap").remove();
             }
 
-            
+
             document.querySelectorAll(".fig-member").forEach((v) => {
                 v.addEventListener("click", (event) => {
                     event.stopPropagation();
@@ -662,12 +677,13 @@
 
 
         function clearAll(s_value) {
+            console.log(s_value);
             document.querySelectorAll(".photo").forEach((v) => {
                 if (v.dataset.mem != s_value) {
                     v.remove();
                 }
-                cascadeDisplay();
             });
+            cascadeDisplay();
         }
 
 
