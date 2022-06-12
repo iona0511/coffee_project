@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-06-10 17:41:08
+-- 產生時間： 2022-06-12 12:30:15
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- 資料庫: `coffee`
@@ -136,7 +130,6 @@ INSERT INTO `comment` (`sid`, `content`, `replies`, `created_at`, `post_sid`, `m
 -- 資料表結構 `coupon`
 --
 
-
 CREATE TABLE `coupon` (
   `sid` int(11) NOT NULL,
   `coupon_name` varchar(255) NOT NULL,
@@ -185,7 +178,6 @@ CREATE TABLE `coupon_logs` (
 --
 
 INSERT INTO `coupon_logs` (`sid`, `member_sid`, `coupon_receive_sid`, `order_sid`, `used_time`) VALUES
-
 (1, 1, 2, 1, '2022-05-31 14:29:48'),
 (2, 2, 4, 3, '2022-05-31 14:50:43'),
 (3, 3, 6, 0, '0000-00-00 00:00:00'),
@@ -197,7 +189,6 @@ INSERT INTO `coupon_logs` (`sid`, `member_sid`, `coupon_receive_sid`, `order_sid
 --
 -- 資料表結構 `coupon_receive`
 --
-
 
 CREATE TABLE `coupon_receive` (
   `sid` int(11) NOT NULL,
@@ -986,18 +977,18 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`products_sid`, `products_number`, `products_name`, `products_introduction`, `products_detail_introduction`, `products_price`, `products_forsale`, `products_onsale`, `products_stocks`, `products_with_products_categroies_sid`, `products_with_products_style_filter_sid`) VALUES
-(1, '1653962198', '曼巴咖啡(一包十入)', '精選曼巴咖啡, 一包十入', '溫順的曼巴，散發出自然甘甜氣味，集清爽與強勁香醇於一體。', 320, 1, 0, 3290, 2, 1),
-(2, '1653962417', '曼特寧咖啡(一包十入)', '精選曼特寧咖啡, 一包十入', '香濃甘苦的滋味，不帶酸味順口香醇。', 320, 1, 0, 3393, 2, 2),
-(3, '1653969575', '黃金曼特寧(半磅)', '曼特寧咖啡豆, 半磅包裝', '曼特寧咖啡豆', 470, 1, 0, 4093, 2, 2),
-(4, '1653972891', '濾紙(大)', '大片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 0, 0, 4400, 4, 4),
-(5, '1653972907', '濾紙(小)', '小片綠紙, 一包100張', '簡易方便, 100%天然紙漿製成, 保留咖啡原味', 150, 1, 0, 4400, 4, 4),
-(6, '1654050346', '巴西咖啡', '巴西咖啡', '巴西咖啡', 320, 1, 0, 3300, 3, 2),
-(7, '1654050441', '巴西咖啡2', '巴西咖啡2', '巴西咖啡2', 320, 1, 0, 3300, 3, 2),
-(8, '1654050701', '巴西咖啡(一包十入)5', '精選巴西咖啡5', '11', 320, 1, 0, 2600, 2, 2),
-(9, '1654589950', 'AA咖啡(一包十入)', '精緻AA咖啡', '精緻AA咖啡', 320, 1, 0, 5500, 2, 2),
-(10, '1654590367', 'BB咖啡(一包十入)', '精緻BB咖啡', '精緻BB咖啡', 120, 1, 0, 300, 2, 2),
-(11, '1654757377', 'CC咖啡(一包十入)', '精緻CC咖啡', '精緻CC咖啡', 320, 1, 0, 3300, 2, 1),
-(12, '1654845189', 'AA咖啡(半磅)', '精選AA咖啡豆', '精選AA咖啡豆', 320, 1, 0, 5000, 3, 1);
+(1, '1655026660', '曼巴咖啡(一包十入)', '濾掛式曼巴咖啡, 一包十入', '捨去曼特寧的濃烈與巴西的酸味，將曼特寧圓潤厚重的苦味與巴西微甜融合成溫順的曼巴，散發出自然甘甜的清香，集優雅的清爽與強勁香醇於一杯。', 320, 1, 1, 3000, 2, 1),
+(2, '1655027037', '瓜地馬拉花神(一包十入)', '瓜地馬拉花神(十包一入)', '花神具有非常愉悅優雅花香主體的風味,酸性柔和且以巧克力般的風味尾韻作結,整體口感乾淨且明亮', 320, 1, 1, 5000, 2, 1),
+(3, '1655027132', '耶加雪菲(一包十入)', '耶加雪菲(一包十入)', '日曬耶加雪菲具有濃郁奔放的水果香,柔和綿長的蜜桃莓果酸卻不刺激,風味甜度高酸度明亮且細膩', 320, 1, 1, 5000, 2, 1),
+(4, '1655027187', '黃金曼特寧(一包十入)', '黃金曼特寧(一包十入)', '手選三次,挑選20目左右碩大的特優級曼特寧生豆,豆質結實緊密,豐富油脂帶出巧克力般滑順奶油般香甜', 370, 1, 1, 5000, 2, 2),
+(5, '1655027252', '曼特寧(十包一入)', '曼特寧(十包一入)', '為蘇門答臘最具代表的咖啡豆,其草本風味質感濃郁芳香度特強,口感厚實的甘甜味是它的獨到之處,對於度喜歡酸味的人的最佳選擇', 320, 1, 1, 1000, 2, 1),
+(6, '1655027314', '義式綜合豆(十包一入)', '義式綜合豆(十包一入)', '使用當季最新鮮100%阿拉比卡咖啡豆,經由專業烘焙來呈現濃郁口感及可可韻味,並帶有淡淡果香餘韻,非常適合調配拿鐵以及卡布奇諾', 270, 1, 1, 5000, 2, 1),
+(7, '1655027409', '肯亞 (半磅)', '肯亞 (半磅)', 'AA TOP最高等級的肯亞咖啡豆其濃郁的黑梅香氣,口感豐富且尾韻悠長,轉化為肯亞特有的甜,一入口紅酒般的餘韻在口中揮之不去', 470, 1, 1, 2000, 3, 2),
+(8, '1655027457', '瓜地馬拉花神(半磅)', '瓜地馬拉花神(半磅)', '花神具有非常愉悅優雅花香主體的風味,酸性柔和且以巧克力般的風味尾韻作結,整體口感乾淨且明亮', 440, 1, 1, 3000, 3, 1),
+(9, '1655027524', '黃金曼特寧(半磅)', '黃金曼特寧(半磅)', '手選三次,挑選20目左右碩大的特優級曼特寧生豆,豆質結實緊密,豐富油脂帶出巧克力般滑順奶油般香甜', 470, 1, 1, 2000, 3, 1),
+(10, '1655027593', '濾紙(大)', '濾紙(大)', '濾紙(大)', 150, 1, 1, 5000, 4, 4),
+(11, '1655027640', '濾紙(小)', '濾紙(小)', '濾紙(小)', 100, 1, 1, 3000, 4, 4),
+(12, '1655027811', '電動慢磨機', '電動慢磨機', '「全世界研磨速度最慢」的電動咖啡磨豆機，以「最慢磨」呈現「最完整」的咖啡風味', 2800, 1, 1, 500, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -1039,7 +1030,7 @@ CREATE TABLE `products_pic` (
 --
 
 INSERT INTO `products_pic` (`products_pic_sid`, `products_pic_one`, `products_pic_multi`) VALUES
-(1, 'manba_bean.jfif', 'coffee-beans-ge63dc538f_1280.png,coffee-cup-g7ca2c646b_1920.jpg,coffee-g0d5529a14_1920.jpg'),
+(1, 'manba_bean.jfif', 'coffee-g3b12ecac6_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-g7a056ccf3_1920.jpg'),
 (2, 'bag-coffee.jpg', 'caffeine-gf6a927184_1920.jpg,cappuccino-g6d10d7112_1920.jpg,caviar-sandwich-gf30000537_1920.jpg'),
 (3, 'manba_bean.jfif', 'caffeine-gf6a927184_1920.jpg,cappuccino-g6d10d7112_1920.jpg,coffee-g3b12ecac6_1920.jpg'),
 (4, 'filter.jpg', 'filter.jpg,filter2.jpg,filter3.jpg'),
@@ -1050,7 +1041,22 @@ INSERT INTO `products_pic` (`products_pic_sid`, `products_pic_one`, `products_pi
 (9, 'manba_bean.jfif', 'coffee-g75832e31d_1920.jpg,coffee-gede84c1ac_1280.png,drip-bag.jpg'),
 (10, 'manba_bean.jfif', 'coffee-gede84c1ac_1280.png,drip-bag.jpg,fresh-g771eed6be_1920.jpg'),
 (11, 'bread-g643eb7d6e_1920.jpg', 'bag-coffee2.jpg,black-g0ea50eca3_1280.png,bread-g89f67674b_1920.jpg'),
-(12, 'coffee-beans-g9399da144_1920.jpg', 'coffee-g3b12ecac6_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-g7a056ccf3_1920.jpg');
+(12, 'coffee-beans-g9399da144_1920.jpg', 'coffee-g3b12ecac6_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-g7a056ccf3_1920.jpg'),
+(13, 'bag-coffee.jpg', 'coffee-g8ca4ec8b4_1920.jpg,coffee-g94f7ab5a8_1920.jpg,coffee-gb0b4b4db0_1920.jpg'),
+(14, 'bag-coffee.jpg', 'coffee-g94f7ab5a8_1920.jpg,coffee-g138b683d2_1920.jpg,coffee-gb0b4b4db0_1920.jpg'),
+(15, 'bag-coffee2.jpg', 'coffee-g3b12ecac6_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-g7a056ccf3_1920.jpg'),
+(16, 'manba_bean.jfif', 'coffee-g0d5529a14_1920.jpg,coffee-g94f7ab5a8_1920.jpg,drip-bag.jpg'),
+(17, 'manba_bean.jfif', 'caffeine-gf6a927184_1920.jpg,cappuccino-g6d10d7112_1920.jpg,coffee-g94f7ab5a8_1920.jpg'),
+(18, 'manba_bean.jfif', 'caffeine-gf6a927184_1920.jpg,coffee-g0d5529a14_1920.jpg,coffee-g4c1b28f2f_1920.jpg'),
+(19, 'manba_bean.jfif', 'coffee-g3b12ecac6_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-g75832e31d_1920.jpg'),
+(20, 'manba_bean.jfif', 'cappuccino-g6d10d7112_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-g7a056ccf3_1920.jpg'),
+(21, 'manba_bean.jfif', 'caffeine-gf6a927184_1920.jpg,cappuccino-g6d10d7112_1920.jpg,coffee-g4c1b28f2f_1920.jpg'),
+(22, 'bag-coffee2.jpg', 'coffee-g0d5529a14_1920.jpg,coffee-g4c1b28f2f_1920.jpg,coffee-gb0b4b4db0_1920.jpg'),
+(23, 'bag-coffee2.jpg', 'coffee-g4c1b28f2f_1920.jpg,coffee-g8ca4ec8b4_1920.jpg,coffee-gb0b4b4db0_1920.jpg'),
+(24, 'bag-coffee2.jpg', 'cappuccino-g6d10d7112_1920.jpg,coffee-g3b12ecac6_1920.jpg,coffee-g4c1b28f2f_1920.jpg'),
+(25, 'filter.jpg', 'filter.jpg,filter2.jpg,filter3.jpg'),
+(26, 'filter.jpg', 'filter.jpg,filter2.jpg,filter3.jpg'),
+(27, 'grider.png', 'coffee-g138b683d2_1920.jpg,coffee-g850f645ff_1920.jpg,coffee-g75832e31d_1920.jpg');
 
 -- --------------------------------------------------------
 
@@ -1438,7 +1444,7 @@ ALTER TABLE `order`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_record`
 --
 ALTER TABLE `points_record`
-MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `points_user`
@@ -1480,7 +1486,7 @@ ALTER TABLE `products_categroies`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products_pic`
 --
 ALTER TABLE `products_pic`
-  MODIFY `products_pic_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `products_pic_sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products_style_filter`
@@ -1512,7 +1518,3 @@ ALTER TABLE `review_likes`
 ALTER TABLE `tag`
   MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

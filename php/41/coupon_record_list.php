@@ -32,7 +32,7 @@ if ($totalRows > 0) {
         header("Location: ?page=$totalPages");
         exit;
     }
-    $sql = sprintf("SELECT * FROM `coupon` LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `coupon` ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     
     $rows = $pdo->query($sql)->fetchAll();
 }
