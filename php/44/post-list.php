@@ -1,6 +1,11 @@
 <?php
 require  dirname(__DIR__, 2) . '/parts/connect_db.php';
 
+if (!isset($_SESSION['user']['admin_account'])) {
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
 
 $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
@@ -66,91 +71,90 @@ if ($totalRows > 0) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-    .bg {
-        background-color: #fff;
-    }
+        .bg {
+            background-color: #fff;
+        }
 
-    table {
-        border-collapse: separate;
-    }
+        table {
+            border-collapse: separate;
+        }
 
-    .page-item.active .page-link {
-        z-index: 3;
-        color: #fff;
-        background-color: #B79973;
-        border-color: #B79973;
-    }
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #B79973;
+            border-color: #B79973;
+        }
 
-    .page-link {
-        color: #B79973;
-    }
+        .page-link {
+            color: #B79973;
+        }
 
-    body {
-        background-color: #CAAD87;
-        background-size: cover;
-        opacity: 0.9;
-    }
+        body {
+            background-color: #CAAD87;
+            background-size: cover;
+            opacity: 0.9;
+        }
 
-    .trash_img a .a1 {
-        display: none;
-    }
+        .trash_img a .a1 {
+            display: none;
+        }
 
-    .trash_img a .b1 {
-        display: block;
-    }
+        .trash_img a .b1 {
+            display: block;
+        }
 
-    .trash_img a:hover .a1 {
-        display: block;
-    }
+        .trash_img a:hover .a1 {
+            display: block;
+        }
 
-    .trash_img a:hover .b1 {
-        display: none;
-    }
+        .trash_img a:hover .b1 {
+            display: none;
+        }
 
-    .edit_img a .c1 {
-        display: none;
-    }
+        .edit_img a .c1 {
+            display: none;
+        }
 
-    .edit_img a .d1 {
-        display: block;
-    }
+        .edit_img a .d1 {
+            display: block;
+        }
 
-    .edit_img a:hover .c1 {
-        display: block;
-    }
+        .edit_img a:hover .c1 {
+            display: block;
+        }
 
-    .edit_img a:hover .d1 {
-        display: none;
-    }
+        .edit_img a:hover .d1 {
+            display: none;
+        }
 
-    .css-8cha5q-SubmitButton {
-        color: rgb(255, 255, 255);
-        background: rgb(51, 51, 51);
-        /* margin: 40px 0px 0px; */
-        /* width: 100%; */
-        font-size: 14px;
-        text-align: center;
-        padding: 10px 16px;
-        letter-spacing: 0.2em;
-        line-height: 1.4;
-        transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
-        transition-property: background, color;
-        transition-duration: 0.4s, 0.3s;
-        transition-timing-function: ease-out, ease-out;
-        transition-delay: 0s, 0s;
-    }
+        .css-8cha5q-SubmitButton {
+            color: rgb(255, 255, 255);
+            background: rgb(51, 51, 51);
+            /* margin: 40px 0px 0px; */
+            /* width: 100%; */
+            font-size: 14px;
+            text-align: center;
+            padding: 10px 16px;
+            letter-spacing: 0.2em;
+            line-height: 1.4;
+            transition: background 0.4s ease-out 0s, color 0.3s ease-out 0s;
+            transition-property: background, color;
+            transition-duration: 0.4s, 0.3s;
+            transition-timing-function: ease-out, ease-out;
+            transition-delay: 0s, 0s;
+        }
 
-    a {
-        text-decoration: none;
-    }
+        a {
+            text-decoration: none;
+        }
 
-    a:hover {
-        background-color: #B2ADAA;
-        text-decoration: none;
-        color: #fff;
-    }
-
-</style>
+        a:hover {
+            background-color: #B2ADAA;
+            text-decoration: none;
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
