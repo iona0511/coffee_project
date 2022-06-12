@@ -48,4 +48,4 @@ if (move_uploaded_file($_FILES['avatar']['tmp_name'], $folder . $filename)) {
 
 
 
-echo json_encode($output);
+echo json_encode($output, JSON_UNESCAPED_UNICODE);
