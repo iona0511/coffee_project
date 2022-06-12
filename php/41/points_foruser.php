@@ -24,10 +24,9 @@ if ($type == 2) {
 }
 
 // ============================================
+$a=$_SESSION['user']['member_sid'];
 
-
-$t_sql = sprintf("SELECT COUNT(1)FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`= %s;", $type);
-
+$t_sql = sprintf("SELECT COUNT(1)FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`= %s AND`points_record`.`member_sid`=%s", $type, $a);
 
 $perPage = 5;
 
@@ -52,12 +51,12 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s LIMIT %s, %s", $type, ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s AND `points_record`.`member_sid`=%s LIMIT %s, %s", $type, $a , ($page - 1) * $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
 
-$a=$_SESSION['user']['member_sid'];
+// $a=$_SESSION['user']['member_sid'];
 
 $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$a );
 
@@ -187,6 +186,9 @@ $a = $t_points[0];
         min-height: 100%;
         z-index: -1;
     }
+    /* ========================= */
+
+    
 
 </style>
 
