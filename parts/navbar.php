@@ -69,6 +69,9 @@ if (!session_id()) {
                     <a class="nav-link" aria-current="page" href="/coffee_project/index_.php">首頁</a>
                 </li>
                 <li class="nav-item px-2">
+                    <a class="nav-link" href="/coffee_project/php/18/news_index_font.php">活動消息</a>
+                </li>
+                <li class="nav-item px-2">
                     <a class="nav-link" href="/coffee_project/php/35/products_font.php">商品</a>
                 </li>
                 <li class="nav-item px-2">

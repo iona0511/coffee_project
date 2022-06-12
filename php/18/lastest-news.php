@@ -192,7 +192,7 @@ if ($totalRows > 0) {
 </style>
 <?php include dirname(dirname(__DIR__, 1)) . '/parts/navbar_admin.php'; ?>
 <div class="container">
-    <div  class="display_justify_content title01" style=" margin:20px auto;font-size:30px;" >活動消息管理</div>
+    <div  class="display_justify_content title01" style=" margin:20px auto;font-size:30px;" >消息管理</div>
     <div class="row">
         <div class="col">
             <nav aria-label="Page navigation example" style="display:flex; flex-direction:row;">
