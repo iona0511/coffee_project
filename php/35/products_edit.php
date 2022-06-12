@@ -1,7 +1,7 @@
 <?php require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
 
-if (!isset($_SESSION['user']['admin_account'])){
+if (!isset($_SESSION['user']['admin_account'])) {
     header('Location:/coffee_project/php/09/admin-login.html');
     exit;
 }
@@ -58,6 +58,27 @@ if (empty($row)) {
         height: 320px;
         /* display: none; */
     }
+
+    .form_row {
+        position: relative;
+    }
+
+    .errorMsg {
+        margin: 0;
+        color: red;
+        font-size: .7rem;
+        display: inline-block;
+    }
+
+    .form_row>i {
+        visibility: hidden;
+        font-size: .7rem;
+    }
+
+    .form_row.error i.fa-circle-exclamation {
+        color: red;
+        visibility: visible;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -68,31 +89,39 @@ if (empty($row)) {
                     <form name="form1" onsubmit="sendData();return false;" novalidate>
                         <input type="hidden" name="products_sid" value="<?= $row['products_sid'] ?>">
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_name" class="form-label">商品名稱</label>
                             <input type="text" class="form-control" id="products_name" name="products_name" required value="<?= htmlentities($row['products_name']) ?>">
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_introduction" class="form-label">商品簡介</label>
                             <input type="products_introduction" class="form-control" id="products_introduction" name="products_introduction" value="<?= $row['products_introduction'] ?>">
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_detail_introduction" class="form-label">商品詳細介紹</label>
                             <textarea class="form-control" name="products_detail_introduction" id="products_detail_introduction" cols="30" rows="3"><?= htmlentities($row['products_detail_introduction']) ?></textarea>
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_price" class="form-label">價錢</label>
                             <input type="number" class="form-control" id="products_price" name="products_price" value="<?= $row['products_price'] ?>">
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_forsale" class="form-label">是否販賣中</label>
 
                             <input type="radio" id="products_forsale" name="products_forsale" value="1" <?= $row['products_forsale'] == 1 ? 'checked' : ''; ?>>
@@ -102,7 +131,7 @@ if (empty($row)) {
 
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_onsale" class="form-label">是否有特價</label>
 
                             <input type="radio" id="products_onsale" name="products_onsale" value="1" <?= $row['products_onsale'] == 1 ? 'checked' : ''; ?>>
@@ -112,13 +141,15 @@ if (empty($row)) {
 
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_stocks" class="form-label">商品庫存</label>
                             <input type="number" class="form-control" id="products_stocks" name="products_stocks" value="<?= $row['products_stocks'] ?>">
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
                             <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
                                 <option value="1" disabled>-- 請選擇 --</option>
@@ -130,15 +161,19 @@ if (empty($row)) {
                                                                                             endif; ?>>
                                         <?= $r['products_categroies_name'] ?>
                                     </option>
-                                <?php endforeach; ?>                                
+                                <?php endforeach; ?>
                             </select>
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_pic_one" class="form-label">商品圖片(商品頁)</label><br>
                             <input id="pic_one_input" type="file" name="products_pic_one[]" accept="image/*" onchange="changeOneImg(event)" value="<?= '/coffee_project/images/35/' . $row['products_pic_one'] ?>" />
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                             <img class="single-img" src="
                             <?php if ($row['products_pic_one']) :
                                 echo '/coffee_project/images/35/' . $row['products_pic_one'];
@@ -146,10 +181,12 @@ if (empty($row)) {
                                             echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" />
                         </div>
 
-                        <div class="mb-3" id="multiDiv">
+                        <div class="mb-3 form_row" id="multiDiv">
                             <label for="products_pic_multi" class="form-label">商品圖片(詳細頁)</label><br>
                             <input id="pic_multi_input" type="file" name="products_pic_multi[]" accept="image/*" onchange="changeMultiImg(event)" multiple value="<?= '/coffee_project/images/35/' . $row['products_pic_multi'] ?>" />
-                            <div class="form-text red"></div>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                             <div class="multiImg">
                                 <?php $multiPic =  explode(",", $row['products_pic_multi']) ?>
                                 <?php for ($i = 0; $i < count($multiPic); $i++) : ?>
@@ -158,10 +195,9 @@ if (empty($row)) {
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 form_row">
                             <label for="products_with_products_style_filter_sid" class="form-label">商品風格</label>
                             <select name="products_with_products_style_filter_sid" id="products_with_products_style_filter_sid">
-                            <div class="form-text red"></div>
                                 <option value="1" disabled>-- 請選擇 -- </option>
                                 <?php foreach ($row_style as $r) : ?>
                                     <option value="<?= $r['products_style_filter_sid'] ?>" <?php if ($r['products_style_filter_sid'] == $row['products_style_filter_sid']) :
@@ -173,6 +209,9 @@ if (empty($row)) {
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="errorMsg"></p>
                         </div>
 
                         <button type="submit" class="btn btn-primary">修改</button>
@@ -194,27 +233,22 @@ if (empty($row)) {
     const row = <?= json_encode($row, JSON_UNESCAPED_UNICODE); ?>;
 
 
+    
+    const errorMsg = document.querySelectorAll('.errorMsg');
+    const form_row = document.querySelectorAll('.form_row');
+
+
     const info_bar = document.querySelector('#info-bar');
     const name_f = document.form1.products_name;
     const price_f = document.form1.products_price;
     const products_introductione_f = document.form1.products_introduction;
     const products_detail_introduction_f = document.form1.products_detail_introduction;
-    const forsale_f = document.form1.products_forsale;
-    const products_onsale_f = document.form1.products_onsale;
     const products_stocks_f = document.form1.products_stocks;
-    const products_with_products_categroies_sid_f = document.form1.products_with_products_categroies_sid;
-    
+
     const products_pic_one_f = document.getElementById("pic_one_input");
     const products_pic_multi_f = document.getElementById("pic_multi_input");
-    // const products_pic_one_f = document.form1.products_products_pic_one;
-    // const products_pic_multi_f = document.form1.products_pic_multi;
-    const products_with_products_style_filter_sid_f = document.form1.products_with_products_style_filter_sid;
 
-    const fields = [name_f];
-    const fieldTexts = [];
-    for (let f of fields) {
-        fieldTexts.push(f.nextElementSibling);
-    }
+
 
 
     function changeOneImg() {
@@ -241,8 +275,10 @@ if (empty($row)) {
                 // wrap.innerHTML = '';
                 // 資料載入後 (讀取完成後)
                 // console.log(reader.result);
-                
-                while(document.querySelector(".multiImg") != null){document.querySelector(".multiImg").remove()};
+
+                while (document.querySelector(".multiImg") != null) {
+                    document.querySelector(".multiImg").remove()
+                };
 
                 reader.onload = function() {
                     // console.log(reader.result);
@@ -265,26 +301,63 @@ if (empty($row)) {
     }
 
 
-    async function sendData() {
-        // 讓欄位的外觀回復原來的狀態
-        for (let i in fields) {
-            fields[i].classList.remove('red');
-            fieldTexts[i].innerText = '';
-        }
-        info_bar.style.display = 'none'; // 隱藏訊息列
 
-        // // TODO: 欄位檢查, 前端的檢查
-        let isPass = true; // 預設是通過檢查的
+    async function sendData() {
+
+
+        let isPass = true;
 
         if (name_f.value.length < 1) {
-            fields[0].classList.add('red');
-            fieldTexts[0].innerText = '請輸入商品名稱';
+            errorMsg[0].style.visibility = 'visible';
+            errorMsg[0].innerText = '請輸入商品名稱';
+            form_row[0].className = 'form_row error';
             isPass = false;
+        } else {
+            errorMsg[0].innerHTML = '';
+            form_row[0].classList.remove("error");
+        }
+        if (price_f.value.length < 1) {
+            errorMsg[3].style.visibility = 'visible';
+            errorMsg[3].innerHTML = '請輸入價格';
+            form_row[3].className = 'form_row error';
+            isPass = false;
+        } else {
+            errorMsg[3].innerHTML = '';
+            form_row[3].classList.remove("error");
+        }
+        if (products_introductione_f.value.length < 1) {
+            errorMsg[1].style.visibility = 'visible';
+            errorMsg[1].innerHTML = '請輸入產品簡介';
+            form_row[1].className = 'form_row error';
+            isPass = false;
+        } else {
+            errorMsg[1].innerHTML = '';
+            form_row[1].classList.remove("error");
+        }
+        if (products_detail_introduction_f.value.length < 1) {
+            errorMsg[2].style.visibility = 'visible';
+            errorMsg[2].innerHTML = '請輸入產品介紹';
+            form_row[2].className = 'form_row error';
+            isPass = false;
+        } else {
+            errorMsg[2].innerHTML = '';
+            form_row[2].classList.remove("error");
+        }
+        if (products_stocks_f.value.length < 1) {
+            errorMsg[4].style.visibility = 'visible';
+            errorMsg[4].innerHTML = '請輸入庫存量';
+            form_row[6].className = 'form_row error';
+            isPass = false;
+        } else {
+            errorMsg[4].innerHTML = '';
+            form_row[6].classList.remove("error");
         }
 
         if (!isPass) {
-            return; // 結束函式
+            return;
         }
+
+
 
         const fd = new FormData(document.form1);
         const r = await fetch('products_edit_api.php', {
