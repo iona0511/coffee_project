@@ -219,13 +219,13 @@ if ($totalRows > 0) {
                     <?php endif;
                     endfor; ?>
 
-                    <li class="page-item">
+                    <li class="page-item  <?= $page == $totalPages ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page + 1 ?>">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link <?= $page == $totalPages ? 'disabled' : '' ?>" href="?page=<?= $totalPages ?>">
+                    <li class="page-item  <?= $page == $totalPages ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= $totalPages ?>">
                             <i class="fa-solid fa-angles-right"></i>
                         </a>
                     </li>
@@ -240,7 +240,7 @@ if ($totalRows > 0) {
     <table class="table table-warning table-striped">
         <thead class="t">
             <tr>
-                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE); border-radius: 30px 0 0 0;">活動編號</th>
+                <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE); border-radius: 30px 0 0 0;">編號</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">活動圖片</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);" class="title-w">活動標題</th>
                 <th scope="col" style=" background:linear-gradient(#F4F2EE, #F4EBDE, #F4F2EE);">類別</th>
