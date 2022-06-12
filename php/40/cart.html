@@ -422,7 +422,7 @@
                     </div>
                 </transition>
             </div>
-            <div class="under_bar">
+            <div class="under_bar" ref="underBar">
                 <div class="coupon_button_group">
                     <button @click="showCouponHandler" v-if="radio === undefined" class="select_coupon">選擇優惠卷</button>
                     <button @click="couponDeny" v-else class="select_coupon">不使用優惠卷</button>
@@ -777,10 +777,15 @@
             },
             mounted() {
                 const myVue = this;
+                const myBody = document.querySelector("body");
                 window.addEventListener("load", () => {
                     setTimeout(() => {
                         myVue.checkQuantity();
                     },100);
+                })
+                window.addEventListener("resize", () => {
+                    const bodyMb = this.$refs.underBar.getBoundingClientRect().height;
+                    myBody.style.marginBottom = bodyMb + 10 + "px";
                 })
             }
         }).mount("#app");
