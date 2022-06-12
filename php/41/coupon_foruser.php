@@ -90,13 +90,13 @@ if($type==1){
     
         $rows = $pdo->query($sql)->fetchAll();
     }
-    $a=$_SESSION['user']['member_sid'];
     
     $sql_points = sprintf("SELECT`coupon`.`coupon_name`,`coupon`.`coupon_money`,`coupon_receive`.`end_time`,`coupon_receive`.`status`,`coupon_logs`.`used_time`,`coupon_receive`.`member_sid`FROM`coupon_receive`JOIN`coupon`ON`coupon_receive`.`coupon_sid`=`coupon`.`sid`JOIN`coupon_logs`ON`coupon_receive`.`sid`=`coupon_logs`.`coupon_receive_sid`JOIN`member`ON`coupon_receive`.`member_sid`=`member`.`member_sid`WHERE`coupon_receive`.`member_sid`=%s",$a );
-    
-    $t_points = $pdo->query($sql_points)->fetchAll();
-    $a = $t_points[0];
 
+    $t_points = $pdo->query($sql_points)->fetchAll();
+
+    // $a = $t_points[0];
+    
 }
 
 
@@ -518,22 +518,12 @@ if($type==1){
                                 <?= $r['coupon_name'] ?>
                             </div>
                         
-
-                            <!-- <div style="flex-direction: row;margin-top:25px;">
-                                <div style="font-size: 14px;">
-                                    <?= $type == 1 ?$r['end_time'] :$r['used_time']; ?>
-                                </div>
-                                <div style="width: 50px;font-size: 14px;">
-                                    <?= $type == 1 ? '到期' : '已過期'; ?>
-                                </div>
-                            </div> -->
-
                             <div style="flex-direction: row;margin-top:25px;">
                                 <div style="font-size: 14px;">
-                                    <?= $type == 1 ? $r['end_time'] : $type == 2 && $r['status'] ==0 ? $r['end_time'] :$r['used_time']; ?>
+                                    <?= $type == 1 ? $r['end_time'] : ($type==2 && $r['status'] ==0 ? $r['end_time'] :$r['used_time']); ?>
                                 </div>
                                 <div style="width: 50px;font-size: 14px;">  
-                                    <?= $type == 1 ? '到期' : $type == 2  && $r['status'] ==0 ?'已過期': '已使用'; ?>
+                                    <?= $type == 1 ? '到期' : ($type ==2  && $r['status'] ==0 ?'已過期': '已使用'); ?>
                                 </div>
                             </div>
 
