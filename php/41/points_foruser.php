@@ -51,7 +51,7 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s AND `points_record`.`member_sid`=%s  LIMIT %s, %s", $type, $a , ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s AND `points_record`.`member_sid`=%s ORDER BY create_at DESC LIMIT %s, %s", $type, $a , ($page - 1) * $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
