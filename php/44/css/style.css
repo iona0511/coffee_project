@@ -404,7 +404,7 @@ li.n-selected {
 .drag-row {
     position: absolute;
     background-color: rgba(239, 235, 229, 0.4);
-    overflow-y: hidden;
+    overflow: hidden;
     display: flex;
     align-items: center;
 
@@ -416,7 +416,7 @@ li.n-selected {
 
 .drag-col {
     flex-grow: 1;
-    flex-shrink: 0;
+    flex-shrink: 1;
     flex-basis: 33.3%;
 
 }

@@ -92,7 +92,7 @@
             width: 90vw;
             margin: 20px auto 0;
             opacity: 0;
-            transition: opacity .3;
+            transition: opacity .4s;
 
 
         }
@@ -292,6 +292,10 @@
             position: relative;
         }
 
+        .s_col a {
+            display: block;
+        }
+
         .s_col::before {
             display: block;
             content: '#';
@@ -359,6 +363,7 @@
         crossorigin="anonymous"></script>
     <script>
         async function preview_tag() {
+            event.cancelBubble = true;
 
             const v = document.main_form.tag.value;
 
@@ -425,7 +430,7 @@
                 'tagName': tagName,
             });
             document.querySelectorAll(".fig-tags").forEach((v) => {
-                console.log(v.innerText.slice(1));
+                // slice1把前面#字去掉
                 if (tagName === v.innerText.slice(1)) {
                     v.parentNode.parentNode.parentNode.dataset.searchTag = "true";
                 }
@@ -547,15 +552,14 @@
                         </div>
                     </div>
                         `;
-
-                // render like過了沒
+                // 新增文章tags
                 v['tags'].forEach((tagName) => {
-                    console.log(tagName);
 
                     document.querySelector(`[data-post="${v['sid']}"] .tags-box`).innerHTML += `
-                    <span class="fig-tags">#${tagName}</span>
-                    `;
+                            <span class="fig-tags">#${tagName}</span>
+                            `;
                 });
+                // render like過了沒
                 getLikes(v['sid']);
             });
 
@@ -595,18 +599,14 @@
             renderPopTags();
 
             render(rows);
-            if (document.querySelectorAll(".photo>img").length > 9) {
-                document.querySelectorAll("img")[10].onload = function () {
-                    cascadeDisplay();
-                    document.querySelector(".wrapper").style.opacity = 1;
-                    document.querySelector(".l-wrap").remove();
-                }
-            } else {
+
+            document.querySelectorAll("img")[document.querySelectorAll(".photo>img").length - 1].onload = function () {
+                cascadeDisplay();
                 document.querySelector(".wrapper").style.opacity = 1;
                 document.querySelector(".l-wrap").remove();
-                cascadeDisplay();
             }
 
+            
             document.querySelectorAll(".fig-member").forEach((v) => {
                 v.addEventListener("click", (event) => {
                     event.stopPropagation();
@@ -673,7 +673,7 @@
 
         // 畫面寬度有變動
         window.onresize = function () {
-            cascadeDisplay()
+            cascadeDisplay();
         }
     </script>
 </body>
