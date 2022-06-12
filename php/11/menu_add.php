@@ -1,4 +1,10 @@
 <?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
+
 $pageName = 'menu_add';
 $title = '新增餐點資料';
 
@@ -116,6 +122,7 @@ $title = '新增餐點資料';
                     <div id="info-bar" class="alert alert-success" role="alert" style="display:none;">
                         資料新增成功
                     </div>
+                    <br>
                 </div>
             </div>
         </div>

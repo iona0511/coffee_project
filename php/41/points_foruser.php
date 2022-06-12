@@ -24,10 +24,9 @@ if ($type == 2) {
 }
 
 // ============================================
+$a=$_SESSION['user']['member_sid'];
 
-
-$t_sql = sprintf("SELECT COUNT(1)FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`= %s;", $type);
-
+$t_sql = sprintf("SELECT COUNT(1)FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`= %s AND`points_record`.`member_sid`=%s", $type, $a);
 
 $perPage = 5;
 
@@ -52,12 +51,12 @@ if ($totalRows > 0) {
         exit;
     }
 
-    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s LIMIT %s, %s", $type, ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT`points_record`.`create_at`,`points_record`.`points_get`,`member`.`member_sid`FROM`points_record`JOIN`member`ON`points_record`.`member_sid`=`member`.`member_sid`WHERE`points_record`.`type`=%s AND `points_record`.`member_sid`=%s ORDER BY create_at DESC LIMIT %s, %s", $type, $a , ($page - 1) * $perPage, $perPage);
 
     $rows = $pdo->query($sql)->fetchAll();
 }
 
-$a=$_SESSION['user']['member_sid'];
+// $a=$_SESSION['user']['member_sid'];
 
 $sql_points = sprintf("SELECT `points_user`.`total_points`,`member`.`member_sid`FROM`points_user`JOIN`member`ON`points_user`.`member_sid`=`member`.`member_sid`WHERE`points_user`.`member_sid`=%s",$a );
 
@@ -187,6 +186,61 @@ $a = $t_points[0];
         min-height: 100%;
         z-index: -1;
     }
+    /* ========================= */
+
+    .loading {
+        font-size: 24px;
+        
+        font-weight: 300;
+        text-align: center;
+    }
+    .loading span {
+        display: inline-block;
+        margin: 0 8px;
+    }
+
+    .loading07 span {
+        position: relative;
+        color:#fff;
+    }
+    .loading07 span::after {
+        position: absolute;
+        /* top: 0;
+        left: 0; */
+        content: attr(data-text);
+        color: #fff;
+        opacity: 0;
+        transform: scale(1.5);
+        animation: loading07 10s infinite;
+    }
+    .loading07 span:nth-child(2)::after {
+        animation-delay: 0.1s;
+    }
+    .loading07 span:nth-child(3)::after {
+        animation-delay: 0.2s;
+    }
+    .loading07 span:nth-child(4)::after {
+        animation-delay: 0.3s;
+    }
+    .loading07 span:nth-child(5)::after {
+        animation-delay: 0.4s;
+    }
+    .loading07 span:nth-child(6)::after {
+        animation-delay: 0.5s;
+    }
+    .loading07 span:nth-child(7)::after {
+        animation-delay: 0.6s;
+    }
+    @keyframes loading07 {
+        0%, 75%, 100% {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+        25%, 50% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 
 </style>
 
@@ -195,15 +249,26 @@ $a = $t_points[0];
     <source src="./copon_img/Writing in a notebook at a coffee shop.mp4" type="video/mp4">
 </video>
 
-
+<section>
+    <div class=" loading loading07 load">
+        <span data-text="查"></span>
+        <span data-text="看"></span>
+        <span data-text="我"></span>
+        <span data-text="的"></span>
+        <span data-text="積"></span>
+        <span data-text="分"></span>
+        <span data-text="表"></span> 
+        
+    </div>
+</section>
 
 
 
 <!-- Button_up -->
-<div class="display_justify_content px24 load" style="font-weight:bold;color:#fff; margin-top: 20px;">
+<!-- <div class="display_justify_content px24 load" style="font-weight:bold;color:#fff; margin-top: 20px;">
     <p>積分紀錄</p>
-</div>
-<div class="display_justify_content load">
+</div> -->
+<div class="display_justify_content load" style="margin-top: 30px; ">
     <p style="color: #893429;font-weight: bold;"> <?= $a['total_points'] ?></p>
     <p>可用積分</p>
 </div>
@@ -239,7 +304,7 @@ $a = $t_points[0];
     </div>
 </div>
 <!-- button_bottom -->
-<div class="row display_justify_content  load">
+<div class=" display_justify_content  load">
     <div class="col-3">
         <nav aria-label="Page navigation example">
             <ul class="pagination display_justify_content">

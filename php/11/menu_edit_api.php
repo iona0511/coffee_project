@@ -4,10 +4,6 @@ header('Content-Type: application/json');
 
 // session_start();
 
-// if (!isset($_SESSION['user']['admin_account'])) {
-//     header('Location:/coffee_project/php/09/admin-login.html');
-//     exit;
-// }
 
 
 $output=[

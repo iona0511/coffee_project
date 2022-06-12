@@ -1,10 +1,12 @@
 <?php require dirname(__DIR__, 2) . '/parts/connect_db.php';
 // session_start();
 
-// if (!isset($_SESSION['user']['admin_account'])) {
-//     header('Location:/coffee_project/php/09/admin-login.html');
-//     exit;
-// }
+
+
+if (!isset($_SESSION['user']['admin_account'])){
+    header('Location:/coffee_project/php/09/admin-login.html');
+    exit;
+}
 
 $pageName = 'menu_edit';
 $title = '修改餐點資料';
@@ -53,6 +55,8 @@ if (empty($row)) {
                     <h5 class="card-title">編輯餐點資料</h5>
                     <form name="form1" onsubmit="sendData();return false;novalidate">
                     <input type ="hidden" name="menu_sid" value="<?=$row['menu_sid']?>">
+
+
                         <div class="mb-3">
                             <label for="menu_categories" class="form-label">種類</label>
                             <input type="text" class="form-control" id="menu_categories" name="menu_categories" required value="<?=$row['menu_categories']?>">
