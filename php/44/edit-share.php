@@ -328,7 +328,8 @@ $tags = $pdo->query($tag_sql)->fetchAll();
         async function preview_tag() {
 
             const v = document.main_form.tag.value;
-            if (v < 1) {
+        
+            if (v.length < 1) {  
                 document.querySelector(".s_result").innerHTML = "";
                 return;
             }

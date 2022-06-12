@@ -155,7 +155,8 @@
         .fig-box {
             position: absolute;
             display: flex;
-            bottom: 8px;
+            flex-wrap: wrap;
+            bottom: 6px;
             left: 0;
 
             padding: 8px 12px;
@@ -163,6 +164,10 @@
             width: 100%;
             /* transform: translateY(25%); */
             justify-content: space-between;
+        }
+
+        .tags-box {
+            width: 100%;
         }
 
         .fig {
@@ -175,8 +180,19 @@
             text-overflow: ellipsis;
             font-size: 16px;
             font-weight: 600;
-
             opacity: 0;
+        }
+
+        .fig-tags {
+            background-color: rgba(190, 211, 227, 0.84);
+            border-radius: 20px;
+            padding: 4px 12px 4px 10px;
+            max-width: 25%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 14px;
+
 
         }
 
@@ -244,6 +260,61 @@
             width: 100%;
             display: flex;
             color: rgb(136, 88, 36);
+            position: relative;
+            top: 0;
+            z-index: 999;
+            align-items: center;
+        }
+
+        .title a {
+            color: rgb(136, 88, 36);
+        }
+
+
+        .search_col {
+            top: 2px;
+            left: 120px;
+            width: 250px;
+            position: absolute;
+            margin-left: .25rem;
+            border-radius: 4px;
+            background-color: #fff;
+            overflow: hidden;
+            box-shadow: 2px 2px 6px 3px #d5d5d571;
+
+        }
+
+
+
+        .s_col {
+            background-color: #fff;
+            padding: 6px 12px 6px 18px;
+            position: relative;
+        }
+
+        .s_col::before {
+            display: block;
+            content: '#';
+            position: absolute;
+            left: 6px;
+            font-weight: 900;
+
+        }
+
+        .s_col:hover {
+            background-color: #bfbfbf;
+
+        }
+
+        .search-wrap {
+            display: flex;
+            width: 450px;
+        }
+
+        .pop-tags {
+            bottom: 0;
+            position: absolute;
+            left: 400px;
         }
     </style>
 </head>
@@ -252,22 +323,26 @@
     <div class="l-wrap">
         <div class="loading">Loading&#8230;</div>
     </div>
+
     <div class="wrapper">
         <div class="title mb-3">
-            <h2>分享牆</h2>
+            <h2 class="mr-3"><a href="share.html">分享牆</a></h2>
             <div class="search-wrap">
 
                 <div class="search_col">
-                    <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="標籤名稱"
-                        autocomplete="off">
-                    <!-- 搜尋列 -->
-                    <div class="s_result">
-                        <!-- 預覽搜尋 -->
-                    </div>
+                    <form action="" name="main_form" onsubmit="return false;">
+                        <input type="text" class="form-control f_tag" id="tag" name="tag" placeholder="標籤名稱"
+                            autocomplete="off">
+                        <!-- 搜尋列 -->
+                        <div class="s_result">
+                            <!-- 預覽搜尋 -->
+                        </div>
+                    </form>
                 </div>
-                <a href="">#超美拉花</a>
-                <a href="">#熱門咖啡豆推薦</a>
-                <a href="">#課程</a>
+                <div class="d-flex pop-tags">
+                    <span style="color: rgba(79, 79, 79, 0.874);">熱門標籤:&nbsp</span>
+
+                </div>
 
             </div>
         </div>
@@ -283,6 +358,88 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
     <script>
+        async function preview_tag() {
+
+            const v = document.main_form.tag.value;
+
+            if (v.length < 1) {
+                document.querySelector(".s_result").innerHTML = "";
+                return;
+            }
+
+            const pData = new FormData(document.main_form);
+            const r = await fetch("api/preview-tag-api.php", {
+                method: "POST",
+                body: pData
+            });
+            const obj = await r.json();
+
+            if (obj.length > 0) {
+                const el = document.createElement("div");
+                obj.forEach((v, ind) => {
+                    el.innerHTML += `
+                    <div class="s_col" >
+                       <a href="javascript:searchTag('${v['name']}');">${v['name']}</a>
+                    </div>`;
+                });
+                document.querySelector(".s_result").innerHTML = el.innerHTML;
+            }
+        }
+
+        document.main_form.tag.addEventListener("input", preview_tag);
+
+        window.addEventListener("click", () => {
+
+            if (event.target == document.main_form.tag) return;
+            if (document.querySelector(".s_result")) {
+                document.querySelector(".s_result").innerHTML = "";
+            }
+        });
+
+        async function renderPopTags() {
+            const data = await fetch("api/pop-tags-api.php");
+            const response = await data.json();
+            // 後端tags只排序times
+
+            // render 4個熱門標籤
+            const popTags = document.querySelector(".pop-tags");
+
+            for (let ind in response) {
+                if (ind <= 3) {
+                    popTags.innerHTML += `
+                    <a href="javascript:searchTag('${response[ind]['name']}');" class="mr-1">#${response[ind]['name']}</a>
+                    `;
+                }
+                else {
+                    break;
+                }
+            }
+
+        }
+
+        async function searchTag(tagName) {
+            //讓search-wrap變搜尋結果
+            document.querySelector(".search-wrap").innerHTML = `<span style="font-style:italic">#${tagName}<span>`;
+
+            const jsonData = JSON.stringify({
+                'tagName': tagName,
+            });
+            document.querySelectorAll(".fig-tags").forEach((v) => {
+                console.log(v.innerText.slice(1));
+                if (tagName === v.innerText.slice(1)) {
+                    v.parentNode.parentNode.parentNode.dataset.searchTag = "true";
+                }
+            });
+            document.querySelectorAll(".photo").forEach((v) => {
+
+                if (v.dataset.searchTag != "true") {
+                    v.remove();
+                    cascadeDisplay();
+                }
+            });
+
+        }
+
         (function getNav() {
             function checkQuantity() {
                 const cart_quantity = document.querySelector(
@@ -382,18 +539,24 @@
                     <div class="photo" onclick="location.href='share-detail.php?pid=${v['sid']}'"  data-mem="${v['member_sid']}" data-post="${v['sid']}">
                         <img src="uploaded/${v['img_name']}" alt="photo">
                         <div class="cover"></div>
+                        <i class="fa-solid fa-heart animate__animated"><span class="likes">${v['likes']}</span></i>
                         <div class="fig-box">
                             <div class="fig fig-member">${v['member_nickname']}</div>
                             <div class="fig fig-title">${v['title']}</div>
+                            <div class="tags-box mt-2"><div>
                         </div>
-
-                        <i class="fa-solid fa-heart animate__animated"><span class="likes">${v['likes']}</span></i>
                     </div>
                         `;
 
                 // render like過了沒
-                getLikes(v['sid']);
+                v['tags'].forEach((tagName) => {
+                    console.log(tagName);
 
+                    document.querySelector(`[data-post="${v['sid']}"] .tags-box`).innerHTML += `
+                    <span class="fig-tags">#${tagName}</span>
+                    `;
+                });
+                getLikes(v['sid']);
             });
 
         }
@@ -413,7 +576,7 @@
             });
 
             const response = await data.json();
-            const likesNumber = document.querySelector(`[data-post="${p}"]`).children[3];
+            const likesNumber = document.querySelector(`[data-post="${p}"] .fa-heart`);
 
             if (response['isLog'] == true) {
                 if (response['isLike'] == true) {
@@ -429,6 +592,7 @@
         window.onload = async function () {
             const data = await fetch("api/share-api.php");
             const rows = await data.json();
+            renderPopTags();
 
             render(rows);
             if (document.querySelectorAll(".photo>img").length > 9) {
@@ -479,7 +643,7 @@
             const response = await data.json();
 
             // render
-            const likesNumber = document.querySelector(`[data-post="${p}"]`).children[3];
+            const likesNumber = document.querySelector(`[data-post="${p}"] .fa-heart`);
             if (response['isLog'] == true) {
                 if (response['isLike'] == true) {
                     likesNumber.classList.add("heart_red");
