@@ -96,7 +96,7 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
 
                         <div class="mb-3">
                             <label for="news_content" class="form-label">活動內容</label>
-                            <textarea type="text" class="form-control" id="news_content" name="news_content" placeholder='請輸入內容' ></textarea>
+                            <textarea type="text" style="height: 300px;" class="form-control" id="news_content" name="news_content" placeholder='請輸入內容' ></textarea>
                             <div class="form-text red"></div>
                         </div>
 
