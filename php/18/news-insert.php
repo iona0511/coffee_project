@@ -193,13 +193,13 @@ $row_class = $pdo->query("SELECT * FROM  `news_class`")->fetchAll();
         let isPass = true; // 預設是通過檢查
 
         if (title_f.value.length < 2) {
-            // alert('標題至少要兩個字');
+            alert('標題至少要兩個字');
             fields[0].classList.add('red');
             fieldTexts[0].innerText = '標題至少要2個字';
             isPass = false;
         }
         if (content_f.value.length < 5) {
-            // alert('內容至少要10個字');
+            alert('內容至少要5個字');
             fields[4].classList.add('red');
             fieldTexts[4].innerText = '內容至少要5個字';
             isPass = false;

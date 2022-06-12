@@ -10,6 +10,7 @@ if (!isset($_SESSION['user']['member_account'])) {
     exit;
 }
 
+
 $pageName = 'lastest-news';
 $title = '活動消息前台';
 
