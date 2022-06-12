@@ -105,7 +105,7 @@ if (empty($row)) {
 
                         <div class="mb-3">
                             <label for="news_content" class="form-label">活動內容</label>
-                            <textarea type="text" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
+                            <textarea type="text" style="height: 300px;" class="form-control" id="news_content" name="news_content"><?= $row['news_content'] ?></textarea>
                             <div class="form-text red"></div>
                         </div>
 <!-- 
@@ -231,7 +231,7 @@ if (empty($row)) {
         let isPass = true; // 預設是通過檢查的
 
         if (title_f.value.length < 2) {
-            // alert('姓名至少兩個字');
+            // alert('標題至少兩個字');
             // name_f.classList.add('red');
             // name_f.nextElementSibling.classList.add('red');
             // name_f.closest('.mb-3').querySelector('.form-text').classList.add('red');

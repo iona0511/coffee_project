@@ -89,20 +89,20 @@
     const inputC = form1.querySelectorAll('input[name="content"]');
 
     const renderData = async()=>{
-        await fetch("post-api.php")
-        .then(r=>r.json())
-        .then((obj)=> {
+        const data = await fetch("post-api.php")
+        const obj = await data.json();
+        console.log(obj);
 
             for( let i = 0 ; i<inputT.length; i++ ){
-                inputT[i].value = obj.postData[i][0];
+                inputT[i].value = obj.postData[i].title;
             }
             for( let i = 0 ; i<inputC.length; i++ ){
-                inputC[i].value = obj.postData[i][1];
+                inputC[i].value = obj.postData[i].content;
             }
 
             for( let i = 0 ; i<link.length; i++ ){
                 link[i].addEventListener('click',()=>{
-                    window.location.href='/coffee_project/php/44/share-detail.php?pid=(obj.postData[i][2])';
+                    window.location.href=`/coffee_project/php/44/share-detail.php?pid=${obj.postData[i].sid}`;
                 })
             }
 
@@ -110,8 +110,7 @@
             //         // window.location.href='/coffee_project/php/09/welcome.php';
             //         window.location.href='/coffee_project/php/44/share-detail.php?pid=1';
             //     })
-    }
-    )};
+};
     renderData();
             
 
@@ -121,7 +120,7 @@
                         return r.text();
                     })
                     .then(function (navData) {
-                        console.log(navData);
+                        // console.log(navData);
                         navBar = document.querySelector(".navBar");
                         navBar.innerHTML = navData;
                     });

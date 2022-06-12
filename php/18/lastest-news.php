@@ -10,6 +10,8 @@ if (!isset($_SESSION['user']['admin_account'])){
 }
 
 
+
+
 $pageName = 'lastest-news';
 $title = '活動消息後台';
 
@@ -261,12 +263,12 @@ if ($totalRows > 0) {
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
                     <td><img src="../../images/18/<?= $r['news_img'] ?>" height="100"></td>
-                    <td><?= htmlentities($r['news_title']) ?></td>
+                    <td style="line-height:40px"><?= htmlentities($r['news_title']) ?></td>
                     <td><?= $r['news_class_sid'] ?></td>
-                    <td><?= htmlentities($r['news_content']) ?></td>
-                    <td><?= $r['news_start_date'] ?></td>
-                    <td><?= $r['news_end_date'] ?></td>
-                    <td><?= $r['news_create_time'] ?></td>
+                    <td style="line-height:40px"><?= htmlentities($r['news_content']) ?></td>
+                    <td style="line-height:40px"><?= $r['news_start_date'] ?></td>
+                    <td style="line-height:40px"><?= $r['news_end_date'] ?></td>
+                    <td style="line-height:40px"><?= $r['news_create_time'] ?></td>
                     <td><a style="width:50px;height:50px;" href="news-edit.php?news_sid=<?= $r['news_sid'] ?>">
                             <i class="fa-solid fa-pen-to-square pen-edit"></i>
                         </a>

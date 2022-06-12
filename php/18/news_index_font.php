@@ -1,14 +1,15 @@
 <?php
 require dirname(dirname(__DIR__, 1)) . '/parts/connect_db.php';
 
-if (!session_id()) {
-    session_start();
-}
+// if (!session_id()) {
+//     session_start();
+// }
 
-if (!isset($_SESSION['user']['member_account'])) {
-    header('Location:/coffee_project/php/09/login.html');
-    exit;
-}
+// if (!isset($_SESSION['user']['member_account'])) {
+//     header('Location:/coffee_project/php/09/login.html');
+//     exit;
+// }
+
 
 $pageName = 'lastest-news';
 $title = '活動消息前台';
@@ -84,6 +85,13 @@ if ($totalRows > 0) {
         text-align: center;
     }
 
+    .box-shadow:hover {
+        box-shadow: 0 16px 32px 0 rgba(48, 55, 66, 0.15);
+        transform: translate(0, -5px);
+        transition-delay: 0s;
+        box-shadow: 1px 1px 8px 1px #333;
+    }
+
     .box-shadow {
         /* box-shadow: 0 13px 27px -5px rgba(50,50,93,0.25), 10px 10px 20px -5px #bb69ff; */
         box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 10px 10px 20px -5px #4c95f4;
@@ -95,8 +103,8 @@ if ($totalRows > 0) {
         width: 100%;
         /* position: absolute;
     top: 50%;
-    /* left: 50%; */
-        */ transform: translateX(-50%) translateY(-50%);
+    /* left: 50%; */*/
+    transform: translateX(-50%) translateY(-50%);
     }
 
     h1 {
@@ -195,7 +203,12 @@ if ($totalRows > 0) {
                                 <p>~</p>
                                 <p class="ms-2 text-success" id="news_end_date"><?= $r['news_end_date'] ?></p>
                             </div>
-                            <p class="card-text"><?= $r['news_content'] ?></p>
+                            <p class="card-text" style="text-indent:25px; overflow: hidden;
+                                                        text-overflow: ellipsis;
+                                                        display: -webkit-box;
+                                                        -webkit-line-clamp: 7;
+                                                        -webkit-box-orient: vertical;
+                                                        white-space:normal;"><?= $r['news_content'] ?></p>
 
                         </div>
                     </div>
