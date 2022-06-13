@@ -262,7 +262,7 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <td><?= $r['news_sid'] ?></td>
-                    <td><img src="/coffee_project/images/18 <?=$r['news_img']?>" height="100"></td>
+                    <td><img src="/../../images/18 <?=$r['news_img']?>" height="100"></td>
                     <td style="line-height:40px"><?= htmlentities($r['news_title']) ?></td>
                     <td><?= $r['news_class_sid'] ?></td>
                     <td style="line-height:40px"><?= htmlentities($r['news_content']) ?></td>
