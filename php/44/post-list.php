@@ -64,7 +64,7 @@ if ($totalRows > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章列表</title>
+    <title>分享列表</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -152,13 +152,18 @@ if ($totalRows > 0) {
             text-decoration: none;
             color: #fff;
         }
+
+        .text-title {
+            color: rgb(136, 88, 36);
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
     <?php include (dirname(__DIR__, 2)) . "/parts/navbar_admin.php"; ?>
     <div class="container">
-        <h2 class="text-primary mb-3" style="font-weight:bold;">文章列表</h2>
+        <h2 class="text-title mt-1 mb-3">文章列表</h2>
 
         <div class="d-flex">
             <nav aria-label="Page navigation example" id="pagination">
@@ -384,7 +389,7 @@ if ($totalRows > 0) {
 
                     if (rows.length > 0) {
                         const rowContent = `<td>
-                            <a href="javascript: delete_it(${v['sid']})">
+                            <a href="javascript: btn_click(${v['sid']})">
                                     <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </td>
