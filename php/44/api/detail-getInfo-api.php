@@ -4,7 +4,7 @@ require  dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 
 
 $data = json_decode(file_get_contents('php://input'), true);
-$mb_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
+$mb_nickname = isset($_SESSION['user']['member_nickname']) ? intval($_SESSION['user']['member_sid']) : '';
 $mb_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : 0;
 
 // 讀照片表
@@ -22,7 +22,7 @@ $isLike = !empty($like);
 $memberInfo = [
     'm_sid' => $mb_sid,
     'm_nickname' => $mb_nickname,
-    'isLike' => $isLike 
+    'isLike' => $isLike
 ];
 $rows[0] = array_merge($rows[0], $memberInfo);
 

@@ -3,8 +3,9 @@ require  dirname(dirname(__DIR__, 2)) . '/parts/connect_db.php';
 
 
 $data = json_decode(file_get_contents('php://input'), true);
-$mb_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : 0;
+$mb_sid = isset($_SESSION['user']['member_sid']) ? intval($_SESSION['user']['member_sid']) : 0;
 $pid = !empty($data['pid']) ? $data['pid'] : 0;
+
 
 $op_msg = [
     'member' => $mb_sid,

@@ -12,7 +12,7 @@ $op_msg = [
 
 
 
-$m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
+$m_sid = isset($_SESSION['user']['member_sid']) ? intval($_SESSION['user']['member_sid']) : '';
 
 
 
@@ -72,7 +72,7 @@ $postSid = $pdo->lastInsertId();
 
 
 if (!empty($tags)) {
-    $pdo->prepare("DELETE FROM post_tag WHERE `post_sid` = $pid")->execute([]); 
+    $pdo->prepare("DELETE FROM post_tag WHERE `post_sid` = $pid")->execute([]);
     foreach ($tags as $k => $tag_name) {
         $sql = sprintf("SELECT * FROM `tag` WHERE `name` = '%s'", $tag_name);
         $tag_in_sql = $pdo->query($sql)->fetch();
@@ -93,7 +93,7 @@ if (!empty($tags)) {
             $tagSid = $pdo->lastInsertId();
         }
         //刪除原本的post_tag關聯
-        
+
         //新增post_tag關聯
         $sql = "INSERT INTO `post_tag` (`post_sid`, `tag_sid`) VALUES (?, ?)";
         $stmt = $pdo->prepare($sql);

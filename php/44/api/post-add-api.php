@@ -13,7 +13,7 @@ $op_msg = [
 ];
 
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
-$m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
+$m_sid = isset($_SESSION['user']['member_sid']) ? intval($_SESSION['user']['member_sid']) : '';
 $photos = json_decode($_POST['photos'], true);
 
 
@@ -129,8 +129,6 @@ if ($stmt->rowCount() == 1) {
     $op_msg['success'] = true;
     $op_msg['postId'] = $postSid;
     $op_msg['poster'] = $m_sid;
-
-
 }
 
 
