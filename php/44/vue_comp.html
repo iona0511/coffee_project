@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul v-for="data of myArray">
+            <li>
+                <img :src="data.image" alt="">
+            </li>
+        </ul>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.js'
+        integrity='sha512-9Vc284sv0s5PSp3I7M4OsV5rMl09djUv3rn+YRXUnNa3JyHv4NfbJgMypvX7P6gomnPMwt4PwULrYDTxNY88UQ=='
+        crossorigin='anonymous'></script>
+    <script>
+        const vm = Vue.createApp({
+            data() {
+                return {
+                    myArray: []
+                }
+            },
+            beforeMount() {
+                fetch("https://yesno.wtf/api")
+                    .then(data => data.json())
+                    .then(data => {
+                        this.myArray.push(data);
+                    })
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>
