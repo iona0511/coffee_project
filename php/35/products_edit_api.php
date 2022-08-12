@@ -78,11 +78,11 @@ if (!is_array($_FILES['products_pic_one']['name'])) {
     exit;
 }
 
-$singlepic= [];
+$singlepic = [];
 foreach ($_FILES['products_pic_one']['name'] as $k => $f) {
 
     $filename = $f;
-    $output['filenames'][] = $filename;    
+    $output['filenames'][] = $filename;
     array_push($singlepic, $filename);
     move_uploaded_file($_FILES['products_pic_one']['tmp_name'][$k], $folder . $filename);
 }
@@ -122,7 +122,7 @@ $products_price = $_POST['products_price'] ?? '';
 $products_forsale = $_POST['products_forsale'] ?? '';
 $products_onsale = $_POST['products_onsale'] ?? '';
 $products_stocks = $_POST['products_stocks'] ?? '';
-$products_with_products_categroies_sid = $_POST['products_with_products_categroies_sid'] ?? '';
+$products_with_products_categories_sid = $_POST['products_with_products_categories_sid'] ?? '';
 $products_with_products_style_filter_sid = $_POST['products_with_products_style_filter_sid'] ?? '';
 
 // TODO 其他欄位檢查
@@ -138,7 +138,7 @@ SET
 `products_forsale`=?,
 `products_onsale`=?,
 `products_stocks`=?,
-`products_with_products_categroies_sid`=?,
+`products_with_products_categories_sid`=?,
 `products_pic_one`=?,
 `products_pic_multi`=?,
 `products_with_products_style_filter_sid`=?
@@ -153,7 +153,7 @@ $output['testtext'][3] = $products_price;
 $output['testtext'][4] = $products_forsale;
 $output['testtext'][5] = $products_onsale;
 $output['testtext'][6] = $products_stocks;
-$output['testtext'][7] = $products_with_products_categroies_sid;
+$output['testtext'][7] = $products_with_products_categories_sid;
 $output['testtext'][8] = $singleNameStr;
 $output['testtext'][9] = $multiNameStr;
 $output['testtext'][10] = $products_with_products_style_filter_sid;
@@ -168,7 +168,7 @@ $stmt->execute([
     $products_forsale,
     $products_onsale,
     $products_stocks,
-    $products_with_products_categroies_sid,
+    $products_with_products_categories_sid,
     $singleNameStr,
     $multiNameStr,
     $products_with_products_style_filter_sid
@@ -176,7 +176,7 @@ $stmt->execute([
 
 
 
-if ($stmt->rowCount() == 1) {
+if ($stmt->rowCount() >= 1) {
     $output['success'] = true;
 } else {
     $output['error'] = '資料沒有修改或圖片沒有修改';

@@ -11,7 +11,7 @@ $pageName = 'products-add';
 $title = '新增商品';
 
 
-$row_cate = $pdo->query("SELECT * FROM`products_categroies`")->fetchAll();
+$row_cate = $pdo->query("SELECT * FROM`products_categories`")->fetchAll();
 $row_pic = $pdo->query("SELECT * FROM`products_pic`")->fetchAll();
 $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 ?>
@@ -121,12 +121,12 @@ $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
                         </div>
 
                         <div class="mb-3 ">
-                            <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
-                            <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
+                            <label for="products_with_products_categories_sid" class="form-label">商品分類</label>
+                            <select name="products_with_products_categories_sid" id="products_with_products_categories_sid">
                                 <option value="1" disabled selected>-- 請選擇 --</option>
                                 <?php foreach ($row_cate as $r) : ?>
-                                    <option value="<?= $r['products_categroies_sid'] ?>">
-                                        <?= $r['products_categroies_name'] ?>
+                                    <option value="<?= $r['products_categories_sid'] ?>">
+                                        <?= $r['products_categories_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
