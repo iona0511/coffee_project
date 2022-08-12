@@ -13,7 +13,7 @@ $op_msg = [
 ];
 
 $m_nickname = isset($_SESSION['user']['member_nickname']) ? $_SESSION['user']['member_nickname'] : '';
-$m_sid = isset($_SESSION['user']['member_sid']) ? $_SESSION['user']['member_sid'] : '';
+$m_sid = isset($_SESSION['user']['member_sid']) ? intval($_SESSION['user']['member_sid']) : '';
 
 if (empty($data['msg'])) {
     $op_msg['error'] = '沒有內文';

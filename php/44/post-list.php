@@ -5,6 +5,7 @@ if (!isset($_SESSION['user']['admin_account'])) {
     exit;
 }
 $user = isset($_SESSION['user']) ? $_SESSION['user'] : ['member_sid' => 0];
+$user['member_sid'] = isset($_SESSION['user']) ? intval($_SESSION['user']['member_sid']) : ['member_sid' => 0];
 
 $perPage = isset($_GET['ppg']) ? intval($_GET['ppg']) : '5';
 $page = isset($_GET['page']) ? intval($_GET['page']) : '1';
