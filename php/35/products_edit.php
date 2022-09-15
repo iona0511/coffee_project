@@ -16,14 +16,14 @@ if (empty($products_sid)) {
 }
 
 $row = $pdo->query("SELECT * FROM`products`
-                    JOIN `products_categroies` 
-                        ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
+                    JOIN `products_categories` 
+                        ON`products`.`products_with_products_categories_sid` = `products_categories`.`products_categories_sid`
                     JOIN `products_pic` 
                         ON`products`.`products_sid` = `products_pic`.`products_pic_sid`
                     JOIN `products_style_filter`
                         ON`products`.`products_with_products_style_filter_sid` = `products_style_filter`.`products_style_filter_sid`
                     WHERE products_sid=$products_sid")->fetch();
-$row_cate = $pdo->query("SELECT * FROM`products_categroies`")->fetchAll();
+$row_cate = $pdo->query("SELECT * FROM`products_categories`")->fetchAll();
 $row_pic = $pdo->query("SELECT * FROM`products_pic`")->fetchAll();
 $row_style = $pdo->query("SELECT * FROM`products_style_filter`")->fetchAll();
 
@@ -150,16 +150,16 @@ if (empty($row)) {
                         </div>
 
                         <div class="mb-3 form_row">
-                            <label for="products_with_products_categroies_sid" class="form-label">商品分類</label>
-                            <select name="products_with_products_categroies_sid" id="products_with_products_categroies_sid">
+                            <label for="products_with_products_categories_sid" class="form-label">商品分類</label>
+                            <select name="products_with_products_categories_sid" id="products_with_products_categories_sid">
                                 <option value="1" disabled>-- 請選擇 --</option>
                                 <?php foreach ($row_cate as $r) : ?>
-                                    <option value="<?= $r['products_categroies_sid'] ?>" <?php if ($r['products_categroies_sid'] == $row['products_categroies_sid']) :
+                                    <option value="<?= $r['products_categories_sid'] ?>" <?php if ($r['products_categories_sid'] == $row['products_categroies_sid']) :
                                                                                                 echo "selected";
                                                                                             else :
                                                                                                 echo " ";
                                                                                             endif; ?>>
-                                        <?= $r['products_categroies_name'] ?>
+                                        <?= $r['products_categories_name'] ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>

@@ -32,8 +32,8 @@ if ($totalRows > 0) {
         exit;
     }
     $sql = sprintf("SELECT * FROM`products`
-                JOIN `products_categroies` 
-                    ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
+                JOIN `products_categories` 
+                    ON`products`.`products_with_products_categories_sid` = `products_categories`.`products_categories_sid`
                 JOIN `products_pic` 
                     ON`products`.`products_sid` = `products_pic`.`products_pic_sid`
                 JOIN `products_style_filter`
@@ -200,7 +200,7 @@ if ($totalRows > 0) {
                         <td><?= $r['products_forsale'] ? '是' : '否'; ?></td>
                         <td><?= $r['products_onsale'] ? '是' : '否'; ?></td>
                         <td><?= $r['products_stocks'] ?></td>
-                        <td><?= $r['products_categroies_name'] ?></td>
+                        <td><?= $r['products_categories_name'] ?></td>
                         <td><img class="products_single_img" src="
                             <?php if ($r['products_pic_one']) : echo '/../../coffee_project/images/35/' . $r['products_pic_one'];
                             endif; ?>" <?php if (!$r['products_pic_one']) : echo "style" . "=" . "display:none;" ?> <?php endif; ?> alt="" id="products_pic_one" title="<?= $r['products_pic_one'] ?>" /></td>

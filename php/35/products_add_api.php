@@ -104,7 +104,7 @@ $products_price = $_POST['products_price'];
 $products_forsale = $_POST['products_forsale'];
 $products_onsale = $_POST['products_onsale'];
 $products_stocks = $_POST['products_stocks'];
-$products_with_products_categroies_sid = $_POST['products_with_products_categroies_sid'];
+$products_with_products_categories_sid = $_POST['products_with_products_categories_sid'];
 // $products_pic_one = $_POST['products_pic_one'];
 // $products_pic_multi = $_POST['products_pic_multi'];
 $products_with_products_style_filter_sid = $_POST['products_with_products_style_filter_sid'];
@@ -120,7 +120,7 @@ $sql = "INSERT INTO `products` (
     `products_forsale`, 
     `products_onsale`, 
     `products_stocks`,
-    `products_with_products_categroies_sid`, 
+    `products_with_products_categories_sid`, 
     `products_with_products_style_filter_sid`) 
     VALUES (
         NULL, 
@@ -145,7 +145,7 @@ $stmt->execute([
     $products_forsale,
     $products_onsale,
     $products_stocks,
-    $products_with_products_categroies_sid,
+    $products_with_products_categories_sid,
     $products_with_products_style_filter_sid,
 ]);
 

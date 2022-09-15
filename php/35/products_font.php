@@ -29,8 +29,8 @@ if ($totalRows > 0) {
         exit;
     }
     $sql = sprintf("SELECT * FROM`products`
-                JOIN `products_categroies` 
-                    ON`products`.`products_with_products_categroies_sid` = `products_categroies`.`products_categroies_sid`
+                JOIN `products_categories` 
+                    ON`products`.`products_with_products_categories_sid` = `products_categories`.`products_categories_sid`
                 JOIN `products_pic` 
                     ON`products`.`products_sid` = `products_pic`.`products_pic_sid`
                 JOIN `products_style_filter`
